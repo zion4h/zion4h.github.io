@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>6.Null-4 命令行环境部署 - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="本文主要介绍如何在shell中运行多个进程，如何停止或暂停进程以及如何让进程在后台运行。之后还会讲解如何配置dotfile以及用SSH处理远程计算机。"><meta property="og:type" content="blog"><meta property="og:title" content="6.Null-4 命令行环境部署"><meta property="og:url" content="https://zion4h.github.io/2022/12/17/CNull-command-line-environment/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="本文主要介绍如何在shell中运行多个进程，如何停止或暂停进程以及如何让进程在后台运行。之后还会讲解如何配置dotfile以及用SSH处理远程计算机。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://zion4h.github.io/img/cover/anato-finnstark-webp.jpg"><meta property="article:published_time" content="2022-12-17T04:48:33.000Z"><meta property="article:modified_time" content="2023-03-24T11:07:45.574Z"><meta property="article:author" content="ning Huangz"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://zion4h.github.io/img/cover/anato-finnstark-webp.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2022/12/17/CNull-command-line-environment/"},"headline":"6.Null-4 命令行环境部署","image":["https://zion4h.github.io/img/cover/anato-finnstark-webp.jpg"],"datePublished":"2022-12-17T04:48:33.000Z","dateModified":"2023-03-24T11:07:45.574Z","author":{"@type":"Person","name":"ning Huangz"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"本文主要介绍如何在shell中运行多个进程，如何停止或暂停进程以及如何让进程在后台运行。之后还会讲解如何配置dotfile以及用SSH处理远程计算机。"}</script><link rel="canonical" href="https://zion4h.github.io/2022/12/17/CNull-command-line-environment/"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/idea.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/img/cover/anato-finnstark-webp.jpg" alt="6.Null-4 命令行环境部署"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-12-17T04:48:33.000Z" title="2022/12/17 12:48:33">2022-12-17</time>发表</span><span class="level-item"><time dateTime="2023-03-24T11:07:45.574Z" title="2023/3/24 19:07:45">2023-03-24</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Labs/">Labs</a></span><span class="level-item">10 分钟读完 (大约1524个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">6.Null-4 命令行环境部署</h1><div class="content"><p>本文主要介绍如何在<strong>shell</strong>中运行多个进程，如何停止或暂停进程以及如何让进程在后台运行。之后还会讲解如何配置<strong>dotfile</strong>以及用<strong>SSH</strong>处理远程计算机。</p>
+<span id="more"></span>
+
+<h2 id="Job控制"><a href="#Job控制" class="headerlink" title="Job控制"></a>Job控制</h2><p>当我们需要中断<strong>job</strong>时，通常是因为命令完成时间过长（比如因为网络问题导致<code>brew update</code>卡住），可以执行<code>Ctrl-C</code>，它本质上是让<strong>shell</strong>向进程传递<code>SIGINT</code>信号。<strong>shell</strong>使用一种称为信号的<strong>UNIX</strong>通信机制向进程传递信息从而改变执行流程，因此<u>信号是软件中断</u>。</p>
+<p>下面的<strong>Python</strong>程序会捕获<code>SIGINT</code>信号，我们如果想要停止它，可以使用<code>SIGQUIT</code>，即键入<code>Ctrl-\</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> signal, time</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">handler</span>(<span class="params">signum, time</span>):</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&quot;\nI got a SIGINT, but I am not stopping&quot;</span>)</span><br><span class="line"></span><br><span class="line">signal.signal(signal.SIGINT, handler)</span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	time.sleep(<span class="number">.1</span>)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&quot;\r&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i), end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">	i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">~/tmp ❯ ./sigin.py</span><br><span class="line">11^C</span><br><span class="line">I got a SIGINT, but I am not stopping</span><br><span class="line">25^C</span><br><span class="line">I got a SIGINT, but I am not stopping</span><br><span class="line">43^\[3]    35733 quit       ./sigin.py</span><br></pre></td></tr></table></figure>
+
+<p>在终端中打印显示的<code>^</code>就是<code>Ctrl</code>。除了<code>SIGINT</code>和<code>SIGQUIT</code>外，还有<code>SIGSTOP</code>也很常用，键入<code>Ctrl-Z</code>可以让作业暂停。此外，我们还可以用<a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/fg.1p.html">fg</a>或者<a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man1/bg.1p.html">bg</a>分别继续前台或后台暂停的作业。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">~ ❯ jobs</span><br><span class="line">~ ❯ sleep 1000</span><br><span class="line">^Z</span><br><span class="line">[1]  + 36791 suspended  sleep 1000</span><br><span class="line">~ ❯ nohup sleep 2000 &amp;</span><br><span class="line">[2] 36793</span><br><span class="line">appending output to nohup.out</span><br><span class="line">~ ❯ jobs</span><br><span class="line">[1]  + suspended  sleep 1000</span><br><span class="line">[2]  - running    nohup sleep 2000</span><br><span class="line">~ ❯ bg %1</span><br><span class="line">[1]  - 36791 continued  sleep 1000</span><br><span class="line">~ ❯ jobs</span><br><span class="line">[1]  - running    sleep 1000</span><br><span class="line">[2]  + running    nohup sleep 2000</span><br><span class="line">~ ❯ kill -STOP %1</span><br><span class="line">[1]  + 36791 suspended (signal)  sleep 1000</span><br><span class="line">~ ❯ jobs</span><br><span class="line">[1]  + suspended (signal)  sleep 1000</span><br><span class="line">[2]  - running    nohup sleep 2000</span><br><span class="line">~ ❯ kill -HUP %1</span><br><span class="line">[1]  + 36791 hangup     sleep 1000</span><br><span class="line">~ ❯ jobs</span><br><span class="line">[2]  + running    nohup sleep 2000</span><br><span class="line">~ ❯ kill -HUP %2</span><br><span class="line">~ ❯ jobs</span><br><span class="line">[2]  + running    nohup sleep 2000</span><br></pre></td></tr></table></figure>
+
+<p>点击<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Signal_(IPC)">here</a>可以查看更多信号相关信息，或者直接键入<code>man signal</code>查看。</p>
+<h2 id="终端多路复用器"><a href="#终端多路复用器" class="headerlink" title="终端多路复用器"></a>终端多路复用器</h2><p>一次性运行多个任务的时候，我们可以同时开多个终端窗口监视它们进度，但在命令行界面使用终端多路复用器是一种更加通用的解决方案，<u>尤其在远程连接机器的时候</u>。</p>
+<p><img src="tmux.png" alt="tmux"></p>
+<p>最流行的终端多路复用器就是<strong>tmux</strong>，可以自己配置快捷键来快速创建和切换标签和界面。在<strong>tmux</strong>中，一个<strong>session</strong>就是一个独立的工作空间可以有多个窗口，而一个窗口就是一个可视标签同一个<strong>session</strong>可以切割出多个窗口，一个窗口可以分为多个<strong>pane</strong>。</p>
+<ul>
+<li>Sessions<ul>
+<li><code>tmux</code> 打开一个新的session</li>
+<li><code>tmux new -s NAME </code>打开一个新的session并命名</li>
+<li><code>tmux ls</code> 列出当前sessions</li>
+<li><code>&lt;C-b&gt; d</code> 在session内部键入这个命令可以退出当前session</li>
+<li><code>tmux a</code> 进入上一个session，也可以用-t进入指定session</li>
+</ul>
+</li>
+<li>Windows<ul>
+<li><code>&lt;C-b&gt; c</code> 创建一个新窗口</li>
+<li><code>&lt;C-b&gt; N</code> 切换到第N个窗口</li>
+<li><code>&lt;C-b&gt; p</code> 切换到上一个窗口</li>
+<li><code>&lt;C-b&gt; n</code> 切换到下一个窗口</li>
+<li><code>&lt;C-b&gt; ，</code>重命名当前窗口</li>
+<li><code>&lt;C-b&gt; w</code> 列出所有窗口</li>
+</ul>
+</li>
+<li>Panes<ul>
+<li><code>&lt;C-b&gt; &quot; </code>水平切割窗口</li>
+<li><code>&lt;C-b&gt; %</code> 竖直切割窗口</li>
+<li><code>&lt;C-b&gt; &lt;direction&gt;</code> 朝特定方向移动pane</li>
+<li><code>&lt;C-b&gt; z</code> 放大当前pane</li>
+</ul>
+</li>
+</ul>
+<p>这里有关于<a target="_blank" rel="noopener" href="https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/">tmux</a>的快速教程。</p>
+<h2 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h2><p><strong>shell</strong>支持<em><strong>aliasing</strong></em>，即用一个较短的指令作为一个长命令的别名从而减少我们的工作量，通常的用法如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> alias_name=<span class="string">&quot;command_to_alias arg1 arg2&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>比较常用过的设定有：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Make shorthands for common flags</span></span><br><span class="line"><span class="built_in">alias</span> ll=<span class="string">&quot;ls -lh&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Save a lot of typing for common commands</span></span><br><span class="line"><span class="built_in">alias</span> gs=<span class="string">&quot;git status&quot;</span></span><br><span class="line"><span class="built_in">alias</span> gc=<span class="string">&quot;git commit&quot;</span></span><br><span class="line"><span class="built_in">alias</span> v=<span class="string">&quot;vim&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Save you from mistyping</span></span><br><span class="line"><span class="built_in">alias</span> sl=<span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Overwrite existing commands for better defaults</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">mv</span>=<span class="string">&quot;mv -i&quot;</span>           <span class="comment"># -i prompts before overwrite</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">mkdir</span>=<span class="string">&quot;mkdir -p&quot;</span>     <span class="comment"># -p make parent dirs as needed</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">df</span>=<span class="string">&quot;df -h&quot;</span>           <span class="comment"># -h prints human readable format</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Alias can be composed</span></span><br><span class="line"><span class="built_in">alias</span> la=<span class="string">&quot;ls -A&quot;</span></span><br><span class="line"><span class="built_in">alias</span> lla=<span class="string">&quot;la -l&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># To ignore an alias run it prepended with \</span></span><br><span class="line">\<span class="built_in">ls</span></span><br><span class="line"><span class="comment"># Or disable an alias altogether with unalias</span></span><br><span class="line"><span class="built_in">unalias</span> la</span><br><span class="line"></span><br><span class="line"><span class="comment"># To get an alias definition just call it with alias</span></span><br><span class="line"><span class="built_in">alias</span> ll</span><br><span class="line"><span class="comment"># Will print ll=&#x27;ls -lh&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果要将别名持久化，我们需要将其配置到<strong>shell</strong>启动文件中，比如**.bashrc<strong>或者</strong>.zshrc<strong>，这些文件又被称为</strong><em>dotfile</em>**。</p>
+<h2 id="Dotfiles"><a href="#Dotfiles" class="headerlink" title="Dotfiles"></a>Dotfiles</h2><p>许多程序都会用一个以<code>.</code>开头的文本文件作为配置文件，我们称这些文件为<strong>dotfiles</strong>，当我们输入ls时它们默认隐藏。<strong>shell</strong>在启动时会读取很多文件并加载其配置，根据<strong>shell</strong>的不同，无论是登录还是交互都很复杂，<a target="_blank" rel="noopener" href="https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html">这里</a>是关于这个问题的参考。</p>
+<p><u>每个人都会对自己的<strong>dotfiles</strong>有特别的配置，除了助教们的配置外<a target="_blank" rel="noopener" href="https://github.com/anishathalye/dotfiles">Anish</a>, <a target="_blank" rel="noopener" href="https://github.com/jonhoo/configs">Jon</a>, <a target="_blank" rel="noopener" href="https://github.com/jjgo/dotfiles">Jose</a>，<a target="_blank" rel="noopener" href="https://dotfiles.github.io/">这里</a>有一些很棒的资料可以参考。</u></p>
+<h2 id="远程连接"><a href="#远程连接" class="headerlink" title="远程连接"></a>远程连接</h2><p>我们可以通过使用<em>Secure Shell</em>即<strong>SSH</strong>来远程连接计算机，通常输入这样的一条指令:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh foo@bar.mid.edu</span><br></pre></td></tr></table></figure>
+
+<p>这里我们尝试以用户foo去登录服务器bar.mid.edu，服务器既可以用<strong>URL</strong>表示也可以用<strong>IP</strong>表示。我们利用<code>ssh-keygen</code>生成密钥对，当有多套密钥对时可以用<code>ssh-agent</code>去管理。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519</span><br></pre></td></tr></table></figure>
+
+<p>为了不用每次都输入密码这么麻烦，我们可以将我们的公钥复制到远程计算机，因为<strong>ssh</strong>会检查<code>.ssh/authorized_keys</code>来决定哪些客户可以直接连接：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 直接复制文件</span></span><br><span class="line"><span class="built_in">cat</span> .ssh/id_ed25519.pub | ssh foobar@remote <span class="string">&#x27;cat &gt;&gt; ~/.ssh/authorized_keys&#x27;</span></span><br><span class="line"><span class="comment"># ssh-copy-id</span></span><br><span class="line">ssh-copy-id -i .ssh/id_ed25519 foobar@remote</span><br></pre></td></tr></table></figure>
+
+<p>当我们想通过<code>ssh</code>复制文件时，可以用<code>scp</code>命令<code>scp path/to/local_file remote_host:path/to/remote_file</code></p>
+<h2 id="Exercises"><a href="#Exercises" class="headerlink" title="Exercises"></a>Exercises</h2><p>1.通过类似ps aux ｜ grep这样的命令去查找并杀死一个job。现在启动一个job，指令是sleep 1000，然后用Ctrl-Z暂停:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">❯ <span class="built_in">sleep</span> 10000</span><br><span class="line">^Z</span><br><span class="line">[1]  + 44133 suspended  <span class="built_in">sleep</span> 10000</span><br><span class="line">❯ <span class="built_in">bg</span></span><br><span class="line">[1]  + 44133 continued  <span class="built_in">sleep</span> 10000</span><br><span class="line">❯ <span class="built_in">jobs</span></span><br><span class="line">[1]  + running    <span class="built_in">sleep</span> 10000</span><br><span class="line">❯ pgrep -af <span class="built_in">sleep</span></span><br><span class="line">44133</span><br><span class="line">❯ pkill -HUP <span class="built_in">sleep</span></span><br><span class="line">[1]  + 44133 hangup     <span class="built_in">sleep</span> 10000</span><br><span class="line">❯ <span class="built_in">jobs</span></span><br><span class="line">~ ❯</span><br></pre></td></tr></table></figure>
+
+<p>2.</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>6.Null-4 命令行环境部署</p><p><a href="https://zion4h.github.io/2022/12/17/CNull-command-line-environment/">https://zion4h.github.io/2022/12/17/CNull-command-line-environment/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>ning Huangz</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-12-17</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-03-24</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/donates/aliPayQrcode.jpg" alt="支付宝"></span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="buymeacoffee"><span class="icon is-small"><i class="fas fa-coffee"></i></span><span>送我杯咖啡</span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/donates/wechatQrcode.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/03/01/redis-knowledge/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Redis</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/12/16/CNull-Vim/"><span class="level-item">6.Null-2 Vim</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "52bd497e9a52f5d7907c77a365cb9cc7",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/algorithm/"><span class="tag">algorithm</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/functional-programming/"><span class="tag">functional programming</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/java/"><span class="tag">java</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/leetcode/"><span class="tag">leetcode</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/redis/"><span class="tag">redis</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/typescript/"><span class="tag">typescript</span><span class="tag">1</span></a></div></div></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Job控制"><span class="level-left"><span class="level-item">1</span><span class="level-item">Job控制</span></span></a></li><li><a class="level is-mobile" href="#终端多路复用器"><span class="level-left"><span class="level-item">2</span><span class="level-item">终端多路复用器</span></span></a></li><li><a class="level is-mobile" href="#别名"><span class="level-left"><span class="level-item">3</span><span class="level-item">别名</span></span></a></li><li><a class="level is-mobile" href="#Dotfiles"><span class="level-left"><span class="level-item">4</span><span class="level-item">Dotfiles</span></span></a></li><li><a class="level is-mobile" href="#远程连接"><span class="level-left"><span class="level-item">5</span><span class="level-item">远程连接</span></span></a></li><li><a class="level is-mobile" href="#Exercises"><span class="level-left"><span class="level-item">6</span><span class="level-item">Exercises</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2023 ning Huangz</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2023</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
