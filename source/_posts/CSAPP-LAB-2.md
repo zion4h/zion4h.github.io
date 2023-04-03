@@ -2,7 +2,10 @@
 title: CSAPP Lab2 Defusing a Binary Bomb
 date: 2022-06-02 12:00:00
 cover: /img/cover/img251.jpg
-categories: Labs
+categories: 
+    - 编程
+    - 编程.Labs
+    - 编程.Labs.CSAPP
 toc: true
 ---
 

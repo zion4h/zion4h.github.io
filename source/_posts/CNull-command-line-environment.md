@@ -2,7 +2,10 @@
 title: 6.Null-4 命令行环境部署
 date: 2022-12-17 12:48:33
 cover: /img/cover/anato-finnstark-webp.jpg
-categories: Labs
+categories: 
+    - 编程
+    - 编程.Labs
+    - 编程.Labs.6.Null
 toc: true
 ---
 

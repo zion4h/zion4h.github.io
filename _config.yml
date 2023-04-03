@@ -7,7 +7,7 @@ title: Blowin' in the Wind
 subtitle: ''
 description: ''
 keywords: null
-author: ning Huangz
+author: zion h4
 language: zh-CN
 timezone: 'Asia/Shanghai'
 
@@ -106,3 +106,13 @@ deploy:
   repo: git@github.com:zion4h/zion4h.github.io.git
   branch: gh-pages
   message: Site updated
+
+# RSS
+feed:
+    type: atom
+    path: atom.xml
+    limit: 20
+    hub:
+    content:
+    content_limit:
+    content_limit_delim: ' '

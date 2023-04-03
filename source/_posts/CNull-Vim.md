@@ -2,7 +2,10 @@
 title: 6.Null-2 Vim
 date: 2022-12-16 15:36:26
 cover: /img/cover/anato-finnstark-web-petit.jpg
-categories: Labs
+categories: 
+    - 编程
+    - 编程.Labs
+    - 编程.Labs.6.Null
 toc: true
 ---
 

@@ -2,7 +2,10 @@
 title: CSAPP Lab3 Understanding Buffer Overflow Bugs
 date: 2022-06-03 12:00:00
 cover: /img/cover/img252.jpg
-categories: Labs
+categories: 
+    - 编程
+    - 编程.Labs
+    - 编程.Labs.CSAPP
 toc: true
 excerpt: 由于是直接上手做的，看完readme后也是一头雾水，结合...
 ---

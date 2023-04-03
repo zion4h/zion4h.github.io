@@ -2,7 +2,10 @@
 title: CSAPP Lab6 Writing Your Own Unix Shell
 date: 2022-06-06 12:00:00
 cover: /img/cover/img257.jpg
-categories: Labs
+categories: 
+    - 编程
+    - 编程.Labs
+    - 编程.Labs.CSAPP
 toc: true
 ---
 

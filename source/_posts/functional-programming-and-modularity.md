@@ -3,6 +3,9 @@ title: 函数式编程和模块化
 date: 2022-12-11 12:00:00
 cover: /img/cover/FBdef8BVUAIfPcy.jpeg
 toc: true
+categories: 
+    - 编程
+    - 编程.函数式编程
 tags: 
     - typescript 
     - functional programming

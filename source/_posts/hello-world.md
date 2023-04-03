@@ -2,6 +2,8 @@
 title: Hello World
 date: 2002-10-31 12:00:00
 toc: true
+categories: 
+    - HelloWorld
 excerpt: Welcome to ...
 ---
 Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
@@ -103,3 +105,10 @@ $ hexo deploy
 More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
 
 How to use [ICARUS](https://ppoffice.github.io/hexo-theme-icarus/uncategorized/getting-started-with-icarus/).
+
+
+## 修改优化
+
+[布局修改](https://www.alphalxy.com/2019/03/customize-icarus/#%E6%96%87%E7%AB%A0%E9%A1%B5%E9%9D%A2%E4%B8%A4%E6%A0%8F%E5%B8%83%E5%B1%80)
+
+[Candinya](https://github.com/Candinya)/[Kratos-Rebirth](https://github.com/Candinya/Kratos-Rebirth)

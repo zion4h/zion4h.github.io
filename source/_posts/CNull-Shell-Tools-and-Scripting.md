@@ -2,7 +2,10 @@
 title: 6.Null-2 shell脚本编程和常用工具
 date: 2022-12-12 22:21:35
 cover: /img/cover/anato-finnstark-anato-finnstark-anato-finnstark-web-petit.jpg
-categories: Labs
+categories: 
+    - 编程
+    - 编程.Labs
+    - 编程.Labs.6.Null
 toc: true
 ---
 

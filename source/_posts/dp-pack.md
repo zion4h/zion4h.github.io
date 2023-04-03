@@ -2,7 +2,9 @@
 title: 算法 背包DP
 date: 2022-12-06 21:29:32
 cover: /img/cover/img023.jpg
-categories: 算法
+categories: 
+    - 编程
+    - 编程.算法
 tags: 
     - leetcode 
     - algorithm

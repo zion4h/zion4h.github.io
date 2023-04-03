@@ -100,7 +100,7 @@ head:
         # E.g., name=theme-color;content=#123456 => <meta name="theme-color" content="#123456">
         - ''
     # URL or path to the website's RSS atom.xml
-    rss: 
+    rss: https://zion4h.github.io/atom.xml
 # Page top navigation bar configurations
 navbar:
     # Navigation menu items
@@ -118,15 +118,25 @@ navbar:
 # Page footer configurations
 footer:
     # Copyright text
-    copyright: © 2023
+    # copyright:
     # Links to be shown on the right of the footer section
     links:
-        Creative Commons:
-            icon: fab fa-creative-commons
-            url: https://creativecommons.org/
-        Attribution 4.0 International:
-            icon: fab fa-creative-commons-by
-            url: https://creativecommons.org/licenses/by/4.0/
+        CC BY-NC-SA 4.0:
+            icon:
+                - fab fa-creative-commons
+                - fab fa-creative-commons-by
+                - fab fa-creative-commons-nc
+                - fab fa-creative-commons-sa
+            url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+        # Creative Commons:
+        #     icon: fab fa-creative-commons
+        #     url: https://creativecommons.org/
+        # Attribution 4.0 International:
+        #     icon: fab fa-creative-commons-by
+        #     url: https://creativecommons.org/licenses/by/4.0/
+        # NonCommercial :
+        #     icon: fab fa-creative-commons-nc
+        #     url: https://creativecommons.org/licenses/nc/4.0/
         Download on GitHub:
             icon: fab fa-github
             url: https://github.com/zion4h
@@ -136,7 +146,8 @@ article:
     highlight:
         # Code highlight themes
         # https://github.com/highlightjs/highlight.js/tree/master/src/styles
-        theme: idea
+        # theme: idea
+        theme: paraiso-light
         # Show copy code button
         clipboard: true
         # Default folding status of the code blocks. Can be "", "folded", "unfolded"
@@ -178,39 +189,39 @@ comment:
         - zion4h
 # Donate plugin configurations
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Donation/
-donates:
-    # "Afdian.net" donate button configurations
-    # -
-    #     type: afdian
-    #     # URL to the "Afdian.net" personal page
-    #     url: ''
-    # Alipay donate button configurations
-    -
-        type: alipay
-        # Alipay qrcode image URL
-        qrcode: 'img/donates/aliPayQrcode.jpg'
-    # "Buy me a coffee" donate button configurations
-    -
-        type: buymeacoffee
-        # URL to the "Buy me a coffee" page
-        url: ''
-    # Patreon donate button configurations
-    -
-        type: patreon
-        # URL to the Patreon page
-        url: ''
-    # Paypal donate button configurations
-    # -
-    #     type: paypal
-    #     # Paypal business ID or email address
-    #     business: ''
-    #     # Currency code
-    #     currency_code: USD
-    # Wechat donate button configurations
-    -
-        type: wechat
-        # Wechat qrcode image URL
-        qrcode: 'img/donates/wechatQrcode.jpg'
+# donates:
+#     # "Afdian.net" donate button configurations
+#     # -
+#     #     type: afdian
+#     #     # URL to the "Afdian.net" personal page
+#     #     url: ''
+#     # Alipay donate button configurations
+#     -
+#         type: alipay
+#         # Alipay qrcode image URL
+#         qrcode: 'img/donates/aliPayQrcode.jpg'
+#     # "Buy me a coffee" donate button configurations
+#     -
+#         type: buymeacoffee
+#         # URL to the "Buy me a coffee" page
+#         url: ''
+#     # Patreon donate button configurations
+#     -
+#         type: patreon
+#         # URL to the Patreon page
+#         url: ''
+#     # Paypal donate button configurations
+#     # -
+#     #     type: paypal
+#     #     # Paypal business ID or email address
+#     #     business: ''
+#     #     # Currency code
+#     #     currency_code: USD
+#     # Wechat donate button configurations
+#     -
+#         type: wechat
+#         # Wechat qrcode image URL
+#         qrcode: 'img/donates/wechatQrcode.jpg'
 # Share plugin configurations
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Share/
 share:
@@ -266,7 +277,7 @@ widgets:
             #     url: https://dribbble.com
             RSS:
                 icon: fas fa-rss
-                url: /
+                url: https://zion4h.github.io/atom.xml
     # Table of contents widget configurations
     -
         # Where should the widget be placed, left sidebar or right sidebar
@@ -287,11 +298,6 @@ widgets:
         links:
             Hexo: https://hexo.io
             Bulma: https://bulma.io
-    # Categories widget configurations
-    -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: left
-        type: categories
     # Recent posts widget configurations
     -
         # Where should the widget be placed, left sidebar or right sidebar
@@ -313,6 +319,12 @@ widgets:
         amount: 
         # Whether to show tags count, i.e. number of posts in the tag.
         show_count: true
+    # Categories widget configurations
+    -
+        # Where should the widget be placed, left sidebar or right sidebar
+        position: right
+        type: categories
+        collapsed: true
     # Google FeedBurner email subscription widget configurations
     # -
     #     # Where should the widget be placed, left sidebar or right sidebar
@@ -353,12 +365,12 @@ plugins:
     # https://tongji.baidu.com
     baidu_analytics:
         # Baidu Analytics tracking ID
-        tracking_id: 
+        tracking_id: a9f2a7370cea3cc47e78ce7e91a24ccc
     # Bing Webmaster Tools plugin settings
     # https://www.bing.com/toolbox/webmaster/
     bing_webmaster:
         # Bing Webmaster Tools tracking ID in the <meta> tag
-        tracking_id: 
+        tracking_id: E57A0E10BC15ABA0F469F0806A5EDEB0
     # BuSuanZi site/page view counter
     # https://busuanzi.ibruce.info
     busuanzi: true
@@ -388,7 +400,7 @@ plugins:
     # https://analytics.google.com
     google_analytics:
         # Google Analytics tracking ID
-        tracking_id: 
+        tracking_id: G-PB49LZ7RGB
     # Hotjar user feedback plugin
     # https://www.hotjar.com/
     hotjar:
