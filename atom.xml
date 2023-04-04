@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-04-03T13:43:40.552Z</updated>
+  <updated>2023-04-04T11:28:32.593Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -21,10 +21,10 @@
     <link href="https://zion4h.github.io/2023/04/03/network-click-website-go/"/>
     <id>https://zion4h.github.io/2023/04/03/network-click-website-go/</id>
     <published>2023-04-03T11:28:30.000Z</published>
-    <updated>2023-04-03T13:43:40.552Z</updated>
+    <updated>2023-04-04T11:28:32.593Z</updated>
     
     
-    <summary type="html">&lt;p&gt;introduction&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;当我们在浏览器输入&lt;code&gt;https://www.youtbe.com&lt;/code&gt;，并按下&lt;code&gt;Enter&lt;/code&gt;键，便能进入油管慢慢泡视频。在这个过程中，究竟发生了什么？其实简单来说就是一个URL解析、DNS查询、TCP连接、HTTP连接、页面渲染以及断开连接，下面，我将按序详细描述整个过程。&lt;/p&gt;</summary>
     
     
     
