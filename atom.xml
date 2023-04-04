@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-04-04T11:28:32.593Z</updated>
+  <updated>2023-04-04T16:33:25.117Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Java 扫盲</title>
+    <link href="https://zion4h.github.io/2023/04/05/java-basic-intro/"/>
+    <id>https://zion4h.github.io/2023/04/05/java-basic-intro/</id>
+    <published>2023-04-04T16:14:33.000Z</published>
+    <updated>2023-04-04T16:33:25.117Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;关于java基础&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="编程.Java" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Java/"/>
+    
+    <category term="编程.扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Java/%E7%BC%96%E7%A8%8B-%E6%89%AB%E7%9B%B2/"/>
+    
+    
+    <category term="java" scheme="https://zion4h.github.io/tags/java/"/>
+    
+    <category term="intro" scheme="https://zion4h.github.io/tags/intro/"/>
+    
+  </entry>
+  
+  <entry>
     <title>输入网址按回车发生了什么？</title>
     <link href="https://zion4h.github.io/2023/04/03/network-click-website-go/"/>
     <id>https://zion4h.github.io/2023/04/03/network-click-website-go/</id>
     <published>2023-04-03T11:28:30.000Z</published>
-    <updated>2023-04-04T11:28:32.593Z</updated>
+    <updated>2023-04-04T16:12:27.537Z</updated>
     
     
     <summary type="html">&lt;p&gt;当我们在浏览器输入&lt;code&gt;https://www.youtbe.com&lt;/code&gt;，并按下&lt;code&gt;Enter&lt;/code&gt;键，便能进入油管慢慢泡视频。在这个过程中，究竟发生了什么？其实简单来说就是一个URL解析、DNS查询、TCP连接、HTTP连接、页面渲染以及断开连接，下面，我将按序详细描述整个过程。&lt;/p&gt;</summary>
@@ -88,10 +113,10 @@
     <link href="https://zion4h.github.io/2023/03/31/opensource-license-intro/"/>
     <id>https://zion4h.github.io/2023/03/31/opensource-license-intro/</id>
     <published>2023-03-30T16:24:42.000Z</published>
-    <updated>2023-03-30T16:31:51.040Z</updated>
+    <updated>2023-04-04T18:04:47.326Z</updated>
     
     
-    <summary type="html">在open source initiative(OSI)中，有介绍各种五花八门的开源协议，采用不同的协议代表赠予了不同程度的权力。</summary>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;开源促进会OSI&lt;/strong&gt;是&lt;strong&gt;开源定义OSD&lt;/strong&gt;的管理者，由Bruce Perens和Eric S. Raymond创立于1998年，我们寻常用的开源协议都需要该组织认可，要求符合&lt;strong&gt;OSD&lt;/strong&gt;定义。&lt;/p&gt;</summary>
     
     
     
@@ -99,8 +124,12 @@
     
     <category term="编程.开源" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-%E5%BC%80%E6%BA%90/"/>
     
+    <category term="编程.证书" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-%E5%BC%80%E6%BA%90/%E7%BC%96%E7%A8%8B-%E8%AF%81%E4%B9%A6/"/>
+    
     
     <category term="osi" scheme="https://zion4h.github.io/tags/osi/"/>
+    
+    <category term="osd" scheme="https://zion4h.github.io/tags/osd/"/>
     
   </entry>
   
@@ -132,10 +161,10 @@
     <link href="https://zion4h.github.io/2023/03/01/redis-intro/"/>
     <id>https://zion4h.github.io/2023/03/01/redis-intro/</id>
     <published>2023-03-01T13:29:32.000Z</published>
-    <updated>2023-03-30T06:00:17.316Z</updated>
+    <updated>2023-04-04T18:18:16.784Z</updated>
     
     
-    <summary type="html">Redis是一个NoSQL数据库，开源（遵守BSD协议），使用ANSI C语言编写，Key-Value存储系统，基于内存运行，能够在大部分POSIX系统上运行。</summary>
+    <summary type="html">&lt;p&gt;首先，我们要对Redis建立一个最基本的印象，K/V，NoSQL，内存数据库，单线程。另外，Redis还是开源的，基于BSD协议（这个协议允许商用），用ANSI C语言编写而成，能够在大部分POSIX系统上运行，当然最常用的就是Linux和OS X系统了。&lt;/p&gt;</summary>
     
     
     
@@ -414,27 +443,6 @@
     
     
     <summary type="html">由于是直接上手做的，看完readme后也是一头雾水，结合...</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
-    
-    <category term="编程.Labs.CSAPP" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/%E7%BC%96%E7%A8%8B-Labs-CSAPP/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>CSAPP Lab2 Defusing a Binary Bomb</title>
-    <link href="https://zion4h.github.io/2022/06/02/CSAPP-LAB-2/"/>
-    <id>https://zion4h.github.io/2022/06/02/CSAPP-LAB-2/</id>
-    <published>2022-06-02T04:00:00.000Z</published>
-    <updated>2023-03-30T05:47:24.814Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;由于实验需要在x86-64环境下使用，因此我不得不放弃使用m1芯片的mac转而使用win10在虚拟机上跑了个centos，这里用vmware安装好后，再在centos上安装GDB即可。&lt;/p&gt;</summary>
     
     
     
