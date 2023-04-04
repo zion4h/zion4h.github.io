@@ -1,0 +1,11 @@
+.is-3-column {
+  background-image: url("https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/bg.png");
+  background-position: top left;
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-size: 400px 400px;
+}
+.widget,
+.footer {
+  background-color: rgba(255,255,255,0.9);
+}

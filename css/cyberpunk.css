@@ -10817,24 +10817,27 @@ article.article .content {
   font-size: 1.1rem;
 }
 article.article .content h1 {
-  font-size: 1.75em;
+  font-size: 2.25em;
 }
 article.article .content h2 {
-  font-size: 1.5em;
+  font-size: 2em;
 }
 article.article .content h3 {
-  font-size: 1.25em;
+  font-size: 1.5em;
 }
 article.article .content h4 {
-  font-size: 1.125em;
+  font-size: 1.25em;
 }
 article.article .content h5 {
   font-size: 1em;
 }
 article.article .content pre {
-  font-size: 0.85em;
+  font-size: 16px;
+  font-weight: 700;
 }
 article.article .content code {
+  font-size: 16px;
+  font-weight: 700;
   padding: 0;
   background: transparent;
   overflow-wrap: break-word;
@@ -11677,6 +11680,17 @@ figure.highlight.foldable div.level-left {
   .section {
     padding: 1.5rem 1rem;
   }
+}
+.is-3-column {
+  background-image: url("https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/bg.png");
+  background-position: top left;
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-size: 400px 400px;
+}
+.widget,
+.footer {
+  background-color: rgba(255,255,255,0.9);
 }
 body {
   counter-reset: card;
