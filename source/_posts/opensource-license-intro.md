@@ -1,27 +1,36 @@
 ---
 title: 如何选择开源许可证？
 date: 2023-03-31 00:24:42
-cover: /img/cover/img1002.jpg
+cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1002.jpg
+thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1002.jpg
 categories: 
     - 编程
     - 编程.开源
+    - 编程.证书
 toc: true
 tags: 
     - osi
-excerpt: 在open source initiative(OSI)中，有介绍各种五花八门的开源协议，采用不同的协议代表赠予了不同程度的权力。
+    - osd
 ---
+**开源促进会OSI**是**开源定义OSD**的管理者，由Bruce Perens和Eric S. Raymond创立于1998年，我们寻常用的开源协议都需要该组织认可，要求符合**OSD**定义。
+<!--more-->
 
-# OSI
+- **OSI** [Open Source initiative](https://opensource.org/licenses/)
+- **OSD** [Open Source definition](https://en.wikipedia.org/wiki/The_Open_Source_Definition)
 
-在***open** source initiative*([OSI](https://opensource.org/licenses/))中，有介绍各种五花八门的开源协议，采用不同的协议代表赠予了不同程度的权力。
+## 常用开源协议
 
-## GPL
+### GPL
 
-1970s，[理查德·斯托曼](https://zh.wikipedia.org/wiki/%E7%90%86%E6%9F%A5%E5%BE%B7%C2%B7%E6%96%AF%E6%89%98%E6%9B%BC)发起了自由软件运动，并撰写了**GNU通用公共许可协议**([GPL](https://zh.wikipedia.org/wiki/GNU%E9%80%9A%E7%94%A8%E5%85%AC%E5%85%B1%E8%AE%B8%E5%8F%AF%E8%AF%81))，它是一个[Copyleft协议](https://zh.wikipedia.org/wiki/Copyleft)。**Copyleft协议**又叫传染性开源协议，只要项目中用到了带Copyleft协议的部分，那么整个项目都必须带上Copyleft协议，从而变相达到鼓励开源的目的。
+1970s，[Richard Stallman](https://en.wikipedia.org/wiki/Richard_Stallman)发起了**自由软件运动**，并撰写了**GNU通用公共许可协议** [GPL](https://en.wikipedia.org/wiki/GNU_General_Public_License)。GPL是一个[Copyleft协议](https://zh.wikipedia.org/wiki/Copyleft)，而Copyleft协议又叫**传染性开源协议**，只要项目中有一部分带Copyleft协议，那么整个项目都必须带上Copyleft协议，从而*变相达到鼓励开源的目的*。
 
-## MIT & BSD
+### MIT & BSD
 
-与之区别的是**宽松自由软件许可协议条款**([Permissive free software licence](https://zh.wikipedia.org/wiki/%E5%AF%AC%E9%AC%86%E8%87%AA%E7%94%B1%E8%BB%9F%E9%AB%94%E6%8E%88%E6%AC%8A%E6%A2%9D%E6%AC%BE))，其派生项目可以不必保持自由软件身份，常见的[MIT协议](https://zh.wikipedia.org/wiki/MIT%E8%A8%B1%E5%8F%AF%E8%AD%89)和[BSD协议](https://zh.wikipedia.org/wiki/BSD%E8%AE%B8%E5%8F%AF%E8%AF%81)都在此列。顺带一提，这两个协议分别来自麻省理工大学和伯克利大学，而MIT协议是最自由的协议。
+与GPL相区别的是**宽松自由软件许可协议**[Permissive free software licence](https://en.wikipedia.org/wiki/Permissive_software_license)，其派生项目可不用再保持自由软件身份，常见的[MIT协议](https://en.wikipedia.org/wiki/MIT_License)和[BSD协议](https://en.wikipedia.org/wiki/BSD_licenses)都在此列。
+
+顺带一提，这两个协议分别来自麻省理工大学和伯克利大学，里面的MIT协议是最自由的协议。由于BSD原始协议要求派生体在打广告时必须声明原始来源，因此我们通常用更简化的**FreeBSD协议**，同时BSD也是商用首选协议。
+
+如MIT协议，有：
 
 ```bash
 Copyright (C) <year> <copyright holders>
@@ -33,17 +42,19 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## LGPL
+### LGPL
 
-由于GPL协议的Copyleft特性，强制项目及其衍生品开源，因此需要再来一个LGPL，允许闭源。
+由于GPL的Copyleft特性，强制项目及其衍生品开源，因此需要再来一个允许闭源的LGPL来调和。
 
-## Apache & MPL
+### Apache & MPL
 
-[Apache协议](https://zh.wikipedia.org/wiki/Apache%E8%AE%B8%E5%8F%AF%E8%AF%81)是自由软件协议，而由Mozilla基金会开发的[MPL协议](https://zh.wikipedia.org/wiki/Mozilla%E5%85%AC%E5%85%B1%E8%AE%B8%E5%8F%AF%E8%AF%81)则更适用于专有软件。
+[Apache协议](https://en.wikipedia.org/wiki/Apache_License)是自由软件协议，而由Mozilla基金会开发的[MPL协议](https://en.wikipedia.org/wiki/Mozilla_Public_License)则更适用于专有软件。
 
 如果实在感到迷惑，可以看下面阮一峰制作的一图流：
-![license.png](license.png)
+![Open Source License Choice](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/open-source-license.png)
 
-# 参考
+## 参考
 
-[【1】****如何选择开源许可证？****](https://www.ruanyifeng.com/blog/2011/05/how_to_choose_free_software_licenses.html)
+[【1】阮一峰：如何选择开源许可证？](https://www.ruanyifeng.com/blog/2011/05/how_to_choose_free_software_licenses.html)
+
+[【2】五种开源协议的比较(BSD，Apache，GPL，LGPL，MIT)](http://www.ha97.com/833.html)
