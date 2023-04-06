@@ -313,7 +313,7 @@ TODO:
 
 [[2] 美团技术：MySQL索引原理及慢查询优化](https://tech.meituan.com/2014/06/30/mysql-index.html)
 
-[[3] 深入浅出MySQL](https://www.linuxidc.com/Linux/2016-05/130922.htm) 
+[[3] 深入浅出MySQL](https://www.linuxidc.com/Linux/2016-05/130922.htm)
 
 [[4] MySQL Doc](https://dev.mysql.com/doc/refman/8.0/en/optimization-indexes.html)
 
