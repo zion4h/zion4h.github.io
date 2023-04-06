@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-04-04T16:33:25.117Z</updated>
+  <updated>2023-04-06T12:23:06.907Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -17,14 +17,14 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Java 扫盲</title>
+    <title>Java 扫盲（一）基础中的基础</title>
     <link href="https://zion4h.github.io/2023/04/05/java-basic-intro/"/>
     <id>https://zion4h.github.io/2023/04/05/java-basic-intro/</id>
     <published>2023-04-04T16:14:33.000Z</published>
-    <updated>2023-04-04T16:33:25.117Z</updated>
+    <updated>2023-04-06T12:23:06.907Z</updated>
     
     
-    <summary type="html">&lt;p&gt;关于java基础&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;根据&lt;strong&gt;TIOBE&lt;/strong&gt;，Java直到2023年依然是主流编程语言。在Java 8以前掌握这门语言是一件比较简单的事情，但在8之后学习曲线开始变陡，即使经过多次减负学习成本也在慢慢增加，尤其需要耗费在学习各种框架的原理和应用之上。&lt;em&gt;Java扫盲系列&lt;/em&gt;不会像官方Doc一样事无巨细地对语法絮絮叨叨不停，而是会按我个人喜好将其拆解分析，着重于&lt;strong&gt;方法论&lt;/strong&gt;上。&lt;/p&gt;</summary>
     
     
     
