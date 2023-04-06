@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-04-06T12:23:06.907Z</updated>
+  <updated>2023-04-06T16:10:41.388Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java 扫盲（二）集合</title>
+    <link href="https://zion4h.github.io/2023/04/07/java-basic-intro-collection/"/>
+    <id>https://zion4h.github.io/2023/04/07/java-basic-intro-collection/</id>
+    <published>2023-04-06T16:08:42.000Z</published>
+    <updated>2023-04-06T16:10:41.388Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;介绍Java集合相关，如何设计，为什么这样设计？主要从存储和速度两个方面考虑。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="编程.Java" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Java/"/>
+    
+    <category term="编程.扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Java/%E7%BC%96%E7%A8%8B-%E6%89%AB%E7%9B%B2/"/>
+    
+    
+    <category term="java" scheme="https://zion4h.github.io/tags/java/"/>
+    
+    <category term="intro" scheme="https://zion4h.github.io/tags/intro/"/>
+    
+  </entry>
   
   <entry>
     <title>Java 扫盲（一）基础中的基础</title>
@@ -67,6 +92,27 @@
   </entry>
   
   <entry>
+    <title>2023年3月</title>
+    <link href="https://zion4h.github.io/2023/04/03/life-diary-23-3/"/>
+    <id>https://zion4h.github.io/2023/04/03/life-diary-23-3/</id>
+    <published>2023-04-03T10:06:53.000Z</published>
+    <updated>2023-04-06T17:07:01.470Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;我也不知道为什么要写日记，可能害怕多年后的某一天，一切尘埃落定，回顾前半生，才发现我只是一直在跑，忘记了风景和人，自己也成了一道孤零零的鬼魂。童年时乘城乡汽车回老家，车子在烂石头路上磕磕绊绊晃悠个不停，车里各种气味混在一起打开窗也透不过气。一般我上车没到五分钟就头晕想吐，而这样的旅程要持续近两个钟头，就硬生生熬着扛着，直到下车那一刻才敢大口呼吸，一种逃出生天的喜悦涌出心头。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="生活.日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E7%94%9F%E6%B4%BB-%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>B树家族</title>
     <link href="https://zion4h.github.io/2023/04/01/data-structure-storage/"/>
     <id>https://zion4h.github.io/2023/04/01/data-structure-storage/</id>
@@ -92,10 +138,10 @@
     <link href="https://zion4h.github.io/2023/03/31/mysql-intro/"/>
     <id>https://zion4h.github.io/2023/03/31/mysql-intro/</id>
     <published>2023-03-31T14:59:20.000Z</published>
-    <updated>2023-04-03T09:56:49.482Z</updated>
+    <updated>2023-04-06T16:26:41.836Z</updated>
     
     
-    <summary type="html">MySQL是一个GPL开源的关系数据库管理系统(DBMS)，根据DB-Engines，截止2023年它的流行程度已仅次于Oracle。其实有很多其他比MySQL好用的DBMS，但为什么它能如此受欢迎呢，个人认为主要有三点：开源免费、简单易用、知名度高。</summary>
+    <summary type="html">&lt;p&gt;&lt;em&gt;&lt;strong&gt;MySQL&lt;/strong&gt;&lt;/em&gt;是一个&lt;em&gt;GPL开源&lt;/em&gt;的关系数据库管理系统(&lt;strong&gt;DBMS&lt;/strong&gt;)，根据&lt;a href=&quot;https://db-engines.com/en/ranking&quot;&gt;DB-Engines&lt;/a&gt;，截止2023年它的流行程度已仅次于&lt;em&gt;&lt;strong&gt;Oracle&lt;/strong&gt;&lt;/em&gt;。其实有很多其他比MySQL好用的DBMS，但为什么它能如此受欢迎呢，个人认为主要有三点：&lt;strong&gt;开源免费、简单易用、知名度高&lt;/strong&gt;。&lt;/p&gt;</summary>
     
     
     
@@ -174,6 +220,69 @@
     
     
     <category term="redis" scheme="https://zion4h.github.io/tags/redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2023年2月</title>
+    <link href="https://zion4h.github.io/2023/02/27/life-diary-23-2/"/>
+    <id>https://zion4h.github.io/2023/02/27/life-diary-23-2/</id>
+    <published>2023-02-27T11:30:19.000Z</published>
+    <updated>2023-04-06T17:07:11.187Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;我现在的目标是挣很多很多钱，不惜一切代价找需求找痛点然后达成交易。而越是想挣大钱，越是要处处小心，不要畏惧打工仔身份，先当好一个合格的打工仔，行内事办漂亮，待人接物妥当。当前的想法是先做个淘宝上的资源二手贩子，再写个软件。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="生活.日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E7%94%9F%E6%B4%BB-%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2023年1月</title>
+    <link href="https://zion4h.github.io/2023/02/06/life-diary-23-1/"/>
+    <id>https://zion4h.github.io/2023/02/06/life-diary-23-1/</id>
+    <published>2023-02-05T16:58:38.000Z</published>
+    <updated>2023-04-06T17:07:16.100Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;文字的张力并不单取决于内容本身，而更多靠着与读者的共鸣。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="生活.日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E7%94%9F%E6%B4%BB-%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2022年12月</title>
+    <link href="https://zion4h.github.io/2023/01/01/life-diary-22-12/"/>
+    <id>https://zion4h.github.io/2023/01/01/life-diary-22-12/</id>
+    <published>2023-01-01T11:24:24.000Z</published>
+    <updated>2023-04-06T17:07:20.113Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;我现在可以确乎无疑地说和不喜欢的人抱在一起交换口水是最无聊的事情，虽然我的性需求很旺盛，但我宁愿DIY，我没有占有欲了。我对陌生女人的曼妙胴体逐渐免疫，并逐渐学会用一种欣赏的角度去理解和看待，那种源于动物性的单调情欲于我而言实在太过寡淡。我所真正期待的，是那些艺术的、深度的、多文化的情感碰撞。之前的我甚至会有一些收集癖，但现在发现其实没必要。我的灵魂深处告诉我，我不喜欢这些乱七八糟的东西，这个答案无关乎道德，体验和探索后我理解了真正的自我。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="生活.日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E7%94%9F%E6%B4%BB-%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
@@ -345,112 +454,6 @@
     <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
     
     <category term="编程.Labs.6.824" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/%E7%BC%96%E7%A8%8B-Labs-6-824/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>6.824 Lab1 MapReduce</title>
-    <link href="https://zion4h.github.io/2022/12/01/6-824-LAB-1/"/>
-    <id>https://zion4h.github.io/2022/12/01/6-824-LAB-1/</id>
-    <published>2022-12-01T04:00:00.000Z</published>
-    <updated>2023-03-30T05:50:33.977Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;遵循&lt;a href=&quot;https://pdos.csail.mit.edu/6.824/labs/lab-mr.html&quot;&gt;lab页&lt;/a&gt;指导，并在本地部署好项目。我在观摩完mrsequential的代码后，再结合&lt;a href=&quot;https://static.googleusercontent.com/media/research.google.com/zh-CN//archive/mapreduce-osdi04.pdf&quot;&gt;MapReduce论文&lt;/a&gt;，理清了基本思路。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
-    
-    <category term="编程.Labs.6.824" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/%E7%BC%96%E7%A8%8B-Labs-6-824/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>CSAPP Lab7 Writing a Dynamic Storage Allocator</title>
-    <link href="https://zion4h.github.io/2022/06/07/CSAPP-LAB-7/"/>
-    <id>https://zion4h.github.io/2022/06/07/CSAPP-LAB-7/</id>
-    <published>2022-06-07T04:00:00.000Z</published>
-    <updated>2023-03-30T05:47:38.975Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;准备&quot;&gt;&lt;a href=&quot;#准备&quot; class=&quot;headerlink&quot; title=&quot;准备&quot;&gt;&lt;/a&gt;准备&lt;/h2&gt;&lt;p&gt;首先，在linux环境下解压，由于在make过程中发现缺少glibc的库，所以还要安装相关包：&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[root@MiWiFi-R4A-srv malloclab-handout]&lt;span class=&quot;meta&quot;&gt;# tar xvf malloclab-handout.tar&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[root@MiWiFi-R4A-srv malloclab-handout]&lt;span class=&quot;meta&quot;&gt;# cd malloclab-handout/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[root@MiWiFi-R4A-srv malloclab-handout]&lt;span class=&quot;meta&quot;&gt;# yum install glibc-devel.i686&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[root@MiWiFi-R4A-srv malloclab-handout]&lt;span class=&quot;meta&quot;&gt;# yum install libstdc++-devel.i686&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
-    
-    <category term="编程.Labs.CSAPP" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/%E7%BC%96%E7%A8%8B-Labs-CSAPP/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>CSAPP Lab6 Writing Your Own Unix Shell</title>
-    <link href="https://zion4h.github.io/2022/06/06/CSAPP-LAB-6/"/>
-    <id>https://zion4h.github.io/2022/06/06/CSAPP-LAB-6/</id>
-    <published>2022-06-06T04:00:00.000Z</published>
-    <updated>2023-03-30T05:47:36.045Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;准备&quot;&gt;&lt;a href=&quot;#准备&quot; class=&quot;headerlink&quot; title=&quot;准备&quot;&gt;&lt;/a&gt;准备&lt;/h2&gt;&lt;p&gt;除了看&lt;a href=&quot;http://csapp.cs.cmu.edu/3e/shlab.pdf&quot;&gt;shlab.dvi (cmu.edu)&lt;/a&gt;和&lt;a href=&quot;https://www.cs.cmu.edu/~213/lectures/15-ecf-signals.pdf&quot;&gt;Introduction to Computer Systems 15-213/18-243, spring 2009 (cmu.edu)&lt;/a&gt;外，这个实验还需要仔细阅读书上第八章异常控制流部分，而书中未补全代码可在&lt;a href=&quot;http://csapp.cs.cmu.edu/3e/ics3/code/src/csapp.c&quot;&gt;csapp.cs.cmu.edu/3e/ics3/code/src/csapp.c&lt;/a&gt;搜索（比如Kill）。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
-    
-    <category term="编程.Labs.CSAPP" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/%E7%BC%96%E7%A8%8B-Labs-CSAPP/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>CSAPP Lab5 Understanding Cache Memories</title>
-    <link href="https://zion4h.github.io/2022/06/05/CSAPP-LAB-5/"/>
-    <id>https://zion4h.github.io/2022/06/05/CSAPP-LAB-5/</id>
-    <published>2022-06-05T04:00:00.000Z</published>
-    <updated>2023-03-30T05:47:32.782Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;环境准备&quot;&gt;&lt;a href=&quot;#环境准备&quot; class=&quot;headerlink&quot; title=&quot;环境准备&quot;&gt;&lt;/a&gt;环境准备&lt;/h2&gt;&lt;p&gt;参考指导文档&lt;a href=&quot;http://csapp.cs.cmu.edu/3e/cachelab.pdf&quot;&gt;cachelab.dvi (cmu.edu)&lt;/a&gt;，我们需要在linux环境下解压文档。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
-    
-    <category term="编程.Labs.CSAPP" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/%E7%BC%96%E7%A8%8B-Labs-CSAPP/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>CSAPP Lab3 Understanding Buffer Overflow Bugs</title>
-    <link href="https://zion4h.github.io/2022/06/03/CSAPP-LAB-3/"/>
-    <id>https://zion4h.github.io/2022/06/03/CSAPP-LAB-3/</id>
-    <published>2022-06-03T04:00:00.000Z</published>
-    <updated>2023-03-30T05:47:29.679Z</updated>
-    
-    
-    <summary type="html">由于是直接上手做的，看完readme后也是一头雾水，结合...</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
-    
-    <category term="编程.Labs.CSAPP" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/%E7%BC%96%E7%A8%8B-Labs-CSAPP/"/>
     
     
   </entry>
