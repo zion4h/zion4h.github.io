@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-04-06T16:10:41.388Z</updated>
+  <updated>2023-04-10T11:28:01.262Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -21,10 +21,10 @@
     <link href="https://zion4h.github.io/2023/04/07/java-basic-intro-collection/"/>
     <id>https://zion4h.github.io/2023/04/07/java-basic-intro-collection/</id>
     <published>2023-04-06T16:08:42.000Z</published>
-    <updated>2023-04-06T16:10:41.388Z</updated>
+    <updated>2023-04-10T11:28:01.262Z</updated>
     
     
-    <summary type="html">&lt;p&gt;介绍Java集合相关，如何设计，为什么这样设计？主要从存储和速度两个方面考虑。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;【CONTINUED】介绍Java集合相关，如何设计，为什么这样设计？主要从存储和速度两个方面考虑。&lt;/p&gt;</summary>
     
     
     
@@ -32,7 +32,7 @@
     
     <category term="编程.Java" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Java/"/>
     
-    <category term="编程.扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Java/%E7%BC%96%E7%A8%8B-%E6%89%AB%E7%9B%B2/"/>
+    <category term="编程.Java.扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Java/%E7%BC%96%E7%A8%8B-Java-%E6%89%AB%E7%9B%B2/"/>
     
     
     <category term="java" scheme="https://zion4h.github.io/tags/java/"/>
@@ -46,7 +46,7 @@
     <link href="https://zion4h.github.io/2023/04/05/java-basic-intro/"/>
     <id>https://zion4h.github.io/2023/04/05/java-basic-intro/</id>
     <published>2023-04-04T16:14:33.000Z</published>
-    <updated>2023-04-06T12:23:06.907Z</updated>
+    <updated>2023-04-10T11:27:53.929Z</updated>
     
     
     <summary type="html">&lt;p&gt;根据&lt;strong&gt;TIOBE&lt;/strong&gt;，Java直到2023年依然是主流编程语言。在Java 8以前掌握这门语言是一件比较简单的事情，但在8之后学习曲线开始变陡，即使经过多次减负学习成本也在慢慢增加，尤其需要耗费在学习各种框架的原理和应用之上。&lt;em&gt;Java扫盲系列&lt;/em&gt;不会像官方Doc一样事无巨细地对语法絮絮叨叨不停，而是会按我个人喜好将其拆解分析，着重于&lt;strong&gt;方法论&lt;/strong&gt;上。&lt;/p&gt;</summary>
@@ -57,7 +57,7 @@
     
     <category term="编程.Java" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Java/"/>
     
-    <category term="编程.扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Java/%E7%BC%96%E7%A8%8B-%E6%89%AB%E7%9B%B2/"/>
+    <category term="编程.Java.扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Java/%E7%BC%96%E7%A8%8B-Java-%E6%89%AB%E7%9B%B2/"/>
     
     
     <category term="java" scheme="https://zion4h.github.io/tags/java/"/>
@@ -117,7 +117,7 @@
     <link href="https://zion4h.github.io/2023/04/01/data-structure-storage/"/>
     <id>https://zion4h.github.io/2023/04/01/data-structure-storage/</id>
     <published>2023-04-01T08:06:46.000Z</published>
-    <updated>2023-04-03T09:56:34.190Z</updated>
+    <updated>2023-04-10T11:01:00.174Z</updated>
     
     
     <summary type="html">探讨B树族相关的数据结构，比如B树、B+树、红黑树等。</summary>
@@ -184,7 +184,7 @@
     <link href="https://zion4h.github.io/2023/03/27/network-https/"/>
     <id>https://zion4h.github.io/2023/03/27/network-https/</id>
     <published>2023-03-27T14:50:39.000Z</published>
-    <updated>2023-03-30T05:53:53.782Z</updated>
+    <updated>2023-04-10T10:58:54.202Z</updated>
     
     
     <summary type="html">HTTPS主要解决了HTTP的两个问题，第一是不再明文传输避免传输的内容被偷窥，第二个是提高了通信传输的安全性防止内容被篡改。</summary>
@@ -291,7 +291,7 @@
     <link href="https://zion4h.github.io/2022/12/17/CNull-command-line-environment/"/>
     <id>https://zion4h.github.io/2022/12/17/CNull-command-line-environment/</id>
     <published>2022-12-17T04:48:33.000Z</published>
-    <updated>2023-03-30T05:46:50.753Z</updated>
+    <updated>2023-04-10T11:50:02.992Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文主要介绍如何在&lt;strong&gt;shell&lt;/strong&gt;中运行多个进程，如何停止或暂停进程以及如何让进程在后台运行。之后还会讲解如何配置&lt;strong&gt;dotfile&lt;/strong&gt;以及用&lt;strong&gt;SSH&lt;/strong&gt;处理远程计算机。&lt;/p&gt;</summary>
@@ -302,7 +302,7 @@
     
     <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
     
-    <category term="编程.Labs.6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/%E7%BC%96%E7%A8%8B-Labs-6-Null/"/>
+    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/MIT-6-Null/"/>
     
     
   </entry>
@@ -312,7 +312,7 @@
     <link href="https://zion4h.github.io/2022/12/16/CNull-Vim/"/>
     <id>https://zion4h.github.io/2022/12/16/CNull-Vim/</id>
     <published>2022-12-16T07:36:26.000Z</published>
-    <updated>2023-03-30T05:47:07.790Z</updated>
+    <updated>2023-04-10T11:50:15.379Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文将介绍&lt;strong&gt;Shell&lt;/strong&gt;中最流行的文本编辑器&lt;a href=&quot;https://www.vim.org/&quot;&gt;Vim&lt;/a&gt;（点进去你会看到一个巨古老的界面，硬核气息可谓是扑面而来）的基本用法和高级技巧，顺带一提&lt;a href=&quot;https://code.visualstudio.com/&quot;&gt;Visual Studio Code&lt;/a&gt;是全平台最流行的编辑器，统计数据源于&lt;a href=&quot;https://insights.stackoverflow.com/survey/2019/#development-environments-and-tools&quot;&gt;Stack Overflow&lt;/a&gt;。这里简单介绍下背景，&lt;strong&gt;Vim&lt;/strong&gt;起源于1976年的Vi编辑器，许多工具都支持&lt;strong&gt;Vim&lt;/strong&gt;仿真模式（比如&lt;strong&gt;VS Code&lt;/strong&gt;）。&lt;/p&gt;</summary>
@@ -323,7 +323,7 @@
     
     <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
     
-    <category term="编程.Labs.6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/%E7%BC%96%E7%A8%8B-Labs-6-Null/"/>
+    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/MIT-6-Null/"/>
     
     
   </entry>
@@ -333,7 +333,7 @@
     <link href="https://zion4h.github.io/2022/12/12/CNull-Shell-Tools-and-Scripting/"/>
     <id>https://zion4h.github.io/2022/12/12/CNull-Shell-Tools-and-Scripting/</id>
     <published>2022-12-12T14:21:35.000Z</published>
-    <updated>2023-03-30T05:46:54.228Z</updated>
+    <updated>2023-04-10T11:50:06.896Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文主要叙述了如何以脚本方式去使用&lt;strong&gt;bash&lt;/strong&gt;，并介绍了大量常用的&lt;strong&gt;shell工具&lt;/strong&gt;。很多工具并非系统自带，因此需要手动下载甚至手动配置，如果是&lt;strong&gt;macOS&lt;/strong&gt;的话，使用&lt;code&gt;brew&lt;/code&gt;一键安装即可。&lt;/p&gt;</summary>
@@ -344,7 +344,7 @@
     
     <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
     
-    <category term="编程.Labs.6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/%E7%BC%96%E7%A8%8B-Labs-6-Null/"/>
+    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/MIT-6-Null/"/>
     
     
   </entry>
@@ -354,7 +354,7 @@
     <link href="https://zion4h.github.io/2022/12/12/CNull-Shell/"/>
     <id>https://zion4h.github.io/2022/12/12/CNull-Shell/</id>
     <published>2022-12-12T05:22:58.000Z</published>
-    <updated>2023-03-30T05:46:58.462Z</updated>
+    <updated>2023-04-10T11:50:09.717Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;a href=&quot;https://missing.csail.mit.edu/&quot;&gt;6.Null&lt;/a&gt;是&lt;em&gt;&lt;strong&gt;MIT&lt;/strong&gt;&lt;/em&gt;开设专为介绍常用计算机工具的一门课程。我在过去的工作和学习过程中可能已经接触过&lt;strong&gt;git&lt;/strong&gt;、&lt;strong&gt;vim&lt;/strong&gt;等工具，也会使用一些简单的命令行指令比如&lt;code&gt;cd&lt;/code&gt;、&lt;code&gt;cp&lt;/code&gt;、&lt;code&gt;mv&lt;/code&gt;等，但远远谈不上熟练。我记得我第一次怀着热情学习&lt;em&gt;&lt;strong&gt;Linux&lt;/strong&gt;&lt;/em&gt;时，在知乎的指路下捧起&lt;em&gt;&lt;strong&gt;鸟叔的Linux私房菜&lt;/strong&gt;&lt;/em&gt;这本书，翻了不到两三页就开始犯困，严重打击了我的学习热情，我像一个通过新华字典学语文的外国人。更难以置信的是，网友们评价这本书学起来比较轻松，真的很难想象上古程序员们度过了怎样枯燥的学习生涯。总而言之，这门课能够提供了关于工具我们真正需要学习的内容，而&lt;u&gt;不用对着手册慢慢啃或者干脆永远像新手一样用时谷歌又或者面对博客里的命令行只是照搬生抄&lt;/u&gt;，仅仅停留在这一长串命令是用来干这个或那个。&lt;/p&gt;</summary>
@@ -365,7 +365,7 @@
     
     <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
     
-    <category term="编程.Labs.6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/%E7%BC%96%E7%A8%8B-Labs-6-Null/"/>
+    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/MIT-6-Null/"/>
     
     
   </entry>
@@ -395,10 +395,10 @@
   
   <entry>
     <title>6-824-LAB-2B</title>
-    <link href="https://zion4h.github.io/2022/12/08/6-824-LAB-2B/"/>
-    <id>https://zion4h.github.io/2022/12/08/6-824-LAB-2B/</id>
+    <link href="https://zion4h.github.io/2022/12/08/mit-6_824-lab-2b/"/>
+    <id>https://zion4h.github.io/2022/12/08/mit-6_824-lab-2b/</id>
     <published>2022-12-08T02:22:53.000Z</published>
-    <updated>2023-03-30T05:50:32.560Z</updated>
+    <updated>2023-04-10T11:49:54.161Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;流程分析&quot;&gt;&lt;a href=&quot;#流程分析&quot; class=&quot;headerlink&quot; title=&quot;流程分析&quot;&gt;&lt;/a&gt;流程分析&lt;/h2&gt;&lt;p&gt;客户端发送的命令会被&lt;code&gt;leader&lt;/code&gt;包装成一个&lt;strong&gt;entry&lt;/strong&gt;并添加到它的日志中，然后广播&lt;strong&gt;append&lt;/strong&gt;消息让其他服务器复制日志。当&lt;strong&gt;entry&lt;/strong&gt;被&lt;u&gt;&lt;strong&gt;安全复制&lt;/strong&gt;&lt;/u&gt;后，&lt;code&gt;leader&lt;/code&gt;上的复制状态机会应用其内部命令，并返回执行结果给客户端。另外，即使&lt;code&gt;leader&lt;/code&gt;已经答复了客户端，为了满足一致性，也会对那些因为网络、奔溃或运行缓慢等而没成功复制日志的服务器重复发送&lt;strong&gt;append&lt;/strong&gt;消息。服务器底层日志本质是一个&lt;strong&gt;entry&lt;/strong&gt;数组，每个&lt;strong&gt;entry&lt;/strong&gt;包含一条命令和&lt;strong&gt;term&lt;/strong&gt;（指代&lt;strong&gt;entry&lt;/strong&gt;创建时所处的任期或者说接收到客户端命令的&lt;code&gt;leader&lt;/code&gt;的任期）。&lt;/p&gt;</summary>
@@ -409,7 +409,7 @@
     
     <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
     
-    <category term="编程.Labs.6.824" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/%E7%BC%96%E7%A8%8B-Labs-6-824/"/>
+    <category term="MIT 6.824" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/MIT-6-824/"/>
     
     
   </entry>
@@ -419,7 +419,7 @@
     <link href="https://zion4h.github.io/2022/12/06/dp-pack/"/>
     <id>https://zion4h.github.io/2022/12/06/dp-pack/</id>
     <published>2022-12-06T13:29:32.000Z</published>
-    <updated>2023-03-30T05:39:28.459Z</updated>
+    <updated>2023-04-10T11:00:01.449Z</updated>
     
     
     <summary type="html">&lt;p&gt;背包问题探讨了如何用有限背包去装入尽可能多或者尽可能贵的物品，或者说用有限空间换取最大价值的问题。当然，问题是多样化的，我们需要将问题中涉及到的资源抽象对应到背包的空间和价值两个维度上。&lt;/p&gt;</summary>
@@ -439,13 +439,13 @@
   
   <entry>
     <title>6.824-LAB-2A</title>
-    <link href="https://zion4h.github.io/2022/12/03/6-824-LAB-2A/"/>
-    <id>https://zion4h.github.io/2022/12/03/6-824-LAB-2A/</id>
+    <link href="https://zion4h.github.io/2022/12/03/mit-6_824-lab-2a/"/>
+    <id>https://zion4h.github.io/2022/12/03/mit-6_824-lab-2a/</id>
     <published>2022-12-03T04:00:00.000Z</published>
-    <updated>2023-03-30T05:50:25.248Z</updated>
+    <updated>2023-04-10T11:56:04.557Z</updated>
     
     
-    <summary type="html">&lt;h2 id=&quot;准备&quot;&gt;&lt;a href=&quot;#准备&quot; class=&quot;headerlink&quot; title=&quot;准备&quot;&gt;&lt;/a&gt;准备&lt;/h2&gt;&lt;p&gt;在做Lab2之前，先读&lt;a href=&quot;https://raft.github.io/raft.pdf&quot;&gt;Raft论文&lt;/a&gt;，再看助教写的&lt;a href=&quot;https://thesquareplanet.com/blog/students-guide-to-raft/&quot;&gt;guide&lt;/a&gt;。我们将在这个实验中实现一个Raft系统，为了方便理解协议的运作过程，可以先去&lt;a href=&quot;https://raft.github.io/&quot;&gt;Raft官网&lt;/a&gt;了解其概念，也可以观看&lt;a href=&quot;http://thesecretlivesofdata.com/raft/&quot;&gt;Raft可视化动画&lt;/a&gt;。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;我们将在Lab2中实现一个&lt;strong&gt;Raft&lt;/strong&gt;系统，&lt;strong&gt;Raft&lt;/strong&gt;本身是一个&lt;strong&gt;分布式一致性算法&lt;/strong&gt;。工欲善其事必先利其器，本实验难度较高，所以我先读&lt;a href=&quot;https://raft.github.io/raft.pdf&quot;&gt;Raft论文&lt;/a&gt;，再看助教写的&lt;a href=&quot;https://thesquareplanet.com/blog/students-guide-to-raft/&quot;&gt;guide&lt;/a&gt;。为了方便理解协议的运作过程，我还去了&lt;a href=&quot;https://raft.github.io/&quot;&gt;Raft官网&lt;/a&gt;，并反复观看&lt;a href=&quot;http://thesecretlivesofdata.com/raft/&quot;&gt;&lt;strong&gt;Raft可视化动画&lt;/strong&gt;&lt;/a&gt;。&lt;/p&gt;</summary>
     
     
     
@@ -453,7 +453,7 @@
     
     <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
     
-    <category term="编程.Labs.6.824" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/%E7%BC%96%E7%A8%8B-Labs-6-824/"/>
+    <category term="MIT 6.824" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/MIT-6-824/"/>
     
     
   </entry>
