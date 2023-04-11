@@ -2,10 +2,7 @@
 title: 6.Null-1 如何玩转Shell
 date: 2022-12-12 13:22:58
 cover: /img/cover/anato-finnstark-anato-finnstark-anato-finnstark-anato-finnstark-web-petit-4.jpg
-categories: 
-    - 编程
-    - 编程.Labs
-    - 编程.Labs.6.Null
+categories: [编程, 编程.Labs, MIT 6.Null]
 toc: true
 ---
 

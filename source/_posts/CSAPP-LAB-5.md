@@ -2,10 +2,7 @@
 title: CSAPP Lab5 Understanding Cache Memories
 date: 2022-06-05 12:00:00
 cover: /img/cover/img253.jpg
-categories: 
-    - 编程
-    - 编程.Labs
-    - 编程.Labs.CSAPP
+categories: [编程, 编程.Labs, CMU 15-213]
 toc: true
 ---
 

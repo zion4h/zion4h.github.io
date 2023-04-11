@@ -3,7 +3,7 @@ title: Java 扫盲（一）基础中的基础
 date: 2023-04-05 00:14:33
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1006.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1006.jpg
-categories: [编程, 编程.Java, 编程.扫盲]
+categories: [编程, 编程.Java, 编程.Java.扫盲]
 tags: [java, intro]
 toc: true
 ---

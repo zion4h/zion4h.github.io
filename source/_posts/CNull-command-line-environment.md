@@ -1,11 +1,8 @@
 ---
 title: 6.Null-4 命令行环境部署
 date: 2022-12-17 12:48:33
-cover: /img/cover/anato-finnstark-webp.jpg
-categories: 
-    - 编程
-    - 编程.Labs
-    - 编程.Labs.6.Null
+cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img001.jpg
+categories: [编程, 编程.Labs, MIT 6.Null]
 toc: true
 ---
 
@@ -80,7 +77,7 @@ appending output to nohup.out
 
 一次性运行多个任务的时候，我们可以同时开多个终端窗口监视它们进度，但在命令行界面使用终端多路复用器是一种更加通用的解决方案，<u>尤其在远程连接机器的时候</u>。
 
-![tmux](tmux.png)
+![tmux demo](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/tmux.png)
 
 最流行的终端多路复用器就是**tmux**，可以自己配置快捷键来快速创建和切换标签和界面。在**tmux**中，一个**session**就是一个独立的工作空间可以有多个窗口，而一个窗口就是一个可视标签同一个**session**可以切割出多个窗口，一个窗口可以分为多个**pane**。
 

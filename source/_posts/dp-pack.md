@@ -94,12 +94,9 @@ F[i,v] = max\\{F[k-1,v], F[k-1,v-c_i]+w_i|item\ i \in group\ K\\}
 $$
 优化后的伪代码如下：
 
-![fake-code](fake-code.png)
+![fake-code](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/dp-pack-fake-code.png)
 
 三重循环不可随意更替，内部第二重循环的逆序是因为在第三重循环会更新$F[v]$的值，而优化时只能在$i-1$的基础上优化。
-
-
-
 
 ## 参考资料
 

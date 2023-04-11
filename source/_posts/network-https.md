@@ -1,7 +1,7 @@
 ---
 title: 计算机网络 HTTPS
 date: 2023-03-27 22:50:39
-cover: /img/cover/img1001.jpg
+cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1001.jpg
 categories: 
     - IT
     - IT.网络
@@ -53,7 +53,7 @@ SSL升级之后就成了TLS，核心我们只需要记住两点：非对称加�
 
 为了保证客户端拿到手的公钥是服务端的而不是黑客的，我们还需要数字证书和CA去验证身份。
 
-![ca.jpg](network.jpg)
+![ca.jpg](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/network.jpg)
 
 # 参考
 
