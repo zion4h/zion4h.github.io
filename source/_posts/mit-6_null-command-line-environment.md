@@ -1,17 +1,16 @@
 ---
-title: 6.Null-4 命令行环境部署
+title: MIT 6.Null 命令行环境部署
 date: 2022-12-17 12:48:33
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img001.jpg
 categories: [编程, 编程.Labs, MIT 6.Null]
 toc: true
 ---
-
 本文主要介绍如何在**shell**中运行多个进程，如何停止或暂停进程以及如何让进程在后台运行。之后还会讲解如何配置**dotfile**以及用**SSH**处理远程计算机。
 <!--more-->
 
 ## Job控制
 
-当我们需要中断**job**时，通常是因为命令完成时间过长（比如因为网络问题导致`brew update`卡住），可以执行`Ctrl-C`，它本质上是让**shell**向进程传递`SIGINT`信号。**shell**使用一种称为信号的**UNIX**通信机制向进程传递信息从而改变执行流程，因此<u>信号是软件中断</u>。
+当我们需要中断**job**时，通常是因为命令完成时间过长（比如因为网络问题导致`brew update`卡住），可以执行`Ctrl-C`，它本质上是让**shell**向进程传递`SIGINT`信号。**shell**使用一种称为信号的**UNIX**通信机制向进程传递信息从而改变执行流程，因此信号是软件中断。
 
 下面的**Python**程序会捕获`SIGINT`信号，我们如果想要停止它，可以使用`SIGQUIT`，即键入`Ctrl-\`。
 
@@ -20,14 +19,14 @@ toc: true
 import signal, time
 
 def handler(signum, time):
-	print("\nI got a SIGINT, but I am not stopping")
+  print("\nI got a SIGINT, but I am not stopping")
 
 signal.signal(signal.SIGINT, handler)
 i = 0
 while True:
-	time.sleep(.1)
-	print("\r{}".format(i), end="")
-	i += 1
+  time.sleep(.1)
+  print("\r{}".format(i), end="")
+  i += 1
 ```
 
 ```shell
@@ -75,7 +74,7 @@ appending output to nohup.out
 
 ## 终端多路复用器
 
-一次性运行多个任务的时候，我们可以同时开多个终端窗口监视它们进度，但在命令行界面使用终端多路复用器是一种更加通用的解决方案，<u>尤其在远程连接机器的时候</u>。
+一次性运行多个任务的时候，我们可以同时开多个终端窗口监视它们进度，但在命令行界面使用终端多路复用器是一种更加通用的解决方案，尤其在远程连接机器的时候。
 
 ![tmux demo](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/tmux.png)
 
@@ -83,7 +82,7 @@ appending output to nohup.out
 
 - Sessions
   - `tmux` 打开一个新的session
-  - `tmux new -s NAME `打开一个新的session并命名
+  - `tmux new -s NAME`打开一个新的session并命名
   - `tmux ls` 列出当前sessions
   - `<C-b> d` 在session内部键入这个命令可以退出当前session
   - `tmux a` 进入上一个session，也可以用-t进入指定session
@@ -95,7 +94,7 @@ appending output to nohup.out
   - `<C-b> ，`重命名当前窗口
   - `<C-b> w` 列出所有窗口
 - Panes
-  - `<C-b> " `水平切割窗口
+  - `<C-b> "`水平切割窗口
   - `<C-b> %` 竖直切割窗口
   - `<C-b> <direction>` 朝特定方向移动pane
   - `<C-b> z` 放大当前pane
@@ -149,9 +148,7 @@ alias ll
 
 许多程序都会用一个以`.`开头的文本文件作为配置文件，我们称这些文件为**dotfiles**，当我们输入ls时它们默认隐藏。**shell**在启动时会读取很多文件并加载其配置，根据**shell**的不同，无论是登录还是交互都很复杂，[这里](https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html)是关于这个问题的参考。
 
-<u>每个人都会对自己的**dotfiles**有特别的配置，除了助教们的配置外[Anish](https://github.com/anishathalye/dotfiles), [Jon](https://github.com/jonhoo/configs), [Jose](https://github.com/jjgo/dotfiles)，[这里](https://dotfiles.github.io)有一些很棒的资料可以参考。</u>
-
-
+每个人都会对自己的**dotfiles**有特别的配置，除了助教们的配置外[Anish](https://github.com/anishathalye/dotfiles), [Jon](https://github.com/jonhoo/configs), [Jose](https://github.com/jjgo/dotfiles)，[这里](https://dotfiles.github.io)有一些很棒的资料可以参考。
 
 ## 远程连接
 
@@ -178,8 +175,6 @@ ssh-copy-id -i .ssh/id_ed25519 foobar@remote
 
 当我们想通过`ssh`复制文件时，可以用`scp`命令`scp path/to/local_file remote_host:path/to/remote_file`
 
-
-
 ## Exercises
 
 1.通过类似ps aux ｜ grep这样的命令去查找并杀死一个job。现在启动一个job，指令是sleep 1000，然后用Ctrl-Z暂停:
@@ -199,5 +194,3 @@ ssh-copy-id -i .ssh/id_ed25519 foobar@remote
 ❯ jobs
 ~ ❯
 ```
-
-2.
