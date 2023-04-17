@@ -291,7 +291,7 @@
     <link href="https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/"/>
     <id>https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/</id>
     <published>2022-12-17T04:48:33.000Z</published>
-    <updated>2023-04-17T07:46:29.507Z</updated>
+    <updated>2023-04-17T07:52:34.797Z</updated>
     
     
     <summary type="html">&lt;p&gt;长期使用 &lt;strong&gt;Shell&lt;/strong&gt; 的程序员应该如何通过优化工作流来节约时间呢？我想可以从以下四点出发，一是提高任务并行度，通过 &lt;strong&gt;Job控制&lt;/strong&gt; 和 &lt;strong&gt;TMUX&lt;/strong&gt; 配合；二是简化或优化命令，通过 &lt;strong&gt;Aliase&lt;/strong&gt; 和 &lt;strong&gt;Dotfiles&lt;/strong&gt; 去配置实现；三是远程访问；四是美化 &lt;strong&gt;Shell&lt;/strong&gt; 界面，良好的ui也能极大提高工作效率。&lt;/p&gt;</summary>
@@ -302,7 +302,7 @@
     
     <category term="编程.labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-labs/"/>
     
-    <category term="mit 6.null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-labs/mit-6-null/"/>
+    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-labs/MIT-6-Null/"/>
     
     
   </entry>
