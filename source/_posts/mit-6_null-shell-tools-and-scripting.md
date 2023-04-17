@@ -222,7 +222,7 @@ script.py
 1.读`man ls`并一个ls命令来列出所有文件
 
 ```shell
-~/tmp ❯ ls -ahlt --color
+~/tmp$ ls -ahlt --color
 total 24
 drwxr-xr-x+ 116 huangzining  staff   3.6K 12 13 16:19 ..
 drwxr-xr-x    7 huangzining  staff   224B 12 13 16:03 .
@@ -236,7 +236,7 @@ drwxr-xr-x   28 huangzining  staff   896B 12 13 15:46 foo
 2.编写一个marco保存当前目录路径，然后执行polo进入之前保存的路径
 
 ```shell
-~/tmp ❯ cat marco.sh
+~/tmp$ cat marco.sh
 marco() {
     target=~/tmp/test.txt
     if [[ ! (-e $target) ]]; then
@@ -244,7 +244,7 @@ marco() {
     fi
     echo $(pwd) > $target
 }
-~/tmp ❯ cat polo.sh
+~/tmp$ cat polo.sh
 polo() {
     cd $(cat ~/tmp/test.txt)
 }

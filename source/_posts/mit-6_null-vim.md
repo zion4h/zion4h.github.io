@@ -11,60 +11,88 @@ toc: true
 
 ## 入门
 
-`vimtutor` Vim自带了一个教学文档，键入即可进入
+初学者可以用 **Vim** 自带的一个教学文档`vimtutor`，它会让你动手实践来学习。**Vim** 的配置文件是`.vimrc`。
 
 ## Vim哲学
 
-**Vim** 有一套特殊且有趣的设计哲学，由于它是面向程序员设计的软件，而在编程时大部分时间都在读和修改而不是创作（看透了大伙本质上都是灵活CV工程师），因此 **Vim** 将`insert`和`manipulate`两种模式分离。**Vim** 被设计成可编程的，即它的操作命令可以组合使用产生各种奇效。当我们在使用 **Vim**时候应该避免使用鼠标，甚至是方向键，虽然我不是很理解因为我现在还不太能熟练使用 **Vim**。`Vim`的终极目标是：**所思即所得**，让编辑速度和思考速度匹配。
+`Vim`的终极目标是：**所思即所得**，让编辑速度和思考速度匹配。而为了达成这个目标，Vim支持 **模态编程** 和 **命令组合**。
 
 ## 模态编程
 
-**Vim** 认为程序员很少编辑长文本，反而常常将时间花在搜索、阅读和小规模的编辑上，为此 **Vim** 设计了多种运行模式：
+由于我们在编程的时候，很少编辑长文本，反而常常将时间花在搜索、阅读和小规模的编辑上，为此 **Vim** 设计了多种运行模式。在不同的场景下进入不同的运行模式，从而保持心流。
 
 - `Normal`
 - `Insert`
 - `Replace`
-- `Visual`(plain, line, block)
+- `Visual`
 - `Command-line`
 
-Vim默认和初始状态都是`Normal`，我们可以通过`<ESC>`从任何模式切换回Normal。在普通模式下，我们可以按 **i** 进入`Insert`，也可以按 **r** 进入`Replace`，使用 **v** 进入`Visual-plain`，使用**V** 进入`Visual-line`，使用`<^v>`（`Ctrl-V`也写作`^V`）进入`Visual-block`，当然还有最通用的使用 **:** 进入`Command-line`。
+**Vim** 默认和初始状态都是 **Normal**，我们可以通过`<ESC>`从任何模式切换回 **Normal**。在普通模式下，我们可以按 `i` 进入 **Insert**，也可以按 `r` 进入 **Replace**，使用 `v` 进入**Visual-plain**，使用 `v` 进入 **Visual-line**，使用`<Ctrl-V>`进入 **Visual-block**，使用 `:`进入 **Command-line**。当然，我们最常用的还是 **Normal** 和 **Insert** 模式。
 
-## 基本编程
+## 基本命令
 
-`Command-line`基本命令如下：
+### 移动
+
+- Basic movement: `hjkl` (left, down, up, right)
+- Words: `w` (next word), `b` (beginning of word), `e` (end of word)
+- Lines: `0` (beginning of line), `^` (first non-blank character), `$` (end of line)
+- Screen: `H` (top of screen), `M` (middle of screen), `L` (bottom of screen)
+- Scroll: `<Ctrl u>` (page up), `<Ctrl d>` (page down)
+- File: `gg` (beginning of file), `G` (end of file)
+- Line numbers: `number G` (number line)
+- Misc: `% (corresponding item)`
+- Find: `f{character}`, `t{character}`, `F{character}`, `T{character}`
+- Search: `/{regex}`, `n` or `N` for navigating matches
+
+### 选取
+
+- `v` 普通选取
+- `V` 按行选取
+- `<Ctrl v>` 按块选取
+
+### 编辑
+
+- `i` 进入 **Insert** 模式
+- `o` 或 `O` 在下一行或上一行插入空白行
+- `d{motion}` 删除 e.g. `dw`删除单词，`d$`删除至行尾，`d0`删除至行头
+- `c{motion}` 修改
+- `x` 删除当前字符，和`dl`等效
+- `s` 修改当前字符，和`cl`等效
+- `u` 撤销 `<Ctrl r>` 返回撤销
+- `y` 复制（**yank** 缩写）
+- `p` 粘贴
+
+### 计数
+
+我们可以将名词或动词同数字组成，从而简化重复操作
+
+- `3w` 向前移动三个单词
+- `5j` 向下移动五行
+- `7dw` 删除七个单词
+
+### 修饰符
+
+我们对于成对的修饰符可以用`a`或`i`去操作其包含的内容：
+
+- `ci(` 修改`()`内的内容
+- `ci[` 修改`[]`内的内容
+- `da'` 删除`''`内的内容以及`''`本身
+
+### Command-line 命令
 
 - `:q` quit
 - `:w` save
 - `:wq` save and quit
-- `:e` {name or file} open file
+- `:e {name of file}` open file for editing
 - `:ls` show open buffers
-- `:help` {topic} open help
+- `:help {topic}` open help
 
-- Basic movement: `hjkl` (left, down, up, right)
-- Words: `w` (next word), b (beginning of word), e (end of word)
-- Lines: `0` (beginning of line), `^` (first non-blank character), `$` (end of line)
-- Screen: `H` (top of screen), `M` (middle of screen), `L` (bottom of screen)
-- Scroll: `<^u>` (up), `<^d>` (down)
-- File: `gg` (beginning of file), `G` (end of file)
-- Line numbers: `:{number}<C-R>` or `number G` (number line)
-- Misc: `% (corresponding item)`
-- Find: `f{character}`, `t{character}`, `F{character}`, `T{character}`
-- Search: `/{regex}`, n / N for navigating matches
+## 高级Vim
 
-我的常用组合键：
+### 查询和替换
 
-- `u` 撤销` <C-R> `取消撤销
-- `dd` 删除行
-- `o` 向下插入行 `O` 向上插入行
+**Vim** 本身有用`:s`提供查询替换功能，但是具体怎么用可以看[vim fandom](https://vim.fandom.com/wiki/Search_and_replace)，这边提供几个使用例子。
 
-`/` 查询：在`normal`下按/即可查询，按 `n` 查找下一个，按 `N` 查找上一个，且支持正则表达式，如果加入`\c`表示大小写不敏感
-
-`:s` 查找并替换，常用方式`:%s/foo/bar/g`可以查看[这里](https://vim.fandom.com/wiki/Search_and_replace#Additional_examples)看具体使用方式。
-
-`:sp` 或者 `:vsp` 切割窗口
-
-## Vim接口
-
-### 移动
-
-## Vim高级技巧
+- `%s/foo/bar/g` 用 **foo** 去全局替换 **bar**
+- `%s/\[.*\](\(.*\))/\1/g` 将 **markdown** 链接替换成普通 **url**
+  
