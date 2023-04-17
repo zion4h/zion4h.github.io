@@ -83,11 +83,11 @@
     <category term="IT.网络" scheme="https://zion4h.github.io/categories/IT/IT-%E7%BD%91%E7%BB%9C/"/>
     
     
-    <category term="网络" scheme="https://zion4h.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
-    
     <category term="http" scheme="https://zion4h.github.io/tags/http/"/>
     
     <category term="dns" scheme="https://zion4h.github.io/tags/dns/"/>
+    
+    <category term="网络" scheme="https://zion4h.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
@@ -287,22 +287,22 @@
   </entry>
   
   <entry>
-    <title>MIT 6.Null 命令行环境部署</title>
+    <title>mit 6.null 命令行环境部署</title>
     <link href="https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/"/>
     <id>https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/</id>
     <published>2022-12-17T04:48:33.000Z</published>
-    <updated>2023-04-13T06:58:27.098Z</updated>
+    <updated>2023-04-17T07:46:29.507Z</updated>
     
     
-    <summary type="html">&lt;p&gt;本文主要介绍如何在&lt;strong&gt;shell&lt;/strong&gt;中运行多个进程，如何停止或暂停进程以及如何让进程在后台运行。之后还会讲解如何配置&lt;strong&gt;dotfile&lt;/strong&gt;以及用&lt;strong&gt;SSH&lt;/strong&gt;处理远程计算机。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;长期使用 &lt;strong&gt;Shell&lt;/strong&gt; 的程序员应该如何通过优化工作流来节约时间呢？我想可以从以下四点出发，一是提高任务并行度，通过 &lt;strong&gt;Job控制&lt;/strong&gt; 和 &lt;strong&gt;TMUX&lt;/strong&gt; 配合；二是简化或优化命令，通过 &lt;strong&gt;Aliase&lt;/strong&gt; 和 &lt;strong&gt;Dotfiles&lt;/strong&gt; 去配置实现；三是远程访问；四是美化 &lt;strong&gt;Shell&lt;/strong&gt; 界面，良好的ui也能极大提高工作效率。&lt;/p&gt;</summary>
     
     
     
     <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
     
-    <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
+    <category term="编程.labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-labs/"/>
     
-    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/MIT-6-Null/"/>
+    <category term="mit 6.null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-labs/mit-6-null/"/>
     
     
   </entry>
@@ -312,7 +312,7 @@
     <link href="https://zion4h.github.io/2022/12/16/mit-6_null-vim/"/>
     <id>https://zion4h.github.io/2022/12/16/mit-6_null-vim/</id>
     <published>2022-12-16T07:36:26.000Z</published>
-    <updated>2023-04-13T16:35:26.987Z</updated>
+    <updated>2023-04-16T10:15:28.599Z</updated>
     
     
     <summary type="html">&lt;p&gt;据&lt;a href=&quot;https://survey.stackoverflow.co/2022/#integrated-development-environment&quot;&gt;Stack Overflow&lt;/a&gt;2022年统计，&lt;a href=&quot;https://code.visualstudio.com/&quot;&gt;Visual Studio Code&lt;/a&gt;是全平台最流行的编辑器，而&lt;a href=&quot;https://www.vim.org/&quot;&gt;Vim&lt;/a&gt;则是最流行的命令行文本编辑器。&lt;strong&gt;Vim&lt;/strong&gt; 源于1976年的 &lt;strong&gt;Vi编辑器&lt;/strong&gt;，许多工具都支持 &lt;strong&gt;Vim&lt;/strong&gt; 仿真模式（比如 &lt;strong&gt;Visual Studio Code&lt;/strong&gt;），如果点进 &lt;strong&gt;Vim&lt;/strong&gt; 官网，你会看到一个巨古老的界面，硬核气息可谓是扑面而来。&lt;/p&gt;</summary>
@@ -337,7 +337,7 @@
     <link href="https://zion4h.github.io/2022/12/12/mit-6_null-shell-tools-and-scripting/"/>
     <id>https://zion4h.github.io/2022/12/12/mit-6_null-shell-tools-and-scripting/</id>
     <published>2022-12-12T14:21:35.000Z</published>
-    <updated>2023-04-12T10:38:28.825Z</updated>
+    <updated>2023-04-16T10:16:09.694Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文主要叙述了如何以脚本方式去使用 &lt;strong&gt;bash&lt;/strong&gt;，并介绍了大量常用的 &lt;strong&gt;Shell工具&lt;/strong&gt;。很多工具并非系统自带，需要手动下载甚至手动配置，如果是 &lt;strong&gt;Mac OS&lt;/strong&gt; 的话，使用&lt;code&gt;brew&lt;/code&gt;一键安装即可。&lt;/p&gt;</summary>
