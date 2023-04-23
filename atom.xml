@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-04-10T11:28:01.262Z</updated>
+  <updated>2023-04-23T07:54:38.489Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -17,14 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>MIT 6.NULL 版本控制 (Git)</title>
+    <link href="https://zion4h.github.io/2023/04/18/mit-6_null-git/"/>
+    <id>https://zion4h.github.io/2023/04/18/mit-6_null-git/</id>
+    <published>2023-04-18T06:20:22.000Z</published>
+    <updated>2023-04-23T07:54:38.489Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;em&gt;Version Control Systems&lt;/em&gt; (VCSs) 版本控制系统&lt;/strong&gt; 是专门用来跟踪源码变动的工具。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;VCSs&lt;/strong&gt; 会用快照将文件夹和它里面的内容变化记录下来，每一份快照都完整包含了那一时刻文件夹及其子文件和子文件夹的状态，以及快照创建人信息和快照捎带信息。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
+    
+    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/MIT-6-Null/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Java 扫盲（二）集合</title>
     <link href="https://zion4h.github.io/2023/04/07/java-basic-intro-collection/"/>
     <id>https://zion4h.github.io/2023/04/07/java-basic-intro-collection/</id>
     <published>2023-04-06T16:08:42.000Z</published>
-    <updated>2023-04-10T11:28:01.262Z</updated>
+    <updated>2023-04-18T06:31:42.970Z</updated>
     
     
-    <summary type="html">&lt;p&gt;【CONTINUED】介绍Java集合相关，如何设计，为什么这样设计？主要从存储和速度两个方面考虑。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;【TODO】介绍Java集合相关，如何设计，为什么这样设计？主要从存储和速度两个方面考虑。&lt;/p&gt;</summary>
     
     
     
@@ -138,7 +160,7 @@
     <link href="https://zion4h.github.io/2023/03/31/mysql-intro/"/>
     <id>https://zion4h.github.io/2023/03/31/mysql-intro/</id>
     <published>2023-03-31T14:59:20.000Z</published>
-    <updated>2023-04-06T16:26:41.836Z</updated>
+    <updated>2023-04-18T06:24:41.479Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;em&gt;&lt;strong&gt;MySQL&lt;/strong&gt;&lt;/em&gt;是一个&lt;em&gt;GPL开源&lt;/em&gt;的关系数据库管理系统(&lt;strong&gt;DBMS&lt;/strong&gt;)，根据&lt;a href=&quot;https://db-engines.com/en/ranking&quot;&gt;DB-Engines&lt;/a&gt;，截止2023年它的流行程度已仅次于&lt;em&gt;&lt;strong&gt;Oracle&lt;/strong&gt;&lt;/em&gt;。其实有很多其他比MySQL好用的DBMS，但为什么它能如此受欢迎呢，个人认为主要有三点：&lt;strong&gt;开源免费、简单易用、知名度高&lt;/strong&gt;。&lt;/p&gt;</summary>
@@ -287,11 +309,11 @@
   </entry>
   
   <entry>
-    <title>mit 6.null 命令行环境部署</title>
+    <title>MIT 6.Null 命令行环境部署</title>
     <link href="https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/"/>
     <id>https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/</id>
     <published>2022-12-17T04:48:33.000Z</published>
-    <updated>2023-04-17T07:58:32.659Z</updated>
+    <updated>2023-04-17T16:28:00.741Z</updated>
     
     
     <summary type="html">&lt;p&gt;长期使用 &lt;strong&gt;Shell&lt;/strong&gt; 的程序员应该如何通过优化工作流来节约时间呢？我想可以从以下四点出发，一是提高任务并行度，通过 &lt;strong&gt;Job控制&lt;/strong&gt; 和 &lt;strong&gt;TMUX&lt;/strong&gt; 配合；二是简化或优化命令，通过 &lt;strong&gt;Aliase&lt;/strong&gt; 和 &lt;strong&gt;Dotfiles&lt;/strong&gt; 去配置实现；三是远程访问；四是美化 &lt;strong&gt;Shell&lt;/strong&gt; 界面，良好的ui也能极大提高工作效率。&lt;/p&gt;</summary>
@@ -360,10 +382,10 @@
     <link href="https://zion4h.github.io/2022/12/12/mit-6_null-shell/"/>
     <id>https://zion4h.github.io/2022/12/12/mit-6_null-shell/</id>
     <published>2022-12-12T05:22:58.000Z</published>
-    <updated>2023-04-12T11:41:13.006Z</updated>
+    <updated>2023-04-18T06:41:27.067Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://missing.csail.mit.edu/&quot;&gt;6.Null&lt;/a&gt;是 &lt;strong&gt;MIT&lt;/strong&gt; 专为介绍常用计算机工具所开设的一门课程。我在过去的工作和学习过程中可能已经接触过 &lt;strong&gt;git&lt;/strong&gt;、&lt;strong&gt;vim&lt;/strong&gt; 等工具，也会使用一些简单的命令行指令比如&lt;code&gt;cd&lt;/code&gt;、&lt;code&gt;cp&lt;/code&gt;、&lt;code&gt;mv&lt;/code&gt;等，但远远谈不上熟练。我仍然记得当我第一次怀着热情学习 &lt;strong&gt;Linux&lt;/strong&gt; 时，首先上知乎，在大神们的指路下捧起了 &lt;strong&gt;鸟叔的Linux私房菜&lt;/strong&gt; 这本书。结果我翻了不到两三页就开始犯困，学习热情消退地很快，整个人就像一个正通过新华字典学语文的洋人。更难以接受的是，网友们评价这本书学起来比较轻松，真的很难想象上古程序员们是度过了怎样枯燥的学习生涯。总而言之，这门课的定位就是一名合格的计算机领路人，我们不用再对着手册慢慢啃，或者干脆永远像新手一样用时谷歌，对着博客里的命令行代码一通照搬生抄，对于 &lt;strong&gt;shell指令&lt;/strong&gt; 的概念也仅仅停留在这一长串命令是用来干这个或那个的阶段。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://missing.csail.mit.edu/&quot;&gt;6.Null&lt;/a&gt;是 &lt;strong&gt;MIT&lt;/strong&gt; 专为介绍常用计算机工具所开设的一门课程。我在过去的工作和学习过程中可能已经接触过 &lt;strong&gt;git&lt;/strong&gt;、&lt;strong&gt;vim&lt;/strong&gt; 等工具，也会使用一些简单的命令行指令比如&lt;code&gt;cd&lt;/code&gt;、&lt;code&gt;cp&lt;/code&gt;、&lt;code&gt;mv&lt;/code&gt;等，但远远谈不上熟练。&lt;/p&gt;</summary>
     
     
     
@@ -427,10 +449,10 @@
     <link href="https://zion4h.github.io/2022/12/06/dp-pack/"/>
     <id>https://zion4h.github.io/2022/12/06/dp-pack/</id>
     <published>2022-12-06T13:29:32.000Z</published>
-    <updated>2023-04-10T11:00:01.449Z</updated>
+    <updated>2023-04-18T06:37:59.009Z</updated>
     
     
-    <summary type="html">&lt;p&gt;背包问题探讨了如何用有限背包去装入尽可能多或者尽可能贵的物品，或者说用有限空间换取最大价值的问题。当然，问题是多样化的，我们需要将问题中涉及到的资源抽象对应到背包的空间和价值两个维度上。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;TODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODO&lt;br&gt;背包问题探讨了如何用有限背包去装入尽可能多或者尽可能贵的物品，或者说用有限空间换取最大价值的问题。当然，问题是多样化的，我们需要将问题中涉及到的资源抽象对应到背包的空间和价值两个维度上。&lt;/p&gt;</summary>
     
     
     
@@ -442,27 +464,6 @@
     <category term="leetcode" scheme="https://zion4h.github.io/tags/leetcode/"/>
     
     <category term="algorithm" scheme="https://zion4h.github.io/tags/algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>6.824-LAB-2A</title>
-    <link href="https://zion4h.github.io/2022/12/03/mit-6_824-lab-2a/"/>
-    <id>https://zion4h.github.io/2022/12/03/mit-6_824-lab-2a/</id>
-    <published>2022-12-03T04:00:00.000Z</published>
-    <updated>2023-04-10T11:56:04.557Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;我们将在Lab2中实现一个&lt;strong&gt;Raft&lt;/strong&gt;系统，&lt;strong&gt;Raft&lt;/strong&gt;本身是一个&lt;strong&gt;分布式一致性算法&lt;/strong&gt;。工欲善其事必先利其器，本实验难度较高，所以我先读&lt;a href=&quot;https://raft.github.io/raft.pdf&quot;&gt;Raft论文&lt;/a&gt;，再看助教写的&lt;a href=&quot;https://thesquareplanet.com/blog/students-guide-to-raft/&quot;&gt;guide&lt;/a&gt;。为了方便理解协议的运作过程，我还去了&lt;a href=&quot;https://raft.github.io/&quot;&gt;Raft官网&lt;/a&gt;，并反复观看&lt;a href=&quot;http://thesecretlivesofdata.com/raft/&quot;&gt;&lt;strong&gt;Raft可视化动画&lt;/strong&gt;&lt;/a&gt;。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="编程.Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/"/>
-    
-    <category term="MIT 6.824" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/MIT-6-824/"/>
-    
     
   </entry>
   
