@@ -7,7 +7,7 @@ categories: [编程, 编程.Java, 编程.Java.扫盲]
 tags: [java, intro]
 toc: true
 ---
-【CONTINUED】介绍Java集合相关，如何设计，为什么这样设计？主要从存储和速度两个方面考虑。
+【TODO】介绍Java集合相关，如何设计，为什么这样设计？主要从存储和速度两个方面考虑。
 <!-- more -->
 
 Java 1.2版本后通过java.util.Collection和java.util.Map解决了两个问题：统一管理容器对象，而不用像以前那样各种API满天飞，最直观的感受是程序员在算法中用起来很顺手；容易拓展，我们可以很方便地构建一个类似的自定义数据结构。

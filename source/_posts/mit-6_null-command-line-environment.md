@@ -1,5 +1,5 @@
 ---
-title: mit 6.null 命令行环境部署
+title: MIT 6.Null 命令行环境部署
 date: 2022-12-17 12:48:33
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img001.jpg
 categories: [编程, 编程.Labs, MIT 6.Null]
@@ -8,9 +8,7 @@ toc: true
 长期使用 **Shell** 的程序员应该如何通过优化工作流来节约时间呢？我想可以从以下四点出发，一是提高任务并行度，通过 **Job控制** 和 **TMUX** 配合；二是简化或优化命令，通过 **Aliase** 和 **Dotfiles** 去配置实现；三是远程访问；四是美化 **Shell** 界面，良好的ui也能极大提高工作效率。
 <!--more-->
 
-todo todo todo todo todo todo todo todo todo todo todo todo todo todo todo todo
-
-## job控制
+## Job控制
 
 当我们需要中断 **Job** 时，通常是因为命令完成时间过长（比如因为网络问题导致`brew update`卡住），通常会按下`<Ctrl c>`。这个组合键本质上是让 **Shell** 向当前进程传递信号`SIGINT`。
 
@@ -35,7 +33,7 @@ while true:
     i += 1
 ```
 
-![kill process](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/killing-a-process.png)
+![kill process](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/Kill-process.png)
 
 当然，一种更优雅直接的方式是向进程传递`SIGTERM`信号，利用[kill](https://www.man7.org/linux/man-pages/man1/kill.1.html)命令向进程发送信号。
 

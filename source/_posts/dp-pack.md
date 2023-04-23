@@ -1,7 +1,7 @@
 ---
 title: 算法 背包DP
 date: 2022-12-06 21:29:32
-cover: /img/cover/img023.jpg
+cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img006.jpg
 categories: 
     - 编程
     - 编程.算法
@@ -10,7 +10,7 @@ tags:
     - algorithm
 toc: true
 ---
-
+TODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODO
 背包问题探讨了如何用有限背包去装入尽可能多或者尽可能贵的物品，或者说用有限空间换取最大价值的问题。当然，问题是多样化的，我们需要将问题中涉及到的资源抽象对应到背包的空间和价值两个维度上。
 <!--more-->
 

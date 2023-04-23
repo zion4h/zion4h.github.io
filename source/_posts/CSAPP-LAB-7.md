@@ -1,7 +1,7 @@
 ---
 title: CSAPP Lab7 Writing a Dynamic Storage Allocator
 date: 2022-06-07 12:00:00
-cover: /img/cover/img268.jpg
+cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img268.jpg
 categories: [编程, 编程.Labs, CMU 15-213]
 toc: true
 ---

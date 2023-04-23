@@ -1,7 +1,7 @@
 ---
 title: MySQL 扫盲
 date: 2023-03-31 22:59:20
-cover: /img/cover/img1003.jpg
+cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1003.jpg
 categories: 
     - IT
     - IT.数据库

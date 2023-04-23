@@ -1,7 +1,7 @@
 ---
 title: CSAPP Lab1 Manipulating Bits
 date: 2022-06-01 12:00:00
-cover: /img/cover/img455.jpg
+cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img455.jpg
 categories: [编程, 编程.Labs, CMU 15-213]
 toc: true
 excerpt: CSAPP的Labs对照CMU的课程15-213...
