@@ -199,3 +199,50 @@ o <-- o <-- o <-- o <---- o
 - [Git from the Bottom Up](https://jwiegley.github.io/git-from-the-bottom-up/) 详细描述Git自底向上实现
 - [How to explain git in simple words?](https://xosh.org/explain-git-in-simple-words/)
 - [Learn Git Branching](https://learngitbranching.js.org/?locale=zh_CN) Git 教学游戏
+
+## 实践
+
+1.添加一个animal.py
+
+```python
+import sys
+
+def default():
+    print('hello')
+
+def main():
+    default()
+
+if __name__ == '__main__':
+    main()
+```
+
+2.加入到暂存区
+
+`git add animal.py`
+
+3.提交
+
+`git commit`
+
+4.查看
+
+![git branch -vv](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/git-branch-vv.png)
+
+5.添加猫猫功能
+
+![add cat feature](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230423163903.png)
+
+6.添加狗狗功能
+
+![add dog feature](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230423164506.png)
+
+7.合并分支
+
+![合并猫狗](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230423165417.png)
+
+![冲突代码](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/0C0uJtMNir.png)
+
+代码冲突解决后记得将冲突文件添加到暂存区，最后键入 `git merge --continue`，解决!
+
+![over](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230423165822.png)
