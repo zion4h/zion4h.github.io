@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-04-25T11:59:23.914Z</updated>
+  <updated>2023-04-26T16:29:14.997Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -17,11 +17,30 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>字体、字标准</title>
+    <link href="https://zion4h.github.io/2023/04/27/font-style/"/>
+    <id>https://zion4h.github.io/2023/04/27/font-style/</id>
+    <published>2023-04-26T16:27:50.000Z</published>
+    <updated>2023-04-26T16:29:14.997Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;我想讲解无衬线字体、衬线字体的发展和历史&amp;amp;&amp;amp;utf-8、ios等各种奇怪编码格式&amp;amp;&amp;amp;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="categories" scheme="https://zion4h.github.io/categories/categories/"/>
+    
+    
+    <category term="tags" scheme="https://zion4h.github.io/tags/tags/"/>
+    
+  </entry>
+  
+  <entry>
     <title>MIT 6.NULL 版本控制 (Git)</title>
     <link href="https://zion4h.github.io/2023/04/18/mit-6_null-git/"/>
     <id>https://zion4h.github.io/2023/04/18/mit-6_null-git/</id>
     <published>2023-04-18T06:20:22.000Z</published>
-    <updated>2023-04-25T11:59:23.914Z</updated>
+    <updated>2023-04-27T16:05:46.557Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;em&gt;Version Control Systems&lt;/em&gt; (VCSs) 版本控制系统&lt;/strong&gt; 是专门用来跟踪源码变动的工具。&lt;/p&gt;
@@ -105,11 +124,11 @@
     <category term="IT.网络" scheme="https://zion4h.github.io/categories/IT/IT-%E7%BD%91%E7%BB%9C/"/>
     
     
-    <category term="网络" scheme="https://zion4h.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
-    
     <category term="http" scheme="https://zion4h.github.io/tags/http/"/>
     
     <category term="dns" scheme="https://zion4h.github.io/tags/dns/"/>
+    
+    <category term="网络" scheme="https://zion4h.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
@@ -206,10 +225,10 @@
     <link href="https://zion4h.github.io/2023/03/27/network-https/"/>
     <id>https://zion4h.github.io/2023/03/27/network-https/</id>
     <published>2023-03-27T14:50:39.000Z</published>
-    <updated>2023-04-10T10:58:54.202Z</updated>
+    <updated>2023-04-27T16:54:30.629Z</updated>
     
     
-    <summary type="html">HTTPS主要解决了HTTP的两个问题，第一是不再明文传输避免传输的内容被偷窥，第二个是提高了通信传输的安全性防止内容被篡改。</summary>
+    <summary type="html">&lt;p&gt;HTTPS 主要解决了 HTTP 的两个问题，第一是不再明文传输避免传输的内容被偷窥，第二个是提高了通信传输的安全性防止内容被篡改。&lt;/p&gt;</summary>
     
     
     
@@ -313,7 +332,7 @@
     <link href="https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/"/>
     <id>https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/</id>
     <published>2022-12-17T04:48:33.000Z</published>
-    <updated>2023-04-17T16:28:00.741Z</updated>
+    <updated>2023-04-27T16:05:47.881Z</updated>
     
     
     <summary type="html">&lt;p&gt;长期使用 &lt;strong&gt;Shell&lt;/strong&gt; 的程序员应该如何通过优化工作流来节约时间呢？我想可以从以下四点出发，一是提高任务并行度，通过 &lt;strong&gt;Job控制&lt;/strong&gt; 和 &lt;strong&gt;TMUX&lt;/strong&gt; 配合；二是简化或优化命令，通过 &lt;strong&gt;Aliase&lt;/strong&gt; 和 &lt;strong&gt;Dotfiles&lt;/strong&gt; 去配置实现；三是远程访问；四是美化 &lt;strong&gt;Shell&lt;/strong&gt; 界面，良好的ui也能极大提高工作效率。&lt;/p&gt;</summary>
@@ -355,14 +374,14 @@
   </entry>
   
   <entry>
-    <title>MIT 6.Null Shell脚本编程和常用工具</title>
+    <title>MIT 6.Null Shell 脚本编程和常用工具</title>
     <link href="https://zion4h.github.io/2022/12/12/mit-6_null-shell-tools-and-scripting/"/>
     <id>https://zion4h.github.io/2022/12/12/mit-6_null-shell-tools-and-scripting/</id>
     <published>2022-12-12T14:21:35.000Z</published>
-    <updated>2023-04-17T07:58:31.630Z</updated>
+    <updated>2023-04-27T16:05:48.785Z</updated>
     
     
-    <summary type="html">&lt;p&gt;本文主要叙述了如何以脚本方式去使用 &lt;strong&gt;bash&lt;/strong&gt;，并介绍了大量常用的 &lt;strong&gt;Shell工具&lt;/strong&gt;。很多工具并非系统自带，需要手动下载甚至手动配置，如果是 &lt;strong&gt;Mac OS&lt;/strong&gt; 的话，使用&lt;code&gt;brew&lt;/code&gt;一键安装即可。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;本文主要叙述了如何以脚本方式去使用 &lt;strong&gt;bash&lt;/strong&gt;，并介绍了大量常用的 &lt;strong&gt;Shell 工具&lt;/strong&gt;。很多工具并非系统自带，需要手动下载甚至手动配置，如果是 &lt;strong&gt;Mac OS&lt;/strong&gt; 的话，使用&lt;code&gt;brew&lt;/code&gt;一键安装即可。&lt;/p&gt;</summary>
     
     
     
@@ -441,29 +460,6 @@
     
     <category term="MIT 6.824" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-Labs/MIT-6-824/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>算法 背包DP</title>
-    <link href="https://zion4h.github.io/2022/12/06/dp-pack/"/>
-    <id>https://zion4h.github.io/2022/12/06/dp-pack/</id>
-    <published>2022-12-06T13:29:32.000Z</published>
-    <updated>2023-04-18T06:37:59.009Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;TODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODO&lt;br&gt;背包问题探讨了如何用有限背包去装入尽可能多或者尽可能贵的物品，或者说用有限空间换取最大价值的问题。当然，问题是多样化的，我们需要将问题中涉及到的资源抽象对应到背包的空间和价值两个维度上。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="编程.算法" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="leetcode" scheme="https://zion4h.github.io/tags/leetcode/"/>
-    
-    <category term="algorithm" scheme="https://zion4h.github.io/tags/algorithm/"/>
     
   </entry>
   
