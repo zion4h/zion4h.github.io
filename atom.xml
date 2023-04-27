@@ -40,7 +40,7 @@
     <link href="https://zion4h.github.io/2023/04/18/mit-6_null-git/"/>
     <id>https://zion4h.github.io/2023/04/18/mit-6_null-git/</id>
     <published>2023-04-18T06:20:22.000Z</published>
-    <updated>2023-04-27T16:05:46.557Z</updated>
+    <updated>2023-04-27T17:04:04.328Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;em&gt;Version Control Systems&lt;/em&gt; (VCSs) 版本控制系统&lt;/strong&gt; 是专门用来跟踪源码变动的工具。&lt;/p&gt;
@@ -87,10 +87,10 @@
     <link href="https://zion4h.github.io/2023/04/05/java-basic-intro/"/>
     <id>https://zion4h.github.io/2023/04/05/java-basic-intro/</id>
     <published>2023-04-04T16:14:33.000Z</published>
-    <updated>2023-04-10T11:27:53.929Z</updated>
+    <updated>2023-04-27T17:00:11.310Z</updated>
     
     
-    <summary type="html">&lt;p&gt;根据&lt;strong&gt;TIOBE&lt;/strong&gt;，Java直到2023年依然是主流编程语言。在Java 8以前掌握这门语言是一件比较简单的事情，但在8之后学习曲线开始变陡，即使经过多次减负学习成本也在慢慢增加，尤其需要耗费在学习各种框架的原理和应用之上。&lt;em&gt;Java扫盲系列&lt;/em&gt;不会像官方Doc一样事无巨细地对语法絮絮叨叨不停，而是会按我个人喜好将其拆解分析，着重于&lt;strong&gt;方法论&lt;/strong&gt;上。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;根据 &lt;strong&gt;TIOBE&lt;/strong&gt;，Java 直到 2023 年依然是主流编程语言。在 Java 8 以前掌握这门语言是一件比较简单的事情，但在 8 之后学习曲线开始变陡，即使经过多次减负学习成本也在慢慢增加，尤其需要耗费在学习各种框架的原理和应用之上。&lt;em&gt;Java 扫盲系列&lt;/em&gt;不会像官方 Doc 一样事无巨细地对语法絮絮叨叨不停，而是会按我个人喜好将其拆解分析，着重于&lt;strong&gt;方法论&lt;/strong&gt;上。&lt;/p&gt;</summary>
     
     
     
@@ -112,10 +112,10 @@
     <link href="https://zion4h.github.io/2023/04/03/network-click-website-go/"/>
     <id>https://zion4h.github.io/2023/04/03/network-click-website-go/</id>
     <published>2023-04-03T11:28:30.000Z</published>
-    <updated>2023-04-04T16:12:27.537Z</updated>
+    <updated>2023-04-27T17:07:29.579Z</updated>
     
     
-    <summary type="html">&lt;p&gt;当我们在浏览器输入&lt;code&gt;https://www.youtbe.com&lt;/code&gt;，并按下&lt;code&gt;Enter&lt;/code&gt;键，便能进入油管慢慢泡视频。在这个过程中，究竟发生了什么？其实简单来说就是一个URL解析、DNS查询、TCP连接、HTTP连接、页面渲染以及断开连接，下面，我将按序详细描述整个过程。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;当我们在浏览器输入&lt;code&gt;https://www.youtbe.com&lt;/code&gt;，并按下 &lt;code&gt;Enter&lt;/code&gt; 键，便能进入油管慢慢泡视频。在这个过程中，究竟发生了什么？其实简单来说就是一个 URL 解析、DNS 查询、TCP 连接、HTTP 连接、页面渲染以及断开连接，下面，我将按序详细描述整个过程。&lt;/p&gt;</summary>
     
     
     
