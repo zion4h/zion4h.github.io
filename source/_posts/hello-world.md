@@ -113,3 +113,5 @@ How to use [ICARUS](https://ppoffice.github.io/hexo-theme-icarus/uncategorized/g
 [布局修改](https://www.alphalxy.com/2019/03/customize-icarus/#%E6%96%87%E7%AB%A0%E9%A1%B5%E9%9D%A2%E4%B8%A4%E6%A0%8F%E5%B8%83%E5%B1%80)
 
 [Candinya](https://github.com/Candinya)/[Kratos-Rebirth](https://github.com/Candinya/Kratos-Rebirth)
+
+[字体修改](https://blakeneko.github.io/2021/07/28/Icarus4%E4%B8%BB%E9%A2%98%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%B0%E5%BD%95/)
