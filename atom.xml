@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-04-26T16:29:14.997Z</updated>
+  <updated>2023-04-28T16:30:34.386Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -21,10 +21,10 @@
     <link href="https://zion4h.github.io/2023/04/27/font-style/"/>
     <id>https://zion4h.github.io/2023/04/27/font-style/</id>
     <published>2023-04-26T16:27:50.000Z</published>
-    <updated>2023-04-26T16:29:14.997Z</updated>
+    <updated>2023-04-28T16:30:34.386Z</updated>
     
     
-    <summary type="html">&lt;p&gt;我想讲解无衬线字体、衬线字体的发展和历史&amp;amp;&amp;amp;utf-8、ios等各种奇怪编码格式&amp;amp;&amp;amp;&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;我想讲解无衬线字体、衬线字体的发展和历史&amp;amp;&amp;amp;utf-8、ios等各种奇怪编码格式&amp;amp;&amp;amp;我喜欢的字体搭配方式&lt;/p&gt;</summary>
     
     
     
@@ -62,10 +62,10 @@
     <link href="https://zion4h.github.io/2023/04/07/java-basic-intro-collection/"/>
     <id>https://zion4h.github.io/2023/04/07/java-basic-intro-collection/</id>
     <published>2023-04-06T16:08:42.000Z</published>
-    <updated>2023-04-18T06:31:42.970Z</updated>
+    <updated>2023-04-29T06:55:14.388Z</updated>
     
     
-    <summary type="html">&lt;p&gt;【TODO】介绍Java集合相关，如何设计，为什么这样设计？主要从存储和速度两个方面考虑。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;介绍 Java 集合相关，如何设计，为什么这样设计？主要从存储和速度两个方面考虑。&lt;/p&gt;</summary>
     
     
     
@@ -112,7 +112,7 @@
     <link href="https://zion4h.github.io/2023/04/03/network-click-website-go/"/>
     <id>https://zion4h.github.io/2023/04/03/network-click-website-go/</id>
     <published>2023-04-03T11:28:30.000Z</published>
-    <updated>2023-04-27T17:07:29.579Z</updated>
+    <updated>2023-04-28T17:11:43.349Z</updated>
     
     
     <summary type="html">&lt;p&gt;当我们在浏览器输入&lt;code&gt;https://www.youtbe.com&lt;/code&gt;，并按下 &lt;code&gt;Enter&lt;/code&gt; 键，便能进入油管慢慢泡视频。在这个过程中，究竟发生了什么？其实简单来说就是一个 URL 解析、DNS 查询、TCP 连接、HTTP 连接、页面渲染以及断开连接，下面，我将按序详细描述整个过程。&lt;/p&gt;</summary>
@@ -133,11 +133,11 @@
   </entry>
   
   <entry>
-    <title>2023年3月</title>
+    <title>2023 年 3 月</title>
     <link href="https://zion4h.github.io/2023/04/03/life-diary-23-3/"/>
     <id>https://zion4h.github.io/2023/04/03/life-diary-23-3/</id>
     <published>2023-04-03T10:06:53.000Z</published>
-    <updated>2023-04-06T17:07:01.470Z</updated>
+    <updated>2023-04-28T16:44:14.772Z</updated>
     
     
     <summary type="html">&lt;p&gt;我也不知道为什么要写日记，可能害怕多年后的某一天，一切尘埃落定，回顾前半生，才发现我只是一直在跑，忘记了风景和人，自己也成了一道孤零零的鬼魂。童年时乘城乡汽车回老家，车子在烂石头路上磕磕绊绊晃悠个不停，车里各种气味混在一起打开窗也透不过气。一般我上车没到五分钟就头晕想吐，而这样的旅程要持续近两个钟头，就硬生生熬着扛着，直到下车那一刻才敢大口呼吸，一种逃出生天的喜悦涌出心头。&lt;/p&gt;</summary>
@@ -154,20 +154,22 @@
   </entry>
   
   <entry>
-    <title>B树家族</title>
-    <link href="https://zion4h.github.io/2023/04/01/data-structure-storage/"/>
-    <id>https://zion4h.github.io/2023/04/01/data-structure-storage/</id>
+    <title>B 树家族</title>
+    <link href="https://zion4h.github.io/2023/04/01/data-structure-btree/"/>
+    <id>https://zion4h.github.io/2023/04/01/data-structure-btree/</id>
     <published>2023-04-01T08:06:46.000Z</published>
-    <updated>2023-04-10T11:01:00.174Z</updated>
+    <updated>2023-04-29T06:23:00.243Z</updated>
     
     
-    <summary type="html">探讨B树族相关的数据结构，比如B树、B+树、红黑树等。</summary>
+    <summary type="html">&lt;p&gt;探讨 B 树族相关的数据结构，比如 &lt;strong&gt;B 树&lt;/strong&gt;、&lt;strong&gt;B+ 树&lt;/strong&gt;、&lt;strong&gt;红黑树&lt;/strong&gt;等。&lt;/p&gt;</summary>
     
     
     
     <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
     
     <category term="编程.算法" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="编程.数据结构" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B-%E7%AE%97%E6%B3%95/%E7%BC%96%E7%A8%8B-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
     
     <category term="BTree" scheme="https://zion4h.github.io/tags/BTree/"/>
@@ -179,10 +181,10 @@
     <link href="https://zion4h.github.io/2023/03/31/mysql-intro/"/>
     <id>https://zion4h.github.io/2023/03/31/mysql-intro/</id>
     <published>2023-03-31T14:59:20.000Z</published>
-    <updated>2023-04-18T06:24:41.479Z</updated>
+    <updated>2023-04-29T07:13:02.781Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;em&gt;&lt;strong&gt;MySQL&lt;/strong&gt;&lt;/em&gt;是一个&lt;em&gt;GPL开源&lt;/em&gt;的关系数据库管理系统(&lt;strong&gt;DBMS&lt;/strong&gt;)，根据&lt;a href=&quot;https://db-engines.com/en/ranking&quot;&gt;DB-Engines&lt;/a&gt;，截止2023年它的流行程度已仅次于&lt;em&gt;&lt;strong&gt;Oracle&lt;/strong&gt;&lt;/em&gt;。其实有很多其他比MySQL好用的DBMS，但为什么它能如此受欢迎呢，个人认为主要有三点：&lt;strong&gt;开源免费、简单易用、知名度高&lt;/strong&gt;。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;MySQL&lt;/strong&gt; 是一个 &lt;strong&gt;GPL 开源&lt;/strong&gt;的 &lt;strong&gt;DBMS&lt;/strong&gt; （关系数据库管理系统），根据 &lt;a href=&quot;https://db-engines.com/en/ranking&quot;&gt;DB-Engines&lt;/a&gt;，截止 2023 年它的流行程度已仅次于 Oracle。其实有很多其他比 MySQL 好用的 DBMS，但为什么它能如此受欢迎呢，个人认为主要有三点：&lt;strong&gt;开源免费&lt;/strong&gt;、&lt;strong&gt;简单易用&lt;/strong&gt;、&lt;strong&gt;知名度高&lt;/strong&gt;。&lt;/p&gt;</summary>
     
     
     
@@ -200,10 +202,10 @@
     <link href="https://zion4h.github.io/2023/03/31/opensource-license-intro/"/>
     <id>https://zion4h.github.io/2023/03/31/opensource-license-intro/</id>
     <published>2023-03-30T16:24:42.000Z</published>
-    <updated>2023-04-04T18:04:47.326Z</updated>
+    <updated>2023-04-28T17:15:52.394Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;strong&gt;开源促进会OSI&lt;/strong&gt;是&lt;strong&gt;开源定义OSD&lt;/strong&gt;的管理者，由Bruce Perens和Eric S. Raymond创立于1998年，我们寻常用的开源协议都需要该组织认可，要求符合&lt;strong&gt;OSD&lt;/strong&gt;定义。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;开源促进会 OSI&lt;/strong&gt; 是&lt;strong&gt;开源定义 OSD&lt;/strong&gt; 的管理者，由 Bruce Perens 和 Eric S. Raymond 创立于 1998 年，我们寻常用的开源协议都需要该组织认可，要求符合 &lt;strong&gt;OSD&lt;/strong&gt; 定义。&lt;/p&gt;</summary>
     
     
     
@@ -225,10 +227,10 @@
     <link href="https://zion4h.github.io/2023/03/27/network-https/"/>
     <id>https://zion4h.github.io/2023/03/27/network-https/</id>
     <published>2023-03-27T14:50:39.000Z</published>
-    <updated>2023-04-27T16:54:30.629Z</updated>
+    <updated>2023-04-29T07:13:53.100Z</updated>
     
     
-    <summary type="html">&lt;p&gt;HTTPS 主要解决了 HTTP 的两个问题，第一是不再明文传输避免传输的内容被偷窥，第二个是提高了通信传输的安全性防止内容被篡改。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;HTTPS&lt;/strong&gt; 主要解决了 &lt;strong&gt;HTTP&lt;/strong&gt; 的两个问题，第一是不再明文传输避免传输的内容被偷窥，第二个是提高了通信传输的安全性防止内容被篡改。&lt;/p&gt;</summary>
     
     
     
@@ -248,10 +250,10 @@
     <link href="https://zion4h.github.io/2023/03/01/redis-intro/"/>
     <id>https://zion4h.github.io/2023/03/01/redis-intro/</id>
     <published>2023-03-01T13:29:32.000Z</published>
-    <updated>2023-04-04T18:18:16.784Z</updated>
+    <updated>2023-04-29T07:14:02.255Z</updated>
     
     
-    <summary type="html">&lt;p&gt;首先，我们要对Redis建立一个最基本的印象，K/V，NoSQL，内存数据库，单线程。另外，Redis还是开源的，基于BSD协议（这个协议允许商用），用ANSI C语言编写而成，能够在大部分POSIX系统上运行，当然最常用的就是Linux和OS X系统了。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;首先，我们要对 Redis 建立一个最基本的印象，&lt;strong&gt;K/V&lt;/strong&gt;，&lt;strong&gt;NoSQL&lt;/strong&gt;，&lt;strong&gt;内存数据库&lt;/strong&gt;，&lt;strong&gt;单线程&lt;/strong&gt;。另外，Redis 还是&lt;strong&gt;开源&lt;/strong&gt;的，基于 &lt;strong&gt;BSD 协议&lt;/strong&gt;（这个协议允许商用），用 &lt;strong&gt;ANSI C&lt;/strong&gt; 语言编写而成，能够在大部分 &lt;strong&gt;POSIX 系统&lt;/strong&gt;上运行，当然最常用的就是 Linux 和 OS X 系统了。&lt;/p&gt;</summary>
     
     
     
@@ -265,11 +267,11 @@
   </entry>
   
   <entry>
-    <title>2023年2月</title>
+    <title>2023 年 2 月</title>
     <link href="https://zion4h.github.io/2023/02/27/life-diary-23-2/"/>
     <id>https://zion4h.github.io/2023/02/27/life-diary-23-2/</id>
     <published>2023-02-27T11:30:19.000Z</published>
-    <updated>2023-04-06T17:07:11.187Z</updated>
+    <updated>2023-04-28T16:43:51.924Z</updated>
     
     
     <summary type="html">&lt;p&gt;我现在的目标是挣很多很多钱，不惜一切代价找需求找痛点然后达成交易。而越是想挣大钱，越是要处处小心，不要畏惧打工仔身份，先当好一个合格的打工仔，行内事办漂亮，待人接物妥当。当前的想法是先做个淘宝上的资源二手贩子，再写个软件。&lt;/p&gt;</summary>
@@ -286,11 +288,11 @@
   </entry>
   
   <entry>
-    <title>2023年1月</title>
+    <title>2023 年 1 月</title>
     <link href="https://zion4h.github.io/2023/02/06/life-diary-23-1/"/>
     <id>https://zion4h.github.io/2023/02/06/life-diary-23-1/</id>
     <published>2023-02-05T16:58:38.000Z</published>
-    <updated>2023-04-06T17:07:16.100Z</updated>
+    <updated>2023-04-28T16:43:38.720Z</updated>
     
     
     <summary type="html">&lt;p&gt;文字的张力并不单取决于内容本身，而更多靠着与读者的共鸣。&lt;/p&gt;</summary>
@@ -307,14 +309,14 @@
   </entry>
   
   <entry>
-    <title>2022年12月</title>
+    <title>2022 年 12 月</title>
     <link href="https://zion4h.github.io/2023/01/01/life-diary-22-12/"/>
     <id>https://zion4h.github.io/2023/01/01/life-diary-22-12/</id>
     <published>2023-01-01T11:24:24.000Z</published>
-    <updated>2023-04-06T17:07:20.113Z</updated>
+    <updated>2023-04-28T16:43:24.965Z</updated>
     
     
-    <summary type="html">&lt;p&gt;我现在可以确乎无疑地说和不喜欢的人抱在一起交换口水是最无聊的事情，虽然我的性需求很旺盛，但我宁愿DIY，我没有占有欲了。我对陌生女人的曼妙胴体逐渐免疫，并逐渐学会用一种欣赏的角度去理解和看待，那种源于动物性的单调情欲于我而言实在太过寡淡。我所真正期待的，是那些艺术的、深度的、多文化的情感碰撞。之前的我甚至会有一些收集癖，但现在发现其实没必要。我的灵魂深处告诉我，我不喜欢这些乱七八糟的东西，这个答案无关乎道德，体验和探索后我理解了真正的自我。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;我现在可以确乎无疑地说和不喜欢的人抱在一起交换口水是最无聊的事情，虽然我的性需求很旺盛，但我宁愿 DIY，我没有占有欲了。我对陌生女人的曼妙胴体逐渐免疫，并逐渐学会用一种欣赏的角度去理解和看待，那种源于动物性的单调情欲于我而言实在太过寡淡。我所真正期待的，是那些艺术的、深度的、多文化的情感碰撞。之前的我甚至会有一些收集癖，但现在发现其实没必要。我的灵魂深处告诉我，我不喜欢这些乱七八糟的东西，这个答案无关乎道德，体验和探索后我理解了真正的自我。&lt;/p&gt;</summary>
     
     
     
@@ -424,10 +426,10 @@
     <link href="https://zion4h.github.io/2022/12/11/functional-programming-and-modularity/"/>
     <id>https://zion4h.github.io/2022/12/11/functional-programming-and-modularity/</id>
     <published>2022-12-11T04:00:00.000Z</published>
-    <updated>2023-03-30T05:39:48.716Z</updated>
+    <updated>2023-04-29T06:54:03.117Z</updated>
     
     
-    <summary type="html">&lt;p&gt;本文涉及项目源于&lt;em&gt;&lt;strong&gt;张天戈&lt;/strong&gt;&lt;/em&gt;老师的高级软件开发技术课设，语言使用&lt;strong&gt;Typescript&lt;/strong&gt;，任务是对论文&lt;a href=&quot;https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf&quot;&gt;Why Functional Programming Matters&lt;/a&gt;，中间有反复参考函数式编程的&lt;a href=&quot;https://github.com/shfshanyue/fp-jargon-zh&quot;&gt;术语&lt;/a&gt;和&lt;strong&gt;Typescript&lt;/strong&gt;的&lt;a href=&quot;https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html&quot;&gt;文档&lt;/a&gt;。这篇论文年代久远（据闻是1984年），当时的&lt;em&gt;&lt;strong&gt;John Hughes&lt;/strong&gt;&lt;/em&gt;对软件发展提出了一个前瞻性的观点：编程会越来越复杂，对于代码复用或者说模块化编程的需求会越来越旺盛。恰好&lt;u&gt;函数式编程的两个特性，高阶函数和惰性求值在模块化编程方面优势巨大&lt;/u&gt;，而这也解释了论文标题的来源。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;本文涉及项目源于&lt;strong&gt;张天戈&lt;/strong&gt;老师的高级软件开发技术课设，语言使用 Typescript，任务是对论文 &lt;a href=&quot;https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf&quot;&gt;&lt;em&gt;Why Functional Programming Matters&lt;/em&gt;&lt;/a&gt;，中间有反复参考&lt;strong&gt;函数式编程&lt;/strong&gt;的 &lt;a href=&quot;https://github.com/shfshanyue/fp-jargon-zh&quot;&gt;术语&lt;/a&gt; 和 Typescript 的 &lt;a href=&quot;https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html&quot;&gt;文档&lt;/a&gt;。&lt;/p&gt;</summary>
     
     
     
@@ -447,10 +449,10 @@
     <link href="https://zion4h.github.io/2022/12/08/mit-6_824-lab-2b/"/>
     <id>https://zion4h.github.io/2022/12/08/mit-6_824-lab-2b/</id>
     <published>2022-12-08T02:22:53.000Z</published>
-    <updated>2023-04-10T11:49:54.161Z</updated>
+    <updated>2023-04-28T17:09:47.224Z</updated>
     
     
-    <summary type="html">&lt;h2 id=&quot;流程分析&quot;&gt;&lt;a href=&quot;#流程分析&quot; class=&quot;headerlink&quot; title=&quot;流程分析&quot;&gt;&lt;/a&gt;流程分析&lt;/h2&gt;&lt;p&gt;客户端发送的命令会被&lt;code&gt;leader&lt;/code&gt;包装成一个&lt;strong&gt;entry&lt;/strong&gt;并添加到它的日志中，然后广播&lt;strong&gt;append&lt;/strong&gt;消息让其他服务器复制日志。当&lt;strong&gt;entry&lt;/strong&gt;被&lt;u&gt;&lt;strong&gt;安全复制&lt;/strong&gt;&lt;/u&gt;后，&lt;code&gt;leader&lt;/code&gt;上的复制状态机会应用其内部命令，并返回执行结果给客户端。另外，即使&lt;code&gt;leader&lt;/code&gt;已经答复了客户端，为了满足一致性，也会对那些因为网络、奔溃或运行缓慢等而没成功复制日志的服务器重复发送&lt;strong&gt;append&lt;/strong&gt;消息。服务器底层日志本质是一个&lt;strong&gt;entry&lt;/strong&gt;数组，每个&lt;strong&gt;entry&lt;/strong&gt;包含一条命令和&lt;strong&gt;term&lt;/strong&gt;（指代&lt;strong&gt;entry&lt;/strong&gt;创建时所处的任期或者说接收到客户端命令的&lt;code&gt;leader&lt;/code&gt;的任期）。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;&lt;code&gt;TODO&lt;/code&gt;&lt;br&gt;客户端发送的命令会被&lt;code&gt;leader&lt;/code&gt;包装成一个&lt;strong&gt;entry&lt;/strong&gt;并添加到它的日志中，然后广播&lt;strong&gt;append&lt;/strong&gt;消息让其他服务器复制日志。当&lt;strong&gt;entry&lt;/strong&gt;被&lt;u&gt;&lt;strong&gt;安全复制&lt;/strong&gt;&lt;/u&gt;后，&lt;code&gt;leader&lt;/code&gt;上的复制状态机会应用其内部命令，并返回执行结果给客户端。另外，即使&lt;code&gt;leader&lt;/code&gt;已经答复了客户端，为了满足一致性，也会对那些因为网络、奔溃或运行缓慢等而没成功复制日志的服务器重复发送&lt;strong&gt;append&lt;/strong&gt;消息。服务器底层日志本质是一个&lt;strong&gt;entry&lt;/strong&gt;数组，每个&lt;strong&gt;entry&lt;/strong&gt;包含一条命令和&lt;strong&gt;term&lt;/strong&gt;（指代&lt;strong&gt;entry&lt;/strong&gt;创建时所处的任期或者说接收到客户端命令的&lt;code&gt;leader&lt;/code&gt;的任期）。&lt;/p&gt;</summary>
     
     
     
