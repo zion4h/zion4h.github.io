@@ -1,5 +1,5 @@
 ---
-title: 2021年9月
+title: 2021 年 9 月
 date: 2021-10-06 21:30:54 
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0102.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0102.jpg
@@ -16,46 +16,47 @@ toc: true
 
 “工人读史真的不错，一遍又一遍，时刻提醒着我。”
 
-    工人读史 
-    A Worker Reads History 
-    【德】贝尔托·布莱希特Bertolt Brecht 
-    忒拜七门谁人铸造？Who built the seven gates of Thebes? 
-    帝王名号满载史册。The books are filled with names of kings. 
-    其中几人亲运石料？Was it the kings who hauled the craggy blocks of stone? 
-    巴比伦古城屡屡破败，And Babylon, so many times destroyed. 
-    谁人不厌兴土重建？Who built the city up each time? 
-    利马圣殿金碧辉煌，In which of Lima's houses, That city glittering with gold, 
-    筑者入住几许？lived those who built it? 
-    中国长城修毕之日，In the evening when the Chinese wall was finished 
-    石匠又去向何方？Where did the masons go? 
-    罗马帝国扬威耀武，Imperial Rome is full of arcs of triumph. 
-    又是何人之功？Who reared them up? 
-    凯撒凯旋，谁者败寇？Over whom did the Caesars triumph? 
-    拜占庭歌舞升平，Byzantium lives in song. 
-    几家欢喜几家忧愁？Were all her dwellings palaces? 
-    梦城亚特兰蒂斯，And even in Atlantis of the legend 
-    沉没之夜，将死之人，The night the seas rushed in, the drowning men 
-    仍对苦役恶语相向。still bellowed for their slaves. 
-    亚历山大征服印度，Young Alexander conquered India. 
-    仅凭一人之师？He alone? 
-    凯撒攻下高卢，Caesar beat the Gauls. 
-    岂无厨师随行？Was there not even a cook in his army? 
-    腓力二世海战灰飞烟灭，Phillip of Spain wept as his fleet was sunk and destroyed. 
-    几人泪眼相望？Were there no other tears? 
-    腓特烈大帝七年胜战，Frederick the Greek triumphed in the Seven Years War. 
-    麾下将士几何？Who triumphed with him? 
-    凯歌数不尽，Each page a victory 
-    庆功者何人？At whose expense the victory ball? 
-    十年一豪杰，Every ten years a great man, 
-    谁人独风骚？Who paid the piper? 
-    太多的史例，So many particulars. 
-    太多的问题。So many questions.
+>**工人读史**
+>**A Worker Reads History**
+>【德】贝尔托·布莱希特 Bertolt Brecht
+>
+>忒拜七门谁人铸造？Who built the seven gates of Thebes?
+>帝王名号满载史册。The books are filled with names of kings.
+>其中几人亲运石料？Was it the kings who hauled the craggy blocks of stone?
+>巴比伦古城屡屡破败，And Babylon, so many times destroyed.
+>谁人不厌兴土重建？Who built the city up each time?
+>利马圣殿金碧辉煌，In which of Lima's houses, That city glittering with gold,
+>筑者入住几许？lived those who built it?
+>中国长城修毕之日，In the evening when the Chinese wall was finished
+>石匠又去向何方？Where did the masons go?
+>罗马帝国扬威耀武，Imperial Rome is full of arcs of triumph.
+>又是何人之功？Who reared them up?
+>凯撒凯旋，谁者败寇？Over whom did the Caesars triumph?
+>拜占庭歌舞升平，Byzantium lives in song.
+>几家欢喜几家忧愁？Were all her dwellings palaces?
+>梦城亚特兰蒂斯，And even in Atlantis of the legend
+>沉没之夜，将死之人，The night the seas rushed in, the drowning men
+>仍对苦役恶语相向。still bellowed for their slaves.
+>亚历山大征服印度，Young Alexander conquered India.
+>仅凭一人之师？He alone?
+>凯撒攻下高卢，Caesar beat the Gauls.
+>岂无厨师随行？Was there not even a cook in his army?
+>腓力二世海战灰飞烟灭，Phillip of Spain wept as his fleet was sunk and destroyed.
+>几人泪眼相望？Were there no other tears?
+>腓特烈大帝七年胜战，Frederick the Greek triumphed in the Seven Years War.
+>麾下将士几何？Who triumphed with him?
+>凯歌数不尽，Each page a victory
+>庆功者何人？At whose expense the victory ball?
+>十年一豪杰，Every ten years a great man,
+>谁人独风骚？Who paid the piper?
+>太多的史例，So many particulars.
+>太多的问题。So many questions.
 
 “旦夕真的不够好用，很想自己做一款更好的。”
 
-“浴室里的喷头调整到与龙头夹角10度左右温度刚刚好。”
+“浴室里的喷头调整到与龙头夹角 10 度左右温度刚刚好。”
 
-“9月22日，依然不知道应该表现出一个什么样的姿态，暂时是孜孜求学的努力上进好青年。”
+“9 月 22 日，依然不知道应该表现出一个什么样的姿态，暂时是孜孜求学的努力上进好青年。”
 
 “人的善恶观就像神经网络跑过的一样，刚出生时好坏不分，每个人的训练集不同。”
 
@@ -73,13 +74,13 @@ toc: true
 
 “我所以为的并不一定真实，耳听为虚。”
 
-“上次英语老师说到kant的定言令式以及利己主义，我觉得这种东西要看大环境的，大环境好，我肯定愿意当好人，大环境不好，我也不喜欢被人拿枪顶着，毕竟我也不是棒槌转世。”
+“上次英语老师说到 kant 的定言令式以及利己主义，我觉得这种东西要看大环境的，大环境好，我肯定愿意当好人，大环境不好，我也不喜欢被人拿枪顶着，毕竟我也不是棒槌转世。”
 
 “自信自信，一定要自信，面带微笑，享受这属于自己的人生。”这是这个月我学会的最宝贵的东西，保持自信能够解决生活中绝大多数鸡毛蒜皮的小问题，赶走那些杂乱无章的思绪。首先，深呼吸，微笑，默念“我也太牛逼了。”足够夸张，但足够有效。另外不要学会尴尬这种工具人情绪，尤其在察言观色这一技能的产出率极为低效的情况下，这是下等人学来自保的，你不尴尬，尴尬的就是别人，当你足够优秀时，这种不解风情甚至也能成为一种奇妙的特点。所以想做什么就做什么，不要顾忌，想学习就学习，想锻炼就锻炼。
 
 沿着天桥爬上去有一条白色过道，没有红绿灯，全凭胆子，我选择从桥下绕过。单行道旁的老屋有一排粉色洗浴房，不知道颜色几成。门口的告示牌上写着，上海中学会针对外籍学生收取额外费用，省籍或者国籍并不明确。
 
-市光路直楞楞走四五个路口倒右拐，插进国和路，算是真正从郊区转进闹市，吃喝玩乐的东西多起来，市井气息渐浓，路过一小区“XX二村”，我猜是倒迁房，农民伯伯天降横财羡煞了我。
+市光路直楞楞走四五个路口倒右拐，插进国和路，算是真正从郊区转进闹市，吃喝玩乐的东西多起来，市井气息渐浓，路过一小区“XX 二村”，我猜是倒迁房，农民伯伯天降横财羡煞了我。
 
 上海的风一阵一阵吹，两侧茂密的行道树也跟着舞，落叶婆娑。我觉得上海和成都很像，虽然我听不懂吴语，但还是莫名亲切。其实细下说来倒也不算莫名，无非是普通话总是客套过头平添了生分，所谓敌人的敌人是朋友，总之四川话和吴语在那一刻暂时握手言和。
 
@@ -89,6 +90,6 @@ toc: true
 
 另外，垃圾桶真的少，我手里的包装纸走了三四个路口也没遇到垃圾桶，值得一提的是商场旁边有三个放垃圾桶的位置，我当时满脑子真香谁会知道自己会变成猴子掰苞谷的倒霉蛋呢。
 
-走到马路边上有一家三口在闲聊，又是房子，说什么摇到就是赚到，39平的小户型什么的，路上又被一身廉价西装的售楼小哥硬塞了一张广告，50平150万，懒得看了。总之，上海只要不买房还是挺舒服的，我比较中意的房子基本都是10W+起步。吓死人，我还不如回老家买套大平层，就算是有皇位要传也犯不着花那么多钱买这玩意儿啊。再说，我装修至少50万打底的，谁乐意花一堆钱买个光秃秃的火柴盒然后简单装修一下“凑合”过着呢，人，只能活一辈子。
+走到马路边上有一家三口在闲聊，又是房子，说什么摇到就是赚到，39 平的小户型什么的，路上又被一身廉价西装的售楼小哥硬塞了一张广告，50 平 150 万，懒得看了。总之，上海只要不买房还是挺舒服的，我比较中意的房子基本都是 10W+起步。吓死人，我还不如回老家买套大平层，就算是有皇位要传也犯不着花那么多钱买这玩意儿啊。再说，我装修至少 50 万打底的，谁乐意花一堆钱买个光秃秃的火柴盒然后简单装修一下“凑合”过着呢，人，只能活一辈子。
 
 上海的雨啊，呼呼的来，呼呼的走，浪费我五十大洋，算是给嘴馋这毛病埋单的。

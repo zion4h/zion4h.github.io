@@ -5,10 +5,10 @@ cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img000.jpeg
 categories: [编程, 编程.Labs, MIT 6.824]
 toc: true
 ---
-## 流程分析
-
+`TODO`
 客户端发送的命令会被`leader`包装成一个**entry**并添加到它的日志中，然后广播**append**消息让其他服务器复制日志。当**entry**被<u>**安全复制**</u>后，`leader`上的复制状态机会应用其内部命令，并返回执行结果给客户端。另外，即使`leader`已经答复了客户端，为了满足一致性，也会对那些因为网络、奔溃或运行缓慢等而没成功复制日志的服务器重复发送**append**消息。服务器底层日志本质是一个**entry**数组，每个**entry**包含一条命令和**term**（指代**entry**创建时所处的任期或者说接收到客户端命令的`leader`的任期）。
 <!--more-->
+## 流程分析
 
 ![appendentries-rpc](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/appendentries-rpc.png)
 

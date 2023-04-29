@@ -1,44 +1,44 @@
 ---
-title: 6.824-LAB-2A
+title: MIT 6.824 Lab2 PartA
 date: 2022-12-03 12:00:00
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img259.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img259.jpg
 categories: [编程, 编程.Labs, MIT 6.824]
 toc: true
 ---
-我们将在Lab2中实现一个**Raft**系统，**Raft**本身是一个**分布式一致性算法**。工欲善其事必先利其器，本实验难度较高，所以我先读[Raft论文](https://raft.github.io/raft.pdf)，再看助教写的[guide](https://thesquareplanet.com/blog/students-guide-to-raft/)。为了方便理解协议的运作过程，我还去了[Raft官网](https://raft.github.io)，并反复观看[**Raft可视化动画**](http://thesecretlivesofdata.com/raft/)。
+我们将在 Lab2 中实现一个 Raft 系统，Raft 本身是一个分布式一致性算法。工欲善其事必先利其器，本实验难度较高，所以我先读 [Raft 论文](https://raft.github.io/raft.pdf)，再看助教写的 [guide](https://thesquareplanet.com/blog/students-guide-to-raft/)。为了方便理解协议的运作过程，我还去了 [Raft 官网](https://raft.github.io)，并反复观看 [Raft 可视化动画](http://thesecretlivesofdata.com/raft/)。
 <!--more-->
 
-再次强调，本lab难度较大，因此我在实验中有参考不少资料，并一一列出：
+再次强调，本 lab 难度较大，因此我在实验中有参考不少资料，并一一列出：
 
-1. [【Raft论文】](https://raft.github.io/raft.pdf)⭐⭐⭐
-2. [【助教guide】](https://thesquareplanet.com/blog/students-guide-to-raft/)⭐⭐⭐
-3. [【Raft动画】](http://thesecretlivesofdata.com/raft/)⭐⭐⭐⭐⭐
+1. [【Raft 论文】](https://raft.github.io/raft.pdf)⭐⭐⭐
+2. [【助教 guide】](https://thesquareplanet.com/blog/students-guide-to-raft/)⭐⭐⭐
+3. [【Raft 动画】](http://thesecretlivesofdata.com/raft/)⭐⭐⭐⭐⭐
 4. 课程建议：
-   1. [如何在Raft使用锁](https://pdos.csail.mit.edu/6.824/labs/raft-locking.txt)
-   2. [如何设计Raft数据结构](https://pdos.csail.mit.edu/6.824/labs/raft-structure.txt)
-   3. [如何在Raft中Debug](https://pdos.csail.mit.edu/6.824/labs/guidance.html)
-5. [【设计实现一个科学的Raft日志系统】](https://blog.josejg.com/debugging-pretty/)⭐⭐⭐
-6. [【Raft交互图】](https://pdos.csail.mit.edu/6.824/notes/raft_diagram.pdf)
+   1. [如何在 Raft 使用锁](https://pdos.csail.mit.edu/6.824/labs/raft-locking.txt)
+   2. [如何设计 Raft 数据结构](https://pdos.csail.mit.edu/6.824/labs/raft-structure.txt)
+   3. [如何在 Raft 中 Debug](https://pdos.csail.mit.edu/6.824/labs/guidance.html)
+5. [【设计实现一个科学的 Raft 日志系统】](https://blog.josejg.com/debugging-pretty/)⭐⭐⭐
+6. [【Raft 交互图】](https://pdos.csail.mit.edu/6.824/notes/raft_diagram.pdf)
 
 ## Raft
 
-分布式系统利用共识算法让一组机器构成一个整体，共识算法又需要复制状态机，而复制状态机实现的关键就是复制日志。复制状态机的基本原理如图所示：
+分布式系统利用**共识算法**让一组机器构成一个整体，共识算法又需要**复制状态机**，而复制状态机实现的关键就是**复制日志**。复制状态机的基本原理如图所示：
 
 ![RSM-architecture](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/RSM-architecture.png)
 
-在一个Raft集群中，每个服务器有三种角色，分别是`leader`、`candidate`和`follower`，正常情况下是一个`leader`和多个`follower`。每个`follower`都只会被动接收RPCs，只有`leader`和`candidate`才能主动发送RPCs。
+在一个 **Raft** 集群中，每个服务器有三种角色，分别是 `leader`、`candidate` 和 `follower`，正常情况下是一个 `leader` 和多个 `follower`。每个 `follower` 都只会被动接收 RPCs，只有 `leader` 和 `candidate` 才能主动发送 RPCs。
 
-**Raft**相比于**Paxos**，优势在于算法更简单易懂，而且能够将共识问题拆分成leader选举、日志复制和安全性三个部分。对于客户端而言，它只需提交指令到`leader`即可（联系`follower`的请求也会被转到leader），当前`leader`遇到网络问题或宕机时，系统会从剩余服务器中选出一个合适的新`leader`继续为客户端提供服务。
+Raft 相比于 Paxos，优势在于算法更简单易懂，而且能够将共识问题拆分成**领导选举、日志复制和安全性**三个部分。对于客户端而言，它只需提交指令到 `leader` 即可（联系 `follower` 的请求也会被转到 `leader`），当前 `leader` 遇到网络问题或宕机时，系统会从剩余服务器中选出一个合适的新 `leader` 继续为客户端提供服务。
 
-Raft的逻辑时间是任期**term**，默认从0开始，且Raft的**Election Safety**属性规定了每个term最多只能有一个leader。每个term由一个选举阶段和一个常规操作阶段构成，如图所示。如果`candidate`选举超时后没有当选`leader`则跳过常规操作阶段直接进入下一个term，并再次选举。
+Raft 的逻辑时间是任期 `term`，默认从 0 开始，且 Raft 的 **Election Safety 属性**规定了每个 term 最多只能有一个 `leader`。每个 term 由一个选举阶段和一个常规操作阶段构成，如图所示。如果 `candidate` 选举超时后没有当选 `leader` 则跳过常规操作阶段直接进入下一个 term，并再次选举。
 
 ![term](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/term.png)
 
-另外，每个服务器都会维持一个**currentTerm**表示服务器当前所处的term，并在相互通信时捎上该值，这样当服务器在通信时一旦发现自己的term落后，就会主动更新term，并将角色转换成follower，注意还需要将投票清空。相对应的，如果收到处于落后term的服务器发来的请求，则直接拒绝。
+另外，每个服务器都会维持一个 `currentTerm` 表示服务器当前所处的 term，并在相互通信时捎上该值，这样当服务器在通信时一旦发现自己的 term 落后，就会主动更新 term，并将角色转换成 `follower`，注意还需要将投票清空。相对应的，如果收到处于落后 term 的服务器发来的请求，则直接拒绝。
 
 ```go
-func (rf *Raft) updateTermL(newTerm int) {
+func (rf Raft) updateTermL(newTerm int) {
     Debug(dTimer, "S%d %s, update from T%d to T%d", rf.me, rf.state, rf.currentTerm, newTerm)
 
     rf.currentTerm = newTerm
@@ -51,15 +51,15 @@ func (rf *Raft) updateTermL(newTerm int) {
 
 ## 系统初始化
 
-服务器初始状态都是`follower`，而只要它从`leader`或`candidate`处收到**有效RPCs**就会维持在这种`follower`状态。正常情况下，`leader`会定期向所有`follower`发送心跳消息（心跳检测消息本质上就是一种没有携带日志的特殊append消息），如果follower经过一段时间（该段时间称为***election timeout***）仍未收到，那么它会认为当前系统无`leader`，并**开始选举**。
+服务器初始状态都是 `follower`，而只要它从 `leader` 或 `candidate` 处收到有效 RPCs 就会维持在这种 `follower` 状态。正常情况下，`leader` 会定期向所有 `follower` 发送心跳消息（心跳检测消息本质上就是一种没有携带日志的特殊 append 消息），如果 `follower` 经过一段时间（该段时间称为 election timeout）仍未收到，那么它会认为当前系统无 `leader`，并开始选举。
 
-项目中的**ticker方法**是一个循环自检函数，用来实现上面提到的`leader`的**心跳检测**和`follower`的**超时检测**。后缀带大写L的是我从代码QA课程中学到的，表示该方法从临界区进入，方便放心访问共享变量，过于真香我立马重构了自己之前的代码。
+项目中的 ticker 方法是一个循环自检函数，用来实现上面提到的 `leader` 的心跳检测和 `follower` 的超时检测。后缀带大写 L 的是我从代码 QA 课程中学到的，表示该方法从临界区进入，方便放心访问共享变量，过于真香我立马重构了自己之前的代码。
 
 ```go
-func (rf *Raft) ticker() {
+func (rf Raft) ticker() {
     for rf.killed() == false {
         
-        time.Sleep(time.Millisecond * 30)
+        time.Sleep(time.Millisecond  30)
 
         rf.mu.Lock()
         if rf.state == leader {
@@ -78,24 +78,24 @@ func (rf *Raft) ticker() {
 
 ## 选举
 
-一个`follower`开启选举的流程如下，先**进入新一轮term，转换状态为`candidate`，然后投票给自己，最后并行发送vote请求给集群中的其他服务器**。当一个`candidate`获得主体投票，即超过一半服务器的票数，则判断其赢得选举。赢得选举后，它将**转换状态为leader，并广播心跳**。需要注意的一点是，这里是所有`leader`的起点。
+一个 `follower` 开启选举的流程如下，先进入新一轮 term，转换状态为 `candidate`，然后投票给自己，最后并行发送 vote 请求给集群中的其他服务器。当一个 `candidate` 获得主体投票，即超过一半服务器的票数，则判断其赢得选举。赢得选举后，它将转换状态为 `leader`，并广播心跳。需要注意的一点是，这里是所有 `leader` 的起点。
 
 ![state-transition](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/state-transition.png)
 
-当`candidate`在等待投票结果时，如果收到有效append消息，说明此时系统中已经有一个合法`leader`在运作，它则会转换成`follower`。另外，如果有多个`follower`同时成了`candidate`可能会遇到**投票分裂**这种情况，即每个`candidate`都得不到主体投票最后没法选出`leader`。而等选举超时后，所有`candidate`又同时开启新一轮选举，往复循环。为了避免这种情况，Raft规定***election timeout***从150-300ms随机挑取，而不是一个固定的数字。
+当 `candidate` 在等待投票结果时，如果收到有效 append 消息，说明此时系统中已经有一个合法 `leader` 在运作，它则会转换成 `follower`。另外，如果有多个 `follower` 同时成了 `candidate` 可能会遇到投票分裂这种情况，即每个 `candidate` 都得不到主体投票最后没法选出 `leader`。而等选举超时后，所有 `candidate` 又同时开启新一轮选举，往复循环。为了避免这种情况，Raft 规定 election timeout 从 150-300ms 随机挑取，而不是一个固定的数字。
 
 ```go
-func (rf *Raft) timerRefreshL() {
-    rf.electionTimeout = time.Now().Add(150 * time.Millisecond)
-    rf.electionTimeout = rf.electionTimeout.Add(time.Duration(rand.Int63n(150)) * time.Millisecond)
+func (rf Raft) timerRefreshL() {
+    rf.electionTimeout = time.Now().Add(150  time.Millisecond)
+    rf.electionTimeout = rf.electionTimeout.Add(time.Duration(rand.Int63n(150))  time.Millisecond)
 }
 ```
 
 ## 投票
 
-`follower`在投票时需要遵循**FIFO**原则，另外为了维持安全性或者更确切的说是**Leader Completeness**属性，还需要对哪些服务器能够被选为`leader`添加一些限制，就是`follower`只能投票给日志满足**up-to-date**的`candidate`。具体来说，对比`follower`和`candidate`的日志的最后一个**entry**，如果`candidate`一方的entry的term较小，则up-to-date为false，反之为true；如果term相等则继续比下标，如果`candidate`一方的entry下标较小，则up-to-date为false，大于或等于都为true。
+`follower` 在投票时需要遵循 **FIFO 原则**，另外为了维持安全性或者更确切的说是 `leader` Completeness 属性，还需要对哪些服务器能够被选为 `leader` 添加一些限制，就是 `follower` 只能投票给日志满足 up-to-date 的 `candidate`。具体来说，对比 `follower` 和 `candidate` 的日志的最后一个 entry，如果 `candidate` 一方的 entry 的 term 较小，则 up-to-date 为 false，反之为 true；如果 term 相等则继续比下标，如果 `candidate` 一方的 entry 下标较小，则 up-to-date 为 false，大于或等于都为 true。
 
 一些细节：
 
-1. `candidate`收到vote不会更新时间;
-2. 成为`leader`后要更新**nextIndex**和**matchIndex**。
+1. `candidate` 收到 vote 不会更新时间；
+2. 成为 `leader` 后要更新 nextIndex 和 matchIndex。
