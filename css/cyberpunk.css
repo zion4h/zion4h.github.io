@@ -10837,11 +10837,10 @@ article.article .content h5 {
   font-weight: 700;
 }
 article.article .content pre {
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 14px;
 }
 article.article .content code {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   padding: 0;
   background: transparent;
