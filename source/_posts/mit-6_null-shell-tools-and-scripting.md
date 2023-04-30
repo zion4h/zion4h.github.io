@@ -2,8 +2,10 @@
 title: MIT 6.Null Shell 脚本编程和常用工具
 date: 2022-12-12 22:21:35
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img002.jpg
-categories: [编程, 编程.Labs, MIT 6.Null]
-tag: shell
+categories: [编程, Labs, MIT 6.Null]
+tags: 
+    - shell
+    - shell
 toc: true
 ---
 本文主要叙述了如何以脚本方式去使用 **bash**，并介绍了大量常用的 **Shell 工具**。很多工具并非系统自带，需要手动下载甚至手动配置，如果是 **Mac OS** 的话，使用`brew`一键安装即可。

@@ -3,8 +3,9 @@ title: 2021 年 9 月
 date: 2021-10-06 21:30:54 
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0102.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0102.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 《月季年》记录了我的一些随笔，主要是生活中的一些困惑、感悟和教训，方便日后的我借鉴思考。我这人时而清醒、时而浑噩，这跟白天黑夜无关，毕竟人不是机器总会懈怠爱偷懒，我尤其爱偷懒。所以，我希望靠清醒时的我能做我最无保留的恩师，记录下文字，好教诲那个不知进步的我。

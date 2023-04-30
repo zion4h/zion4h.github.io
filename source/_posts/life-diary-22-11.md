@@ -3,8 +3,9 @@ title: 2022 年 11 月
 date: 2022-11-02 21:45:43 
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0112.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0112.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 早上精神正好时，我慢悠悠地做题，时不时刷会儿短视频，再看看热点新闻，大把精力就浪费在这些无聊的地方。抬手一看表，将将 11 点，下午和晚上还有 12 小时，于是吃饭散步午觉。

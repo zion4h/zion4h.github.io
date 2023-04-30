@@ -2,27 +2,27 @@
 title: CSAPP Lab6 Writing Your Own Unix Shell
 date: 2022-06-06 12:00:00
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img257.jpg
-categories: [编程, 编程.Labs, CMU 15-213]
+categories: [编程, Labs, CMU 15-213]
 toc: true
 ---
 
 ## 准备
 
-除了看[shlab.dvi (cmu.edu)](http://csapp.cs.cmu.edu/3e/shlab.pdf)和[Introduction to Computer Systems 15-213/18-243, spring 2009 (cmu.edu)](https://www.cs.cmu.edu/~213/lectures/15-ecf-signals.pdf)外，这个实验还需要仔细阅读书上第八章异常控制流部分，而书中未补全代码可在[csapp.cs.cmu.edu/3e/ics3/code/src/csapp.c](http://csapp.cs.cmu.edu/3e/ics3/code/src/csapp.c)搜索（比如Kill）。
+除了看 [shlab.dvi (cmu.edu)](http://csapp.cs.cmu.edu/3e/shlab.pdf) 和 [Introduction to Computer Systems 15-213/18-243, spring 2009 (cmu.edu)](https://www.cs.cmu.edu/~213/lectures/15-ecf-signals.pdf) 外，这个实验还需要仔细阅读书上第八章异常控制流部分，而书中未补全代码可在 [csapp.cs.cmu.edu/3e/ics3/code/src/csapp.c](http://csapp.cs.cmu.edu/3e/ics3/code/src/csapp.c) 搜索（比如 Kill）。
 <!--more-->
 
-由于我基本是按照书上介绍内容照葫芦画瓢，实际的个人思考很少，个人认为比较重要的点是对照tshref.out（也可以用make rtestx输出）差异去不断修改。具体来说，我们按照原代码框架顺序编写eval、builtin_cmd、do_bgfg、waitfg和另外3个handler即可。
+由于我基本是按照书上介绍内容照葫芦画瓢，实际的个人思考很少，个人认为比较重要的点是对照 tshref.out（也可以用 make rtestx 输出）差异去不断修改。具体来说，我们按照原代码框架顺序编写 eval、builtin_cmd、do_bgfg、waitfg 和另外 3 个 handler 即可。
 
-另外值得注意的是很多特殊变量不需要我们定义，比如SIGCONT，我的错误示范：
+另外值得注意的是很多特殊变量不需要我们定义，比如 SIGCONT，我的错误示范：
 
 ```c
-/* signal.h中未定义信号 */
-#define SIGCONT 18 /* 用在bg和fg指令 */
+/* signal.h 中未定义信号 */
+#define SIGCONT 18 /* 用在 bg 和 fg 指令 */
 ```
 
 ## eval、builtin_cmd、do_bgfg、waitfg
 
-eval部分代码直接参照8-24，而其中锁的部分参考8.5.4和8-40，lab在Hints中也有提到需要在fork子进程前用sigprocmask锁住SIGCHLD信号，防止子进程提前终止导致父进程添加僵尸进程。当然，这里一开始我是完全没考虑并发冲突之类的。
+eval 部分代码直接参照 8-24，而其中锁的部分参考 8.5.4 和 8-40，lab 在 Hints 中也有提到需要在 fork 子进程前用 sigprocmask 锁住 SIGCHLD 信号，防止子进程提前终止导致父进程添加僵尸进程。当然，这里一开始我是完全没考虑并发冲突之类的。
 
 ```c
 void eval(char *cmdline) {
@@ -51,13 +51,13 @@ void eval(char *cmdline) {
             Execve(argv[0], argv, environ);
         }
 
-        // 添加子任务到jobs
+        // 添加子任务到 jobs
         Sigprocmask(SIG_BLOCK, &mask_all, NULL);
         int state = bg ? BG : FG;
         addjob(jobs, pid, state, cmdline);
         Sigprocmask(SIG_SETMASK, &prev_one, NULL); // 解锁
 
-        // 父进程等待前台job终止
+        // 父进程等待前台 job 终止
         if (!bg) {
             waitfg(pid);
         } else {
@@ -68,7 +68,7 @@ void eval(char *cmdline) {
 }
 ```
 
-然后，编写buildtin_cmd，注意这个方法属于主线程，因此我们用exit(0)可以跳出循环安全退出，当然具体代码参照8-24编写即可。
+然后，编写 buildtin_cmd，注意这个方法属于主线程，因此我们用 exit(0) 可以跳出循环安全退出，当然具体代码参照 8-24 编写即可。
 
 ```c
 int builtin_cmd(char **argv) {
@@ -93,7 +93,7 @@ int builtin_cmd(char **argv) {
 }
 ```
 
-在编写do_bgfg的时候，要注意和参考输出做对比，这里我推荐test15，基本囊括了所有情况：
+在编写 do_bgfg 的时候，要注意和参考输出做对比，这里我推荐 test15，基本囊括了所有情况：
 
 ```c
 void do_bgfg(char **argv) {
@@ -143,7 +143,7 @@ void do_bgfg(char **argv) {
 }
 ```
 
-waitfg我是参考8.5.7，循环阻塞式检测是否还有前台任务。
+waitfg 我是参考 8.5.7，循环阻塞式检测是否还有前台任务。
 
 ```c
 void waitfg(pid_t pid) {
@@ -157,9 +157,9 @@ void waitfg(pid_t pid) {
 
 ## Signal handlers
 
-我们创建的任务会有多种运行场景，收到信号SIGINT强制进程结束（键入ctrl+c也可以发出相同信号），收到SIGSTOP或者SIGTSTP（等效于ctrl+z）而暂停进程，后两者本质差不多，但还是有区别[unix - What is the difference between SIGSTOP and SIGTSTP? - Stack Overflow](https://stackoverflow.com/questions/11886812/what-is-the-difference-between-sigstop-and-sigtstp)。当然我们需要发送的另一个指令SIGCONT可以让暂停进程继续运行，通常和SIGSTOP成对出现。
+我们创建的任务会有多种运行场景，收到信号 SIGINT 强制进程结束（键入 ctrl+c 也可以发出相同信号），收到 SIGSTOP 或者 SIGTSTP（等效于 ctrl+z）而暂停进程，后两者本质差不多，但还是有区别 [unix - What is the difference between SIGSTOP and SIGTSTP? - Stack Overflow](https://stackoverflow.com/questions/11886812/what-is-the-difference-between-sigstop-and-sigtstp)。当然我们需要发送的另一个指令 SIGCONT 可以让暂停进程继续运行，通常和 SIGSTOP 成对出现。
 
-理解了信号的使用后，再借助8.4.3的内容，我们可以用信号去结束、回收、重启我们的子进程：
+理解了信号的使用后，再借助 8.4.3 的内容，我们可以用信号去结束、回收、重启我们的子进程：
 
 ```c
 void sigchld_handler(int sig) {

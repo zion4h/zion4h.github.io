@@ -3,8 +3,9 @@ title: 2022 年 8 月
 date: 2022-09-01 22:42:42
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0109.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0109.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 今天揉鼻子时掉落下一根纯白色的鼻毛，联想起之前天天熬夜导致半夜心悸干呕的痛苦经历，我不得不承认自己身体并不好，但没关系，我会慢慢锻炼身体的。

@@ -3,14 +3,14 @@ title: MySQL 扫盲
 date: 2023-03-31 22:59:20
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1003.jpg
 categories: 
-    - IT
-    - IT.数据库
+    - [IT, 数据库]
 toc: true
 tags: 
     - mysql
 ---
 **MySQL** 是一个 **GPL 开源**的 **DBMS** （关系数据库管理系统），根据 [DB-Engines](https://db-engines.com/en/ranking)，截止 2023 年它的流行程度已仅次于 Oracle。其实有很多其他比 MySQL 好用的 DBMS，但为什么它能如此受欢迎呢，个人认为主要有三点：**开源免费**、**简单易用**、**知名度高**。
 <!--more-->
+**后人竟是我自己**：“写完再看，感觉好枯燥，好丑，逻辑不清晰，语言不练达，你真的懂MySQL吗？？”
 
 - [如何选择开源许可证？](https://zion4h.github.io/2023/03/31/opensource-license-intro/)
 

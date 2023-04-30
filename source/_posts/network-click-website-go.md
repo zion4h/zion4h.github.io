@@ -3,8 +3,12 @@ title: 输入网址按回车发生了什么？
 date: 2023-04-03 19:28:30
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1005.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1005.jpg
-categories: [IT, IT.网络]
-tags: [http, dns, 网络]
+categories: 
+    - [IT, 网络]
+tags: 
+    - 网络
+    - dns
+    - tcp
 toc: true
 ---
 当我们在浏览器输入`https://www.youtbe.com`，并按下 `Enter` 键，便能进入油管慢慢泡视频。在这个过程中，究竟发生了什么？其实简单来说就是一个 URL 解析、DNS 查询、TCP 连接、HTTP 连接、页面渲染以及断开连接，下面，我将按序详细描述整个过程。
@@ -31,7 +35,7 @@ toc: true
 2. 操作系统缓存
 3. 路由缓存
 4. **ISP** 的 **DNS**
-5. 递归解析器，这里会进行递归查询，先询问根域名服务器，再询问**顶级域名服务器。com**，得到`youtube.com`这个域名的 ip 地址
+5. 递归解析器，这里会进行递归查询，先询问根域名服务器，再询问**顶级域名服务器 .com**，得到`youtube.com`这个域名的 ip 地址
 
 ## TCP 三次握手
 

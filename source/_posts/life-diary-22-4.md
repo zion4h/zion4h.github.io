@@ -3,8 +3,9 @@ title: 2022 年 4 月
 date: 2022-04-27 00:03:37 
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0107.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0107.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 整个 3 月、4 月都是在隔离中度过，这两个月我都在“补课”，vue、java se、spring、springboot、微服务、分布式等等。我感觉我像是个调包侠，不停的配置、引用，跟神经网络炼丹没啥区别。我生命最宝贵的两个月，就这样悄悄溜走了，没有悲伤，只剩下迷茫。

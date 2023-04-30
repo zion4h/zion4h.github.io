@@ -3,8 +3,9 @@ title: 2021 年 4 月
 date: 2021-04-07 22:32:54 
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0101.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0101.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 考研结束，上岸 FDU。未来的目标很明确，拼尽全力。

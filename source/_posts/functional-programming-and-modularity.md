@@ -5,11 +5,10 @@ thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img009.jpg
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img009.jpg
 toc: true
 categories: 
-    - 编程
-    - 编程.函数式编程
+    - [编程, 函数式编程]
 tags: 
     - typescript 
-    - functional programming
+    - 函数式编程
 ---
 本文涉及项目源于**张天戈**老师的高级软件开发技术课设，语言使用 Typescript，任务是对论文 [*Why Functional Programming Matters*](https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf)，中间有反复参考**函数式编程**的 [术语](https://github.com/shfshanyue/fp-jargon-zh) 和 Typescript 的 [文档](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html)。
 <!--more-->

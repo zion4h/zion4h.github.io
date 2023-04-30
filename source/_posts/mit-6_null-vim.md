@@ -2,20 +2,23 @@
 title: MIT 6.Null Vim
 date: 2022-12-16 15:36:26
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img003.jpg
-categories: [编程, 编程.Labs, MIT 6.Null]
-tag: [vim, shell]
+categories: [编程, Labs, MIT 6.Null]
+tags: 
+    - vim
+    - shell
 toc: true
 ---
-据[Stack Overflow](https://survey.stackoverflow.co/2022/#integrated-development-environment)2022年统计，[Visual Studio Code](https://code.visualstudio.com)是全平台最流行的编辑器，而[Vim](https://www.vim.org)则是最流行的命令行文本编辑器。**Vim** 源于1976年的 **Vi编辑器**，许多工具都支持 **Vim** 仿真模式（比如 **Visual Studio Code**），如果点进 **Vim** 官网，你会看到一个巨古老的界面，硬核气息可谓是扑面而来。
+据 [Stack Overflow](https://survey.stackoverflow.co/2022/#integrated-development-environment) 2022 年统计，[Visual Studio Code](https://code.visualstudio.com) 是全平台最流行的编辑器，而 [Vim](https://www.vim.org) 则是最流行的命令行文本编辑器。**Vim** 源于 1976 年的 **Vi 编辑器**，许多工具都支持 **Vim** 仿真模式（比如 **Visual Studio Code**），如果点进 **Vim** 官网，你会看到一个巨古老的界面，硬核气息可谓是扑面而来。
 <!--more-->
+**后人竟是我自己**：“写的不够好，vim 哲学没有好好描述，基本命令释义应该用中文，多一点实践场景，那种囊括大部分操作的 demo 展示，以后再修改”
 
 ## 入门
 
-初学者可以用 **Vim** 自带的一个教学文档`vimtutor`，它会让你动手实践来学习。**Vim** 的配置文件是`.vimrc`。
+初学者可以用 **Vim** 自带的一个教学文档 `vimtutor`，它会让你动手实践来学习。**Vim** 的配置文件是 `.vimrc`。
 
-## Vim哲学
+## Vim 哲学
 
-`Vim`的终极目标是：**所思即所得**，让编辑速度和思考速度匹配。而为了达成这个目标，Vim支持 **模态编程** 和 **命令组合**。
+`Vim` 的终极目标是：**所思即所得**，让编辑速度和思考速度匹配。而为了达成这个目标，Vim 支持 **模态编程** 和 **命令组合**。
 
 ## 模态编程
 
@@ -27,7 +30,7 @@ toc: true
 - `Visual`
 - `Command-line`
 
-**Vim** 默认和初始状态都是 **Normal**，我们可以通过`<ESC>`从任何模式切换回 **Normal**。在普通模式下，我们可以按 `i` 进入 **Insert**，也可以按 `r` 进入 **Replace**，使用 `v` 进入**Visual-plain**，使用 `v` 进入 **Visual-line**，使用`<Ctrl-V>`进入 **Visual-block**，使用 `:`进入 **Command-line**。当然，我们最常用的还是 **Normal** 和 **Insert** 模式。
+**Vim** 默认和初始状态都是 **Normal**，我们可以通过 `<ESC>` 从任何模式切换回 **Normal**。在普通模式下，我们可以按 `i` 进入 **Insert**，也可以按 `r` 进入 **Replace**，使用 `v` 进入 **Visual-plain**，使用 `v` 进入 **Visual-line**，使用 `<Ctrl-V>` 进入 **Visual-block**，使用 `:` 进入 **Command-line**。当然，我们最常用的还是 **Normal** 和 **Insert** 模式。
 
 ## 基本命令
 
@@ -87,11 +90,11 @@ toc: true
 - `:ls` show open buffers
 - `:help {topic}` open help
 
-## 高级Vim
+## 高级 Vim
 
 ### 查询和替换
 
-**Vim** 本身有用`:s`提供查询替换功能，但是具体怎么用可以看[vim fandom](https://vim.fandom.com/wiki/Search_and_replace)，这边提供几个使用例子。
+**Vim** 本身有用`:s`提供查询替换功能，但是具体怎么用可以看 [vim fandom](https://vim.fandom.com/wiki/Search_and_replace)，这边提供几个使用例子。
 
 - `%s/foo/bar/g` 用 **foo** 去全局替换 **bar**
 - `%s/\[.*\](\(.*\))/\1/g` 将 **markdown** 链接替换成普通 **url**

@@ -3,8 +3,9 @@ title: 2023 年 3 月
 date:   2023-04-03 18:06:53
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0116.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0116.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 我也不知道为什么要写日记，可能害怕多年后的某一天，一切尘埃落定，回顾前半生，才发现我只是一直在跑，忘记了风景和人，自己也成了一道孤零零的鬼魂。童年时乘城乡汽车回老家，车子在烂石头路上磕磕绊绊晃悠个不停，车里各种气味混在一起打开窗也透不过气。一般我上车没到五分钟就头晕想吐，而这样的旅程要持续近两个钟头，就硬生生熬着扛着，直到下车那一刻才敢大口呼吸，一种逃出生天的喜悦涌出心头。

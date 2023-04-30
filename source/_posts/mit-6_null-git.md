@@ -3,7 +3,10 @@ title: MIT 6.NULL 版本控制 (Git)
 date: 2023-04-18 14:20:22
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img005.webp
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img005.webp
-categories: [编程, 编程.Labs, MIT 6.Null]
+categories: [编程, Labs, MIT 6.Null]
+tags: 
+    - shell
+    - git
 toc: true
 ---
 ***Version Control Systems* (VCSs) 版本控制系统** 是专门用来跟踪源码变动的工具。

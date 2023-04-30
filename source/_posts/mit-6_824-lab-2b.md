@@ -2,7 +2,10 @@
 title: 6-824-LAB-2B
 date: 2022-12-08 10:22:53
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img000.jpeg
-categories: [编程, 编程.Labs, MIT 6.824]
+categories: [编程, Labs, MIT 6.824]
+tags: 
+    - raft
+    - go
 toc: true
 ---
 `TODO`

@@ -3,8 +3,9 @@ title: 一些动漫推荐
 date: 2017-03-15 22:51:06 
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0100.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0100.jpg
-categories: [生活, 生活.点评]
-tags: [动漫]
+categories: [生活, 评论]
+tags:
+    - 动漫
 toc: true
 ---
 这篇文章是我在大一写的，主要目的是给想了解日漫的朋友们推荐一些水平优秀的动漫，顺带也为我的动漫史划上句号，年龄过了，动漫给的已不是我所想的了。

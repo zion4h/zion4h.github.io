@@ -2,13 +2,13 @@
 title: CSAPP Lab7 Writing a Dynamic Storage Allocator
 date: 2022-06-07 12:00:00
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img268.jpg
-categories: [编程, 编程.Labs, CMU 15-213]
+categories: [编程, Labs, CMU 15-213]
 toc: true
 ---
 
 ## 准备
 
-首先，在linux环境下解压，由于在make过程中发现缺少glibc的库，所以还要安装相关包：
+首先，在 linux 环境下解压，由于在 make 过程中发现缺少 glibc 的库，所以还要安装相关包：
 
 ```c
 [root@MiWiFi-R4A-srv malloclab-handout]# tar xvf malloclab-handout.tar
@@ -18,18 +18,18 @@ toc: true
 ```
 <!--more-->
 
-lab缺少trace文件，可自行下载[CSAPP-Lab/initial_labs/08_Malloc Lab/traces at master · Deconx/CSAPP-Lab (github.com)](https://github.com/Deconx/CSAPP-Lab/tree/master/initial_labs/08_Malloc%20Lab/traces)。然后，详读[malloclab.dvi (cmu.edu)](http://csapp.cs.cmu.edu/3e/malloclab.pdf)和书上9.9节。
+lab 缺少 trace 文件，可自行下载 [CSAPP-Lab/initial_labs/08_Malloc Lab/traces at master · Deconx/CSAPP-Lab (github.com)](https://github.com/Deconx/CSAPP-Lab/tree/master/initial_labs/08_Malloc%20Lab/traces)。然后，详读 [malloclab.dvi (cmu.edu)](http://csapp.cs.cmu.edu/3e/malloclab.pdf) 和书上 9.9 节。
 
 ## 思路和过程
 
-众所周知，由于通常是等程序实际运行时，我们才知道数据结构的实际大小，所以需要动态内存来专门维护进程的虚拟内存的。动态内存的分配方式主要有两种：类似于C中malloc包这种显式分配和Java中垃圾收集器这种隐式分配，当然在这个lab中我们主要考虑前者。
+众所周知，由于通常是等程序实际运行时，我们才知道数据结构的实际大小，所以需要动态内存来专门维护进程的虚拟内存的。动态内存的分配方式主要有两种：类似于 C 中 malloc 包这种显式分配和 Java 中垃圾收集器这种隐式分配，当然在这个 lab 中我们主要考虑前者。
 
-为了设计好这个分配器，我们需要阅读和掌握malloc、sbrk、free等函数，这里我主要参考书上介绍内容和[Memory Allocation and C (The GNU C Library)](https://www.gnu.org/software/libc/manual/html_node/Memory-Allocation-and-C.html)。简单来说，malloc返回一个size大小的可用块，sbrk直接扩展收缩堆并返回旧brk（这里可以参考memlib.c），而free则是对指针有要求。
+为了设计好这个分配器，我们需要阅读和掌握 malloc、sbrk、free 等函数，这里我主要参考书上介绍内容和 [Memory Allocation and C (The GNU C Library)](https://www.gnu.org/software/libc/manual/html_node/Memory-Allocation-and-C.html)。简单来说，malloc 返回一个 size 大小的可用块，sbrk 直接扩展收缩堆并返回旧 brk（这里可以参考 memlib.c），而 free 则是对指针有要求。
 
-我们使用的隐式空闲链表中的每个块主要由四个部分组成，头部、有效载荷、填充字段（可选）和尾部，其中头部尾部是knuth提出以便于边界判定从而快速追溯和合并连续空闲块。在采用双字对齐时，块的大小是8的倍数（默认一个字4字节，也就是32bit，双字就是64bit）。因此块头虽然表示块大小，但后3位实际上是无用的（因为有效大小应是8的倍数），所以直接用它来表示附加信息，比如用最后一位表示块是否空闲，在PPT中也有其他用法。
+我们使用的隐式空闲链表中的每个块主要由四个部分组成，头部、有效载荷、填充字段（可选）和尾部，其中头部尾部是 knuth 提出以便于边界判定从而快速追溯和合并连续空闲块。在采用双字对齐时，块的大小是 8 的倍数（默认一个字 4 字节，也就是 32bit，双字就是 64bit）。因此块头虽然表示块大小，但后 3 位实际上是无用的（因为有效大小应是 8 的倍数），所以直接用它来表示附加信息，比如用最后一位表示块是否空闲，在 PPT 中也有其他用法。
 
 ```c
-/* 从一个字中读出块长和分配位，和PACK对应 */
+/* 从一个字中读出块长和分配位，和 PACK 对应 */
 #define GET_SIZE(p)  (GET(p) & ~0x7)
 #define GET_ALLOC(p) (GET(p) & 0x1)
 
@@ -38,11 +38,11 @@ lab缺少trace文件，可自行下载[CSAPP-Lab/initial_labs/08_Malloc Lab/trac
 #define FTRP(bp) ((char *)(bp) + GET_SIZE(HDRP(bp)) - DSIZE)
 ```
 
-当一个块被释放时，就会涉及空闲块合并，可分为4种情况afa、aff、ffa和fff。在编码过程中应注意，块指针指向的是第一个有效载荷字节地址，当然如果有效载荷为空则指向尾部。当堆被初始化时或者当分配函数无法找到一个合适的匹配块时，就会拓展堆。mem_sbrk每次调用都返回一个块，由于bp指向的是结尾块（就是那个0/1块），因此结尾块成了新的头部，并设置为空闲。注意啊，这个sbrk其实只返回了一个双字对齐的内存片段，它一个部分成了新块的载荷和尾部，还有一部分成了新的结尾块。再之后，拓展完新块会遇到最后一个分配块为空闲的情况，所以拓展堆后还需要将二者合并。
+当一个块被释放时，就会涉及空闲块合并，可分为 4 种情况 afa、aff、ffa 和 fff。在编码过程中应注意，块指针指向的是第一个有效载荷字节地址，当然如果有效载荷为空则指向尾部。当堆被初始化时或者当分配函数无法找到一个合适的匹配块时，就会拓展堆。mem_sbrk 每次调用都返回一个块，由于 bp 指向的是结尾块（就是那个 0/1 块），因此结尾块成了新的头部，并设置为空闲。注意啊，这个 sbrk 其实只返回了一个双字对齐的内存片段，它一个部分成了新块的载荷和尾部，还有一部分成了新的结尾块。再之后，拓展完新块会遇到最后一个分配块为空闲的情况，所以拓展堆后还需要将二者合并。
 
-堆在初始化时需要四个字，其中第二个字和第三个字构成起始块（载荷为0），第四个字构成结尾块。之后让头指针就指向起始块，后面我们采用邻近适配法时新指针也指向这个块。
+堆在初始化时需要四个字，其中第二个字和第三个字构成起始块（载荷为 0），第四个字构成结尾块。之后让头指针就指向起始块，后面我们采用邻近适配法时新指针也指向这个块。
 
-测试前，我们需要在config.h中为自己tracefiles文件夹的路径设置TRACEDIR，然后make执行即可：
+测试前，我们需要在 config.h 中为自己 tracefiles 文件夹的路径设置 TRACEDIR，然后 make 执行即可：
 
 ```bash
 [root@localhost malloclab-handout]# make && ./mdriver -V
@@ -173,7 +173,7 @@ Perf index = 42 (util) + 40 (thru) = 82/100
 /* 操作空闲链表的基本定义和宏 */
 #define WSIZE     4 // 字长
 #define DSIZE     8 // 双字长
-#define CHUNKSIZE (1 << 12) // 初始堆默认为4kB，拓展堆也基于此
+#define CHUNKSIZE (1 << 12) // 初始堆默认为 4kB，拓展堆也基于此
 
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 
@@ -183,7 +183,7 @@ Perf index = 42 (util) + 40 (thru) = 82/100
 #define GET(p)      (*(unsigned int *)(p))
 #define PUT(p, val) (*(unsigned int *)(p) = (val))
 
-/* 从一个字中读出块长和分配位，和PACK对应 */
+/* 从一个字中读出块长和分配位，和 PACK 对应 */
 #define GET_SIZE(p)  (GET(p) & ~0x7)
 #define GET_ALLOC(p) (GET(p) & 0x1)
 
@@ -262,7 +262,7 @@ static void *find_fit(size_t asize) {
 }
 
 static void place(void *bp, size_t asize) {
-    // 剩余部分必须要超过DSIZE才切割
+    // 剩余部分必须要超过 DSIZE 才切割
     size_t origin = GET_SIZE(HDRP(bp));
     size_t rest = origin - asize;
     if (rest >= (2*DSIZE)) {
@@ -330,7 +330,7 @@ void *mm_malloc(size_t size) {
     size_t extendsize; // 拓展堆大小（如果没匹配成功）
     char *bp;
 
-    // 第一次申请malloc
+    // 第一次申请 malloc
     if (heap_listp == 0) {
         mm_init();
     }
@@ -406,4 +406,4 @@ void *mm_realloc(void *ptr, size_t size) {
 }
 ```
 
-TODO，参考书和资料只能得到82分左右，但如果我们采用伙伴系统buddy system应该会得到更高的分数吧，时间紧迫，暂时搁置了。
+`TODO`，参考书和资料只能得到 82 分左右，但如果我们采用伙伴系统 buddy system 应该会得到更高的分数吧，时间紧迫，暂时搁置了。

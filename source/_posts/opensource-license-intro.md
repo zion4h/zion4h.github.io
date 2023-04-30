@@ -4,13 +4,10 @@ date: 2023-03-31 00:24:42
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1002.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1002.jpg
 categories: 
-    - 编程
-    - 编程.开源
-    - 编程.证书
+    - [编程, 开源]
 toc: true
 tags: 
-    - osi
-    - osd
+    - 开源
 ---
 **开源促进会 OSI** 是**开源定义 OSD** 的管理者，由 Bruce Perens 和 Eric S. Raymond 创立于 1998 年，我们寻常用的开源协议都需要该组织认可，要求符合 **OSD** 定义。
 <!--more-->
@@ -50,7 +47,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 [Apache 协议](https://en.wikipedia.org/wiki/Apache_License) 是自由软件协议，而由 Mozilla 基金会开发的 [MPL 协议](https://en.wikipedia.org/wiki/Mozilla_Public_License) 则更适用于专有软件。
 
-如果实在感到迷惑，可以看下面阮一峰制作的一图流：
+如果实在感到迷惑，可以看下面**阮一峰**制作的一图流：
 ![Open Source License Choice](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/open-source-license.png)
 
 ## 参考

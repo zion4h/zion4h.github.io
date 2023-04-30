@@ -3,8 +3,9 @@ title: 2023 年 2 月
 date:  2023-02-27 19:30:19
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0115.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0115.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 我现在的目标是挣很多很多钱，不惜一切代价找需求找痛点然后达成交易。而越是想挣大钱，越是要处处小心，不要畏惧打工仔身份，先当好一个合格的打工仔，行内事办漂亮，待人接物妥当。当前的想法是先做个淘宝上的资源二手贩子，再写个软件。

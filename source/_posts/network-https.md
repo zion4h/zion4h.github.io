@@ -3,8 +3,7 @@ title: 计算机网络 HTTPS
 date: 2023-03-27 22:50:39
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1001.jpg
 categories: 
-    - IT
-    - IT.网络
+    - [IT, 网络]
 toc: true
 tags: 
     - 网络

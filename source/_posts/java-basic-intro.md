@@ -3,8 +3,10 @@ title: Java 扫盲（一）基础中的基础
 date: 2023-04-05 00:14:33
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1006.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1006.jpg
-categories: [编程, 编程.Java, 编程.Java.扫盲]
-tags: [java, intro]
+categories: [编程, Java, 扫盲]
+tags:
+    - java
+    - intro
 toc: true
 ---
 根据 **TIOBE**，Java 直到 2023 年依然是主流编程语言。在 Java 8 以前掌握这门语言是一件比较简单的事情，但在 8 之后学习曲线开始变陡，即使经过多次减负学习成本也在慢慢增加，尤其需要耗费在学习各种框架的原理和应用之上。*Java 扫盲系列*不会像官方 Doc 一样事无巨细地对语法絮絮叨叨不停，而是会按我个人喜好将其拆解分析，着重于**方法论**上。

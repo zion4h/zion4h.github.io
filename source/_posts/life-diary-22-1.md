@@ -3,8 +3,9 @@ title: 2022 年 1 月
 date: 2022-02-10 18:47:13 
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0105.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0105.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 这个月很懒散，天天玩游戏，主要是下棋和英雄联盟，但是也没什么负罪感。不过我觉得还是尽量少玩或者不玩比较好，因为我在玩游戏的过程中基本都是惯性思维，临场发挥基本就是找地方躲，这让我很挫败。为了消除这种挫败感，我觉得我至少应该尝试一下那些不怎么需要快速反应的游戏。遥想当年，好吧其实当年我也很菜，我总是幻想总有一天能够“开窍”，从而得心应手地驾驭 MOBA 游戏，但现实总是残酷无情。

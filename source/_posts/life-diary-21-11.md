@@ -3,8 +3,9 @@ title: 2021 年 11 月
 date: 2021-12-02 10:54:06 
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0104.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0104.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 人生有涯而知无涯，以有涯逐无涯，殆已。我知道自己本事不小，但也没那么大，勤勤恳恳做足每天功夫，争取活一日消一日业即可。

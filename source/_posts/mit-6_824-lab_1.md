@@ -3,7 +3,10 @@ title: MIT 6.824 Lab1 构建一个 MapReduce 系统
 date: 2022-12-01 12:00:00
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img264.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img264.jpg
-categories: [编程, 编程.Labs, MIT 6.824]
+categories: [编程, Labs, MIT 6.824]
+tags: 
+    - raft
+    - go
 toc: true
 ---
 遵循 [lab 页](https://pdos.csail.mit.edu/6.824/labs/lab-mr.html) 指导，并在本地部署好项目。我在观摩完 mrsequential 部分的代码后，再结合 [MapReduce 论文](https://static.googleusercontent.com/media/research.google.com/zh-CN//archive/mapreduce-osdi04.pdf)，理清了基本思路。

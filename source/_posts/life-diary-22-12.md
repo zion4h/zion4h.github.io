@@ -3,8 +3,9 @@ title: 2022 年 12 月
 date: 2023-01-01 19:24:24
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0113.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0113.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 我现在可以确乎无疑地说和不喜欢的人抱在一起交换口水是最无聊的事情，虽然我的性需求很旺盛，但我宁愿 DIY，我没有占有欲了。我对陌生女人的曼妙胴体逐渐免疫，并逐渐学会用一种欣赏的角度去理解和看待，那种源于动物性的单调情欲于我而言实在太过寡淡。我所真正期待的，是那些艺术的、深度的、多文化的情感碰撞。之前的我甚至会有一些收集癖，但现在发现其实没必要。我的灵魂深处告诉我，我不喜欢这些乱七八糟的东西，这个答案无关乎道德，体验和探索后我理解了真正的自我。

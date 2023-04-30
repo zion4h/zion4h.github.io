@@ -3,12 +3,11 @@ title: Redis 基础扫盲
 date: 2023-03-01 21:29:32
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1000.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1000.jpg
-categories: 
-    - IT
-    - IT.数据库
+categories: [IT, 数据库]
 toc: true
 tags: 
     - redis
+    - 数据库
 ---
 首先，我们要对 Redis 建立一个最基本的印象，**K/V**，**NoSQL**，**内存数据库**，**单线程**。另外，Redis 还是**开源**的，基于 **BSD 协议**（这个协议允许商用），用 **ANSI C** 语言编写而成，能够在大部分 **POSIX 系统**上运行，当然最常用的就是 Linux 和 OS X 系统了。
 <!--more-->

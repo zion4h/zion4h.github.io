@@ -3,8 +3,9 @@ title: 2023 年 1 月
 date:  2023-02-06 00:58:38
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0114.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0114.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 文字的张力并不单取决于内容本身，而更多靠着与读者的共鸣。

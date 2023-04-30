@@ -3,8 +3,9 @@ title: 2022 年 9 月
 date: 2022-10-03 21:49:53
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0110.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0110.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 前段时间心里说不出的苦闷，由于本身在一个 wlb 工作环境中，大家都是嘻嘻哈哈热热闹闹的，但唯独我因为不善表达导致社交困难。哪怕当个不会说话的螺丝钉也就罢了，至少这六个月当好工具人交差跳槽完事，但上上周组长交的任务真把我整破防了。

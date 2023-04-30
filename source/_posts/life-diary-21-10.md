@@ -3,8 +3,9 @@ title: 2021 年 10 月
 date: 2021-12-02 10:52:39 
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0103.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0103.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 人要获得乐趣。

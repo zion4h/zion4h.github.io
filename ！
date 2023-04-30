@@ -1,0 +1,43 @@
+change font-family to Merriweather, Georgia, 'Noto Sans SC', sans-serif;
+add space during English word by using extension of VS which named
+pangu.
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Changes to be committed:
+#	new file:   source/_posts/data-structure-btree.md
+#	deleted:    source/_posts/data-structure-storage.md
+#	modified:   source/_posts/dp-pack.md
+#	modified:   source/_posts/font-style.md
+#	modified:   source/_posts/functional-programming-and-modularity.md
+#	modified:   source/_posts/hello-world.md
+#	modified:   source/_posts/java-basic-intro-collection.md
+#	modified:   source/_posts/life-comic-recommend.md
+#	modified:   source/_posts/life-diary-21-10.md
+#	modified:   source/_posts/life-diary-21-11.md
+#	modified:   source/_posts/life-diary-21-4.md
+#	modified:   source/_posts/life-diary-21-9.md
+#	modified:   source/_posts/life-diary-22-1.md
+#	modified:   source/_posts/life-diary-22-10.md
+#	modified:   source/_posts/life-diary-22-11.md
+#	modified:   source/_posts/life-diary-22-12.md
+#	modified:   source/_posts/life-diary-22-2.md
+#	modified:   source/_posts/life-diary-22-4.md
+#	modified:   source/_posts/life-diary-22-5.md
+#	modified:   source/_posts/life-diary-22-8.md
+#	modified:   source/_posts/life-diary-22-9.md
+#	modified:   source/_posts/life-diary-23-1.md
+#	modified:   source/_posts/life-diary-23-2.md
+#	modified:   source/_posts/life-diary-23-3.md
+#	deleted:    source/_posts/mit-6_824-lab-1.md
+#	modified:   source/_posts/mit-6_824-lab-2a.md
+#	modified:   source/_posts/mit-6_824-lab-2b.md
+#	new file:   source/_posts/mit-6_824-lab_1.md
+#	modified:   source/_posts/mysql-intro.md
+#	modified:   source/_posts/network-click-website-go.md
+#	modified:   source/_posts/network-https.md
+#	modified:   source/_posts/opensource-license-intro.md
+#	modified:   source/_posts/redis-intro.md
+#	modified:   "source/_posts/\347\256\227\346\263\225.md"
+#

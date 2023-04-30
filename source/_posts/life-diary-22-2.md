@@ -3,8 +3,9 @@ title: 2022 年 2 月
 date: 2022-03-07 09:50:44 
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0106.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img0106.jpg
-categories: [生活, 生活.日记]
-tags: [日记]
+categories: [生活, 日记]
+tags:
+    - 日记
 toc: true
 ---
 关于定下每天看英语文章这个日常的碎碎念：迄今为止，与我成功息息相关的价值观都比较功利，可以预见的是这种思维方式对我的长线发展无疑是有害的。

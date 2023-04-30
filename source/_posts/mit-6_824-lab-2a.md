@@ -3,7 +3,10 @@ title: MIT 6.824 Lab2 PartA
 date: 2022-12-03 12:00:00
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img259.jpg
 thumbnail: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img259.jpg
-categories: [编程, 编程.Labs, MIT 6.824]
+categories: [编程, Labs, MIT 6.824]
+tags: 
+    - raft
+    - go
 toc: true
 ---
 我们将在 Lab2 中实现一个 Raft 系统，Raft 本身是一个分布式一致性算法。工欲善其事必先利其器，本实验难度较高，所以我先读 [Raft 论文](https://raft.github.io/raft.pdf)，再看助教写的 [guide](https://thesquareplanet.com/blog/students-guide-to-raft/)。为了方便理解协议的运作过程，我还去了 [Raft 官网](https://raft.github.io)，并反复观看 [Raft 可视化动画](http://thesecretlivesofdata.com/raft/)。

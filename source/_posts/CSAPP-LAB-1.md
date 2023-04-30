@@ -2,18 +2,14 @@
 title: CSAPP Lab1 Manipulating Bits
 date: 2022-06-01 12:00:00
 cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img455.jpg
-categories: [编程, 编程.Labs, CMU 15-213]
+categories: [编程, Labs, CMU 15-213]
 toc: true
-excerpt: CSAPP的Labs对照CMU的课程15-213...
 ---
-
-CSAPP的Labs对照CMU的课程[15-213](https://www.bilibili.com/video/BV1iW411d7hd/?spm_id_from=333.337.search-card.all.click&vd_source=e36f47f043068554931919060ccd92ef)，由于本科有学习过相关内容，所以有的课我就直接跳过了。
-
+CSAPP 的 Labs 对照 CMU 的课程 [15-213](https://www.bilibili.com/video/BV1iW411d7hd/?spm_id_from=333.337.search-card.all.click&vd_source=e36f47f043068554931919060ccd92ef)，由于本科有学习过相关内容，所以有的课我就直接跳过了。
+<!--more-->
 
 代码链接：[Manipulating Bits](https://github.com/zion4h/csapp/blob/master/datalab-handout/bits.c)
 项目链接：[zion4h/csapp](https://github.com/zion4h/csapp)
-
-
 
 ```c
 /* 
@@ -89,7 +85,6 @@ INTEGER CODING RULES:
   3. Has unpredictable behavior when shifting if the shift amount
      is less than 0 or greater than 31.
 
-
 EXAMPLES OF ACCEPTABLE CODING STYLE:
   /*
    * pow2plus1 - returns 2^x + 1, where 0 <= x <= 31
@@ -126,7 +121,6 @@ You are expressly forbidden to:
      cannot use arrays, structs, or unions.
   6. Use any floating point data types, operations, or constants.
 
-
 NOTES:
   1. Use the dlc (data lab checker) compiler (described in the handout) to 
      check the legality of your solutions.
@@ -151,7 +145,6 @@ NOTES:
  *   2. Use the BDD checker to formally verify that your solutions produce 
  *      the correct answers.
  */
-
 
 #endif
 //1
@@ -254,7 +247,7 @@ int conditional(int x, int y, int z) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
-    // 同号则相减看是否为负值； 异号则x小于0则结果为正
+    // 同号则相减看是否为负值； 异号则 x 小于 0 则结果为正
     int a = ~((x >> 31) ^ (y >> 31));
     return (a & !((y + ~x + 1) >> 31)) | ((!a) & (x >> 31));
 }
@@ -290,7 +283,7 @@ int logicalNeg(int x) {
 int howManyBits(int x) {
     // if x < 0 -> x = x ^ (x >> 31)
     // 有点难以理解
-    // 当x>0取决于第一个1在哪里，当x<0取决于第一个0在哪里
+    // 当 x>0 取决于第一个 1 在哪里，当 x<0 取决于第一个 0 在哪里
 
     x = x ^ (x >> 31);
     int b1 = !!(x >> 16) << 4;
@@ -318,7 +311,7 @@ int howManyBits(int x) {
  *   Rating: 4
  */
 unsigned floatScale2(unsigned uf) {
-    // 首先将指数、底数、符号位从uf拆出来
+    // 首先将指数、底数、符号位从 uf 拆出来
     unsigned flag = uf & (1 << 31);
     unsigned exp = (uf & 0x7f800000) >> 23;
     unsigned base = uf & 0x007fffff;
@@ -357,7 +350,7 @@ int floatFloat2Int(unsigned uf) {
     if (!(flag ^ (base >> 31))) return base;
     // 当前符号为负，原来为正，超出范围
     else if (base >> 31) return inf;
-    // 原来为负，现在为正, 取相反数
+    // 原来为负，现在为正，取相反数
     else return ~base + 1;
 
     return 2;
@@ -379,11 +372,10 @@ int floatFloat2Int(unsigned uf) {
 unsigned floatPower2(int x) {
     unsigned inf = 0x7f800000;
 
-    // 初始为x*2^0->0-127-x
+    // 初始为 x*2^0->0-127-x
     int exp = x + 127;
     if (exp >= 255) return inf;
     if (exp <= 0) return 0;
     return exp << 23;
 }
 ```
-
