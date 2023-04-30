@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-04-30T08:39:55.791Z</updated>
+  <updated>2023-04-30T12:34:00.372Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://zion4h.github.io/2023/04/27/font-style/"/>
     <id>https://zion4h.github.io/2023/04/27/font-style/</id>
     <published>2023-04-26T16:27:50.000Z</published>
-    <updated>2023-04-30T08:39:55.791Z</updated>
+    <updated>2023-04-30T12:34:00.372Z</updated>
     
     
     <summary type="html">&lt;p&gt;当我在配置博客网站时，常常对&lt;strong&gt;字体&lt;/strong&gt;、字号产生选择困难症，而我又想让&lt;strong&gt;中英文混编&lt;/strong&gt;时能够合理搭配，不仅如此我还会在正文中插入&lt;strong&gt;代码&lt;/strong&gt;，这又需要另行考量。因此，我特地去查询了相关资料，去了解&lt;strong&gt;无衬线字体&lt;/strong&gt;、&lt;strong&gt;衬线字体&lt;/strong&gt;的发展历史，顺带看了下各种编码格式，并整理成文。&lt;/p&gt;</summary>
@@ -124,11 +124,11 @@
     <category term="IT.网络" scheme="https://zion4h.github.io/categories/IT/IT-%E7%BD%91%E7%BB%9C/"/>
     
     
-    <category term="网络" scheme="https://zion4h.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
-    
     <category term="http" scheme="https://zion4h.github.io/tags/http/"/>
     
     <category term="dns" scheme="https://zion4h.github.io/tags/dns/"/>
+    
+    <category term="网络" scheme="https://zion4h.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
