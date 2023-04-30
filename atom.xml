@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-04-30T13:21:30.024Z</updated>
+  <updated>2023-04-30T17:53:28.944Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2023 年 4 月</title>
+    <link href="https://zion4h.github.io/2023/05/01/life-diary-23-4/"/>
+    <id>https://zion4h.github.io/2023/05/01/life-diary-23-4/</id>
+    <published>2023-04-30T16:40:53.000Z</published>
+    <updated>2023-04-30T17:53:28.944Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;一流举子二流医，三星四卜五堪舆，唯有相家称第六，七书八画九琴棋。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;给当今社会把把脉，当个“二流医”又何妨。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>如何选择你的字体</title>
@@ -139,27 +163,6 @@
   </entry>
   
   <entry>
-    <title>2023 年 3 月</title>
-    <link href="https://zion4h.github.io/2023/04/03/life-diary-23-3/"/>
-    <id>https://zion4h.github.io/2023/04/03/life-diary-23-3/</id>
-    <published>2023-04-03T10:06:53.000Z</published>
-    <updated>2023-04-30T13:18:26.106Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;我也不知道为什么要写日记，可能害怕多年后的某一天，一切尘埃落定，回顾前半生，才发现我只是一直在跑，忘记了风景和人，自己也成了一道孤零零的鬼魂。童年时乘城乡汽车回老家，车子在烂石头路上磕磕绊绊晃悠个不停，车里各种气味混在一起打开窗也透不过气。一般我上车没到五分钟就头晕想吐，而这样的旅程要持续近两个钟头，就硬生生熬着扛着，直到下车那一刻才敢大口呼吸，一种逃出生天的喜悦涌出心头。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
-    
-    
-    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
     <title>B 树家族</title>
     <link href="https://zion4h.github.io/2023/04/01/data-structure-btree/"/>
     <id>https://zion4h.github.io/2023/04/01/data-structure-btree/</id>
@@ -177,6 +180,27 @@
     
     
     <category term="btree" scheme="https://zion4h.github.io/tags/btree/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2023 年 3 月</title>
+    <link href="https://zion4h.github.io/2023/04/01/life-diary-23-3/"/>
+    <id>https://zion4h.github.io/2023/04/01/life-diary-23-3/</id>
+    <published>2023-03-31T16:40:53.000Z</published>
+    <updated>2023-04-30T16:42:30.589Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;我也不知道为什么要写日记，可能害怕多年后的某一天，一切尘埃落定，回顾前半生，才发现我只是一直在跑，忘记了风景和人，自己也成了一道孤零零的鬼魂。童年时乘城乡汽车回老家，车子在烂石头路上磕磕绊绊晃悠个不停，车里各种气味混在一起打开窗也透不过气。一般我上车没到五分钟就头晕想吐，而这样的旅程要持续近两个钟头，就硬生生熬着扛着，直到下车那一刻才敢大口呼吸，一种逃出生天的喜悦涌出心头。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
@@ -445,31 +469,6 @@
     <category term="typescript" scheme="https://zion4h.github.io/tags/typescript/"/>
     
     <category term="函数式编程" scheme="https://zion4h.github.io/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>6-824-LAB-2B</title>
-    <link href="https://zion4h.github.io/2022/12/08/mit-6_824-lab-2b/"/>
-    <id>https://zion4h.github.io/2022/12/08/mit-6_824-lab-2b/</id>
-    <published>2022-12-08T02:22:53.000Z</published>
-    <updated>2023-04-30T13:18:03.039Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;code&gt;TODO&lt;/code&gt;&lt;br&gt;客户端发送的命令会被&lt;code&gt;leader&lt;/code&gt;包装成一个&lt;strong&gt;entry&lt;/strong&gt;并添加到它的日志中，然后广播&lt;strong&gt;append&lt;/strong&gt;消息让其他服务器复制日志。当&lt;strong&gt;entry&lt;/strong&gt;被&lt;u&gt;&lt;strong&gt;安全复制&lt;/strong&gt;&lt;/u&gt;后，&lt;code&gt;leader&lt;/code&gt;上的复制状态机会应用其内部命令，并返回执行结果给客户端。另外，即使&lt;code&gt;leader&lt;/code&gt;已经答复了客户端，为了满足一致性，也会对那些因为网络、奔溃或运行缓慢等而没成功复制日志的服务器重复发送&lt;strong&gt;append&lt;/strong&gt;消息。服务器底层日志本质是一个&lt;strong&gt;entry&lt;/strong&gt;数组，每个&lt;strong&gt;entry&lt;/strong&gt;包含一条命令和&lt;strong&gt;term&lt;/strong&gt;（指代&lt;strong&gt;entry&lt;/strong&gt;创建时所处的任期或者说接收到客户端命令的&lt;code&gt;leader&lt;/code&gt;的任期）。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/"/>
-    
-    <category term="MIT 6.824" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-824/"/>
-    
-    
-    <category term="raft" scheme="https://zion4h.github.io/tags/raft/"/>
-    
-    <category term="go" scheme="https://zion4h.github.io/tags/go/"/>
     
   </entry>
   
