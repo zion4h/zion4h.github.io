@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-04-30T17:53:28.944Z</updated>
+  <updated>2023-05-02T11:21:33.346Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MIT 6.Null 调试和性能分析</title>
+    <link href="https://zion4h.github.io/2023/05/02/mit-6_null-debugging-and-profiling/"/>
+    <id>https://zion4h.github.io/2023/05/02/mit-6_null-debugging-and-profiling/</id>
+    <published>2023-05-02T06:31:49.000Z</published>
+    <updated>2023-05-02T11:21:33.346Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;“Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.” — Brian Kernighan, &lt;em&gt;Unix for Beginners&lt;/em&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;编程有一条黄金法则，“代码并不会按你所想那样运行，而只会按你所述运行”。写完代码只是编程的第一步，我们更多时间其实花在了 &lt;strong&gt;Debugging（调试）&lt;/strong&gt;和 &lt;strong&gt;Profiling（性能分析）&lt;/strong&gt;上。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/"/>
+    
+    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-Null/"/>
+    
+    
+    <category term="shell" scheme="https://zion4h.github.io/tags/shell/"/>
+    
+    <category term="debug" scheme="https://zion4h.github.io/tags/debug/"/>
+    
+    <category term="profile" scheme="https://zion4h.github.io/tags/profile/"/>
+    
+  </entry>
   
   <entry>
     <title>2023 年 4 月</title>
@@ -230,7 +260,7 @@
     <link href="https://zion4h.github.io/2023/03/31/opensource-license-intro/"/>
     <id>https://zion4h.github.io/2023/03/31/opensource-license-intro/</id>
     <published>2023-03-30T16:24:42.000Z</published>
-    <updated>2023-04-30T13:12:42.346Z</updated>
+    <updated>2023-05-02T06:27:13.983Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;strong&gt;开源促进会 OSI&lt;/strong&gt; 是&lt;strong&gt;开源定义 OSD&lt;/strong&gt; 的管理者，由 Bruce Perens 和 Eric S. Raymond 创立于 1998 年，我们寻常用的开源协议都需要该组织认可，要求符合 &lt;strong&gt;OSD&lt;/strong&gt; 定义。&lt;/p&gt;</summary>
@@ -446,29 +476,6 @@
     
     
     <category term="shell" scheme="https://zion4h.github.io/tags/shell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>函数式编程和模块化</title>
-    <link href="https://zion4h.github.io/2022/12/11/functional-programming-and-modularity/"/>
-    <id>https://zion4h.github.io/2022/12/11/functional-programming-and-modularity/</id>
-    <published>2022-12-11T04:00:00.000Z</published>
-    <updated>2023-04-30T13:21:09.135Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;本文涉及项目源于&lt;strong&gt;张天戈&lt;/strong&gt;老师的高级软件开发技术课设，语言使用 Typescript，任务是对论文 &lt;a href=&quot;https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf&quot;&gt;&lt;em&gt;Why Functional Programming Matters&lt;/em&gt;&lt;/a&gt;，中间有反复参考&lt;strong&gt;函数式编程&lt;/strong&gt;的 &lt;a href=&quot;https://github.com/shfshanyue/fp-jargon-zh&quot;&gt;术语&lt;/a&gt; 和 Typescript 的 &lt;a href=&quot;https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html&quot;&gt;文档&lt;/a&gt;。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="函数式编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
-    
-    
-    <category term="typescript" scheme="https://zion4h.github.io/tags/typescript/"/>
-    
-    <category term="函数式编程" scheme="https://zion4h.github.io/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
