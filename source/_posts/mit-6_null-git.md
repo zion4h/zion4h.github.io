@@ -194,6 +194,26 @@ o <-- o <-- o <-- o <---- o
 - `git bisect`
 - `.gitignore` 指定哪些 **untracked files** 需要忽略
 
+### Fast-Forward Merge
+
+**Fast-Forward Merge（快进式合并）**其实并不需要我们做额外操作，它是 Git 本身内置的。
+
+![快进式合并](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230503163121.png)
+
+### Three-Way Merge
+
+如果在合并时使用 `--no-ff` 参数，Git 就会采用 **Three-Way Merge（三方合并）**。所谓三方合并是同“先 `diff`，再手工决定”的两方合并相区别的，它会根据原始文档内容判断到底该保留谁的，简单来说是舍旧迎新策略。
+
+![三方合并](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230503165154.png)
+
+### Squash Merge
+
+**Squash Merge（压缩式合并）**本身和普通 `merge` 没什么两样，但是它能让整个 log 更加干净。我们正常合并会让新 `commit` 拥有两个父节点，但很多时候我们的分支只是做了一些很细小的修改，如果直接 `merge` 会让整个 log 看着非常乱，而压缩式合并能够解决我们这种需求。当然，它是原理本身不难猜到，就是将分支改动在主干上重放，然后需要手动 `commit`。
+
+![压缩式合并](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230503171038.png)
+
+### Rebase
+
 ## Resources
 
 - [Pro Git](https://git-scm.com/book/en/v2) 很重要的一本书
@@ -249,3 +269,7 @@ if __name__ == '__main__':
 代码冲突解决后记得将冲突文件添加到暂存区，最后键入 `git merge --continue`，解决！
 
 ![over](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230423165822.png)
+
+## 参考
+
+[【1】Git 合并那些事——认识几种 Merge 方法](https://morningspace.github.io/tech/git-merge-stories-1/)

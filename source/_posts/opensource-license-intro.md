@@ -50,6 +50,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 如果实在感到迷惑，可以看下面**阮一峰**制作的一图流：
 ![Open Source License Choice](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/open-source-license.png)
 
+## CC
+
+`TODO`
+
+知识共享署名-相同方式共享 4.0 国际许可协议
+
 ## 参考
 
 [【 1 】阮一峰：如何选择开源许可证？](https://www.ruanyifeng.com/blog/2011/05/how_to_choose_free_software_licenses.html)

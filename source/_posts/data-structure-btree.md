@@ -74,12 +74,14 @@ B 树用在数据库有这样几点优势：
 
 MySQL 的 InnoDB 采用 B+树存储索引，相较于 B 树，由于元素都放到了叶子节点所以树会变矮查询速度变快，另一方面 B+树的叶子节点是有序串联的，因此范围查询起来也比较方便。
 
-### Red–black tree
+### 红黑树 Red–black tree
 
 红黑树是由 Leonidas J. Guibas 和 Robert Sedgewick 在 2-3-4 树上发展而来，增删查改节点的时间都是$O(log n)$。
 
 红黑树保证根和叶子节点都是黑色，红色节点不相邻，且任意路径的黑色节点数相等，这使得最长路径和最短路径只有两倍差。
 
-### Skip list
+### 跳表 Skip list
 
-`TODO`
+[跳表](https://en.wikipedia.org/wiki/Skip_list)是一个概率数据结构，最大亮点是能够以${\mathcal {O}}(\log n)$复杂进行查询和增删。它实现快速查询的原理其实很简单，在维持更少元素的子序列上查找即可，这样就能跳过非目标的元素了。
+
+![跳表添加元素](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/Skip_list_add_element-en.gif)
