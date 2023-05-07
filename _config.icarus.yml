@@ -147,7 +147,7 @@ article:
         # Code highlight themes
         # https://github.com/highlightjs/highlight.js/tree/master/src/styles
         # theme: idea
-        theme: paraiso-light
+        theme: mono-blue
         # Show copy code button
         clipboard: true
         # Default folding status of the code blocks. Can be "", "folded", "unfolded"
