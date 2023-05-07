@@ -52,71 +52,7 @@
 <li>对于新出现的问题，我们的日志中可能已经包含足够多信息去调试，而<strong>不用复现</strong></li>
 </ol>
 <p>这是一个用 Python 代码编写的日志打印程序：</p>
-<pre><code class="hljs python"><span class="hljs-keyword">import</span> logging
-<span class="hljs-keyword">import</span> sys
-
-<span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomFormatter</span>(logging.Formatter):
-    <span class="hljs-string">&quot;&quot;&quot;Logging Formatter to add colors and count warning / errors&quot;&quot;&quot;</span>
-
-    grey = <span class="hljs-string">&quot;\x1b[38;21m&quot;</span>
-    yellow = <span class="hljs-string">&quot;\x1b[33;21m&quot;</span>
-    red = <span class="hljs-string">&quot;\x1b[31;21m&quot;</span>
-    bold_red = <span class="hljs-string">&quot;\x1b[31;1m&quot;</span>
-    reset = <span class="hljs-string">&quot;\x1b[0m&quot;</span>
-    <span class="hljs-built_in">format</span> = <span class="hljs-string">&quot;%(asctime)s - %(name)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)&quot;</span>
-
-    FORMATS = &#123;
-        logging.DEBUG: grey + <span class="hljs-built_in">format</span> + reset,
-        logging.INFO: grey + <span class="hljs-built_in">format</span> + reset,
-        logging.WARNING: yellow + <span class="hljs-built_in">format</span> + reset,
-        logging.ERROR: red + <span class="hljs-built_in">format</span> + reset,
-        logging.CRITICAL: bold_red + <span class="hljs-built_in">format</span> + reset
-    &#125;
-
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">format</span>(<span class="hljs-params">self, record</span>):
-        log_fmt = self.FORMATS.get(record.levelno)
-        formatter = logging.Formatter(log_fmt)
-        <span class="hljs-keyword">return</span> formatter.<span class="hljs-built_in">format</span>(record)
-
-<span class="hljs-comment"># create logger with &#x27;spam_application&#x27;</span>
-logger = logging.getLogger(<span class="hljs-string">&quot;Sample&quot;</span>)
-
-<span class="hljs-comment"># create console handler with a higher log level</span>
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-
-<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.argv)&gt; <span class="hljs-number">1</span>:
-    <span class="hljs-keyword">if</span> sys.argv[<span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;log&#x27;</span>:
-        ch.setFormatter(logging.Formatter(<span class="hljs-string">&#x27;%(asctime)s : %(levelname)s : %(name)s : %(message)s&#x27;</span>))
-    <span class="hljs-keyword">elif</span> sys.argv[<span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;color&#x27;</span>:
-        ch.setFormatter(CustomFormatter())
-
-<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.argv) &gt; <span class="hljs-number">2</span>:
-    logger.setLevel(logging.__getattribute__(sys.argv[<span class="hljs-number">2</span>]))
-<span class="hljs-keyword">else</span>:
-    logger.setLevel(logging.DEBUG)
-
-logger.addHandler(ch)
-
-<span class="hljs-comment"># logger.debug(&quot;debug message&quot;)</span>
-<span class="hljs-comment"># logger.info(&quot;info message&quot;)</span>
-<span class="hljs-comment"># logger.warning(&quot;warning message&quot;)</span>
-<span class="hljs-comment"># logger.error(&quot;error message&quot;)</span>
-<span class="hljs-comment"># logger.critical(&quot;critical message&quot;)</span>
-
-<span class="hljs-keyword">import</span> random
-<span class="hljs-keyword">import</span> time
-<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">100</span>):
-    i = random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>)
-    <span class="hljs-keyword">if</span> i &lt;= <span class="hljs-number">4</span>:
-        logger.info(<span class="hljs-string">&quot;Value is &#123;&#125; - Everything is fine&quot;</span>.<span class="hljs-built_in">format</span>(i))
-    <span class="hljs-keyword">elif</span> i &lt;= <span class="hljs-number">6</span>:
-        logger.warning(<span class="hljs-string">&quot;Value is &#123;&#125; - System is getting hot&quot;</span>.<span class="hljs-built_in">format</span>(i))
-    <span class="hljs-keyword">elif</span> i &lt;= <span class="hljs-number">8</span>:
-        logger.error(<span class="hljs-string">&quot;Value is &#123;&#125; - Dangerous region&quot;</span>.<span class="hljs-built_in">format</span>(i))
-    <span class="hljs-keyword">else</span>:
-        logger.critical(<span class="hljs-string">&quot;Maximum value reached&quot;</span>)
-    time.sleep(<span class="hljs-number">0.3</span>)</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomFormatter</span>(logging.Formatter):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Logging Formatter to add colors and count warning / errors&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    grey = <span class="string">&quot;\x1b[38;21m&quot;</span></span><br><span class="line">    yellow = <span class="string">&quot;\x1b[33;21m&quot;</span></span><br><span class="line">    red = <span class="string">&quot;\x1b[31;21m&quot;</span></span><br><span class="line">    bold_red = <span class="string">&quot;\x1b[31;1m&quot;</span></span><br><span class="line">    reset = <span class="string">&quot;\x1b[0m&quot;</span></span><br><span class="line">    <span class="built_in">format</span> = <span class="string">&quot;%(asctime)s - %(name)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)&quot;</span></span><br><span class="line"></span><br><span class="line">    FORMATS = &#123;</span><br><span class="line">        logging.DEBUG: grey + <span class="built_in">format</span> + reset,</span><br><span class="line">        logging.INFO: grey + <span class="built_in">format</span> + reset,</span><br><span class="line">        logging.WARNING: yellow + <span class="built_in">format</span> + reset,</span><br><span class="line">        logging.ERROR: red + <span class="built_in">format</span> + reset,</span><br><span class="line">        logging.CRITICAL: bold_red + <span class="built_in">format</span> + reset</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">format</span>(<span class="params">self, record</span>):</span><br><span class="line">        log_fmt = self.FORMATS.get(record.levelno)</span><br><span class="line">        formatter = logging.Formatter(log_fmt)</span><br><span class="line">        <span class="keyword">return</span> formatter.<span class="built_in">format</span>(record)</span><br><span class="line"></span><br><span class="line"><span class="comment"># create logger with &#x27;spam_application&#x27;</span></span><br><span class="line">logger = logging.getLogger(<span class="string">&quot;Sample&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># create console handler with a higher log level</span></span><br><span class="line">ch = logging.StreamHandler()</span><br><span class="line">ch.setLevel(logging.DEBUG)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(sys.argv)&gt; <span class="number">1</span>:</span><br><span class="line">    <span class="keyword">if</span> sys.argv[<span class="number">1</span>] == <span class="string">&#x27;log&#x27;</span>:</span><br><span class="line">        ch.setFormatter(logging.Formatter(<span class="string">&#x27;%(asctime)s : %(levelname)s : %(name)s : %(message)s&#x27;</span>))</span><br><span class="line">    <span class="keyword">elif</span> sys.argv[<span class="number">1</span>] == <span class="string">&#x27;color&#x27;</span>:</span><br><span class="line">        ch.setFormatter(CustomFormatter())</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) &gt; <span class="number">2</span>:</span><br><span class="line">    logger.setLevel(logging.__getattribute__(sys.argv[<span class="number">2</span>]))</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    logger.setLevel(logging.DEBUG)</span><br><span class="line"></span><br><span class="line">logger.addHandler(ch)</span><br><span class="line"></span><br><span class="line"><span class="comment"># logger.debug(&quot;debug message&quot;)</span></span><br><span class="line"><span class="comment"># logger.info(&quot;info message&quot;)</span></span><br><span class="line"><span class="comment"># logger.warning(&quot;warning message&quot;)</span></span><br><span class="line"><span class="comment"># logger.error(&quot;error message&quot;)</span></span><br><span class="line"><span class="comment"># logger.critical(&quot;critical message&quot;)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    i = random.randint(<span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">    <span class="keyword">if</span> i &lt;= <span class="number">4</span>:</span><br><span class="line">        logger.info(<span class="string">&quot;Value is &#123;&#125; - Everything is fine&quot;</span>.<span class="built_in">format</span>(i))</span><br><span class="line">    <span class="keyword">elif</span> i &lt;= <span class="number">6</span>:</span><br><span class="line">        logger.warning(<span class="string">&quot;Value is &#123;&#125; - System is getting hot&quot;</span>.<span class="built_in">format</span>(i))</span><br><span class="line">    <span class="keyword">elif</span> i &lt;= <span class="number">8</span>:</span><br><span class="line">        logger.error(<span class="string">&quot;Value is &#123;&#125; - Dangerous region&quot;</span>.<span class="built_in">format</span>(i))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        logger.critical(<span class="string">&quot;Maximum value reached&quot;</span>)</span><br><span class="line">    time.sleep(<span class="number">0.3</span>)</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230502151128.png" alt="小程序 logger 运行展示"></p>
 <p>终端可以通过颜色提高可读性，像 <code>ls</code> 或者 <code>grep</code> 都使用 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/ANSI_escape_code">ANSI 转义序列</a> 来让 shell 修改输出的颜色。e.g.，执行 <code>echo -e &quot;\e[38;2;255;0;0mThis is red\e[0m&quot;</code>会输出一行红色的 This is red 在终端。当然，前提是这个终端支持 <a target="_blank" rel="noopener" href="https://github.com/termstandard/colors">24-bit truecolor</a>，像 Mac OS 的 terminal 就并不支持，需要改用只支持 16 色的 ANSI 转义序列，e.g.，执行 <code>echo -e &quot;\e[31;1mThis is red\e[0m&quot;</code>。</p>

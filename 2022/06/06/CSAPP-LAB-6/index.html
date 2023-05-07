@@ -44,178 +44,23 @@
 
 <p>由于我基本是按照书上介绍内容照葫芦画瓢，实际的个人思考很少，个人认为比较重要的点是对照 tshref.out（也可以用 make rtestx 输出）差异去不断修改。具体来说，我们按照原代码框架顺序编写 eval、builtin_cmd、do_bgfg、waitfg 和另外 3 个 handler 即可。</p>
 <p>另外值得注意的是很多特殊变量不需要我们定义，比如 SIGCONT，我的错误示范：</p>
-<pre><code class="hljs c"><span class="hljs-comment">/* signal.h 中未定义信号 */</span>
-<span class="hljs-meta">#<span class="hljs-keyword">define</span> SIGCONT 18 <span class="hljs-comment">/* 用在 bg 和 fg 指令 */</span></span></code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* signal.h 中未定义信号 */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SIGCONT 18 <span class="comment">/* 用在 bg 和 fg 指令 */</span></span></span><br></pre></td></tr></table></figure>
 
 <h2 id="eval、builtin-cmd、do-bgfg、waitfg"><a href="#eval、builtin-cmd、do-bgfg、waitfg" class="headerlink" title="eval、builtin_cmd、do_bgfg、waitfg"></a>eval、builtin_cmd、do_bgfg、waitfg</h2><p>eval 部分代码直接参照 8-24，而其中锁的部分参考 8.5.4 和 8-40，lab 在 Hints 中也有提到需要在 fork 子进程前用 sigprocmask 锁住 SIGCHLD 信号，防止子进程提前终止导致父进程添加僵尸进程。当然，这里一开始我是完全没考虑并发冲突之类的。</p>
-<pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">eval</span><span class="hljs-params">(<span class="hljs-type">char</span> *cmdline)</span> &#123;
-    <span class="hljs-type">char</span> *argv[MAXARGS];
-    <span class="hljs-type">char</span> buf[MAXLINE];
-    <span class="hljs-type">int</span> bg;
-    <span class="hljs-type">pid_t</span> pid;
-
-    <span class="hljs-built_in">strcpy</span>(buf, cmdline);
-    bg = parseline(buf, argv);
-    <span class="hljs-comment">// 输入空命令行</span>
-    <span class="hljs-keyword">if</span> (argv[<span class="hljs-number">0</span>] == <span class="hljs-literal">NULL</span>)
-        <span class="hljs-keyword">return</span>;
-
-    <span class="hljs-type">sigset_t</span> mask_all, mask_one, prev_one;
-
-    Sigfillset(&amp;mask_all);
-    Sigemptyset(&amp;mask_one);
-    Sigaddset(&amp;mask_one, SIGCHLD);
-
-    <span class="hljs-keyword">if</span> (!builtin_cmd(argv)) &#123;
-        Sigprocmask(SIG_BLOCK, &amp;mask_one, &amp;prev_one);
-        <span class="hljs-keyword">if</span> ((pid = Fork()) == <span class="hljs-number">0</span>) &#123;
-            Sigprocmask(SIG_SETMASK, &amp;prev_one, <span class="hljs-literal">NULL</span>);
-            Setpgid(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
-            Execve(argv[<span class="hljs-number">0</span>], argv, environ);
-        &#125;
-
-        <span class="hljs-comment">// 添加子任务到 jobs</span>
-        Sigprocmask(SIG_BLOCK, &amp;mask_all, <span class="hljs-literal">NULL</span>);
-        <span class="hljs-type">int</span> state = bg ? BG : FG;
-        addjob(jobs, pid, state, cmdline);
-        Sigprocmask(SIG_SETMASK, &amp;prev_one, <span class="hljs-literal">NULL</span>); <span class="hljs-comment">// 解锁</span>
-
-        <span class="hljs-comment">// 父进程等待前台 job 终止</span>
-        <span class="hljs-keyword">if</span> (!bg) &#123;
-            waitfg(pid);
-        &#125; <span class="hljs-keyword">else</span> &#123;
-            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[%d] (%d) %s&quot;</span>, pid2jid(pid), pid, cmdline);
-        &#125;
-    &#125;
-    <span class="hljs-keyword">return</span>;
-&#125;</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">eval</span><span class="params">(<span class="type">char</span> *cmdline)</span> &#123;</span><br><span class="line">    <span class="type">char</span> *argv[MAXARGS];</span><br><span class="line">    <span class="type">char</span> buf[MAXLINE];</span><br><span class="line">    <span class="type">int</span> bg;</span><br><span class="line">    <span class="type">pid_t</span> pid;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">strcpy</span>(buf, cmdline);</span><br><span class="line">    bg = parseline(buf, argv);</span><br><span class="line">    <span class="comment">// 输入空命令行</span></span><br><span class="line">    <span class="keyword">if</span> (argv[<span class="number">0</span>] == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">sigset_t</span> mask_all, mask_one, prev_one;</span><br><span class="line"></span><br><span class="line">    Sigfillset(&amp;mask_all);</span><br><span class="line">    Sigemptyset(&amp;mask_one);</span><br><span class="line">    Sigaddset(&amp;mask_one, SIGCHLD);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!builtin_cmd(argv)) &#123;</span><br><span class="line">        Sigprocmask(SIG_BLOCK, &amp;mask_one, &amp;prev_one);</span><br><span class="line">        <span class="keyword">if</span> ((pid = Fork()) == <span class="number">0</span>) &#123;</span><br><span class="line">            Sigprocmask(SIG_SETMASK, &amp;prev_one, <span class="literal">NULL</span>);</span><br><span class="line">            Setpgid(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">            Execve(argv[<span class="number">0</span>], argv, environ);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 添加子任务到 jobs</span></span><br><span class="line">        Sigprocmask(SIG_BLOCK, &amp;mask_all, <span class="literal">NULL</span>);</span><br><span class="line">        <span class="type">int</span> state = bg ? BG : FG;</span><br><span class="line">        addjob(jobs, pid, state, cmdline);</span><br><span class="line">        Sigprocmask(SIG_SETMASK, &amp;prev_one, <span class="literal">NULL</span>); <span class="comment">// 解锁</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 父进程等待前台 job 终止</span></span><br><span class="line">        <span class="keyword">if</span> (!bg) &#123;</span><br><span class="line">            waitfg(pid);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;[%d] (%d) %s&quot;</span>, pid2jid(pid), pid, cmdline);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>然后，编写 buildtin_cmd，注意这个方法属于主线程，因此我们用 exit(0) 可以跳出循环安全退出，当然具体代码参照 8-24 编写即可。</p>
-<pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">builtin_cmd</span><span class="hljs-params">(<span class="hljs-type">char</span> **argv)</span> &#123;
-    <span class="hljs-comment">// quit</span>
-    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">0</span>], <span class="hljs-string">&quot;quit&quot;</span>)) &#123;
-        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);
-    &#125;
-
-    <span class="hljs-comment">// jobs</span>
-    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">0</span>], <span class="hljs-string">&quot;jobs&quot;</span>)) &#123;
-        listjobs(jobs);
-        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
-    &#125;
-
-    <span class="hljs-comment">// bg | fg &lt;job&gt;</span>
-    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">0</span>], <span class="hljs-string">&quot;bg&quot;</span>) || !<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">0</span>], <span class="hljs-string">&quot;fg&quot;</span>)) &#123;
-        do_bgfg(argv);
-        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
-    &#125;
-
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;     <span class="hljs-comment">/* not a builtin command */</span>
-&#125;</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">builtin_cmd</span><span class="params">(<span class="type">char</span> **argv)</span> &#123;</span><br><span class="line">    <span class="comment">// quit</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">strcmp</span>(argv[<span class="number">0</span>], <span class="string">&quot;quit&quot;</span>)) &#123;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// jobs</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">strcmp</span>(argv[<span class="number">0</span>], <span class="string">&quot;jobs&quot;</span>)) &#123;</span><br><span class="line">        listjobs(jobs);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// bg | fg &lt;job&gt;</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">strcmp</span>(argv[<span class="number">0</span>], <span class="string">&quot;bg&quot;</span>) || !<span class="built_in">strcmp</span>(argv[<span class="number">0</span>], <span class="string">&quot;fg&quot;</span>)) &#123;</span><br><span class="line">        do_bgfg(argv);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;     <span class="comment">/* not a builtin command */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在编写 do_bgfg 的时候，要注意和参考输出做对比，这里我推荐 test15，基本囊括了所有情况：</p>
-<pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">do_bgfg</span><span class="hljs-params">(<span class="hljs-type">char</span> **argv)</span> &#123;
-    <span class="hljs-type">int</span> bg = !<span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">0</span>], <span class="hljs-string">&quot;bg&quot;</span>);
-    <span class="hljs-keyword">if</span> (argv[<span class="hljs-number">1</span>] == <span class="hljs-literal">NULL</span>) &#123;
-        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s command requires PID or %%jobid argument\n&quot;</span>, argv[<span class="hljs-number">0</span>]);
-        <span class="hljs-keyword">return</span>;
-    &#125;
-
-    <span class="hljs-type">pid_t</span> pid;
-    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">job_t</span> *<span class="hljs-title">job</span>;</span>
-    <span class="hljs-keyword">if</span> (argv[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] == <span class="hljs-string">&#x27;%&#x27;</span>) &#123;
-        <span class="hljs-comment">// job_id</span>
-        <span class="hljs-type">int</span> jid = atoi(argv[<span class="hljs-number">1</span>] + <span class="hljs-number">1</span>);
-        <span class="hljs-keyword">if</span> (jid == <span class="hljs-number">0</span>) &#123;
-            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s: argument must be a PID or %%jobid\n&quot;</span>, argv[<span class="hljs-number">0</span>]);
-            <span class="hljs-keyword">return</span>;
-        &#125;
-
-        <span class="hljs-keyword">if</span> ((job = getjobjid(jobs, jid)) == <span class="hljs-literal">NULL</span>) &#123;
-            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s: No such job\n&quot;</span>, argv[<span class="hljs-number">1</span>]);
-            <span class="hljs-keyword">return</span>;
-        &#125;
-        pid = job-&gt;pid;
-    &#125; <span class="hljs-keyword">else</span> &#123;
-        <span class="hljs-comment">// pid</span>
-        pid = atoi(argv[<span class="hljs-number">1</span>]);
-        <span class="hljs-keyword">if</span> (pid == <span class="hljs-number">0</span>) &#123;
-            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s: argument must be a PID or %%jobid\n&quot;</span>, argv[<span class="hljs-number">0</span>]);
-            <span class="hljs-keyword">return</span>;
-        &#125;
-
-        <span class="hljs-keyword">if</span> ((job = getjobpid(jobs, pid)) == <span class="hljs-literal">NULL</span>) &#123;
-            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;(%s): No such process\n&quot;</span>, argv[<span class="hljs-number">1</span>]);
-            <span class="hljs-keyword">return</span>;
-        &#125;
-    &#125;
-
-    Kill(-pid, SIGCONT);
-    <span class="hljs-keyword">if</span> (bg) &#123;
-        job-&gt;state = BG;
-        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;[%d] (%d) %s&quot;</span>, job-&gt;jid, pid, job-&gt;cmdline);
-    &#125; <span class="hljs-keyword">else</span> &#123;
-        job-&gt;state = FG;
-        waitfg(pid);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">do_bgfg</span><span class="params">(<span class="type">char</span> **argv)</span> &#123;</span><br><span class="line">    <span class="type">int</span> bg = !<span class="built_in">strcmp</span>(argv[<span class="number">0</span>], <span class="string">&quot;bg&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (argv[<span class="number">1</span>] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%s command requires PID or %%jobid argument\n&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">pid_t</span> pid;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">job_t</span> *<span class="title">job</span>;</span></span><br><span class="line">    <span class="keyword">if</span> (argv[<span class="number">1</span>][<span class="number">0</span>] == <span class="string">&#x27;%&#x27;</span>) &#123;</span><br><span class="line">        <span class="comment">// job_id</span></span><br><span class="line">        <span class="type">int</span> jid = atoi(argv[<span class="number">1</span>] + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span> (jid == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%s: argument must be a PID or %%jobid\n&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ((job = getjobjid(jobs, jid)) == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%s: No such job\n&quot;</span>, argv[<span class="number">1</span>]);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        pid = job-&gt;pid;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// pid</span></span><br><span class="line">        pid = atoi(argv[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">if</span> (pid == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%s: argument must be a PID or %%jobid\n&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ((job = getjobpid(jobs, pid)) == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;(%s): No such process\n&quot;</span>, argv[<span class="number">1</span>]);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Kill(-pid, SIGCONT);</span><br><span class="line">    <span class="keyword">if</span> (bg) &#123;</span><br><span class="line">        job-&gt;state = BG;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[%d] (%d) %s&quot;</span>, job-&gt;jid, pid, job-&gt;cmdline);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        job-&gt;state = FG;</span><br><span class="line">        waitfg(pid);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>waitfg 我是参考 8.5.7，循环阻塞式检测是否还有前台任务。</p>
-<pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">waitfg</span><span class="hljs-params">(<span class="hljs-type">pid_t</span> pid)</span> &#123;
-    <span class="hljs-type">sigset_t</span> mask;
-    Sigemptyset(&amp;mask);
-    <span class="hljs-keyword">while</span> (fgpid(jobs) != <span class="hljs-number">0</span>) &#123;
-        sigsuspend(&amp;mask);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">waitfg</span><span class="params">(<span class="type">pid_t</span> pid)</span> &#123;</span><br><span class="line">    <span class="type">sigset_t</span> mask;</span><br><span class="line">    Sigemptyset(&amp;mask);</span><br><span class="line">    <span class="keyword">while</span> (fgpid(jobs) != <span class="number">0</span>) &#123;</span><br><span class="line">        sigsuspend(&amp;mask);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="Signal-handlers"><a href="#Signal-handlers" class="headerlink" title="Signal handlers"></a>Signal handlers</h2><p>我们创建的任务会有多种运行场景，收到信号 SIGINT 强制进程结束（键入 ctrl+c 也可以发出相同信号），收到 SIGSTOP 或者 SIGTSTP（等效于 ctrl+z）而暂停进程，后两者本质差不多，但还是有区别 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/11886812/what-is-the-difference-between-sigstop-and-sigtstp">unix - What is the difference between SIGSTOP and SIGTSTP? - Stack Overflow</a>。当然我们需要发送的另一个指令 SIGCONT 可以让暂停进程继续运行，通常和 SIGSTOP 成对出现。</p>
 <p>理解了信号的使用后，再借助 8.4.3 的内容，我们可以用信号去结束、回收、重启我们的子进程：</p>
-<pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">sigchld_handler</span><span class="hljs-params">(<span class="hljs-type">int</span> sig)</span> &#123;
-    <span class="hljs-type">int</span> olderrno = errno, status;
-    <span class="hljs-type">pid_t</span> pid;
-    <span class="hljs-type">sigset_t</span> mask_all, prev_all;
-    Sigfillset(&amp;mask_all);
-    <span class="hljs-keyword">while</span> ((pid = waitpid(<span class="hljs-number">-1</span>, &amp;status, WNOHANG | WUNTRACED)) &gt; <span class="hljs-number">0</span>) &#123;
-        Sigprocmask(SIG_BLOCK, &amp;mask_all, &amp;prev_all);
-        <span class="hljs-keyword">if</span> (WIFEXITED(status)) &#123;
-            <span class="hljs-comment">// 正常返回</span>
-            deletejob(jobs, pid);
-        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (WIFSIGNALED(status)) &#123;
-            <span class="hljs-comment">// TSTP</span>
-            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Job [%d] (%d) terminated by signal %d\n&quot;</span>, pid2jid(pid), pid, WTERMSIG(status));
-            deletejob(jobs, pid);
-        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (WIFSTOPPED(status)) &#123;
-            <span class="hljs-comment">// STOP</span>
-            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Job [%d] (%d) stopped by signal %d\n&quot;</span>, pid2jid(pid), pid, WSTOPSIG(status));
-            <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">job_t</span> *<span class="hljs-title">job</span> =</span> getjobpid(jobs, pid);
-            job-&gt;state = ST;
-        &#125;
-        Sigprocmask(SIG_SETMASK, &amp;prev_all, <span class="hljs-literal">NULL</span>);
-    &#125;
-    errno = olderrno;
-&#125;
- 
-<span class="hljs-type">void</span> <span class="hljs-title function_">sigint_handler</span><span class="hljs-params">(<span class="hljs-type">int</span> sig)</span> &#123;
-    <span class="hljs-type">pid_t</span> pid;
-    <span class="hljs-type">sigset_t</span> mask_all, prev_all;
-    Sigfillset(&amp;mask_all);
-    Sigprocmask(SIG_BLOCK, &amp;mask_all, &amp;prev_all);
-    <span class="hljs-keyword">if</span> ((pid = fgpid(jobs)) &gt; <span class="hljs-number">0</span>) &#123;
-        Sigprocmask(SIG_SETMASK, &amp;prev_all, <span class="hljs-literal">NULL</span>);
-        Kill(-pid, SIGINT);
-    &#125;
-&#125;
-
-<span class="hljs-type">void</span> <span class="hljs-title function_">sigtstp_handler</span><span class="hljs-params">(<span class="hljs-type">int</span> sig)</span> &#123;
-    <span class="hljs-type">pid_t</span> pid;
-    <span class="hljs-type">sigset_t</span> mask_all, prev_all;
-    Sigfillset(&amp;mask_all);
-    Sigprocmask(SIG_BLOCK, &amp;mask_all, &amp;prev_all);
-    <span class="hljs-keyword">if</span> ((pid = fgpid(jobs)) &gt; <span class="hljs-number">0</span>) &#123;
-        Sigprocmask(SIG_SETMASK, &amp;prev_all, <span class="hljs-literal">NULL</span>);
-        Kill(-pid, SIGTSTP);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">sigchld_handler</span><span class="params">(<span class="type">int</span> sig)</span> &#123;</span><br><span class="line">    <span class="type">int</span> olderrno = errno, status;</span><br><span class="line">    <span class="type">pid_t</span> pid;</span><br><span class="line">    <span class="type">sigset_t</span> mask_all, prev_all;</span><br><span class="line">    Sigfillset(&amp;mask_all);</span><br><span class="line">    <span class="keyword">while</span> ((pid = waitpid(<span class="number">-1</span>, &amp;status, WNOHANG | WUNTRACED)) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        Sigprocmask(SIG_BLOCK, &amp;mask_all, &amp;prev_all);</span><br><span class="line">        <span class="keyword">if</span> (WIFEXITED(status)) &#123;</span><br><span class="line">            <span class="comment">// 正常返回</span></span><br><span class="line">            deletejob(jobs, pid);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (WIFSIGNALED(status)) &#123;</span><br><span class="line">            <span class="comment">// TSTP</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Job [%d] (%d) terminated by signal %d\n&quot;</span>, pid2jid(pid), pid, WTERMSIG(status));</span><br><span class="line">            deletejob(jobs, pid);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (WIFSTOPPED(status)) &#123;</span><br><span class="line">            <span class="comment">// STOP</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Job [%d] (%d) stopped by signal %d\n&quot;</span>, pid2jid(pid), pid, WSTOPSIG(status));</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">job_t</span> *<span class="title">job</span> =</span> getjobpid(jobs, pid);</span><br><span class="line">            job-&gt;state = ST;</span><br><span class="line">        &#125;</span><br><span class="line">        Sigprocmask(SIG_SETMASK, &amp;prev_all, <span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    errno = olderrno;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="type">void</span> <span class="title function_">sigint_handler</span><span class="params">(<span class="type">int</span> sig)</span> &#123;</span><br><span class="line">    <span class="type">pid_t</span> pid;</span><br><span class="line">    <span class="type">sigset_t</span> mask_all, prev_all;</span><br><span class="line">    Sigfillset(&amp;mask_all);</span><br><span class="line">    Sigprocmask(SIG_BLOCK, &amp;mask_all, &amp;prev_all);</span><br><span class="line">    <span class="keyword">if</span> ((pid = fgpid(jobs)) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        Sigprocmask(SIG_SETMASK, &amp;prev_all, <span class="literal">NULL</span>);</span><br><span class="line">        Kill(-pid, SIGINT);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">sigtstp_handler</span><span class="params">(<span class="type">int</span> sig)</span> &#123;</span><br><span class="line">    <span class="type">pid_t</span> pid;</span><br><span class="line">    <span class="type">sigset_t</span> mask_all, prev_all;</span><br><span class="line">    Sigfillset(&amp;mask_all);</span><br><span class="line">    Sigprocmask(SIG_BLOCK, &amp;mask_all, &amp;prev_all);</span><br><span class="line">    <span class="keyword">if</span> ((pid = fgpid(jobs)) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        Sigprocmask(SIG_SETMASK, &amp;prev_all, <span class="literal">NULL</span>);</span><br><span class="line">        Kill(-pid, SIGTSTP);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>收官~</p>
 </div><div class="article-licensing box"><div class="licensing-title"><p>CSAPP Lab6 Writing Your Own Unix Shell</p><p><a href="https://zion4h.github.io/2022/06/06/CSAPP-LAB-6/">https://zion4h.github.io/2022/06/06/CSAPP-LAB-6/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-06-06</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-30</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/06/07/CSAPP-LAB-7/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">CSAPP Lab7 Writing a Dynamic Storage Allocator</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/06/05/CSAPP-LAB-5/"><span class="level-item">CSAPP Lab5 Understanding Cache Memories</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({

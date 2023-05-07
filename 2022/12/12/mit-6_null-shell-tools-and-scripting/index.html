@@ -43,21 +43,11 @@
 <span id="more"></span>
 
 <h2 id="shell-脚本"><a href="#shell-脚本" class="headerlink" title="shell 脚本"></a>shell 脚本</h2><p>大部分 <strong>Shell</strong> 都有自己的脚本语言，我们掌握最基本的 <strong>bash</strong> 脚本就能应付绝大多数使用场景。为什么需要学习 <strong>Shell 脚本</strong>，因为在使用 <strong>Shell</strong> 时，除了执行命令和用管道将它们连接外，常常会有 <strong>批量执行命令</strong> 和 <strong>控制流</strong> 的需求。控制流本身指程序运行顺序，程序员可以通过循环和条件语句去控制这个顺序。</p>
-<pre><code class="hljs shell"><span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-built_in">ls</span></span>
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash">foo=bar</span>
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash">foo = bar</span>
-zsh: command not found: foo
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$foo</span>&quot;</span></span>
-bar
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;$foo&#x27;</span></span>
-<span class="hljs-meta prompt_">$</span><span class="language-bash">foo</span></code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="built_in">ls</span></span></span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash">foo=bar</span></span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash">foo = bar</span></span><br><span class="line">zsh: command not found: foo</span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$foo</span>&quot;</span></span></span><br><span class="line">bar</span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&#x27;$foo&#x27;</span></span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">foo</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="赋值变量"><a href="#赋值变量" class="headerlink" title="赋值变量"></a>赋值变量</h3><p>我们可以在 <strong>bash</strong> 中直接赋值变量，但注意在 <strong>shell</strong> 脚本中，空格符会将参数拆分。另外，字符串可以用单引号<code>&#39;</code>和双引号<code>&quot;</code>定义，但二者不等效。单引号是纯文本，双引号会替换变量值。</p>
 <p>现在我们写一个脚本文件 <em><strong>mcd.sh</strong></em>，<code>$1</code>表示这个脚本接收的第一个参数：</p>
-<pre><code class="hljs sh"><span class="hljs-function"><span class="hljs-title">mcd</span></span>() &#123;
-    <span class="hljs-built_in">mkdir</span> -p <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span>
-    <span class="hljs-built_in">cd</span> <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span>
-&#125;</code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">mcd</span></span>() &#123;</span><br><span class="line">    <span class="built_in">mkdir</span> -p <span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line">    <span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>bash</strong> 会使用特殊变量来引用参数、错误代码和其他变量，下面列出了常用变量：</p>
 <ul>
@@ -72,158 +62,49 @@ bar
 </ul>
 <p>想更多细节，请参考 <strong>TLDR</strong> (Linux 文档计划）的 <a target="_blank" rel="noopener" href="https://tldp.org/LDP/abs/html/special-chars.html">特殊变量章节</a>。</p>
 <h3 id="命令返回结果"><a href="#命令返回结果" class="headerlink" title="命令返回结果"></a>命令返回结果</h3><p>命令会使用<code>STDOUT</code>返回输出或者用<code>STDERR</code>返回错误，并且会返回一个<code>Return Code</code>（也就是<code>$?</code>）。这个返回码为 <strong>0</strong> 时表示一切正常，反之如果出错则返回码为 <strong>1</strong>。返回码能够与逻辑与<code>&amp;&amp;</code>和逻辑或<code>||</code>一起组合运算，还可以用分号<code>;</code>将同一行命令分隔。</p>
-<pre><code class="hljs shell"><span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-literal">false</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Oops, fail&quot;</span></span>
-Oops, fail
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-literal">true</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Will not be printed&quot;</span></span>
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-literal">true</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Things went well&quot;</span></span>
-Things went well
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-literal">false</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Will not be printed&quot;</span></span>
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-literal">true</span> ; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;This will always run&quot;</span></span>
-This will always run
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-literal">false</span> ; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;This will always run&quot;</span></span>
-This will always run</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="literal">false</span> || <span class="built_in">echo</span> <span class="string">&quot;Oops, fail&quot;</span></span></span><br><span class="line">Oops, fail</span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="literal">true</span> || <span class="built_in">echo</span> <span class="string">&quot;Will not be printed&quot;</span></span></span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="literal">true</span> &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;Things went well&quot;</span></span></span><br><span class="line">Things went well</span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="literal">false</span> &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;Will not be printed&quot;</span></span></span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="literal">true</span> ; <span class="built_in">echo</span> <span class="string">&quot;This will always run&quot;</span></span></span><br><span class="line">This will always run</span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="literal">false</span> ; <span class="built_in">echo</span> <span class="string">&quot;This will always run&quot;</span></span></span><br><span class="line">This will always run</span><br></pre></td></tr></table></figure>
 
 <h3 id="命令置换和进程替换"><a href="#命令置换和进程替换" class="headerlink" title="命令置换和进程替换"></a>命令置换和进程替换</h3><p>一种常见的场景是希望将命令的输出结果作为变量获取，我们可以通过 <strong>命令置换</strong> <em><strong>command substitution</strong></em> 完成。当我们输入<code>$(CMD)</code>时，它会先执行<code>CMD</code>，并用结果取代原本的<code>$(CMD)</code>。比如，当我们想要遍历文件夹时，可以使用<code>for file in $(ls)</code>，<strong>shell</strong> 会先调用<code>ls</code>然后迭代访问这些其返回结果。</p>
 <p>另外一个鲜为人知的类似功能是 <strong>进程替换</strong> <em><strong>process substitution</strong></em>，常用在希望将命令结果用文件而不是 <strong>STDIN</strong> 传递时。当我们输入<code>&lt;(CMD)</code>时，会先执行<code>CMD</code>，然后将结果保存在一个临时文件中，并用这个临时文件名去替换原本的<code>&lt;(CMD)</code>。比如，<code>diff &lt;(ls foo) &lt;(ls bar)</code>会现实 <strong>foo</strong> 和 <strong>bar</strong> 两个文件夹之间的差异。</p>
-<pre><code class="hljs sh"><span class="hljs-meta">#!/bin/bash</span>
-
-<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Starting program at <span class="hljs-subst">$(date)</span>&quot;</span> <span class="hljs-comment"># Date will be substituted</span>
-
-<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Running program <span class="hljs-variable">$0</span> with <span class="hljs-variable">$#</span> arguments with pid $$&quot;</span>
-
-<span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;<span class="hljs-variable">$@</span>&quot;</span>; <span class="hljs-keyword">do</span>
-    grep foobar <span class="hljs-string">&quot;<span class="hljs-variable">$file</span>&quot;</span> &gt; /dev/null 2&gt; /dev/null
-    <span class="hljs-comment"># When pattern is not found, grep has exit status 1</span>
-    <span class="hljs-comment"># We redirect STDOUT and STDERR to a null register since we do not care about them</span>
-    <span class="hljs-keyword">if</span> [[ $? -ne 0 ]]; <span class="hljs-keyword">then</span>
-        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;File <span class="hljs-variable">$file</span> does not have any foobar, adding one&quot;</span>
-        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# foobar&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$file</span>&quot;</span>
-    <span class="hljs-keyword">fi</span>
-<span class="hljs-keyword">done</span></code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Starting program at <span class="subst">$(date)</span>&quot;</span> <span class="comment"># Date will be substituted</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Running program <span class="variable">$0</span> with <span class="variable">$#</span> arguments with pid $$&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span>; <span class="keyword">do</span></span><br><span class="line">    grep foobar <span class="string">&quot;<span class="variable">$file</span>&quot;</span> &gt; /dev/null 2&gt; /dev/null</span><br><span class="line">    <span class="comment"># When pattern is not found, grep has exit status 1</span></span><br><span class="line">    <span class="comment"># We redirect STDOUT and STDERR to a null register since we do not care about them</span></span><br><span class="line">    <span class="keyword">if</span> [[ $? -ne 0 ]]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;File <span class="variable">$file</span> does not have any foobar, adding one&quot;</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;# foobar&quot;</span> &gt;&gt; <span class="string">&quot;<span class="variable">$file</span>&quot;</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 
 <p>代码中比较了前一条命令的返回码是否为 <strong>0</strong>，如果想要执行其他比较，可以参考 <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/test.1.html">Linux 手册</a> 和 <a target="_blank" rel="noopener" href="http://mywiki.wooledge.org/BashFAQ/031">Unix wiki</a>，执行比较的时候注意加双中括号<code>[[]]</code>。</p>
 <h3 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h3><p><strong>Shell</strong> 支持 <strong>通配符</strong> <em><strong>Wildcards</strong></em>，可以用<code>?</code>和<code>*</code>分别匹配 <strong>一个</strong> 或 <strong>多个</strong> 字符，此外 <strong>Shell</strong> 还支持用大括号<code>&#123;&#125;</code>去扩展命令中的公共子字符串。</p>
-<pre><code class="hljs shell"><span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-built_in">mkdir</span> foo bar</span>
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-built_in">mkdir</span> &#123;foo,bar&#125;/&#123;x..z&#125;</span>
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash">tree .</span>
-.
-├── bar
-│   ├── x
-│   ├── y
-│   └── z
-├── foo
-│   ├── x
-│   ├── y
-│   └── z
-├── mcd.sh
-└── test.sh</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="built_in">mkdir</span> foo bar</span></span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="built_in">mkdir</span> &#123;foo,bar&#125;/&#123;x..z&#125;</span></span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash">tree .</span></span><br><span class="line">.</span><br><span class="line">├── bar</span><br><span class="line">│   ├── x</span><br><span class="line">│   ├── y</span><br><span class="line">│   └── z</span><br><span class="line">├── foo</span><br><span class="line">│   ├── x</span><br><span class="line">│   ├── y</span><br><span class="line">│   └── z</span><br><span class="line">├── mcd.sh</span><br><span class="line">└── test.sh</span><br></pre></td></tr></table></figure>
 
 <p>当脚本变得很复杂时，我们可以借助 <a target="_blank" rel="noopener" href="https://github.com/koalaman/shellcheck">shellcheck</a> 检测 <strong>sh</strong> 和 <strong>bash</strong> 的语法错误。</p>
 <h3 id="其他脚本"><a href="#其他脚本" class="headerlink" title="其他脚本"></a>其他脚本</h3><p>除了 <strong>bash</strong> 脚本，我们还可以写一个 <strong>Python 脚本</strong>，它通过 <strong>python3</strong> 解释器而不是 <strong>bash</strong> 来执行。</p>
-<pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python3</span>
-<span class="hljs-keyword">import</span> sys
-<span class="hljs-keyword">for</span> arg <span class="hljs-keyword">in</span> <span class="hljs-built_in">reversed</span>(sys.argv[<span class="hljs-number">1</span>:]):
-    <span class="hljs-built_in">print</span>(arg)</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">for</span> arg <span class="keyword">in</span> <span class="built_in">reversed</span>(sys.argv[<span class="number">1</span>:]):</span><br><span class="line">    <span class="built_in">print</span>(arg)</span><br></pre></td></tr></table></figure>
 
 <p>执行方法也是通用的：</p>
-<pre><code class="hljs shell"><span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-built_in">chmod</span> 755 script.py</span>
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash">./script.py a b c</span>
-c
-b
-a</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="built_in">chmod</span> 755 script.py</span></span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash">./script.py a b c</span></span><br><span class="line">c</span><br><span class="line">b</span><br><span class="line">a</span><br></pre></td></tr></table></figure>
 
 <p>第一行的<code>#!</code>是 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Shebang_(Unix)">shebang</a>，它会告诉内核使用 <strong>python3 解释器</strong> 来执行这个脚本。这里不得不强调一下脚本和 <strong>shell 函数</strong> 的区别，<strong>shell</strong> 函数必须用使用和当前 <strong>shell</strong> 相同的语言，而脚本可以用任何语言，这就是为什么脚本都需要加上一行 <strong>shebang</strong>。</p>
 <h2 id="shell-工具"><a href="#shell-工具" class="headerlink" title="shell 工具"></a>shell 工具</h2><h3 id="查看命令使用方式"><a href="#查看命令使用方式" class="headerlink" title="查看命令使用方式"></a>查看命令使用方式</h3><p>一般用<code>-h</code>或<code>--help</code>，也可以用<code>man</code>直接查看使用手册，但有时候手册过于臃肿，我们可以借助工具 <a target="_blank" rel="noopener" href="https://tldr.sh/">tldr</a> 将说明简化。</p>
 <h3 id="查找文件"><a href="#查找文件" class="headerlink" title="查找文件"></a>查找文件</h3><p>直接使用内置命令<code>find</code>即可：</p>
-<pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">Find all directories named src</span>
-find . -name src -type d
-<span class="hljs-meta prompt_"># </span><span class="language-bash">Find all python files that have a folder named <span class="hljs-built_in">test</span> <span class="hljs-keyword">in</span> their path</span>
-find . -path &#x27;*/test/*.py&#x27; -type f
-<span class="hljs-meta prompt_"># </span><span class="language-bash">Find all files modified <span class="hljs-keyword">in</span> the last day</span>
-find . -mtime -1
-<span class="hljs-meta prompt_"># </span><span class="language-bash">Find all zip files with size <span class="hljs-keyword">in</span> range 500k to 10M</span>
-find . -size +500k -size -10M -name &#x27;*.tar.gz&#x27;</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all directories named src</span></span><br><span class="line">find . -name src -type d</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all python files that have a folder named <span class="built_in">test</span> <span class="keyword">in</span> their path</span></span><br><span class="line">find . -path &#x27;*/test/*.py&#x27; -type f</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all files modified <span class="keyword">in</span> the last day</span></span><br><span class="line">find . -mtime -1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all zip files with size <span class="keyword">in</span> range 500k to 10M</span></span><br><span class="line">find . -size +500k -size -10M -name &#x27;*.tar.gz&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>我们还可对找到的文件执行操作：</p>
-<pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">Delete all files with .tmp extension</span>
-find . -name &#x27;*.tmp&#x27; -exec rm &#123;&#125; \;
-<span class="hljs-meta prompt_"># </span><span class="language-bash">Find all PNG files and convert them to JPG</span>
-find . -name &#x27;*.png&#x27; -exec convert &#123;&#125; &#123;&#125;.jpg \;</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Delete all files with .tmp extension</span></span><br><span class="line">find . -name &#x27;*.tmp&#x27; -exec rm &#123;&#125; \;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all PNG files and convert them to JPG</span></span><br><span class="line">find . -name &#x27;*.png&#x27; -exec convert &#123;&#125; &#123;&#125;.jpg \;</span><br></pre></td></tr></table></figure>
 
 <p>尽管<code>find</code>很强大，但它的语法用起来也很麻烦，因此我们通常用替代工具 <a target="_blank" rel="noopener" href="https://github.com/sharkdp/fd">fd</a>，它更简单更快而且更友好：</p>
-<pre><code class="hljs shell"><span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash">fd <span class="hljs-string">&quot;t&quot;</span></span>
-bar/t/
-foo/t/
-script.py
-test.sh</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash">fd <span class="string">&quot;t&quot;</span></span></span><br><span class="line">bar/t/</span><br><span class="line">foo/t/</span><br><span class="line">script.py</span><br><span class="line">test.sh</span><br></pre></td></tr></table></figure>
 
 <h4 id="查找代码"><a href="#查找代码" class="headerlink" title="查找代码"></a>查找代码</h4><p>查找代码最通用的自然是 <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/grep.1.html">grep</a>，<code>grep</code>有很多标志符，比较常用的是<code>-C</code>用来获取匹配行的上下文，以及<code>-v</code>用来反转匹配（比如返回所有不匹配某个<code>pattern</code>的行）。当你想要从多个文件中快速查找时，可以用<code>-R</code>递归查询。</p>
 <p>针对<code>grep -R</code>也有很多优化查询工具，比如 <a target="_blank" rel="noopener" href="https://github.com/beyondgrep/ack3">ack</a>, <a target="_blank" rel="noopener" href="https://github.com/ggreer/the_silver_searcher">ag</a> 和 <a target="_blank" rel="noopener" href="https://github.com/BurntSushi/ripgrep">rg</a>，下面的结果高下立判。</p>
-<pre><code class="hljs shell"><span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash">grep -R <span class="hljs-string">&quot;s&quot;</span>                                                         17s</span>
-./script.py:#!/usr/bin/python3
-./script.py:import sys
-./script.py:for arg in reversed(sys.argv[1:]):
-./test.sh:#!/bin/bash
-./test.sh:echo &quot;Starting program at $(date)&quot; # Date will be substituted
-./test.sh:echo &quot;Running program $0 with $# arguments with pid $$&quot;
-./test.sh:    # When pattern is not found, grep has exit status 1
-./test.sh:    # We redirect STDOUT and STDERR to a null register since we do not care about them
-./test.sh:        echo &quot;File $file does not have any foobar, adding one&quot;
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash">rg <span class="hljs-string">&quot;s&quot;</span></span>
-test.sh
-1:#!/bin/bash
-3:echo &quot;Starting program at $(date)&quot; # Date will be substituted
-5:echo &quot;Running program $0 with $# arguments with pid $$&quot;
-9:    # When pattern is not found, grep has exit status 1
-10:    # We redirect STDOUT and STDERR to a null register since we do not care about them
-12:        echo &quot;File $file does not have any foobar, adding one&quot;
-
-script.py
-1:#!/usr/bin/python3
-2:import sys
-3:for arg in reversed(sys.argv[1:]):</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash">grep -R <span class="string">&quot;s&quot;</span>                                                         17s</span></span><br><span class="line">./script.py:#!/usr/bin/python3</span><br><span class="line">./script.py:import sys</span><br><span class="line">./script.py:for arg in reversed(sys.argv[1:]):</span><br><span class="line">./test.sh:#!/bin/bash</span><br><span class="line">./test.sh:echo &quot;Starting program at $(date)&quot; # Date will be substituted</span><br><span class="line">./test.sh:echo &quot;Running program $0 with $# arguments with pid $$&quot;</span><br><span class="line">./test.sh:    # When pattern is not found, grep has exit status 1</span><br><span class="line">./test.sh:    # We redirect STDOUT and STDERR to a null register since we do not care about them</span><br><span class="line">./test.sh:        echo &quot;File $file does not have any foobar, adding one&quot;</span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash">rg <span class="string">&quot;s&quot;</span></span></span><br><span class="line">test.sh</span><br><span class="line">1:#!/bin/bash</span><br><span class="line">3:echo &quot;Starting program at $(date)&quot; # Date will be substituted</span><br><span class="line">5:echo &quot;Running program $0 with $# arguments with pid $$&quot;</span><br><span class="line">9:    # When pattern is not found, grep has exit status 1</span><br><span class="line">10:    # We redirect STDOUT and STDERR to a null register since we do not care about them</span><br><span class="line">12:        echo &quot;File $file does not have any foobar, adding one&quot;</span><br><span class="line"></span><br><span class="line">script.py</span><br><span class="line">1:#!/usr/bin/python3</span><br><span class="line">2:import sys</span><br><span class="line">3:for arg in reversed(sys.argv[1:]):</span><br></pre></td></tr></table></figure>
 
 <h4 id="查找-shell-命令"><a href="#查找-shell-命令" class="headerlink" title="查找 shell 命令"></a>查找 shell 命令</h4><p>通过<code>history</code>我们可以浏览之前输入的命令，除了不断按上箭头，我们还可以通过<code>history | grep find</code>找到包含“<strong>find</strong>”子串的命令。</p>
 <p>此外，我们也可以用<code>Ctrl+R</code>去向后搜索，它其实是和 <a target="_blank" rel="noopener" href="https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings#ctrl-r">fzf</a> 绑定的。当然，由于我用的是 <strong>zsh</strong>，自然使用  <em><strong>history-based autosuggestions</strong></em> 插件了。</p>
 <h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><h3 id="练习-1"><a href="#练习-1" class="headerlink" title="练习 1"></a>练习 1</h3><p>读<code>man ls</code>并一个 ls 命令来列出所有文件</p>
-<pre><code class="hljs shell"><span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-built_in">ls</span> -ahlt --color</span>
-total 24
-drwxr-xr-x+ 116 huangzining  staff   3.6K 12 13 16:19 ..
-drwxr-xr-x    7 huangzining  staff   224B 12 13 16:03 .
-drwxr-xr-x   28 huangzining  staff   896B 12 13 15:46 bar
-drwxr-xr-x   28 huangzining  staff   896B 12 13 15:46 foo
--rwxr-xr-x    1 huangzining  staff    80B 12 13 15:27 script.py
--rw-r--r--    1 huangzining  staff   484B 12 13 15:11 test.sh
--rw-r--r--    1 huangzining  staff    40B 12 12 22:46 mcd.sh</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="built_in">ls</span> -ahlt --color</span></span><br><span class="line">total 24</span><br><span class="line">drwxr-xr-x+ 116 huangzining  staff   3.6K 12 13 16:19 ..</span><br><span class="line">drwxr-xr-x    7 huangzining  staff   224B 12 13 16:03 .</span><br><span class="line">drwxr-xr-x   28 huangzining  staff   896B 12 13 15:46 bar</span><br><span class="line">drwxr-xr-x   28 huangzining  staff   896B 12 13 15:46 foo</span><br><span class="line">-rwxr-xr-x    1 huangzining  staff    80B 12 13 15:27 script.py</span><br><span class="line">-rw-r--r--    1 huangzining  staff   484B 12 13 15:11 test.sh</span><br><span class="line">-rw-r--r--    1 huangzining  staff    40B 12 12 22:46 mcd.sh</span><br></pre></td></tr></table></figure>
 
 <h3 id="练习-2"><a href="#练习-2" class="headerlink" title="练习 2"></a>练习 2</h3><p>编写一个 marco 保存当前目录路径，然后执行 polo 进入之前保存的路径</p>
-<pre><code class="hljs shell"><span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-built_in">cat</span> marco.sh</span>
-marco() &#123;
-    target=~/tmp/test.txt
-    if [[ ! (-e $target) ]]; then
-    touch $target
-    fi
-    echo $(pwd) &gt; $target
-&#125;
-<span class="hljs-meta prompt_">~/tmp$ </span><span class="language-bash"><span class="hljs-built_in">cat</span> polo.sh</span>
-polo() &#123;
-    cd $(cat ~/tmp/test.txt)
-&#125;</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="built_in">cat</span> marco.sh</span></span><br><span class="line">marco() &#123;</span><br><span class="line">    target=~/tmp/test.txt</span><br><span class="line">    if [[ ! (-e $target) ]]; then</span><br><span class="line">    touch $target</span><br><span class="line">    fi</span><br><span class="line">    echo $(pwd) &gt; $target</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_">~/tmp$ </span><span class="language-bash"><span class="built_in">cat</span> polo.sh</span></span><br><span class="line">polo() &#123;</span><br><span class="line">    cd $(cat ~/tmp/test.txt)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>注意修改执行权限并用<code>source</code>将这两个命令定义给 shell。</p>
 <h3 id="练习-3"><a href="#练习-3" class="headerlink" title="练习 3"></a>练习 3</h3><p>捕获脚本的全部输出打印到文件，记录运行次数</p>
-<pre><code class="hljs sh"> <span class="hljs-comment">#!/usr/bin/env bash</span>
-
-<span class="hljs-keyword">for</span> (( i=<span class="hljs-number">1</span>;; i++ )); <span class="hljs-keyword">do</span>
-    n=$(( RANDOM % <span class="hljs-number">100</span> ))
-    <span class="hljs-keyword">if</span> [[ n -eq 42 ]]; <span class="hljs-keyword">then</span>
-        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Something went wrong&quot;</span>
-        &gt;&amp;2 <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;The error was using magic numbers&quot;</span>
-        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;run <span class="hljs-variable">$i</span> times&quot;</span>
-        <span class="hljs-built_in">exit</span> 1
-    <span class="hljs-keyword">fi</span>
-    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Everything went according to plan&quot;</span>
-    <span class="hljs-keyword">done</span></code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (( i=<span class="number">1</span>;; i++ )); <span class="keyword">do</span></span><br><span class="line">    n=$(( RANDOM % <span class="number">100</span> ))</span><br><span class="line">    <span class="keyword">if</span> [[ n -eq 42 ]]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;Something went wrong&quot;</span></span><br><span class="line">        &gt;&amp;2 <span class="built_in">echo</span> <span class="string">&quot;The error was using magic numbers&quot;</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;run <span class="variable">$i</span> times&quot;</span></span><br><span class="line">        <span class="built_in">exit</span> 1</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Everything went according to plan&quot;</span></span><br><span class="line">    <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 </div><div class="article-licensing box"><div class="licensing-title"><p>MIT 6.Null Shell 脚本编程和常用工具</p><p><a href="https://zion4h.github.io/2022/12/12/mit-6_null-shell-tools-and-scripting/">https://zion4h.github.io/2022/12/12/mit-6_null-shell-tools-and-scripting/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-12-12</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-30</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/shell/">shell</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/12/16/mit-6_null-vim/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">MIT 6.Null Vim</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/12/12/mit-6_null-shell/"><span class="level-item">MIT 6.Null 如何玩转Shell</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
             id: "32b8b0d6d024752afcbfa0a81820a9c4",
             repo: "zion4h.github.io",

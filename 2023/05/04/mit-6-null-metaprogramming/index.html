@@ -47,12 +47,7 @@
 <p>言归正传，香农熵强度单位是 bit，可以由 <code>log_2(# of possibilities)</code> 计算得到，比如投一个骰子会出现 6 种点数，那它的随机性就是 2.58 bits。多少强度的密码可以被认为是安全的呢？一般来说，线上密码应该大于 40，线下则要求更高，需要 80。原因不难想到，线下能够利用硬件加速，而线上有网络等限制。</p>
 <h2 id="Hash-函数"><a href="#Hash-函数" class="headerlink" title="Hash 函数"></a>Hash 函数</h2><p><strong>CHF(<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">Cryptographic hash function</a>)</strong> 可以将任意长度的数据都映射成一个固定长度。</p>
 <p>我们拿 <strong><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/SHA-1">SHA1</a></strong> 举例，Git 就有采用 SHA1，它能够将任意输入都转化成一个 160-bit 的输出，合 40 个 HEX 码。我们也可以在命令行中尝试使用，</p>
-<pre><code class="hljs sh">[vagrant@localhost ~]$ <span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;hello\n&#x27;</span> | <span class="hljs-built_in">sha1sum</span>
-f572d396fae9206628714fb2ce00f72e94f2258f  -
-[vagrant@localhost ~]$ <span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;hello\n&#x27;</span> | <span class="hljs-built_in">sha1sum</span>
-f572d396fae9206628714fb2ce00f72e94f2258f  -
-[vagrant@localhost ~]$ <span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;Hello\n&#x27;</span> | <span class="hljs-built_in">sha1sum</span>
-1d229271928d3f9e2bb0375bd6ce5db6c6d348d9  -</code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[vagrant@localhost ~]$ <span class="built_in">printf</span> <span class="string">&#x27;hello\n&#x27;</span> | <span class="built_in">sha1sum</span></span><br><span class="line">f572d396fae9206628714fb2ce00f72e94f2258f  -</span><br><span class="line">[vagrant@localhost ~]$ <span class="built_in">printf</span> <span class="string">&#x27;hello\n&#x27;</span> | <span class="built_in">sha1sum</span></span><br><span class="line">f572d396fae9206628714fb2ce00f72e94f2258f  -</span><br><span class="line">[vagrant@localhost ~]$ <span class="built_in">printf</span> <span class="string">&#x27;Hello\n&#x27;</span> | <span class="built_in">sha1sum</span></span><br><span class="line">1d229271928d3f9e2bb0375bd6ce5db6c6d348d9  -</span><br></pre></td></tr></table></figure>
 
 <p>理想的哈希函数有以下属性：</p>
 <ul>
@@ -65,21 +60,12 @@ f572d396fae9206628714fb2ce00f72e94f2258f  -
 <h2 id="KDFs"><a href="#KDFs" class="headerlink" title="KDFs"></a>KDFs</h2><p><strong>KDFs</strong>（<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Key_derivation_function">key derivation functions 密钥推导函数</a>）是一个和 CHF 相关的概念，常用来生成一个固定输出，并将其用作其他加密函数的密钥。KDFs 会故意放慢速度，来减缓离线暴力攻击。</p>
 <p>具体到实际运用场景，我们用户并不希望网站明文传输或者存储我们的密码，这样安全风险太高且侵犯隐私。因此，可以将密码和 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Salt_(cryptography)">盐</a>（随机生成）混合得到 KDF 并存储。而当需要验证时，再将用户输入和同一份<strong>盐</strong>混合，与之前存储的 KDF 对照。</p>
 <h2 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h2><p><strong>对称加密</strong>解决的是隐藏信息问题，也就是让通信双方以一种独有方式进行交流，其他人无法破解他们的交流内容。实现的原理也很简单，双方持有一份相同的密钥，可以用这个密钥加密明文，也能用这个密钥解开密文。</p>
-<pre><code class="hljs plain-text">keygen() -&gt; key  (this function is randomized)
-
-encrypt(plaintext: array&lt;byte&gt;, key) -&gt; array&lt;byte&gt;  (the ciphertext)
-decrypt(ciphertext: array&lt;byte&gt;, key) -&gt; array&lt;byte&gt;  (the plaintext)</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">keygen() -&gt; key  (this function is randomized)</span><br><span class="line"></span><br><span class="line">encrypt(plaintext: array&lt;byte&gt;, key) -&gt; array&lt;byte&gt;  (the ciphertext)</span><br><span class="line">decrypt(ciphertext: array&lt;byte&gt;, key) -&gt; array&lt;byte&gt;  (the plaintext)</span><br></pre></td></tr></table></figure>
 
 <p>密钥 key 可以由 KDF 生成，如 <code>key = KDF(passphrase)</code>。可以参考一些使用较为广泛的对称加密算法，比如 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a>。</p>
 <h2 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h2><p>“非对称”指的是有两个密钥，具有两个不同的角色。顾名思义，私钥是用来保密的，而公钥可以公开共享并且不会影响安全性（与对称密钥中的共享密钥相区别）。</p>
 <p>非对称加密提供加密、解密和签名、验证功能：</p>
-<pre><code class="hljs plain-text">keygen() -&gt; (public key, private key)  (this function is randomized)
-
-encrypt(plaintext: array&lt;byte&gt;, public key) -&gt; array&lt;byte&gt;  (the ciphertext)
-decrypt(ciphertext: array&lt;byte&gt;, private key) -&gt; array&lt;byte&gt;  (the plaintext)
-
-sign(message: array&lt;byte&gt;, private key) -&gt; array&lt;byte&gt;  (the signature)
-verify(message: array&lt;byte&gt;, signature: array&lt;byte&gt;, public key) -&gt; bool  (whether or not the signature is valid)</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">keygen() -&gt; (public key, private key)  (this function is randomized)</span><br><span class="line"></span><br><span class="line">encrypt(plaintext: array&lt;byte&gt;, public key) -&gt; array&lt;byte&gt;  (the ciphertext)</span><br><span class="line">decrypt(ciphertext: array&lt;byte&gt;, private key) -&gt; array&lt;byte&gt;  (the plaintext)</span><br><span class="line"></span><br><span class="line">sign(message: array&lt;byte&gt;, private key) -&gt; array&lt;byte&gt;  (the signature)</span><br><span class="line">verify(message: array&lt;byte&gt;, signature: array&lt;byte&gt;, public key) -&gt; bool  (whether or not the signature is valid)</span><br></pre></td></tr></table></figure>
 
 <p>由公钥加密的信息只能由私钥解开，用函数表达就是 <code>decrypt(encrypt(m, public key), private key) = m</code></p>
 <h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><h3 id="密码管理"><a href="#密码管理" class="headerlink" title="密码管理"></a>密码管理</h3><p>常用的密码有 <a target="_blank" rel="noopener" href="https://keepassxc.org/">KeePassXC</a>（我最喜欢的💖），<a target="_blank" rel="noopener" href="https://www.passwordstore.org/">pass</a> 和 1Password（收费😅）。密码管理工具可以避免重复使用密码，随机生成的高熵密码，并且所有密码保存在一个地方，使用对称加密，密钥使用 KDF 从密码短语生成。</p>

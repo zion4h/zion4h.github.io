@@ -63,44 +63,16 @@
 <p>Raft 的逻辑时间是任期 <code>term</code>，默认从 0 开始，且 Raft 的 <strong>Election Safety 属性</strong>规定了每个 term 最多只能有一个 <code>leader</code>。每个 term 由一个选举阶段和一个常规操作阶段构成，如图所示。如果 <code>candidate</code> 选举超时后没有当选 <code>leader</code> 则跳过常规操作阶段直接进入下一个 term，并再次选举。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/term.png" alt="term"></p>
 <p>另外，每个服务器都会维持一个 <code>currentTerm</code> 表示服务器当前所处的 term，并在相互通信时捎上该值，这样当服务器在通信时一旦发现自己的 term 落后，就会主动更新 term，并将角色转换成 <code>follower</code>，注意还需要将投票清空。相对应的，如果收到处于落后 term 的服务器发来的请求，则直接拒绝。</p>
-<pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf Raft)</span></span> updateTermL(newTerm <span class="hljs-type">int</span>) &#123;
-    Debug(dTimer, <span class="hljs-string">&quot;S%d %s, update from T%d to T%d&quot;</span>, rf.me, rf.state, rf.currentTerm, newTerm)
-
-    rf.currentTerm = newTerm
-    rf.state = follower
-    rf.votedFor = <span class="hljs-number">-1</span>
-
-    rf.persist()
-&#125;</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rf Raft)</span></span> updateTermL(newTerm <span class="type">int</span>) &#123;</span><br><span class="line">    Debug(dTimer, <span class="string">&quot;S%d %s, update from T%d to T%d&quot;</span>, rf.me, rf.state, rf.currentTerm, newTerm)</span><br><span class="line"></span><br><span class="line">    rf.currentTerm = newTerm</span><br><span class="line">    rf.state = follower</span><br><span class="line">    rf.votedFor = <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">    rf.persist()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="系统初始化"><a href="#系统初始化" class="headerlink" title="系统初始化"></a>系统初始化</h2><p>服务器初始状态都是 <code>follower</code>，而只要它从 <code>leader</code> 或 <code>candidate</code> 处收到有效 RPCs 就会维持在这种 <code>follower</code> 状态。正常情况下，<code>leader</code> 会定期向所有 <code>follower</code> 发送心跳消息（心跳检测消息本质上就是一种没有携带日志的特殊 append 消息），如果 <code>follower</code> 经过一段时间（该段时间称为 election timeout）仍未收到，那么它会认为当前系统无 <code>leader</code>，并开始选举。</p>
 <p>项目中的 ticker 方法是一个循环自检函数，用来实现上面提到的 <code>leader</code> 的心跳检测和 <code>follower</code> 的超时检测。后缀带大写 L 的是我从代码 QA 课程中学到的，表示该方法从临界区进入，方便放心访问共享变量，过于真香我立马重构了自己之前的代码。</p>
-<pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf Raft)</span></span> ticker() &#123;
-    <span class="hljs-keyword">for</span> rf.killed() == <span class="hljs-literal">false</span> &#123;
-        
-        time.Sleep(time.Millisecond  <span class="hljs-number">30</span>)
-
-        rf.mu.Lock()
-        <span class="hljs-keyword">if</span> rf.state == leader &#123;
-            rf.timerRefreshL()
-            rf.sendAppendsL(<span class="hljs-literal">true</span>)
-        &#125; <span class="hljs-keyword">else</span> &#123;
-            <span class="hljs-keyword">if</span> rf.electionTimeout.Before(time.Now()) &#123;
-                rf.timerRefreshL()
-                rf.startElectionL()
-            &#125;
-        &#125;
-        rf.mu.Unlock()
-    &#125;
-&#125;</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rf Raft)</span></span> ticker() &#123;</span><br><span class="line">    <span class="keyword">for</span> rf.killed() == <span class="literal">false</span> &#123;</span><br><span class="line">        </span><br><span class="line">        time.Sleep(time.Millisecond  <span class="number">30</span>)</span><br><span class="line"></span><br><span class="line">        rf.mu.Lock()</span><br><span class="line">        <span class="keyword">if</span> rf.state == leader &#123;</span><br><span class="line">            rf.timerRefreshL()</span><br><span class="line">            rf.sendAppendsL(<span class="literal">true</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> rf.electionTimeout.Before(time.Now()) &#123;</span><br><span class="line">                rf.timerRefreshL()</span><br><span class="line">                rf.startElectionL()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        rf.mu.Unlock()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="选举"><a href="#选举" class="headerlink" title="选举"></a>选举</h2><p>一个 <code>follower</code> 开启选举的流程如下，先进入新一轮 term，转换状态为 <code>candidate</code>，然后投票给自己，最后并行发送 vote 请求给集群中的其他服务器。当一个 <code>candidate</code> 获得主体投票，即超过一半服务器的票数，则判断其赢得选举。赢得选举后，它将转换状态为 <code>leader</code>，并广播心跳。需要注意的一点是，这里是所有 <code>leader</code> 的起点。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/state-transition.png" alt="state-transition"></p>
 <p>当 <code>candidate</code> 在等待投票结果时，如果收到有效 append 消息，说明此时系统中已经有一个合法 <code>leader</code> 在运作，它则会转换成 <code>follower</code>。另外，如果有多个 <code>follower</code> 同时成了 <code>candidate</code> 可能会遇到投票分裂这种情况，即每个 <code>candidate</code> 都得不到主体投票最后没法选出 <code>leader</code>。而等选举超时后，所有 <code>candidate</code> 又同时开启新一轮选举，往复循环。为了避免这种情况，Raft 规定 election timeout 从 150-300ms 随机挑取，而不是一个固定的数字。</p>
-<pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf Raft)</span></span> timerRefreshL() &#123;
-    rf.electionTimeout = time.Now().Add(<span class="hljs-number">150</span>  time.Millisecond)
-    rf.electionTimeout = rf.electionTimeout.Add(time.Duration(rand.Int63n(<span class="hljs-number">150</span>))  time.Millisecond)
-&#125;</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rf Raft)</span></span> timerRefreshL() &#123;</span><br><span class="line">    rf.electionTimeout = time.Now().Add(<span class="number">150</span>  time.Millisecond)</span><br><span class="line">    rf.electionTimeout = rf.electionTimeout.Add(time.Duration(rand.Int63n(<span class="number">150</span>))  time.Millisecond)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="投票"><a href="#投票" class="headerlink" title="投票"></a>投票</h2><p><code>follower</code> 在投票时需要遵循 <strong>FIFO 原则</strong>，另外为了维持安全性或者更确切的说是 <code>leader</code> Completeness 属性，还需要对哪些服务器能够被选为 <code>leader</code> 添加一些限制，就是 <code>follower</code> 只能投票给日志满足 up-to-date 的 <code>candidate</code>。具体来说，对比 <code>follower</code> 和 <code>candidate</code> 的日志的最后一个 entry，如果 <code>candidate</code> 一方的 entry 的 term 较小，则 up-to-date 为 false，反之为 true；如果 term 相等则继续比下标，如果 <code>candidate</code> 一方的 entry 下标较小，则 up-to-date 为 false，大于或等于都为 true。</p>
 <p>一些细节：</p>

@@ -59,70 +59,25 @@
 <li><code>snapshot</code> 这里指代最顶层 <strong>tree</strong> 的快照</li>
 </ul>
 <h3 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h3><p>如果用伪代码表述的话，可以表示上述三者为：</p>
-<pre><code class="hljs javascript"><span class="hljs-comment">// a file is a bunch of bytes</span>
-type blob = array&lt;byte&gt;
-
-<span class="hljs-comment">// a directory contains named files and directories</span>
-type tree = map&lt;string, tree | blob&gt;
-
-<span class="hljs-comment">// a commit has parents, metadata, and the top-level tree</span>
-type commit = struct &#123;
-    <span class="hljs-attr">parents</span>: array&lt;commit&gt;
-    <span class="hljs-attr">author</span>: string
-    <span class="hljs-attr">message</span>: string
-    <span class="hljs-attr">snapshot</span>: tree
-&#125;</code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a file is a bunch of bytes</span></span><br><span class="line">type blob = array&lt;byte&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// a directory contains named files and directories</span></span><br><span class="line">type tree = map&lt;string, tree | blob&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// a commit has parents, metadata, and the top-level tree</span></span><br><span class="line">type commit = struct &#123;</span><br><span class="line">    <span class="attr">parents</span>: array&lt;commit&gt;</span><br><span class="line">    <span class="attr">author</span>: string</span><br><span class="line">    <span class="attr">message</span>: string</span><br><span class="line">    <span class="attr">snapshot</span>: tree</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>我们用 <code>object</code> 去统称 <code>tree</code>、<code>blob</code>、<code>commit</code>，则所有 <code>object</code> 都可以按如下方式统一管理：</p>
-<pre><code class="hljs javascript">type object = blob | tree | commit
-
-objects = map&lt;string, object&gt;
-
-def <span class="hljs-title function_">store</span>(object):
-    id = <span class="hljs-title function_">sha1</span>(object)
-    objects[id] = object
-
-def <span class="hljs-title function_">load</span>(id):
-    <span class="hljs-keyword">return</span> objects[id]</code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">type object = blob | tree | commit</span><br><span class="line"></span><br><span class="line">objects = map&lt;string, object&gt;</span><br><span class="line"></span><br><span class="line">def <span class="title function_">store</span>(object):</span><br><span class="line">    id = <span class="title function_">sha1</span>(object)</span><br><span class="line">    objects[id] = object</span><br><span class="line"></span><br><span class="line">def <span class="title function_">load</span>(id):</span><br><span class="line">    <span class="keyword">return</span> objects[id]</span><br></pre></td></tr></table></figure>
 
 <p>简而言之，<strong>Git</strong> 会对 <code>object</code> 通过 <strong>SHA-1 哈希值</strong> （40 个 16 进制数）进行内容寻址。</p>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p>尽管所有的 <code>commit</code> 都被哈希值唯一标记，但正常人类是没办法记住 40 个 16 进制数的，因此我们需要借助索引去记忆，它们指向实际的 <strong>commits</strong>，比如我们常用索引 <code>master</code> 就指向主分支上的最新的 <strong>commits</strong>。</p>
-<pre><code class="hljs javascript">references = map&lt;string, string&gt;
-
-def <span class="hljs-title function_">update_reference</span>(name, id):
-    references[name] = id
-
-def <span class="hljs-title function_">read_reference</span>(name):
-    <span class="hljs-keyword">return</span> references[name]
-
-def <span class="hljs-title function_">load_reference</span>(name_or_id):
-    <span class="hljs-keyword">if</span> name_or_id <span class="hljs-keyword">in</span> <span class="hljs-attr">references</span>:
-        <span class="hljs-keyword">return</span> <span class="hljs-title function_">load</span>(references[name_or_id])
-    <span class="hljs-attr">else</span>:
-        <span class="hljs-keyword">return</span> <span class="hljs-title function_">load</span>(name_or_id)</code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">references = map&lt;string, string&gt;</span><br><span class="line"></span><br><span class="line">def <span class="title function_">update_reference</span>(name, id):</span><br><span class="line">    references[name] = id</span><br><span class="line"></span><br><span class="line">def <span class="title function_">read_reference</span>(name):</span><br><span class="line">    <span class="keyword">return</span> references[name]</span><br><span class="line"></span><br><span class="line">def <span class="title function_">load_reference</span>(name_or_id):</span><br><span class="line">    <span class="keyword">if</span> name_or_id <span class="keyword">in</span> <span class="attr">references</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">load</span>(references[name_or_id])</span><br><span class="line">    <span class="attr">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">load</span>(name_or_id)</span><br></pre></td></tr></table></figure>
 
 <p>在 <strong>Git</strong> 中，索引 <code>HEAD</code> 指向当前位置。</p>
 <h3 id="Snapshots"><a href="#Snapshots" class="headerlink" title="Snapshots"></a>Snapshots</h3><p>每个 <code>commit</code> 都会记录最顶层 <code>tree</code>，形如：</p>
-<pre><code class="hljs sh">&lt;root&gt; (tree)
-|
-+- foo (tree)
-|  |
-|  + bar.txt (blob, contents = <span class="hljs-string">&quot;hello world&quot;</span>)
-|
-+- baz.txt (blob, contents = <span class="hljs-string">&quot;git is wonderful&quot;</span>)</code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;root&gt; (tree)</span><br><span class="line">|</span><br><span class="line">+- foo (tree)</span><br><span class="line">|  |</span><br><span class="line">|  + bar.txt (blob, contents = <span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">|</span><br><span class="line">+- baz.txt (blob, contents = <span class="string">&quot;git is wonderful&quot;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>而 <strong>commits</strong> 的 DAG （有向无环图）则构成了 <strong>Git</strong> 的历史记录，通俗来讲就是，每个 <code>commit</code> 只需要知道自己的父亲是哪些 <strong>commits</strong>，也就是能正确回答我从哪里来这个问题就好（嗯~非哲学范畴）。</p>
 <p>假如考虑这样一个场景，我们要对源码进行 1. 修复 Bug；2. 添加新功能，我们可以用新建两个分支同步执行：</p>
-<pre><code class="hljs sh">o &lt;-- o &lt;-- o &lt;-- o
-            ^
-             \
-              --- o &lt;-- o</code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">o &lt;-- o &lt;-- o &lt;-- o</span><br><span class="line">            ^</span><br><span class="line">             \</span><br><span class="line">              --- o &lt;-- o</span><br></pre></td></tr></table></figure>
 
 <p>我们接下来需要合并 1 和 2，但不可避免的会遇到合并冲突，这需要我们手动选择保留和删除冲突代码。</p>
-<pre><code class="hljs sh">o &lt;-- o &lt;-- o &lt;-- o &lt;---- o
-            ^            /
-             \          v
-              --- o &lt;-- o</code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">o &lt;-- o &lt;-- o &lt;-- o &lt;---- o</span><br><span class="line">            ^            /</span><br><span class="line">             \          v</span><br><span class="line">              --- o &lt;-- o</span><br></pre></td></tr></table></figure>
 
 <h3 id="Repositories"><a href="#Repositories" class="headerlink" title="Repositories"></a>Repositories</h3><p>现在，我们终于能够正确定义一个 Git 仓库了！在硬盘上，它是一堆由 <code>reference</code> 和 <code>object</code> 构成的数据，我们可以从 <strong>Git 数据模型</strong> 角度去理解。我们输入的 <strong>Git 命令</strong> 都在操作 <strong>commit 的 DAG</strong>，本质上是在添加和修改<code>object</code>和<code>referance</code>。</p>
 <h2 id="暂存区"><a href="#暂存区" class="headerlink" title="暂存区"></a>暂存区</h2><p><strong>Git</strong> 还有一个暂存区的概念，它跟数据模型正交，属于创建提交的一部分。简单来说，暂存区允许我们告诉 <strong>Git</strong> 下一次快照需要包含哪些修改，这和通常的 VCS 直接保存当前状态有所区别，这能够暂存区的快照更干净、更聪明。</p>
@@ -193,16 +148,7 @@ def <span class="hljs-title function_">load_reference</span>(name_or_id):
 <li><a target="_blank" rel="noopener" href="https://xosh.org/explain-git-in-simple-words/">How to explain git in simple words?</a></li>
 <li><a target="_blank" rel="noopener" href="https://learngitbranching.js.org/?locale=zh_CN">Learn Git Branching</a> Git 教学游戏</li>
 </ul>
-<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><h3 id="添加一个-animal-py"><a href="#添加一个-animal-py" class="headerlink" title="添加一个 animal.py"></a>添加一个 animal.py</h3><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys
-
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">default</span>():
-    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;hello&#x27;</span>)
-
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():
-    default()
-
-<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:
-    main()</code></pre>
+<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><h3 id="添加一个-animal-py"><a href="#添加一个-animal-py" class="headerlink" title="添加一个 animal.py"></a>添加一个 animal.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">default</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;hello&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    default()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
 
 <h3 id="加入到暂存区"><a href="#加入到暂存区" class="headerlink" title="加入到暂存区"></a>加入到暂存区</h3><p><code>git add animal.py</code></p>
 <h3 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h3><p><code>git commit</code></p>

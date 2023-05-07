@@ -83,31 +83,7 @@
 <p>如果我们选择了 <strong>LRU</strong>，Redis 会维持一个系统时间，并且给每个键都设置一个<strong>时间值</strong>，这个时间在访问时会刷新。</p>
 <h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h2><p>Redis 本身定义了 list 数据对象，也能满足一些简单队列需求。这里单独提队列，是指的<strong>阻塞队列</strong>和<strong>延迟队列</strong>。直接取空 list，取元素失败后会 <code>sleep</code> 一段时间再唤醒重新取，而采用 <code>blpop</code> 则能阻塞获取元素。延迟队列的实现也很简单，用 zset 存储消息，而把时间戳作分数，这样我们利用 <code>zrangebyscore</code> 在 N 秒之前对数据轮询。</p>
 <h2 id="发布订阅模式"><a href="#发布订阅模式" class="headerlink" title="发布订阅模式"></a>发布订阅模式</h2><p>这个模式有两个角色，一个负责<strong>发布频道</strong>，一个负责<strong>订阅频道</strong>，后者持续接收消息。</p>
-<pre><code class="hljs bash"><span class="hljs-comment"># A is a SUB</span>
-redis 127.0.0.1:6379&gt; SUBSCRIBE runoobChat
-
-Reading messages... (press Ctrl-C to quit)
-1) <span class="hljs-string">&quot;subscribe&quot;</span>
-2) <span class="hljs-string">&quot;runoobChat&quot;</span>
-3) (<span class="hljs-built_in">integer</span>) 1
-
-<span class="hljs-comment"># B is a PUB</span>
-redis 127.0.0.1:6379&gt; PUBLISH runoobChat <span class="hljs-string">&quot;Redis PUBLISH test&quot;</span>
-
-(<span class="hljs-built_in">integer</span>) 1
-
-redis 127.0.0.1:6379&gt; PUBLISH runoobChat <span class="hljs-string">&quot;Learn redis by runoob.com&quot;</span>
-
-(<span class="hljs-built_in">integer</span>) 1
-
-<span class="hljs-comment"># A will show message below:</span>
-1) <span class="hljs-string">&quot;message&quot;</span>
-2) <span class="hljs-string">&quot;runoobChat&quot;</span>
-3) <span class="hljs-string">&quot;Redis PUBLISH test&quot;</span>
-
-1) <span class="hljs-string">&quot;message&quot;</span>
-2) <span class="hljs-string">&quot;runoobChat&quot;</span>
-3) <span class="hljs-string">&quot;Learn redis by runoob.com&quot;</span></code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># A is a SUB</span></span><br><span class="line">redis 127.0.0.1:6379&gt; SUBSCRIBE runoobChat</span><br><span class="line"></span><br><span class="line">Reading messages... (press Ctrl-C to quit)</span><br><span class="line">1) <span class="string">&quot;subscribe&quot;</span></span><br><span class="line">2) <span class="string">&quot;runoobChat&quot;</span></span><br><span class="line">3) (<span class="built_in">integer</span>) 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># B is a PUB</span></span><br><span class="line">redis 127.0.0.1:6379&gt; PUBLISH runoobChat <span class="string">&quot;Redis PUBLISH test&quot;</span></span><br><span class="line"></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line"></span><br><span class="line">redis 127.0.0.1:6379&gt; PUBLISH runoobChat <span class="string">&quot;Learn redis by runoob.com&quot;</span></span><br><span class="line"></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># A will show message below:</span></span><br><span class="line">1) <span class="string">&quot;message&quot;</span></span><br><span class="line">2) <span class="string">&quot;runoobChat&quot;</span></span><br><span class="line">3) <span class="string">&quot;Redis PUBLISH test&quot;</span></span><br><span class="line"></span><br><span class="line">1) <span class="string">&quot;message&quot;</span></span><br><span class="line">2) <span class="string">&quot;runoobChat&quot;</span></span><br><span class="line">3) <span class="string">&quot;Learn redis by runoob.com&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="本文参考"><a href="#本文参考" class="headerlink" title="本文参考"></a>本文参考</h2><p><a target="_blank" rel="noopener" href="https://redis.io/docs/">【 1 】 Redis Documentation</a></p>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wrrXz4GoILd5hsbrYACTmA">【 2 】 Redis 面霸篇：从高频问题透视核心原理</a></p>

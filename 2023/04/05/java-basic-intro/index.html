@@ -52,72 +52,22 @@
 </ul>
 <h3 id="hashCode"><a href="#hashCode" class="headerlink" title="hashCode"></a>hashCode</h3><p><code>hash</code> 中文译作“<strong>散列</strong>”，本身代表一种基本的计算机概念，每个 <code>hash</code> 都代表一种哈希生成算法，而 Java 中的 <code>hashCode</code> 会返回一个和内存地址相关的 32 位整数，从而利用对象唯一性来保证其哈希码的唯一性。</p>
 <h3 id="equals"><a href="#equals" class="headerlink" title="equals"></a>equals</h3><p>原始的 <code>equals</code> 方法只是让两个对象用 <code>==</code> 直接比较，因此 <code>String</code> 类有重写该方法，当我们设计类的时候想要正确比较同样也需要重写这个方法。如</p>
-<pre><code class="hljs java"><span class="hljs-meta">@Override</span>
-<span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">equals</span><span class="hljs-params">(Object o)</span> &#123;
-    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span> == o) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-    <span class="hljs-keyword">if</span> (o == <span class="hljs-literal">null</span> || getClass() != o.getClass()) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-
-    <span class="hljs-type">EqualExample</span> <span class="hljs-variable">that</span> <span class="hljs-operator">=</span> (EqualExample) o;
-
-    <span class="hljs-keyword">if</span> (x != that.x) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-    <span class="hljs-keyword">if</span> (y != that.y) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-    <span class="hljs-keyword">return</span> z == that.z;
-&#125;</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">equals</span><span class="params">(Object o)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span> == o) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (o == <span class="literal">null</span> || getClass() != o.getClass()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">EqualExample</span> <span class="variable">that</span> <span class="operator">=</span> (EqualExample) o;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (x != that.x) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (y != that.y) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> z == that.z;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="clone"><a href="#clone" class="headerlink" title="clone"></a>clone</h3><p>拷贝又分为浅拷贝和深拷贝，浅拷贝就是返回同一个引用对象，而深拷贝就是返回和原始对象的引用类型但引用的是不同对象，前者基本没啥意义，我们谈拷贝默认指深拷贝。在 Java 中，如果一个对象没有实现 <code>Cloneable</code> 接口，默认抛出 <code>CloneNotSupportedException</code>，另外 <code>clone</code> 方法是复制一个数组最快的方法。</p>
 <p>为什么我们需要克隆方法而不是直接用 <code>new</code> 创建一个新对象？因为用 <code>new</code> 创建对象会耗费大量时间。</p>
 <p>如何在实际应用中使用 <code>clone</code>？如果是已经设计部署好的类，我们可以定义一个父类并实现 <code>Cloneable</code> 接口。</p>
 <p>下面，用一个实际例子说明如何正确使用 <code>clone</code> 方法：</p>
-<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">demo</span> &#123;
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> CloneNotSupportedException &#123;
-        <span class="hljs-type">B</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">B</span>(<span class="hljs-string">&quot;X ming&quot;</span>, <span class="hljs-number">12</span>);
-        System.out.println(b);
-        <span class="hljs-type">B</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> (B)b.clone();
-        System.out.println(c);
-    &#125;
-&#125;
-
-<span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Cloneable</span>&#123;
-
-&#125;
-
-<span class="hljs-keyword">class</span> <span class="hljs-title class_">B</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">A</span>&#123;
-    String name;
-    <span class="hljs-type">int</span> age;
-
-    B (String name, <span class="hljs-type">int</span> age) &#123;
-        <span class="hljs-built_in">this</span>.name = name;
-        <span class="hljs-built_in">this</span>.age = age;
-    &#125;
-
-    <span class="hljs-meta">@Override</span>
-    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> &#123;
-        <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>.toString() + <span class="hljs-string">&quot;, &quot;</span> + name + <span class="hljs-string">&quot;, &quot;</span> + age;
-    &#125;
-
-    <span class="hljs-meta">@Override</span>
-    <span class="hljs-keyword">protected</span> Object <span class="hljs-title function_">clone</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> CloneNotSupportedException &#123;
-        <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>.clone();
-    &#125;
-&#125;</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">demo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> CloneNotSupportedException &#123;</span><br><span class="line">        <span class="type">B</span> <span class="variable">b</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">B</span>(<span class="string">&quot;X ming&quot;</span>, <span class="number">12</span>);</span><br><span class="line">        System.out.println(b);</span><br><span class="line">        <span class="type">B</span> <span class="variable">c</span> <span class="operator">=</span> (B)b.clone();</span><br><span class="line">        System.out.println(c);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> <span class="keyword">implements</span> <span class="title class_">Cloneable</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">extends</span> <span class="title class_">A</span>&#123;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">    B (String name, <span class="type">int</span> age) &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>.toString() + <span class="string">&quot;, &quot;</span> + name + <span class="string">&quot;, &quot;</span> + age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> Object <span class="title function_">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>.clone();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="wait-notify-和-notifyAll"><a href="#wait-notify-和-notifyAll" class="headerlink" title="wait, notify 和 notifyAll"></a>wait, notify 和 notifyAll</h3><p>线程类指那些继承自 Thread 的类，唤醒指让线程状态从阻塞态转为就绪态。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/thread-status.png" alt="Thread status"></p>
 <p><code>wait</code>, <code>notify</code> 和 <code>notifyAll</code> 方法是 Java 留给线程通信的，本质是修改锁对象状态。比如其中的 <code>notify</code> 就是用来唤醒<strong>单个线程</strong>的。</p>
-<pre><code class="hljs java"><span class="hljs-keyword">synchronized</span>( lockObject )
-&#123; 
-  <span class="hljs-keyword">while</span>( ! condition )
-  &#123; 
-    lockObject.wait();
-  &#125;
-   
-  <span class="hljs-comment">//take the action here;</span>
-&#125;</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span>( lockObject )</span><br><span class="line">&#123; </span><br><span class="line">  <span class="keyword">while</span>( ! condition )</span><br><span class="line">  &#123; </span><br><span class="line">    lockObject.wait();</span><br><span class="line">  &#125;</span><br><span class="line">   </span><br><span class="line">  <span class="comment">//take the action here;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><p>Java 中的 <code>String</code> 底层是 <code>char</code> 数组，但是实现了 <code>CharSequence</code> 接口的类还有 <code>StringBuffer</code> 和 <code>StringBuilder</code>。我们会用 <code>StringBuilder</code> 创建<em>可变字符串</em>，为什么专门提出这个概念，字符串不都是可以修改吗？并不是，Java 中的 <code>String</code> 是 <code>final</code> 修饰的，当我们尝试修改它时，本质上是用一个新创建的实例去替换它。</p>
 <p><code>String</code> 对象有两种创建方式，一种是字面量创建的方式，如</p>
-<pre><code class="hljs java">String s1=<span class="hljs-string">&quot;Welcome&quot;</span>;  
-String s2=<span class="hljs-string">&quot;Welcome&quot;</span>;<span class="hljs-comment">//It doesn&#x27;t create a new instance  </span></code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String s1=<span class="string">&quot;Welcome&quot;</span>;  </span><br><span class="line">String s2=<span class="string">&quot;Welcome&quot;</span>;<span class="comment">//It doesn&#x27;t create a new instance  </span></span><br></pre></td></tr></table></figure>
 
 <p>用这种方式创建的字符串会直接再<strong>字符串常量池</strong>里面创建，大大节省内存效率。而另外一种创建方式就是 <code>new</code> 关键字了，略过不表。</p>
 <h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p>通过<strong>反射</strong>，我们可以知道一个对象的类是什么，它能够执行哪些方法。换句话说，我们可以在运行时通过反射调用 <code>private</code> 方法甚至构造一个对象。</p>

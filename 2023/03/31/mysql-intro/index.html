@@ -47,32 +47,7 @@
 </ul>
 <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>首先我们应当明确一点，索引是用来 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/optimization-indexes.html">优化 SQL 查询</a> 的，或者说提高 <code>SELECT</code> 操作速度的，当然前提是要在查询条件中使用索引列。</p>
 <h3 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h3><p>由 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/create-index.html">CREATE INDEX Statement</a>，</p>
-<pre><code class="hljs bash">CREATE [UNIQUE | FULLTEXT | SPATIAL] INDEX index_name
-    [index_type]
-    ON tbl_name (key_part,...)
-    [index_option]
-    [algorithm_option | lock_option] ...
-
-key_part: &#123;col_name [(length)] | (<span class="hljs-built_in">expr</span>)&#125; [ASC | DESC]
-
-index_option: &#123;
-    KEY_BLOCK_SIZE [=] value
-  | index_type
-  | WITH PARSER parser_name
-  | COMMENT <span class="hljs-string">&#x27;string&#x27;</span>
-  | &#123;VISIBLE | INVISIBLE&#125;
-  | ENGINE_ATTRIBUTE [=] <span class="hljs-string">&#x27;string&#x27;</span>
-  | SECONDARY_ENGINE_ATTRIBUTE [=] <span class="hljs-string">&#x27;string&#x27;</span>
-&#125;
-
-index_type:
-    USING &#123;BTREE | HASH&#125;
-
-algorithm_option:
-    ALGORITHM [=] &#123;DEFAULT | INPLACE | COPY&#125;
-
-lock_option:
-    LOCK [=] &#123;DEFAULT | NONE | SHARED | EXCLUSIVE&#125;</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">CREATE [UNIQUE | FULLTEXT | SPATIAL] INDEX index_name</span><br><span class="line">    [index_type]</span><br><span class="line">    ON tbl_name (key_part,...)</span><br><span class="line">    [index_option]</span><br><span class="line">    [algorithm_option | lock_option] ...</span><br><span class="line"></span><br><span class="line">key_part: &#123;col_name [(length)] | (<span class="built_in">expr</span>)&#125; [ASC | DESC]</span><br><span class="line"></span><br><span class="line">index_option: &#123;</span><br><span class="line">    KEY_BLOCK_SIZE [=] value</span><br><span class="line">  | index_type</span><br><span class="line">  | WITH PARSER parser_name</span><br><span class="line">  | COMMENT <span class="string">&#x27;string&#x27;</span></span><br><span class="line">  | &#123;VISIBLE | INVISIBLE&#125;</span><br><span class="line">  | ENGINE_ATTRIBUTE [=] <span class="string">&#x27;string&#x27;</span></span><br><span class="line">  | SECONDARY_ENGINE_ATTRIBUTE [=] <span class="string">&#x27;string&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">index_type:</span><br><span class="line">    USING &#123;BTREE | HASH&#125;</span><br><span class="line"></span><br><span class="line">algorithm_option:</span><br><span class="line">    ALGORITHM [=] &#123;DEFAULT | INPLACE | COPY&#125;</span><br><span class="line"></span><br><span class="line">lock_option:</span><br><span class="line">    LOCK [=] &#123;DEFAULT | NONE | SHARED | EXCLUSIVE&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="前缀索引"><a href="#前缀索引" class="headerlink" title="前缀索引"></a>前缀索引</h3><p>有时候索引列很长比如 <code>CHAR(200)</code>，但在前 10 个或者前 20 个字符，大多数值又是唯一的，我们可以对索引列的前 N 个字符创建索引，从而<strong>节省索引空间并加速查询</strong>。</p>
 <h3 id="全文本索引"><a href="#全文本索引" class="headerlink" title="全文本索引"></a>全文本索引</h3><p>MyISAM 和 InnoDB 存储引擎都支持全文本索引 <code>FULLTEXT</code> 的，并且只限于 <code>CHAR</code>、<code>VARCHAR</code> 和 <code>TEXT</code> 列，但是索引是对整个列的，不支持前缀索引。</p>
@@ -85,23 +60,7 @@ lock_option:
 <li>博客：<a href="https://zion4h.github.io/2023/04/01/data-structure-btree/">B 树家族</a></li>
 </ul>
 <h3 id="组合索引的最左前缀特性"><a href="#组合索引的最左前缀特性" class="headerlink" title="组合索引的最左前缀特性"></a>组合索引的最左前缀特性</h3><p>如果我们创建了一个组合索引，我们也不强求在条件句中用上全部的索引列，而是只要用到了最左边的索引列就能用上这个组合索引。</p>
-<pre><code class="hljs bash">mysql&gt; create index ind_sales2_companyid_moneys on sales2(company_id,moneys);
-Query OK, 1000 rows affected (0.03 sec)
-Records: 1000 Duplicates: 0 Warnings: 0
-
-mysql&gt; explain select * from sales2 <span class="hljs-built_in">where</span> company_id = 2006\G;
-*************************** 1. row ***************************
- <span class="hljs-built_in">id</span>: 1
- select_type: SIMPLE
- table: sales2
- <span class="hljs-built_in">type</span>: ref
-possible_keys: ind_sales2_companyid_moneys
-key: ind_sales2_companyid_moneys
- key_len: 5
- ref: const
- rows: 1
- Extra: Using <span class="hljs-built_in">where</span>
-1 row <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create index ind_sales2_companyid_moneys on sales2(company_id,moneys);</span><br><span class="line">Query OK, 1000 rows affected (0.03 sec)</span><br><span class="line">Records: 1000 Duplicates: 0 Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; explain select * from sales2 <span class="built_in">where</span> company_id = 2006\G;</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line"> <span class="built_in">id</span>: 1</span><br><span class="line"> select_type: SIMPLE</span><br><span class="line"> table: sales2</span><br><span class="line"> <span class="built_in">type</span>: ref</span><br><span class="line">possible_keys: ind_sales2_companyid_moneys</span><br><span class="line">key: ind_sales2_companyid_moneys</span><br><span class="line"> key_len: 5</span><br><span class="line"> ref: const</span><br><span class="line"> rows: 1</span><br><span class="line"> Extra: Using <span class="built_in">where</span></span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <h3 id="索引的-like-查询"><a href="#索引的-like-查询" class="headerlink" title="索引的 like 查询"></a>索引的 like 查询</h3><p>如果查询条件是 <code>like</code>，那么 <code>%</code> 不能放在开头，否则无法使用索引；对于大文本查询，我们要用全文搜索，而不是 <code>like %…%</code>。</p>
 <h3 id="无法使用索引的场景"><a href="#无法使用索引的场景" class="headerlink" title="无法使用索引的场景"></a>无法使用索引的场景</h3><ol>
@@ -112,19 +71,7 @@ key: ind_sales2_companyid_moneys
 <li>如果 <code>like</code> 是用 <code>%</code> 开头的则不支持</li>
 </ol>
 <h2 id="事务和锁定语句"><a href="#事务和锁定语句" class="headerlink" title="事务和锁定语句"></a>事务和锁定语句</h2><p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/sql-transactional-statements.html">MySQL 事务</a> 一般指的<strong>本地事务</strong>，但它也能通过 <strong>XA 事务</strong>支持<strong>分布式事务</strong>。</p>
-<h3 id="事务控制命令"><a href="#事务控制命令" class="headerlink" title="事务控制命令"></a>事务控制命令</h3><pre><code class="hljs sql"><span class="hljs-keyword">START</span> TRANSACTION
-    [transaction_characteristic [, transaction_characteristic] ...]
-
-transaction_characteristic: &#123;
-    <span class="hljs-keyword">WITH</span> CONSISTENT SNAPSHOT
-  <span class="hljs-operator">|</span> READ WRITE
-  <span class="hljs-operator">|</span> READ <span class="hljs-keyword">ONLY</span>
-&#125;
-
-<span class="hljs-keyword">BEGIN</span> [WORK]
-<span class="hljs-keyword">COMMIT</span> [WORK] [<span class="hljs-keyword">AND</span> [<span class="hljs-keyword">NO</span>] CHAIN] [[<span class="hljs-keyword">NO</span>] <span class="hljs-keyword">RELEASE</span>]
-<span class="hljs-keyword">ROLLBACK</span> [WORK] [<span class="hljs-keyword">AND</span> [<span class="hljs-keyword">NO</span>] CHAIN] [[<span class="hljs-keyword">NO</span>] <span class="hljs-keyword">RELEASE</span>]
-<span class="hljs-keyword">SET</span> autocommit <span class="hljs-operator">=</span> &#123;<span class="hljs-number">0</span> <span class="hljs-operator">|</span> <span class="hljs-number">1</span>&#125;</code></pre>
+<h3 id="事务控制命令"><a href="#事务控制命令" class="headerlink" title="事务控制命令"></a>事务控制命令</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">START</span> TRANSACTION</span><br><span class="line">    [transaction_characteristic [, transaction_characteristic] ...]</span><br><span class="line"></span><br><span class="line">transaction_characteristic: &#123;</span><br><span class="line">    <span class="keyword">WITH</span> CONSISTENT SNAPSHOT</span><br><span class="line">  <span class="operator">|</span> READ WRITE</span><br><span class="line">  <span class="operator">|</span> READ <span class="keyword">ONLY</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">BEGIN</span> [WORK]</span><br><span class="line"><span class="keyword">COMMIT</span> [WORK] [<span class="keyword">AND</span> [<span class="keyword">NO</span>] CHAIN] [[<span class="keyword">NO</span>] <span class="keyword">RELEASE</span>]</span><br><span class="line"><span class="keyword">ROLLBACK</span> [WORK] [<span class="keyword">AND</span> [<span class="keyword">NO</span>] CHAIN] [[<span class="keyword">NO</span>] <span class="keyword">RELEASE</span>]</span><br><span class="line"><span class="keyword">SET</span> autocommit <span class="operator">=</span> &#123;<span class="number">0</span> <span class="operator">|</span> <span class="number">1</span>&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><code>START TRANSACTION</code> 或 <code>BEGIN</code> 开启一个新的事务，后者就是个别名，不用纠结</li>
@@ -135,65 +82,21 @@ transaction_characteristic: &#123;
 </ul>
 <p>当我们开始一个事务时，如果还有未提交的事务存在那么它会被立刻提交。</p>
 <p>如果有<code>LOCK TABLES</code>，那么也会强制释放表锁。另外一点是，任何 <strong>DDL 语句</strong>都无法回滚。</p>
-<h3 id="事务断点"><a href="#事务断点" class="headerlink" title="事务断点"></a>事务断点</h3><pre><code class="hljs sql"><span class="hljs-keyword">SAVEPOINT</span> identifier
-<span class="hljs-keyword">ROLLBACK</span> [WORK] <span class="hljs-keyword">TO</span> [<span class="hljs-keyword">SAVEPOINT</span>] identifier
-<span class="hljs-keyword">RELEASE</span> <span class="hljs-keyword">SAVEPOINT</span> identifier</code></pre>
+<h3 id="事务断点"><a href="#事务断点" class="headerlink" title="事务断点"></a>事务断点</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SAVEPOINT</span> identifier</span><br><span class="line"><span class="keyword">ROLLBACK</span> [WORK] <span class="keyword">TO</span> [<span class="keyword">SAVEPOINT</span>] identifier</span><br><span class="line"><span class="keyword">RELEASE</span> <span class="keyword">SAVEPOINT</span> identifier</span><br></pre></td></tr></table></figure>
 
 <p>事务断点的使用方法如上，很直观。如果创建同名断点时会覆盖旧的断点。</p>
 <p>在执行回滚操作后，晚于回滚位置之后的保存点都将删除，并且回滚位置之后存储的行锁都不会释放，除非是新增的行。</p>
-<h3 id="锁定语句"><a href="#锁定语句" class="headerlink" title="锁定语句"></a>锁定语句</h3><pre><code class="hljs sql">LOCK TABLES
-    tbl_name [[<span class="hljs-keyword">AS</span>] alias] lock_type
-    [, tbl_name [[<span class="hljs-keyword">AS</span>] alias] lock_type] ...
-
-lock_type: &#123;
-    READ [<span class="hljs-keyword">LOCAL</span>]
-  <span class="hljs-operator">|</span> [LOW_PRIORITY] WRITE
-&#125;
-
-UNLOCK TABLES</code></pre>
+<h3 id="锁定语句"><a href="#锁定语句" class="headerlink" title="锁定语句"></a>锁定语句</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">LOCK TABLES</span><br><span class="line">    tbl_name [[<span class="keyword">AS</span>] alias] lock_type</span><br><span class="line">    [, tbl_name [[<span class="keyword">AS</span>] alias] lock_type] ...</span><br><span class="line"></span><br><span class="line">lock_type: &#123;</span><br><span class="line">    READ [<span class="keyword">LOCAL</span>]</span><br><span class="line">  <span class="operator">|</span> [LOW_PRIORITY] WRITE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">UNLOCK TABLES</span><br></pre></td></tr></table></figure>
 
 <ol>
 <li><p>使用 LOCK TABLES 的只能访问被锁定表格</p>
- <pre><code class="hljs bash">mysql&gt; LOCK TABLES t1 READ;
-mysql&gt; SELECT COUNT(*) FROM t1;
-+----------+
-| COUNT(*) |
-+----------+
-|        3 |
-+----------+
-mysql&gt; SELECT COUNT(*) FROM t2;
-ERROR 1100 (HY000): Table <span class="hljs-string">&#x27;t2&#x27;</span> was not locked with LOCK TABLES</code></pre></li>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; LOCK TABLES t1 READ;</span><br><span class="line">mysql&gt; SELECT COUNT(*) FROM t1;</span><br><span class="line">+----------+</span><br><span class="line">| COUNT(*) |</span><br><span class="line">+----------+</span><br><span class="line">|        3 |</span><br><span class="line">+----------+</span><br><span class="line">mysql&gt; SELECT COUNT(*) FROM t2;</span><br><span class="line">ERROR 1100 (HY000): Table <span class="string">&#x27;t2&#x27;</span> was not locked with LOCK TABLES</span><br></pre></td></tr></table></figure></li>
 <li><p>锁定时使用表名或者别名都可以，但是我们在访问这些锁定表一定要和锁定语句的声明保持一致</p>
- <pre><code class="hljs bash">mysql&gt; LOCK TABLE t WRITE, t AS t1 READ;
-mysql&gt; INSERT INTO t SELECT * FROM t;
-ERROR 1100: Table <span class="hljs-string">&#x27;t&#x27;</span> was not locked with LOCK TABLES
-mysql&gt; INSERT INTO t SELECT * FROM t AS t1;</code></pre></li>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; LOCK TABLE t WRITE, t AS t1 READ;</span><br><span class="line">mysql&gt; INSERT INTO t SELECT * FROM t;</span><br><span class="line">ERROR 1100: Table <span class="string">&#x27;t&#x27;</span> was not locked with LOCK TABLES</span><br><span class="line">mysql&gt; INSERT INTO t SELECT * FROM t AS t1;</span><br></pre></td></tr></table></figure></li>
 <li><p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/lock-tables.html">LOCK TABLES</a> 和 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/lock-tables.html">UNLOCK TABLES</a> 配合事务使用：</p>
- <pre><code class="hljs sql"><span class="hljs-keyword">SET</span> autocommit<span class="hljs-operator">=</span><span class="hljs-number">0</span>;
-LOCK TABLES t1 WRITE, t2 READ, ...;
-... do something <span class="hljs-keyword">with</span> tables t1 <span class="hljs-keyword">and</span> t2 here ...
-<span class="hljs-keyword">COMMIT</span>;
-UNLOCK TABLES;</code></pre></li>
+ <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> autocommit<span class="operator">=</span><span class="number">0</span>;</span><br><span class="line">LOCK TABLES t1 WRITE, t2 READ, ...;</span><br><span class="line">... do something <span class="keyword">with</span> tables t1 <span class="keyword">and</span> t2 here ...</span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="设置事务"><a href="#设置事务" class="headerlink" title="设置事务"></a>设置事务</h3><pre><code class="hljs sql"><span class="hljs-keyword">SET</span> [<span class="hljs-keyword">GLOBAL</span> <span class="hljs-operator">|</span> SESSION] TRANSACTION
-    transaction_characteristic [, transaction_characteristic] ...
-
-transaction_characteristic: &#123;
-    ISOLATION LEVEL level
-  <span class="hljs-operator">|</span> access_mode
-&#125;
-
-level: &#123;
-     REPEATABLE READ
-   <span class="hljs-operator">|</span> READ COMMITTED
-   <span class="hljs-operator">|</span> READ UNCOMMITTED
-   <span class="hljs-operator">|</span> SERIALIZABLE
-&#125;
-
-access_mode: &#123;
-     READ WRITE
-   <span class="hljs-operator">|</span> READ <span class="hljs-keyword">ONLY</span>
-&#125;</code></pre>
+<h3 id="设置事务"><a href="#设置事务" class="headerlink" title="设置事务"></a>设置事务</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> [<span class="keyword">GLOBAL</span> <span class="operator">|</span> SESSION] TRANSACTION</span><br><span class="line">    transaction_characteristic [, transaction_characteristic] ...</span><br><span class="line"></span><br><span class="line">transaction_characteristic: &#123;</span><br><span class="line">    ISOLATION LEVEL level</span><br><span class="line">  <span class="operator">|</span> access_mode</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">level: &#123;</span><br><span class="line">     REPEATABLE READ</span><br><span class="line">   <span class="operator">|</span> READ COMMITTED</span><br><span class="line">   <span class="operator">|</span> READ UNCOMMITTED</span><br><span class="line">   <span class="operator">|</span> SERIALIZABLE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">access_mode: &#123;</span><br><span class="line">     READ WRITE</span><br><span class="line">   <span class="operator">|</span> READ <span class="keyword">ONLY</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ol>
 <li><p>设置事务隔离级别</p>

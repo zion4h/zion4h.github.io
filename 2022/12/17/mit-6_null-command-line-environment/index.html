@@ -45,18 +45,7 @@
 <h2 id="Job控制"><a href="#Job控制" class="headerlink" title="Job控制"></a>Job控制</h2><p>当我们需要中断 <strong>Job</strong> 时，通常是因为命令完成时间过长（比如因为网络问题导致<code>brew update</code>卡住），通常会按下<code>&lt;Ctrl c&gt;</code>。这个组合键本质上是让 <strong>Shell</strong> 向当前进程传递信号<code>SIGINT</code>。</p>
 <p><strong>Shell</strong> 使用一种称为 <strong>信号</strong> 的 <strong>unix通信机制</strong> 向进程传递信息从而改变执行流程，因此信号是 <strong>软件中断</strong>。</p>
 <h3 id="杀死进程"><a href="#杀死进程" class="headerlink" title="杀死进程"></a>杀死进程</h3><p><strong>杀死进程</strong> 有两种方式，键入<code>Ctrl c</code>从而发送<code>SIGINT</code>信号给进程，或者键入<code>Ctrl \</code>从而发送<code>SIGQUIT</code>信号给进程。</p>
-<pre><code class="hljs python"><span class="hljs-comment">#! /usr.bin/env python</span>
-<span class="hljs-keyword">import</span> signal, time
-
-<span class="hljs-keyword">def</span> <span class="hljs-title function_">handler</span>(<span class="hljs-params">signum, time</span>):
-    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\ni got a sigint, but i am not stopping&quot;</span>)
-
-signal.signal(signal.sigint, handler)
-i = <span class="hljs-number">0</span>
-<span class="hljs-keyword">while</span> true:
-    time.sleep(<span class="hljs-number">.1</span>)
-    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\r&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(i), end=<span class="hljs-string">&quot;&quot;</span>)
-    i += <span class="hljs-number">1</span></code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr.bin/env python</span></span><br><span class="line"><span class="keyword">import</span> signal, time</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">handler</span>(<span class="params">signum, time</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\ni got a sigint, but i am not stopping&quot;</span>)</span><br><span class="line"></span><br><span class="line">signal.signal(signal.sigint, handler)</span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> true:</span><br><span class="line">    time.sleep(<span class="number">.1</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\r&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i), end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/Kill-process.png" alt="kill process"></p>
 <p>当然，一种更优雅直接的方式是向进程传递<code>SIGTERM</code>信号，利用<a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/kill.1.html">kill</a>命令向进程发送信号。</p>
@@ -95,24 +84,10 @@ i = <span class="hljs-number">0</span>
 </ul>
 <p>这里有关于<a target="_blank" rel="noopener" href="https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/">tmux</a>的快速教程。</p>
 <h2 id="Aliases"><a href="#Aliases" class="headerlink" title="Aliases"></a>Aliases</h2><p><strong>Shell</strong> 支持 <strong>Aliasing</strong>，即用一个较短的指令作为一个长命令的别名从而减少我们的工作量，通常的用法如下：</p>
-<pre><code class="hljs sh"><span class="hljs-built_in">alias</span> alias_name=<span class="hljs-string">&quot;command_to_alias arg1 arg2&quot;</span></code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> alias_name=<span class="string">&quot;command_to_alias arg1 arg2&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>比较常用过的设定有：</p>
-<pre><code class="hljs sh"><span class="hljs-comment"># User specific aliases and functions</span>
-<span class="hljs-built_in">alias</span> ll=<span class="hljs-string">&quot;ls -lh&quot;</span>
-
-<span class="hljs-built_in">alias</span> gs=<span class="hljs-string">&quot;git status&quot;</span>
-<span class="hljs-built_in">alias</span> gc=<span class="hljs-string">&quot;git commit&quot;</span>
-<span class="hljs-built_in">alias</span> v=<span class="hljs-string">&quot;vim&quot;</span>
-
-<span class="hljs-built_in">alias</span> sl=<span class="hljs-built_in">ls</span>
-
-<span class="hljs-built_in">alias</span> <span class="hljs-built_in">mv</span>=<span class="hljs-string">&quot;mv -i&quot;</span>           <span class="hljs-comment"># -i prompts before overwrite</span>
-<span class="hljs-built_in">alias</span> <span class="hljs-built_in">mkdir</span>=<span class="hljs-string">&quot;mkdir -p&quot;</span>     <span class="hljs-comment"># -p make parent dirs as needed</span>
-<span class="hljs-built_in">alias</span> <span class="hljs-built_in">df</span>=<span class="hljs-string">&quot;df -h&quot;</span>           <span class="hljs-comment"># -h prints human readable format</span>
-
-<span class="hljs-built_in">alias</span> la=<span class="hljs-string">&quot;ls -A&quot;</span>
-<span class="hljs-built_in">alias</span> lla=<span class="hljs-string">&quot;la -l&quot;</span></code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># User specific aliases and functions</span></span><br><span class="line"><span class="built_in">alias</span> ll=<span class="string">&quot;ls -lh&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">alias</span> gs=<span class="string">&quot;git status&quot;</span></span><br><span class="line"><span class="built_in">alias</span> gc=<span class="string">&quot;git commit&quot;</span></span><br><span class="line"><span class="built_in">alias</span> v=<span class="string">&quot;vim&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">alias</span> sl=<span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">mv</span>=<span class="string">&quot;mv -i&quot;</span>           <span class="comment"># -i prompts before overwrite</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">mkdir</span>=<span class="string">&quot;mkdir -p&quot;</span>     <span class="comment"># -p make parent dirs as needed</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">df</span>=<span class="string">&quot;df -h&quot;</span>           <span class="comment"># -h prints human readable format</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">alias</span> la=<span class="string">&quot;ls -A&quot;</span></span><br><span class="line"><span class="built_in">alias</span> lla=<span class="string">&quot;la -l&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>如果要将别名持久化，我们需要将其配置到 <strong>shell</strong> 启动文件中，比如 <strong>.bashrc</strong> 或者 <strong>.zshrc</strong>，这些文件又被称为 <strong>Dotfile</strong>。</p>
 <h2 id="Dotfiles"><a href="#Dotfiles" class="headerlink" title="Dotfiles"></a>Dotfiles</h2><p>许多程序都会用一个以<code>.</code>开头的文本文件作为配置文件，我们称这些文件为 <strong>Dotfiles</strong>，当我们输入ls时它们默认隐藏。<strong>Shell</strong> 在启动时会读取很多文件并加载其配置，根据 <strong>Shell</strong> 的不同，无论是登录还是交互都很复杂，<a target="_blank" rel="noopener" href="https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html">这里</a>是关于这个问题的参考。</p>
@@ -124,16 +99,13 @@ i = <span class="hljs-number">0</span>
 <li><a target="_blank" rel="noopener" href="https://dotfiles.github.io/">others</a>有一些很棒的资料可以参考。</li>
 </ul>
 <h2 id="远程访问"><a href="#远程访问" class="headerlink" title="远程访问"></a>远程访问</h2><p>我们可以通过使用 <em>Secure Shell</em> 即 <strong>SSH</strong> 来远程连接计算机，通常输入这样的一条指令:</p>
-<pre><code class="hljs sh">ssh foo@bar.mid.edu</code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh foo@bar.mid.edu</span><br></pre></td></tr></table></figure>
 
 <p>这里我们尝试以用户 <strong>foo</strong> 去登录服务器<code>bar.mid.edu</code>，服务器既可以用 <strong>URL</strong> 表示也可以用 <strong>IP</strong> 表示。我们利用<code>ssh-keygen</code>生成密钥对，当有多套密钥对时可以用<code>ssh-agent</code>去管理。</p>
-<pre><code class="hljs sh">ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519</code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519</span><br></pre></td></tr></table></figure>
 
 <p>为了不用每次都输入密码这么麻烦，我们可以将我们的公钥复制到远程计算机，因为 <strong>ssh</strong> 会检查<code>.ssh/authorized_keys</code>来决定哪些客户可以直接连接：</p>
-<pre><code class="hljs sh"><span class="hljs-comment"># 直接复制文件</span>
-<span class="hljs-built_in">cat</span> .ssh/id_ed25519.pub | ssh foobar@remote <span class="hljs-string">&#x27;cat &gt;&gt; ~/.ssh/authorized_keys&#x27;</span>
-<span class="hljs-comment"># ssh-copy-id</span>
-ssh-copy-id -i .ssh/id_ed25519 foobar@remote</code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 直接复制文件</span></span><br><span class="line"><span class="built_in">cat</span> .ssh/id_ed25519.pub | ssh foobar@remote <span class="string">&#x27;cat &gt;&gt; ~/.ssh/authorized_keys&#x27;</span></span><br><span class="line"><span class="comment"># ssh-copy-id</span></span><br><span class="line">ssh-copy-id -i .ssh/id_ed25519 foobar@remote</span><br></pre></td></tr></table></figure>
 
 <p>当我们想通过<code>ssh</code>复制文件时，可以用<code>scp</code>命令<code>scp path/to/local_file remote_host:path/to/remote_file</code></p>
 <h2 id="Shell-amp-Frameworks"><a href="#Shell-amp-Frameworks" class="headerlink" title="Shell &amp; Frameworks"></a>Shell &amp; Frameworks</h2><p><code>TODO</code></p>
