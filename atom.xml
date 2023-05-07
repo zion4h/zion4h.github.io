@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-05-03T07:35:41.646Z</updated>
+  <updated>2023-05-07T13:04:07.568Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MIT 6.Null 安全和密码学</title>
+    <link href="https://zion4h.github.io/2023/05/04/mit-6-null-metaprogramming/"/>
+    <id>https://zion4h.github.io/2023/05/04/mit-6-null-metaprogramming/</id>
+    <published>2023-05-04T14:16:10.000Z</published>
+    <updated>2023-05-07T13:04:07.568Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;标题很唬人，但实际上我们并不需要去学习如何设计安全系统或密码协议，而只需要理解和实际编程相关的东西，比如在 Git 中使用 &lt;strong&gt;Hash 函数&lt;/strong&gt;或在 SSH 中使用 &lt;strong&gt;KDF&lt;/strong&gt; 和&lt;strong&gt;对称非对称加密&lt;/strong&gt;，密码学突然就接地气了。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/"/>
+    
+    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-Null/"/>
+    
+    
+    <category term="shell" scheme="https://zion4h.github.io/tags/shell/"/>
+    
+    <category term="security" scheme="https://zion4h.github.io/tags/security/"/>
+    
+    <category term="cryptography" scheme="https://zion4h.github.io/tags/cryptography/"/>
+    
+  </entry>
   
   <entry>
     <title>MIT 6.Null 调试和性能分析</title>
@@ -442,29 +469,6 @@
     
     
     <summary type="html">&lt;p&gt;本文主要叙述了如何以脚本方式去使用 &lt;strong&gt;bash&lt;/strong&gt;，并介绍了大量常用的 &lt;strong&gt;Shell 工具&lt;/strong&gt;。很多工具并非系统自带，需要手动下载甚至手动配置，如果是 &lt;strong&gt;Mac OS&lt;/strong&gt; 的话，使用&lt;code&gt;brew&lt;/code&gt;一键安装即可。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/"/>
-    
-    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-Null/"/>
-    
-    
-    <category term="shell" scheme="https://zion4h.github.io/tags/shell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MIT 6.Null 如何玩转Shell</title>
-    <link href="https://zion4h.github.io/2022/12/12/mit-6_null-shell/"/>
-    <id>https://zion4h.github.io/2022/12/12/mit-6_null-shell/</id>
-    <published>2022-12-12T05:22:58.000Z</published>
-    <updated>2023-04-30T13:17:59.165Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://missing.csail.mit.edu/&quot;&gt;6.Null&lt;/a&gt;是 &lt;strong&gt;MIT&lt;/strong&gt; 专为介绍常用计算机工具所开设的一门课程。我在过去的工作和学习过程中可能已经接触过 &lt;strong&gt;git&lt;/strong&gt;、&lt;strong&gt;vim&lt;/strong&gt; 等工具，也会使用一些简单的命令行指令比如 &lt;code&gt;cd&lt;/code&gt;、&lt;code&gt;cp&lt;/code&gt;、&lt;code&gt;mv&lt;/code&gt; 等，但远远谈不上熟练。&lt;/p&gt;</summary>
     
     
     
