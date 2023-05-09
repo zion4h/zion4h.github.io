@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-05-07T13:04:07.568Z</updated>
+  <updated>2023-05-07T14:06:39.426Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -17,9 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>MIT 6.Null 大杂烩</title>
+    <link href="https://zion4h.github.io/2023/05/07/mit-6-null-potpourri/"/>
+    <id>https://zion4h.github.io/2023/05/07/mit-6-null-potpourri/</id>
+    <published>2023-05-07T13:54:31.000Z</published>
+    <updated>2023-05-07T14:06:39.426Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本篇大杂烩包括键盘重映射、守护进程、FUSE、备份、APIs、命令行模板、窗口管理器、VPNs、Markdown等。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/"/>
+    
+    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-Null/"/>
+    
+    
+    <category term="shell" scheme="https://zion4h.github.io/tags/shell/"/>
+    
+  </entry>
+  
+  <entry>
     <title>MIT 6.Null 安全和密码学</title>
-    <link href="https://zion4h.github.io/2023/05/04/mit-6-null-metaprogramming/"/>
-    <id>https://zion4h.github.io/2023/05/04/mit-6-null-metaprogramming/</id>
+    <link href="https://zion4h.github.io/2023/05/04/mit-6-null-security/"/>
+    <id>https://zion4h.github.io/2023/05/04/mit-6-null-security/</id>
     <published>2023-05-04T14:16:10.000Z</published>
     <updated>2023-05-07T13:04:07.568Z</updated>
     
@@ -287,7 +310,7 @@
     <link href="https://zion4h.github.io/2023/03/31/opensource-license-intro/"/>
     <id>https://zion4h.github.io/2023/03/31/opensource-license-intro/</id>
     <published>2023-03-30T16:24:42.000Z</published>
-    <updated>2023-05-03T08:05:41.916Z</updated>
+    <updated>2023-05-07T13:50:08.554Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;strong&gt;开源促进会 OSI&lt;/strong&gt; 是&lt;strong&gt;开源定义 OSD&lt;/strong&gt; 的管理者，由 Bruce Perens 和 Eric S. Raymond 创立于 1998 年，我们寻常用的开源协议都需要该组织认可，要求符合 &lt;strong&gt;OSD&lt;/strong&gt; 定义。&lt;/p&gt;</summary>
@@ -457,29 +480,6 @@
     <category term="shell" scheme="https://zion4h.github.io/tags/shell/"/>
     
     <category term="vim" scheme="https://zion4h.github.io/tags/vim/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MIT 6.Null Shell 脚本编程和常用工具</title>
-    <link href="https://zion4h.github.io/2022/12/12/mit-6_null-shell-tools-and-scripting/"/>
-    <id>https://zion4h.github.io/2022/12/12/mit-6_null-shell-tools-and-scripting/</id>
-    <published>2022-12-12T14:21:35.000Z</published>
-    <updated>2023-04-30T13:18:00.022Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;本文主要叙述了如何以脚本方式去使用 &lt;strong&gt;bash&lt;/strong&gt;，并介绍了大量常用的 &lt;strong&gt;Shell 工具&lt;/strong&gt;。很多工具并非系统自带，需要手动下载甚至手动配置，如果是 &lt;strong&gt;Mac OS&lt;/strong&gt; 的话，使用&lt;code&gt;brew&lt;/code&gt;一键安装即可。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/"/>
-    
-    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-Null/"/>
-    
-    
-    <category term="shell" scheme="https://zion4h.github.io/tags/shell/"/>
     
   </entry>
   
