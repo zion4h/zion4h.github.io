@@ -50,11 +50,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 如果实在感到迷惑，可以看下面**阮一峰**制作的一图流：
 ![Open Source License Choice](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/open-source-license.png)
 
-## CC
+## Creative Commons
 
-`TODO`
+[Creative Commons 许可证](https://creativecommons.org/licenses/)是允许免费分发其他受版权保护的“作品”的几种公共版权许可证之一。你只需要做出[两个选择](https://creativecommons.org/choose/)，是否共享以及是否商用。
 
-知识共享署名-相同方式共享 4.0 国际许可协议
+![署名-非商业性使用-相同方式共享 4.0 国际](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230507214354.png)
 
 ## 参考
 
