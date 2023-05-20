@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-05-15T16:03:46.739Z</updated>
+  <updated>2023-05-20T05:42:38.948Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -21,10 +21,10 @@
     <link href="https://zion4h.github.io/2023/05/07/mit-6-null-potpourri/"/>
     <id>https://zion4h.github.io/2023/05/07/mit-6-null-potpourri/</id>
     <published>2023-05-07T13:54:31.000Z</published>
-    <updated>2023-05-15T16:03:46.739Z</updated>
+    <updated>2023-05-20T05:42:38.948Z</updated>
     
     
-    <summary type="html">&lt;p&gt;本篇大杂烩包括键盘重映射、守护进程、FUSE、备份、APIs、命令行模板、窗口管理器、VPNs、Markdown等。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;本篇大杂烩包括键盘重映射、守护进程、FUSE、备份、APIs、命令行模板、窗口管理器、VPNs、Markdown 等。&lt;/p&gt;</summary>
     
     
     
@@ -146,7 +146,7 @@
     <link href="https://zion4h.github.io/2023/04/18/mit-6_null-git/"/>
     <id>https://zion4h.github.io/2023/04/18/mit-6_null-git/</id>
     <published>2023-04-18T06:20:22.000Z</published>
-    <updated>2023-05-03T09:14:44.631Z</updated>
+    <updated>2023-05-16T15:57:28.261Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;em&gt;Version Control Systems&lt;/em&gt; (VCSs) 版本控制系统&lt;/strong&gt; 是专门用来跟踪源码变动的工具。&lt;/p&gt;
