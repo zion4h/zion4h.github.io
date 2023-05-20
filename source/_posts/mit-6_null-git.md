@@ -223,7 +223,7 @@ o <-- o <-- o <-- o <---- o
 - [How to explain git in simple words?](https://xosh.org/explain-git-in-simple-words/)
 - [Learn Git Branching](https://learngitbranching.js.org/?locale=zh_CN) Git 教学游戏
 
-## 实践
+## 实践 1 本地操作
 
 ### 添加一个 animal.py
 
