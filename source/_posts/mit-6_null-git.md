@@ -214,6 +214,12 @@ o <-- o <-- o <-- o <---- o
 
 ### Rebase
 
+TODO
+
+### cherry-pick
+
+TODO
+
 ## Resources
 
 - [Pro Git](https://git-scm.com/book/en/v2) 很重要的一本书
@@ -269,6 +275,26 @@ if __name__ == '__main__':
 代码冲突解决后记得将冲突文件添加到暂存区，最后键入 `git merge --continue`，解决！
 
 ![over](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230423165822.png)
+
+## 实践 2 远程访问
+
+### 绑定远程项目
+
+将本地 git 项目和远程项目绑定，如果是从远端拷贝到本地，那直接克隆就好。但若是先建立的本地项目，想要发送到远程，则需要配置 remote，再 push。
+
+![添加远程仓库](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230523180410.png)
+
+### 同步更新
+
+你在修改代码的同时，别人也在修改代码，因次我们除了保持本地与远程同名分支代码的同步外，想要合并到主干分支，务必请求 pull request 简称 PR。
+
+![提交 PR](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230523182656.png)
+
+上传到远端分支 Bob 后，我们可以提交 PR，然后仓库管理员会审核，如果有冲突的代码会手动解决冲突。
+
+![远程审核](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230523182951.png)
+
+![手动修改并通过](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230523183208.png)
 
 ## 参考
 

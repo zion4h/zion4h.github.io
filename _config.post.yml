@@ -1,8 +1,5 @@
 widgets:
     -
-        type: tags
-        position: left
-    -
         position: left
         type: toc
         index: true
