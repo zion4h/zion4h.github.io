@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-05-20T05:42:38.948Z</updated>
+  <updated>2023-05-23T09:35:50.100Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -15,6 +15,71 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>单源最短路径问题</title>
+    <link href="https://zion4h.github.io/2023/05/21/algorithm-shortest-path-1/"/>
+    <id>https://zion4h.github.io/2023/05/21/algorithm-shortest-path-1/</id>
+    <published>2023-05-21T12:34:23.000Z</published>
+    <updated>2023-05-23T09:35:50.100Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;当你掏出手机打开高德地图，搜索从“五角场”到“江浦公园”的最短路线，&lt;strong&gt;单源最短路径&lt;/strong&gt;就是高效解决这种问题的算法。当然，我其实瞬间就想到了很多其他的点子，比如直接在卫星地图上测量实际距离，又或者将一些路标（比如地铁口、学校、医院等）之间的最短路线（或者最优路线，虽然二者有时不相等，比如“&lt;em&gt;我喜欢绿化更高的出行线路，它让我心情好&lt;/em&gt;”）提前记录好，然后只需要测量起始点到最近路标的最近路线即可。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="算法" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="算法" scheme="https://zion4h.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="最短路径" scheme="https://zion4h.github.io/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>并发编程</title>
+    <link href="https://zion4h.github.io/2023/05/21/concurrent-programming/"/>
+    <id>https://zion4h.github.io/2023/05/21/concurrent-programming/</id>
+    <published>2023-05-21T12:23:03.000Z</published>
+    <updated>2023-05-21T12:25:14.014Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;一个简单的比方，人不能同时吃饭喝酒，不然你就会呛着。并发的意思就是，你可以抿一口酒再吃一口菜，这样酒也喝了，菜也尝了，就很好。而并行的意思就是，你是一个长着两张嘴的人，真的能够同时畅饮纯生并大口嚼着牛排。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="并发" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91/"/>
+    
+    
+    <category term="并发" scheme="https://zion4h.github.io/tags/%E5%B9%B6%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>读《黑客与画家》有感</title>
+    <link href="https://zion4h.github.io/2023/05/20/read-hackers-and-painters/"/>
+    <id>https://zion4h.github.io/2023/05/20/read-hackers-and-painters/</id>
+    <published>2023-05-20T10:25:06.000Z</published>
+    <updated>2023-05-20T14:43:19.344Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;我大学的时候有翻过几页这本书，但阅读体验不好没看多少。虽然很多人吹捧它，可是我并不想在这种书上浪费时间，因为读它跟读《Java 编程思想》一样让我感到吃力，而这本书并不会给我找工作提供任何帮助。后来，还有学长推荐《摩托车与禅》，我都将它们归类为一个靠创业挣了钱的美国人专门拍了部自己的阿甘正传，明显不适合我。但最近，因为编程随想的一篇文章 &lt;a href=&quot;https://program-think.blogspot.com/2012/05/weekly-share-5.html&quot;&gt;每周转载：IT 大牛谈编程语言（网文 3 篇）&lt;/a&gt;，让我开始对书的作者产生了浓厚的兴趣。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="评论" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E8%AF%84%E8%AE%BA/"/>
+    
+    
+    <category term="黑客文化" scheme="https://zion4h.github.io/tags/%E9%BB%91%E5%AE%A2%E6%96%87%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>MIT 6.Null 大杂烩</title>
@@ -146,7 +211,7 @@
     <link href="https://zion4h.github.io/2023/04/18/mit-6_null-git/"/>
     <id>https://zion4h.github.io/2023/04/18/mit-6_null-git/</id>
     <published>2023-04-18T06:20:22.000Z</published>
-    <updated>2023-05-16T15:57:28.261Z</updated>
+    <updated>2023-05-23T11:44:20.642Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;em&gt;Version Control Systems&lt;/em&gt; (VCSs) 版本控制系统&lt;/strong&gt; 是专门用来跟踪源码变动的工具。&lt;/p&gt;
@@ -411,75 +476,6 @@
     
     
     <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2022 年 12 月</title>
-    <link href="https://zion4h.github.io/2023/01/01/life-diary-22-12/"/>
-    <id>https://zion4h.github.io/2023/01/01/life-diary-22-12/</id>
-    <published>2023-01-01T11:24:24.000Z</published>
-    <updated>2023-04-30T13:18:44.242Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;我现在可以确乎无疑地说和不喜欢的人抱在一起交换口水是最无聊的事情，虽然我的性需求很旺盛，但我宁愿 DIY，我没有占有欲了。我对陌生女人的曼妙胴体逐渐免疫，并逐渐学会用一种欣赏的角度去理解和看待，那种源于动物性的单调情欲于我而言实在太过寡淡。我所真正期待的，是那些艺术的、深度的、多文化的情感碰撞。之前的我甚至会有一些收集癖，但现在发现其实没必要。我的灵魂深处告诉我，我不喜欢这些乱七八糟的东西，这个答案无关乎道德，体验和探索后我理解了真正的自我。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
-    
-    
-    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MIT 6.Null 命令行环境部署</title>
-    <link href="https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/"/>
-    <id>https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/</id>
-    <published>2022-12-17T04:48:33.000Z</published>
-    <updated>2023-04-30T13:18:01.311Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;长期使用 &lt;strong&gt;Shell&lt;/strong&gt; 的程序员应该如何通过优化工作流来节约时间呢？我想可以从以下四点出发，一是提高任务并行度，通过 &lt;strong&gt;Job控制&lt;/strong&gt; 和 &lt;strong&gt;TMUX&lt;/strong&gt; 配合；二是简化或优化命令，通过 &lt;strong&gt;Aliase&lt;/strong&gt; 和 &lt;strong&gt;Dotfiles&lt;/strong&gt; 去配置实现；三是远程访问；四是美化 &lt;strong&gt;Shell&lt;/strong&gt; 界面，良好的ui也能极大提高工作效率。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/"/>
-    
-    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-Null/"/>
-    
-    
-    <category term="shell" scheme="https://zion4h.github.io/tags/shell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MIT 6.Null Vim</title>
-    <link href="https://zion4h.github.io/2022/12/16/mit-6_null-vim/"/>
-    <id>https://zion4h.github.io/2022/12/16/mit-6_null-vim/</id>
-    <published>2022-12-16T07:36:26.000Z</published>
-    <updated>2023-04-30T13:17:55.230Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;据 &lt;a href=&quot;https://survey.stackoverflow.co/2022/#integrated-development-environment&quot;&gt;Stack Overflow&lt;/a&gt; 2022 年统计，&lt;a href=&quot;https://code.visualstudio.com/&quot;&gt;Visual Studio Code&lt;/a&gt; 是全平台最流行的编辑器，而 &lt;a href=&quot;https://www.vim.org/&quot;&gt;Vim&lt;/a&gt; 则是最流行的命令行文本编辑器。&lt;strong&gt;Vim&lt;/strong&gt; 源于 1976 年的 &lt;strong&gt;Vi 编辑器&lt;/strong&gt;，许多工具都支持 &lt;strong&gt;Vim&lt;/strong&gt; 仿真模式（比如 &lt;strong&gt;Visual Studio Code&lt;/strong&gt;），如果点进 &lt;strong&gt;Vim&lt;/strong&gt; 官网，你会看到一个巨古老的界面，硬核气息可谓是扑面而来。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="Labs" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/"/>
-    
-    <category term="MIT 6.Null" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-Null/"/>
-    
-    
-    <category term="shell" scheme="https://zion4h.github.io/tags/shell/"/>
-    
-    <category term="vim" scheme="https://zion4h.github.io/tags/vim/"/>
     
   </entry>
   
