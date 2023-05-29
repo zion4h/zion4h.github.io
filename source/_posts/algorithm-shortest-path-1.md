@@ -90,3 +90,7 @@ def dijkstra(G, W, s):
 代码中的 `Q` 是一个**优先队列**，而 `extract_min` 方法从 `Q` 中找出距离最短的点，从队列移除并返回该结点。
 
 顺带八卦一下，**dijkstra** 中的 **ij** 其实是 **y** 上添了俩点，但当时打印不出来这个字母于是用 **i 和 j** 做了替换。
+
+## 题目
+
+[2699. 修改图中的边权](https://leetcode.cn/problems/modify-graph-edge-weights/)
