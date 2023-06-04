@@ -9,3 +9,5 @@ tags:
 toc: true
 ---
 介绍如何解析Maven的POM文件。
+
+参考 [Introduction to the POM](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html)
