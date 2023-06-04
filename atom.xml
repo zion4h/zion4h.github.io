@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-06-04T07:37:20.942Z</updated>
+  <updated>2023-06-04T14:50:15.702Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2023 年 5 月</title>
+    <link href="https://zion4h.github.io/2023/06/04/life-diary-23-5/"/>
+    <id>https://zion4h.github.io/2023/06/04/life-diary-23-5/</id>
+    <published>2023-06-04T14:43:50.000Z</published>
+    <updated>2023-06-04T14:50:15.702Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;达尔文的进化论直到今天仍被有些人奉为圭臬，两百年前的进步思想如果仍觉得不过时那显然该淘汰的是持有这种偏见的人本身。我并不关心它在生物学上的争议，而是想批评它代表的哲学观以及政治思想的腐朽。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>数位 DP</title>
@@ -42,7 +63,7 @@
     <link href="https://zion4h.github.io/2023/05/28/maven-structure/"/>
     <id>https://zion4h.github.io/2023/05/28/maven-structure/</id>
     <published>2023-05-28T14:29:57.000Z</published>
-    <updated>2023-06-01T10:21:01.899Z</updated>
+    <updated>2023-06-04T14:16:03.648Z</updated>
     
     
       
@@ -215,13 +236,10 @@
     <link href="https://zion4h.github.io/2023/05/01/life-diary-23-4/"/>
     <id>https://zion4h.github.io/2023/05/01/life-diary-23-4/</id>
     <published>2023-04-30T16:40:53.000Z</published>
-    <updated>2023-04-30T17:53:28.944Z</updated>
+    <updated>2023-06-04T14:47:30.648Z</updated>
     
     
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;一流举子二流医，三星四卜五堪舆，唯有相家称第六，七书八画九琴棋。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;给当今社会把把脉，当个“二流医”又何妨。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;“一流举子二流医，三星四卜五堪舆，唯有相家称第六，七书八画九琴棋。”给当今社会把把脉，当个“二流医”又何妨。&lt;/p&gt;</summary>
     
     
     
@@ -460,29 +478,6 @@
     <category term="网络" scheme="https://zion4h.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
     
     <category term="计算机基础" scheme="https://zion4h.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis 基础扫盲</title>
-    <link href="https://zion4h.github.io/2023/03/01/redis-intro/"/>
-    <id>https://zion4h.github.io/2023/03/01/redis-intro/</id>
-    <published>2023-03-01T13:29:32.000Z</published>
-    <updated>2023-04-30T13:13:06.645Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;首先，我们要对 Redis 建立一个最基本的印象，&lt;strong&gt;K/V&lt;/strong&gt;，&lt;strong&gt;NoSQL&lt;/strong&gt;，&lt;strong&gt;内存数据库&lt;/strong&gt;，&lt;strong&gt;单线程&lt;/strong&gt;。另外，Redis 还是&lt;strong&gt;开源&lt;/strong&gt;的，基于 &lt;strong&gt;BSD 协议&lt;/strong&gt;（这个协议允许商用），用 &lt;strong&gt;ANSI C&lt;/strong&gt; 语言编写而成，能够在大部分 &lt;strong&gt;POSIX 系统&lt;/strong&gt;上运行，当然最常用的就是 Linux 和 OS X 系统了。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="IT" scheme="https://zion4h.github.io/categories/IT/"/>
-    
-    <category term="数据库" scheme="https://zion4h.github.io/categories/IT/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    
-    <category term="redis" scheme="https://zion4h.github.io/tags/redis/"/>
-    
-    <category term="数据库" scheme="https://zion4h.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
