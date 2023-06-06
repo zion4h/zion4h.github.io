@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-06-04T14:50:15.702Z</updated>
+  <updated>2023-06-06T13:37:14.809Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>并查集</title>
+    <link href="https://zion4h.github.io/2023/06/06/algorithm-dsu/"/>
+    <id>https://zion4h.github.io/2023/06/06/algorithm-dsu/</id>
+    <published>2023-06-06T13:26:54.000Z</published>
+    <updated>2023-06-06T13:37:14.809Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;算法常见题之&lt;strong&gt;并查集&lt;/strong&gt;或者不相交集合数据结构 &lt;strong&gt;DSU&lt;/strong&gt;，当有一组集合 n 个元素，假设我们经常需要：（1）判定某个元素属于哪个集合，（2）将两个集合合并成一个集合。那么，我们只需要维护一个&lt;strong&gt;并查集&lt;/strong&gt;即可。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="算法" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="算法" scheme="https://zion4h.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="并查集" scheme="https://zion4h.github.io/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/"/>
+    
+  </entry>
   
   <entry>
     <title>2023 年 5 月</title>
@@ -63,16 +86,10 @@
     <link href="https://zion4h.github.io/2023/05/28/maven-structure/"/>
     <id>https://zion4h.github.io/2023/05/28/maven-structure/</id>
     <published>2023-05-28T14:29:57.000Z</published>
-    <updated>2023-06-04T15:07:50.586Z</updated>
+    <updated>2023-06-06T14:05:49.927Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html"></summary>
-        
-      
+    <summary type="html">&lt;p&gt;本文将简单介绍如何解析 Maven 的 目录结构和 POM 文件结构。&lt;/p&gt;</summary>
     
     
     
@@ -88,7 +105,7 @@
     <link href="https://zion4h.github.io/2023/05/21/algorithm-shortest-path-1/"/>
     <id>https://zion4h.github.io/2023/05/21/algorithm-shortest-path-1/</id>
     <published>2023-05-21T12:34:23.000Z</published>
-    <updated>2023-05-23T12:45:18.656Z</updated>
+    <updated>2023-06-06T13:29:09.881Z</updated>
     
     
     <summary type="html">&lt;p&gt;当你掏出手机打开高德地图，搜索从“五角场”到“江浦公园”的最短路线，&lt;strong&gt;单源最短路径&lt;/strong&gt;就是高效解决这种问题的算法。当然，我其实瞬间就想到了很多其他的点子，比如直接在卫星地图上测量实际距离，又或者将一些路标（比如地铁口、学校、医院等）之间的最短路线（或者最优路线，虽然二者有时不相等，比如“&lt;em&gt;我喜欢绿化更高的出行线路，它让我心情好&lt;/em&gt;”）提前记录好，然后只需要测量起始点到最近路标的最近路线即可。&lt;/p&gt;</summary>
@@ -102,7 +119,7 @@
     
     <category term="算法" scheme="https://zion4h.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
-    <category term="最短路径" scheme="https://zion4h.github.io/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/"/>
+    <category term="最短路" scheme="https://zion4h.github.io/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF/"/>
     
   </entry>
   
@@ -455,29 +472,6 @@
     
     
     <category term="开源" scheme="https://zion4h.github.io/tags/%E5%BC%80%E6%BA%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>计算机网络 HTTPS</title>
-    <link href="https://zion4h.github.io/2023/03/27/network-https/"/>
-    <id>https://zion4h.github.io/2023/03/27/network-https/</id>
-    <published>2023-03-27T14:50:39.000Z</published>
-    <updated>2023-04-30T13:13:54.021Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;strong&gt;HTTPS&lt;/strong&gt; 主要解决了 &lt;strong&gt;HTTP&lt;/strong&gt; 的两个问题，第一是不再明文传输避免传输的内容被偷窥，第二个是提高了通信传输的安全性防止内容被篡改。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="IT" scheme="https://zion4h.github.io/categories/IT/"/>
-    
-    <category term="网络" scheme="https://zion4h.github.io/categories/IT/%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="网络" scheme="https://zion4h.github.io/tags/%E7%BD%91%E7%BB%9C/"/>
-    
-    <category term="计算机基础" scheme="https://zion4h.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
