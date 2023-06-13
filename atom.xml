@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-06-06T13:37:14.809Z</updated>
+  <updated>2023-06-10T12:23:23.735Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -17,11 +17,65 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>最小生成树</title>
+    <link href="https://zion4h.github.io/2023/06/10/algirithm-mst/"/>
+    <id>https://zion4h.github.io/2023/06/10/algirithm-mst/</id>
+    <published>2023-06-10T09:06:03.000Z</published>
+    <updated>2023-06-10T12:23:23.735Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;strong&gt;最小生成树&lt;/strong&gt;源于最短电路连接，我们希望连接所有组件的针脚，同时又巴不得连线最短。由于连接了全部点，同时无环，因此又叫最小树。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="算法" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="算法" scheme="https://zion4h.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="MST" scheme="https://zion4h.github.io/tags/MST/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++ 入门/扫盲</title>
+    <link href="https://zion4h.github.io/2023/06/09/programming-intro-cpp/"/>
+    <id>https://zion4h.github.io/2023/06/09/programming-intro-cpp/</id>
+    <published>2023-06-09T00:18:00.000Z</published>
+    <updated>2023-06-10T12:27:24.678Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html"></summary>
+        
+      
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="C++" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/C/"/>
+    
+    <category term="扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/C/%E6%89%AB%E7%9B%B2/"/>
+    
+    
+    <category term="c++" scheme="https://zion4h.github.io/tags/c/"/>
+    
+    <category term="入门" scheme="https://zion4h.github.io/tags/%E5%85%A5%E9%97%A8/"/>
+    
+  </entry>
+  
+  <entry>
     <title>并查集</title>
     <link href="https://zion4h.github.io/2023/06/06/algorithm-dsu/"/>
     <id>https://zion4h.github.io/2023/06/06/algorithm-dsu/</id>
     <published>2023-06-06T13:26:54.000Z</published>
-    <updated>2023-06-06T13:37:14.809Z</updated>
+    <updated>2023-06-10T09:30:30.349Z</updated>
     
     
     <summary type="html">&lt;p&gt;算法常见题之&lt;strong&gt;并查集&lt;/strong&gt;或者不相交集合数据结构 &lt;strong&gt;DSU&lt;/strong&gt;，当有一组集合 n 个元素，假设我们经常需要：（1）判定某个元素属于哪个集合，（2）将两个集合合并成一个集合。那么，我们只需要维护一个&lt;strong&gt;并查集&lt;/strong&gt;即可。&lt;/p&gt;</summary>
@@ -128,7 +182,7 @@
     <link href="https://zion4h.github.io/2023/05/21/concurrent-programming/"/>
     <id>https://zion4h.github.io/2023/05/21/concurrent-programming/</id>
     <published>2023-05-21T12:23:03.000Z</published>
-    <updated>2023-06-05T14:54:15.333Z</updated>
+    <updated>2023-06-08T15:02:10.508Z</updated>
     
     
     <summary type="html">&lt;blockquote&gt;
@@ -430,48 +484,6 @@
     
     
     <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL 扫盲</title>
-    <link href="https://zion4h.github.io/2023/03/31/mysql-intro/"/>
-    <id>https://zion4h.github.io/2023/03/31/mysql-intro/</id>
-    <published>2023-03-31T14:59:20.000Z</published>
-    <updated>2023-04-30T13:15:08.277Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;strong&gt;MySQL&lt;/strong&gt; 是一个 &lt;strong&gt;GPL 开源&lt;/strong&gt;的 &lt;strong&gt;DBMS&lt;/strong&gt; （关系数据库管理系统），根据 &lt;a href=&quot;https://db-engines.com/en/ranking&quot;&gt;DB-Engines&lt;/a&gt;，截止 2023 年它的流行程度已仅次于 Oracle。其实有很多其他比 MySQL 好用的 DBMS，但为什么它能如此受欢迎呢，个人认为主要有三点：&lt;strong&gt;开源免费&lt;/strong&gt;、&lt;strong&gt;简单易用&lt;/strong&gt;、&lt;strong&gt;知名度高&lt;/strong&gt;。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="IT" scheme="https://zion4h.github.io/categories/IT/"/>
-    
-    <category term="数据库" scheme="https://zion4h.github.io/categories/IT/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    
-    <category term="mysql" scheme="https://zion4h.github.io/tags/mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何选择开源许可证？</title>
-    <link href="https://zion4h.github.io/2023/03/31/opensource-license-intro/"/>
-    <id>https://zion4h.github.io/2023/03/31/opensource-license-intro/</id>
-    <published>2023-03-30T16:24:42.000Z</published>
-    <updated>2023-05-07T13:50:08.554Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;strong&gt;开源促进会 OSI&lt;/strong&gt; 是&lt;strong&gt;开源定义 OSD&lt;/strong&gt; 的管理者，由 Bruce Perens 和 Eric S. Raymond 创立于 1998 年，我们寻常用的开源协议都需要该组织认可，要求符合 &lt;strong&gt;OSD&lt;/strong&gt; 定义。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="开源" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E5%BC%80%E6%BA%90/"/>
-    
-    
-    <category term="开源" scheme="https://zion4h.github.io/tags/%E5%BC%80%E6%BA%90/"/>
     
   </entry>
   
