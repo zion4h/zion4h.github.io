@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-06-10T12:23:23.735Z</updated>
+  <updated>2023-06-14T00:02:49.864Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>programming-lambda</title>
+    <link href="https://zion4h.github.io/2023/06/14/programming-lambda/"/>
+    <id>https://zion4h.github.io/2023/06/14/programming-lambda/</id>
+    <published>2023-06-14T00:02:49.000Z</published>
+    <updated>2023-06-14T00:02:49.864Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html"></summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>最小生成树</title>
@@ -44,16 +65,10 @@
     <link href="https://zion4h.github.io/2023/06/09/programming-intro-cpp/"/>
     <id>https://zion4h.github.io/2023/06/09/programming-intro-cpp/</id>
     <published>2023-06-09T00:18:00.000Z</published>
-    <updated>2023-06-10T12:27:24.678Z</updated>
+    <updated>2023-06-18T23:58:17.490Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html"></summary>
-        
-      
+    <summary type="html">&lt;p&gt;简单列出一些C++语言的特点和知识，目前处于“知其然”阶段。&lt;/p&gt;</summary>
     
     
     
@@ -463,27 +478,6 @@
     
     
     <category term="btree" scheme="https://zion4h.github.io/tags/btree/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2023 年 3 月</title>
-    <link href="https://zion4h.github.io/2023/04/01/life-diary-23-3/"/>
-    <id>https://zion4h.github.io/2023/04/01/life-diary-23-3/</id>
-    <published>2023-03-31T16:40:53.000Z</published>
-    <updated>2023-04-30T16:42:30.589Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;我也不知道为什么要写日记，可能害怕多年后的某一天，一切尘埃落定，回顾前半生，才发现我只是一直在跑，忘记了风景和人，自己也成了一道孤零零的鬼魂。童年时乘城乡汽车回老家，车子在烂石头路上磕磕绊绊晃悠个不停，车里各种气味混在一起打开窗也透不过气。一般我上车没到五分钟就头晕想吐，而这样的旅程要持续近两个钟头，就硬生生熬着扛着，直到下车那一刻才敢大口呼吸，一种逃出生天的喜悦涌出心头。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
-    
-    
-    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
