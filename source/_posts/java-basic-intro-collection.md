@@ -7,6 +7,7 @@ categories: [编程, Java, 扫盲]
 tags:
     - java
     - intro
+    - TODO
 toc: true
 ---
 介绍 Java 集合相关，如何设计，为什么这样设计？主要从存储和速度两个方面考虑。

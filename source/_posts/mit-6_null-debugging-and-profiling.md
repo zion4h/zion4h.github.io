@@ -12,7 +12,7 @@ toc: true
 ---
 >“Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.” — Brian Kernighan, *Unix for Beginners*.
 
-编程有一条黄金法则，“代码并不会按你所想那样运行，而只会按你所述运行”。写完代码只是编程的第一步，我们更多时间其实花在了 **Debugging（调试）**和 **Profiling（性能分析）**上。
+编程有一条黄金法则，“代码并不会按你所想那样运行，而只会按你所述运行”。写完代码只是编程的第一步，我们更多时间其实花在了 **Debugging（调试）** 和 **Profiling（性能分析）** 上。
 <!-- more -->
 ## Debugging
 
