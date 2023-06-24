@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2023-06-14T00:02:49.864Z</updated>
+  <updated>2023-06-23T01:20:15.409Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>programming-lambda</title>
+    <title>函数式编程</title>
     <link href="https://zion4h.github.io/2023/06/14/programming-lambda/"/>
     <id>https://zion4h.github.io/2023/06/14/programming-lambda/</id>
     <published>2023-06-14T00:02:49.000Z</published>
-    <updated>2023-06-14T00:02:49.864Z</updated>
+    <updated>2023-06-23T01:20:15.409Z</updated>
     
     
       
@@ -34,6 +34,8 @@
     
     
     
+    
+    <category term="TODO" scheme="https://zion4h.github.io/tags/TODO/"/>
     
   </entry>
   
@@ -65,7 +67,7 @@
     <link href="https://zion4h.github.io/2023/06/09/programming-intro-cpp/"/>
     <id>https://zion4h.github.io/2023/06/09/programming-intro-cpp/</id>
     <published>2023-06-09T00:18:00.000Z</published>
-    <updated>2023-06-18T23:58:17.490Z</updated>
+    <updated>2023-06-23T08:35:49.246Z</updated>
     
     
     <summary type="html">&lt;p&gt;简单列出一些C++语言的特点和知识，目前处于“知其然”阶段。&lt;/p&gt;</summary>
@@ -78,6 +80,8 @@
     
     <category term="扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/C/%E6%89%AB%E7%9B%B2/"/>
     
+    
+    <category term="TODO" scheme="https://zion4h.github.io/tags/TODO/"/>
     
     <category term="c++" scheme="https://zion4h.github.io/tags/c/"/>
     
@@ -197,7 +201,7 @@
     <link href="https://zion4h.github.io/2023/05/21/concurrent-programming/"/>
     <id>https://zion4h.github.io/2023/05/21/concurrent-programming/</id>
     <published>2023-05-21T12:23:03.000Z</published>
-    <updated>2023-06-08T15:02:10.508Z</updated>
+    <updated>2023-06-23T01:00:27.417Z</updated>
     
     
     <summary type="html">&lt;blockquote&gt;
@@ -214,6 +218,8 @@
     
     <category term="并发" scheme="https://zion4h.github.io/tags/%E5%B9%B6%E5%8F%91/"/>
     
+    <category term="TODO" scheme="https://zion4h.github.io/tags/TODO/"/>
+    
   </entry>
   
   <entry>
@@ -221,7 +227,7 @@
     <link href="https://zion4h.github.io/2023/05/20/read-hackers-and-painters/"/>
     <id>https://zion4h.github.io/2023/05/20/read-hackers-and-painters/</id>
     <published>2023-05-20T10:25:06.000Z</published>
-    <updated>2023-06-04T15:11:07.724Z</updated>
+    <updated>2023-06-23T01:01:13.599Z</updated>
     
     
     <summary type="html">&lt;p&gt;我大学的时候有翻过几页这本书，但阅读体验不好没看多少。虽然很多人吹捧它，可是我并不想在这种书上浪费时间，因为读它跟读《Java 编程思想》一样让我感到吃力，而这本书并不会给我找工作提供任何帮助。后来，还有学长推荐《摩托车与禅》，我都将它们归类为一个靠创业挣了钱的美国人专门拍了部自己的阿甘正传，明显不适合我。但最近，因为编程随想的一篇文章 &lt;a href=&quot;https://program-think.blogspot.com/2012/05/weekly-share-5.html&quot;&gt;每周转载：IT 大牛谈编程语言（网文 3 篇）&lt;/a&gt;，让我开始对书的作者产生了浓厚的兴趣。&lt;/p&gt;</summary>
@@ -232,6 +238,8 @@
     
     <category term="评论" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E8%AF%84%E8%AE%BA/"/>
     
+    
+    <category term="TODO" scheme="https://zion4h.github.io/tags/TODO/"/>
     
     <category term="黑客文化" scheme="https://zion4h.github.io/tags/%E9%BB%91%E5%AE%A2%E6%96%87%E5%8C%96/"/>
     
@@ -292,13 +300,13 @@
     <link href="https://zion4h.github.io/2023/05/02/mit-6_null-debugging-and-profiling/"/>
     <id>https://zion4h.github.io/2023/05/02/mit-6_null-debugging-and-profiling/</id>
     <published>2023-05-02T06:31:49.000Z</published>
-    <updated>2023-05-03T07:35:41.646Z</updated>
+    <updated>2023-06-23T00:58:44.331Z</updated>
     
     
     <summary type="html">&lt;blockquote&gt;
 &lt;p&gt;“Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.” — Brian Kernighan, &lt;em&gt;Unix for Beginners&lt;/em&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;编程有一条黄金法则，“代码并不会按你所想那样运行，而只会按你所述运行”。写完代码只是编程的第一步，我们更多时间其实花在了 **Debugging（调试）**和 **Profiling（性能分析）**上。&lt;/p&gt;</summary>
+&lt;p&gt;编程有一条黄金法则，“代码并不会按你所想那样运行，而只会按你所述运行”。写完代码只是编程的第一步，我们更多时间其实花在了 &lt;strong&gt;Debugging（调试）&lt;/strong&gt; 和 &lt;strong&gt;Profiling（性能分析）&lt;/strong&gt; 上。&lt;/p&gt;</summary>
     
     
     
@@ -390,7 +398,7 @@
     <link href="https://zion4h.github.io/2023/04/07/java-basic-intro-collection/"/>
     <id>https://zion4h.github.io/2023/04/07/java-basic-intro-collection/</id>
     <published>2023-04-06T16:08:42.000Z</published>
-    <updated>2023-04-30T13:20:18.418Z</updated>
+    <updated>2023-06-23T00:59:36.282Z</updated>
     
     
     <summary type="html">&lt;p&gt;介绍 Java 集合相关，如何设计，为什么这样设计？主要从存储和速度两个方面考虑。&lt;/p&gt;</summary>
@@ -403,6 +411,8 @@
     
     <category term="扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/Java/%E6%89%AB%E7%9B%B2/"/>
     
+    
+    <category term="TODO" scheme="https://zion4h.github.io/tags/TODO/"/>
     
     <category term="java" scheme="https://zion4h.github.io/tags/java/"/>
     
@@ -461,14 +471,14 @@
   </entry>
   
   <entry>
-    <title>B 树家族</title>
+    <title>B 树</title>
     <link href="https://zion4h.github.io/2023/04/01/data-structure-btree/"/>
     <id>https://zion4h.github.io/2023/04/01/data-structure-btree/</id>
     <published>2023-04-01T08:06:46.000Z</published>
-    <updated>2023-05-03T08:21:27.200Z</updated>
+    <updated>2023-06-24T07:36:59.090Z</updated>
     
     
-    <summary type="html">&lt;p&gt;探讨 B 树族相关的数据结构，比如 &lt;strong&gt;B 树&lt;/strong&gt;、&lt;strong&gt;B+ 树&lt;/strong&gt;、&lt;strong&gt;红黑树&lt;/strong&gt;等。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;探讨 &lt;strong&gt;B 树&lt;/strong&gt;和其变种的数据结构，比如 &lt;strong&gt;B 树&lt;/strong&gt;、&lt;strong&gt;B+ 树&lt;/strong&gt;、&lt;strong&gt;红黑树&lt;/strong&gt;等。&lt;/p&gt;</summary>
     
     
     
