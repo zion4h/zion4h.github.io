@@ -10,13 +10,11 @@ toc: true
 excerpt: 在本篇博客中，我将介绍如何使用 Vagrant 搭建本地开发环境，并准备一个 C++ 编译环境。Vagrant 是由 HashiCorp 公司开发的工具，能够简化虚拟环境的管理。
 ---
 
-## 开始
-
 ### 介绍
 
 在本篇博客中，我将介绍如何使用 Vagrant 搭建本地开发环境，并准备一个 C++ 编译环境。Vagrant 是由 HashiCorp 公司开发的工具，能够简化虚拟环境的管理。
 
-### 一、云主机与虚拟机的比较
+### 云主机与虚拟机的比较
 
 #### 云主机
 
@@ -32,101 +30,112 @@ excerpt: 在本篇博客中，我将介绍如何使用 Vagrant 搭建本地开�
 
 - 随用随扔
 
-### 二、Vagrant 安装与配置
+### Vagrant 安装与配置
 
-#### 前置条件：已安装 VirtualBox
+#### 前置条件
 
-1. **安装 Vagrant**
-   - 进入 [Vagrant 下载页面](https://developer.hashicorp.com/vagrant/install)
-   - 根据系统架构选择下载安装包：32 位选择 i686，64 位选择 AMD64（x86_64）
-   - 验证架构：
+- 已安装 VirtualBox
 
-     ```powershell
-     PS E:\VagrantBoxes> wmic os get osarchitecture
-     OSArchitecture
-     64-bit
-     ```
+#### 安装 Vagrant
 
-   - 安装后验证是否成功：
+1. 进入 [Vagrant 下载页面](https://developer.hashicorp.com/vagrant/install)
+2. 根据系统架构选择下载安装包：32 位选择 i686，64 位选择 AMD64（x86_64）
+3. 验证架构：
 
-     ```shell
-     vagrant --version
-     ```
+    ```powershell
+    PS E:\VagrantBoxes> wmic os get osarchitecture
+    OSArchitecture
+    64-bit
+    ```
 
-     ![验证安装成功与否](https://i.imgur.com/wm37wRH.png)
+4. 安装后验证是否成功：
 
-2. **环境准备**
-   - 添加基础环境，可到 [HashiCorp's Vagrant Cloud box catalog](https://app.vagrantup.com/boxes/search) 查看。
+    ```shell
+    vagrant --version
+    ```
 
-     ![添加基础环境](https://i.imgur.com/kYntQXC.png)
+    ![验证安装成功与否](https://i.imgur.com/wm37wRH.png)
 
-   - 初始化虚拟环境（如 `vb_cpp_memdiy`），会生成一个 `Vagrantfile`：
+#### 环境准备
 
-     ```shell
-     vagrant init vb_cpp_memdiy
-     ```
+1. 添加基础环境，可到 [HashiCorp's Vagrant Cloud box catalog](https://app.vagrantup.com/boxes/search) 查看。
 
-     ![初始化虚拟环境](https://i.imgur.com/KTk4b5U.png)
+    ![添加基础环境](https://i.imgur.com/kYntQXC.png)
 
-   - 在 `Vagrantfile` 中配置网络和 SSH。
+2. 初始化虚拟环境（如 `vb_cpp_memdiy`），会生成一个 `Vagrantfile`：
 
-     ![配置网络和 SSH](https://i.imgur.com/uJ3jwkg.png)
+    ```shell
+    vagrant init vb_cpp_memdiy
+    ```
 
-3. **启动环境并连接**
-   - 启动虚拟环境：
+    ![初始化虚拟环境](https://i.imgur.com/KTk4b5U.png)
 
-     ```shell
-     vagrant up
-     ```
+3. 在 `Vagrantfile` 中配置网络和 SSH。
 
-     ![启动虚拟环境](https://i.imgur.com/mMCcKsx.png)
+    ![配置网络和 SSH](https://i.imgur.com/uJ3jwkg.png)
 
-   - 通过 SSH 连接访问：
+#### 启动环境并连接
 
-     ```shell
-     vagrant ssh
-     ```
+1. 启动虚拟环境：
 
-     ![SSH 连接访问](https://i.imgur.com/PLCmcrs.png)
+    ```shell
+    vagrant up
+    ```
 
-   - 退出环境：
+    ![启动虚拟环境](https://i.imgur.com/mMCcKsx.png)
 
-     ```shell
-     # 按 Ctrl+D 或输入
-     logout
-     ```
+2. 通过 SSH 连接访问：
 
-### 三、准备 C++ 编译环境
+    ```shell
+    vagrant ssh
+    ```
 
-1. **添加 PPA 并安装工具**
-   - 添加 PPA 以获取更新版本的 CMake:
+    ![SSH 连接访问](https://i.imgur.com/PLCmcrs.png)
 
-     ```shell
-     sudo add-apt-repository ppa:kitware/ppa
-     sudo apt-get update
-     ```
+3. 退出环境：
 
-   - 安装 CMake、GDB 和 G++：
+    ```shell
+    # 按 Ctrl+D 或输入
+    logout
+    ```
 
-     ```shell
-     sudo apt-get install cmake gdb g++
-     ```
+### 准备 C++ 编译环境
 
-     ![Clion 配置 remote host](https://i.imgur.com/aN5j2rW.png)
+#### 添加 PPA 并安装工具
 
-     ![Clion 配置 SFTP](https://i.imgur.com/aN5j2rW.png)
+1. 添加 PPA 以获取更新版本的 CMake:
 
-     ![Clion 配置 文件映射](https://i.imgur.com/X3x6w5C.png)
+    ```shell
+    sudo add-apt-repository ppa:kitware/ppa
+    sudo apt-get update
+    ```
 
-     ![Clion 配置 映射验证](https://i.imgur.com/TcQEenU.png)
+2. 安装 CMake、GDB 和 G++：
 
-     ![Clion 配置 上传文件到 remote host](https://i.imgur.com/ftDuwWC.png)
-2. **解决依赖包问题**
-   - 如果遇到依赖包缺失或版本冲突，升级并下载相应的包。
+    ```shell
+    sudo apt-get install cmake gdb g++
+    ```
 
-3. **调试设置**
-   - 将调试调整为远程，避免调用本地的 MinGW（Windows）。
+    ![Clion 配置 remote host](https://i.imgur.com/aN5j2rW.png)
 
-     ![Clion 配置 Debug](https://i.imgur.com/a0drG6y.png)
+    ![Clion 配置 SFTP](https://i.imgur.com/aN5j2rW.png)
 
-最后，通过以上步骤，你可以在本地使用 Vagrant 搭建一个易于控制的开发环境，并准备好 C++ 编译环境。
+    ![Clion 配置 文件映射](https://i.imgur.com/X3x6w5C.png)
+
+    ![Clion 配置 映射验证](https://i.imgur.com/TcQEenU.png)
+
+    ![Clion 配置 上传文件到 remote host](https://i.imgur.com/ftDuwWC.png)
+
+#### 解决依赖包问题
+
+- 如果遇到依赖包缺失或版本冲突，升级并下载相应的包。
+
+#### 调试设置
+
+- 将调试调整为远程，避免调用本地的 MinGW（Windows）。
+
+    ![Clion 配置 Debug](https://i.imgur.com/a0drG6y.png)
+
+### 结论
+
+通过以上步骤，你可以在本地使用 Vagrant 搭建一个易于控制的开发环境，并准备好 C++ 编译环境。
