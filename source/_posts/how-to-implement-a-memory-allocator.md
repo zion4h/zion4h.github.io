@@ -1,8 +1,8 @@
 ---
 title: 如何实现一个内存分配器？
 date: 2024-07-03 10:58:58
-cover: https://i.imgur.com/9tcpIkI.jpeg
-thumbnail: https://i.imgur.com/9tcpIkI.jpeg
+cover: https://i.imgur.com/0oLikma.png
+thumbnail: https://i.imgur.com/0oLikma.png
 categories: ['编程', '扫盲']
 tags:
     - intro

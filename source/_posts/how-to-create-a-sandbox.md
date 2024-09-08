@@ -1,36 +1,30 @@
 ---
 title: 如何创建一个随意折腾的 Linux 沙盒环境？
 date: 2024-07-02 21:09:21
-cover: https://i.imgur.com/wm37wRH.png
-thumbnail: https://i.imgur.com/wm37wRH.png
+cover: https://i.imgur.com/WVccm9R.png
+thumbnail: https://i.imgur.com/WVccm9R.png
 categories: ['编程', '扫盲']
 tags:
     - intro
 toc: true
-excerpt: 在本篇博客中，我将介绍如何使用 Vagrant 搭建本地开发环境，并准备一个 C++ 编译环境。Vagrant 是由 HashiCorp 公司开发的工具，能够简化虚拟环境的管理。
+excerpt: 项目式学习（Project Based Learning）能够快速检验和提高一个人的编程水平，而学习过程中又不可避免地会编写运行一些 Demo。然而，如果直接使用 Windows 或者 MacOS 多少会面临环境部署问题，因此拥有一个能随意折腾地 Linux 沙盒对我来说开始变得尤为迫切。因此，在本篇博客中，我将介绍如何在 Windows 上轻松创建一个 Linux 沙盒。
 ---
 
 ### 介绍
 
-在本篇博客中，我将介绍如何使用 Vagrant 搭建本地开发环境，并准备一个 C++ 编译环境。Vagrant 是由 HashiCorp 公司开发的工具，能够简化虚拟环境的管理。
+项目式学习（[Project Based Learning](https://github.com/practical-tutorials/project-based-learning?tab=readme-ov-file#project-based-learning)）能够快速检验和提高一个人的编程水平，而学习过程中又不可避免地会编写运行一些 Demo。然而，如果直接使用 Windows 或者 MacOS 多少会面临环境部署问题，因此拥有一个能随意折腾地 Linux 沙盒对我来说开始变得尤为迫切。因此，在本篇博客中，我将介绍如何在 Windows 上轻松创建一个 Linux 沙盒。
 
-### 云主机与虚拟机的比较
+### 部署 Linux 的方法
 
-#### 云主机
+最直接的想法是在阿里云等平台直接租一台**云主机**，选择完套餐后再启动就是一个 Linux 系统，甚至配有公网 IP。但坏处也很明显，贵！
 
-- 公网 IP
+各种**在线沙盒**是退而求其次的想法，诸如 [COMPILER EXPLORER](https://godbolt.org/) 等，想用 C++的任一版本编译器都可，还不用部署，开盒即用还随用随扔。
 
-#### 虚拟机
-
-- VirtualBox、VMware
-- Docker
-- Vagrant：本地便宜且易于控制，启停和连接方便快捷
-
-#### 临时 Web 模拟
-
-- 随用随扔
+最后就是各种本地跑的**虚拟机**了，厚重的如 VirtualBox、VMware，小巧的如 Docker，还有就是今天的主角 Vagrant 了！Vagrant 是由 HashiCorp 公司开发的工具，不仅简单易上手，启停和连接也非常迅速。
 
 ### Vagrant 安装与配置
+
+使用 Vagrant 搭建本地开发环境，并准备一个 C++ 编译环境。
 
 #### 前置条件
 
