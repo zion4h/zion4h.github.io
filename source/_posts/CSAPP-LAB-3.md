@@ -5,12 +5,14 @@ cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img252.jpg
 categories: [编程, Labs, CMU 15-213]
 toc: true
 ---
+
 由于是直接上手做的，看完 readme 后也是一头雾水，结合 [attacklab.pdf (cmu.edu)](http://csapp.cs.cmu.edu/3e/attacklab.pdf) 和原书第三版的 3.10.3 和 3.10.4 才恍然大悟，当然视频资料也有不少。另外，之前又犯了个错误，就是我在 mac 上反编译了 ctarget，注意 csapp 的系列实验都应在 x86 环境下进行。
+
 <!--more-->
 
 ## 准备
 
-实验 3 主要分成两个部分，在 ctarget 做代码注入 CI 攻击，在 rtarget 上做返回导向编程 ROP 攻击。在 CI 部分有 3 个 level，而在 ROP 部分有两个 level，由于我们不是 cmu 的学生，所以在调试命令时注意加上-q 禁止发送结果给服务器。
+实验 3 主要分成两个部分，在 ctarget 做代码注入 CI 攻击，在 rtarget 上做返回导向编程 ROP 攻击。在 CI 部分有 3 个 level，而在 ROP 部分有两个 level，由于我们不是 cmu 的学生，所以在调试命令时注意加上 - q 禁止发送结果给服务器。
 
 为了方便，我们将 ctarget 和 rtarget 反汇编到 ctarget.s 和 rtarget.s 中：
 
@@ -267,7 +269,7 @@ retq
    5: c3                    retq
 ```
 
-通过查询 ASCII 表，我们可以得到 cookie 0x59b997fa 的字节码表示“35 39 62 39 39 37 66 61”。
+通过查询 ASCII 表，我们可以得到 cookie 0x59b997fa 的字节码表示 “35 39 62 39 39 37 66 61”。
 
 ```X86ASM
 bf b0 dc 61 55 c3 00 00
@@ -295,9 +297,9 @@ PASS: Would have posted the following:
 
 由于 DI 攻击方式太过常见，所以很多程序都自带针对 DI 的防御手段，比如栈随机化、栈破坏检测（通过金丝雀值）和限制可执行代码区域。但显然它们也不能做到尽善尽美，level4 和 level5 就要求我们在以上限制下重新完成 touch2 和 touch3 的骇入。
 
-现在我们重新梳理 touch2，不难发现其实我们真正需要的操作是让寄存器 edi 获得 0x59b997fa。由于当前的限制条件，我们只能将其写在栈上再通过 pop 读出，且这个 pop 操作只能通过 lab 给出的“工具代码段”也就是 start_farm 到 end_farm 这一部分得到。
+现在我们重新梳理 touch2，不难发现其实我们真正需要的操作是让寄存器 edi 获得 0x59b997fa。由于当前的限制条件，我们只能将其写在栈上再通过 pop 读出，且这个 pop 操作只能通过 lab 给出的 “工具代码段” 也就是 start\_farm 到 end\_farm 这一部分得到。
 
-首先，参考实验说明的附录表格，我们知道 pop 操作是 0x58~0x5f，于是去 farm 中寻找，发现只有 58 和 5c，分别对应 popq rax 和 popq rsp，这里再次说明 q 后缀是 64 位，l 后缀是 32 位。了解二者含义都知道，我们只有一个选项那就是 popq rax，也就是说我们存储的 0x59b997fa 会被送到 rax。
+首先，参考实验说明的附录表格，我们知道 pop 操作是 0x58\~0x5f，于是去 farm 中寻找，发现只有 58 和 5c，分别对应 popq rax 和 popq rsp，这里再次说明 q 后缀是 64 位，l 后缀是 32 位。了解二者含义都知道，我们只有一个选项那就是 popq rax，也就是说我们存储的 0x59b997fa 会被送到 rax。
 
 这里我们取 addval，0x4019a7+4=0x4019ab：
 
@@ -311,9 +313,9 @@ PASS: Would have posted the following:
   4019bb: c3                    retq
 ```
 
-那么我们现在是希望该字段被送到 edi 或者 rdi，通过查找 movl 和 movq 表，再对照 farm 内容，我们找到了三条数据，由于包含”49 89 c7”对应“movq rax, rdi”，所以就不用再去找中转了（与之相对的，level5 需要）。
+那么我们现在是希望该字段被送到 edi 或者 rdi，通过查找 movl 和 movq 表，再对照 farm 内容，我们找到了三条数据，由于包含”49 89 c7” 对应 “movq rax, rdi”，所以就不用再去找中转了（与之相对的，level5 需要）。
 
-对比这三条，我选择了 addval，因为后面直接跟着 c3，对应汇编中的“retq”，取 0x4019a0+2，即 0x4019a2：
+对比这三条，我选择了 addval，因为后面直接跟着 c3，对应汇编中的 “retq”，取 0x4019a0+2，即 0x4019a2：
 
 ```X86ASM
 00000000004019a0 <addval_273>:
@@ -366,7 +368,7 @@ PASS: Would have posted the following:
 /* 6. 字符串 */
 ```
 
-首先，我们要找能够接收 rsp 的寄存器，也就是形如”movq rsp x“的指令（48 89 e0~7），发现只有”48 89 e0“。这里我们依然挑选最干净的第一项，它后面直接跟着 c3，得到 0x401a06。
+首先，我们要找能够接收 rsp 的寄存器，也就是形如”movq rsp x“的指令（48 89 e0\~7），发现只有”48 89 e0“。这里我们依然挑选最干净的第一项，它后面直接跟着 c3，得到 0x401a06。
 
 ```X86ASM
 0000000000401a03 <addval_190>:
@@ -382,7 +384,7 @@ PASS: Would have posted the following:
   401a60: c3                    retq
 ```
 
-然后，我们要找到能将该地址和偏移地址加起来的函数，我找了半天没发现 add，但找到了另一个更贴切的 add_xy，直接用这整个函数即可，得到 0x4019d6。
+然后，我们要找到能将该地址和偏移地址加起来的函数，我找了半天没发现 add，但找到了另一个更贴切的 add\_xy，直接用这整个函数即可，得到 0x4019d6。
 
 ```X86ASM
 00000000004019d6 <add_xy>:
@@ -449,7 +451,7 @@ PASS: Would have posted the following:
 
 2.`0xc3` 对应返回值之前有讲过
 
-3.单个字节不被看作操作，会被自动忽略，比如下面的代码，我们想要”89 d1“，由于和”c3“只间隔一个字节，中间的”91“会被忽略，即可以截取该代码段运行。
+3\. 单个字节不被看作操作，会被自动忽略，比如下面的代码，我们想要”89 d1“，由于和”c3“只间隔一个字节，中间的”91“会被忽略，即可以截取该代码段运行。
 
 ```X86ASM
 0000000000401a6e <setval_167>:

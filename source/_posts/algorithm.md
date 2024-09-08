@@ -8,19 +8,21 @@ tags:
     - leetcode
     - algorithm
 ---
+
 > The palest ink is better than the best memory.
 >
 > 好记性不如烂笔头。
+
 <!--more-->
 
-- [Markdown 中输入数学公式及 LaTex 常用数学符号整理](http://liyangbit.com/math/jupyter-latex/)
+* [Markdown 中输入数学公式及 LaTex 常用数学符号整理](http://liyangbit.com/math/jupyter-latex/)
 
 ## Trie 字典树
 
 **字典树** 又叫 **前缀树**，洋文叫 **Trie**。**Trie** 本质上是一个多路查询树，它也可以被看作一个树形态的确定有限状态自动机 **DFA**，
 
-- [Trie](https://en.wikipedia.org/wiki/Trie)
-- [DFA](https://en.wikipedia.org/wiki/Deterministic_finite_automaton)
+* [Trie](https://en.wikipedia.org/wiki/Trie)
+* [DFA](https://en.wikipedia.org/wiki/Deterministic_finite_automaton)
 
 ![Trie](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/Trie_example.png)
 
@@ -77,7 +79,7 @@ class Trie {
 
 ## 约瑟夫环
 
-**约瑟夫环** 通常用来求解这样一个问题：*一圈 **n** 人每次取第 **m** 个，被取到则离开圈子，问最后一个取到的是原先第几个人？*
+**约瑟夫环** 通常用来求解这样一个问题：_一圈 **n** 人每次取第 **m** 个，被取到则离开圈子，问最后一个取到的是原先第几个人？_
 
 如果直接模拟整个过程的话，每次都要考虑越过多少虚空位置（已经被删除），会很麻烦，因此我们要用递归思想。假设将上述问题抽象成 `f(n, m)`，并且我们已经知道 `f(n-1, m)` 的结果为 `k`，那么显然在抽取一个人之后，顺位 k 个人即能得到我们想要的结果。用数学来表示，即：
 
@@ -129,7 +131,7 @@ class Solution {
 
 ## 洗牌算法
 
-洗牌算法最著名的当属 [Knuth shuffle](https://rosettacode.org/wiki/Knuth_shuffle) 算法，其原理是将“牌”分为有序无序两部分，每次从未打乱部分中选择一个元素加入到已打乱部分。
+洗牌算法最著名的当属 [Knuth shuffle](https://rosettacode.org/wiki/Knuth_shuffle) 算法，其原理是将 “牌” 分为有序无序两部分，每次从未打乱部分中选择一个元素加入到已打乱部分。
 
 具体来说，假设有数组 `[1,2,3,4,5]`，那么随机抽一个和最末尾元素交换，比如得到 `[1,5,3,4,2]`，然后再从前四个继续，比如得到 `[1,4,3,5,2]`，再继续。
 
@@ -200,7 +202,7 @@ class Solution {
 
 ## 香农熵
 
-[香农熵](https://en.wikipedia.org/wiki/Entropy_(information_theory))又称为“进制猜想”，可以将其转换为 *猜测多维空间的某一点在何处* 的问题，即将待测点均匀分布在一个多维空间，而目标点能够用坐标系轻易标出，只要满足 $N^c >= buckets$。
+[香农熵](https://en.wikipedia.org/wiki/Entropy_\(information_theory\))又称为 “进制猜想”，可以将其转换为 _猜测多维空间的某一点在何处_ 的问题，即将待测点均匀分布在一个多维空间，而目标点能够用坐标系轻易标出，只要满足 $N^c >= buckets$。
 
 在经典**可怜小猪**这题中，由于小猪可以保留一列，所以有 $N=k+1$。
 
@@ -296,7 +298,7 @@ class Solution {
 
 ### 极坐标
 
-注意一点，用 `atan(dy/dx)` 函数只能求出 [-90˚，90˚] 而用 `atan2(dy, dx)` 可以求出 [-180˚, 180˚]。另外，极坐标求角度范围可以等效为**循环队列**问题，通过**倍长队列和滑动窗口组合**解决。
+注意一点，用 `atan(dy/dx)` 函数只能求出 \[-90˚，90˚] 而用 `atan2(dy, dx)` 可以求出 \[-180˚, 180˚]。另外，极坐标求角度范围可以等效为**循环队列**问题，通过**倍长队列和滑动窗口组合**解决。
 
 [leetcode 1610. 可见点的最大数目](https://leetcode.cn/problems/maximum-number-of-visible-points/)
 
@@ -429,7 +431,7 @@ class Solution {
 
 **最短路**、**最小生成树**、**线段树**
 
-[涵盖所有存图方式的模版 by 三叶](https://mp.weixin.qq.com/s?__biz=MzU4NDE3MTEyMA==&mid=2247488007&idx=1&sn=9d0dcfdf475168d26a5a4bd6fcd3505d&chksm=fd9cb918caeb300e1c8844583db5c5318a89e60d8d552747ff8c2256910d32acd9013c93058f&mpshare=1&scene=23&srcid=0311tjKy74JijYzXhHo8Qob7&sharer_sharetime=1646964421353&sharer_shareid=1221771780968b30ef07c3f22cd356ed%23rd)
+[涵盖所有存图方式的模版 by 三叶](https://mp.weixin.qq.com/s?__biz=MzU4NDE3MTEyMA==\&mid=2247488007\&idx=1\&sn=9d0dcfdf475168d26a5a4bd6fcd3505d\&chksm=fd9cb918caeb300e1c8844583db5c5318a89e60d8d552747ff8c2256910d32acd9013c93058f\&mpshare=1\&scene=23\&srcid=0311tjKy74JijYzXhHo8Qob7\&sharer_sharetime=1646964421353\&sharer_shareid=1221771780968b30ef07c3f22cd356ed%23rd)
 
 ## 字符串
 
@@ -518,11 +520,11 @@ class Solution {
 
 ### 背包 DP
 
-[背包九讲](http://cuitianyi.com/Pack/ )
+[背包九讲](http://cuitianyi.com/Pack/)
 
 [背包九讲 v2](https://github.com/tianyicui/pack/blob/master/V2.pdf)
 
-[三叶背包](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzU4NDE3MTEyMA==&action=getalbum&album_id=1751702161341628417&scene=173&from_msgid=2247486107&from_itemidx=1&count=3&nolastread=1#wechat_redirect)
+[三叶背包](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzU4NDE3MTEyMA==\&action=getalbum\&album_id=1751702161341628417\&scene=173\&from_msgid=2247486107\&from_itemidx=1\&count=3\&nolastread=1#wechat_redirect)
 
 ```javascript
 f[i][v] = max{f[i-1][v], f[i-1][v - c[i]] + w[i]}

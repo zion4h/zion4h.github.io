@@ -9,8 +9,11 @@ tags:
     - 并查集
 toc: true
 ---
+
 算法常见题之**并查集**或者不相交集合数据结构 **DSU**，当有一组集合 n 个元素，假设我们经常需要：（1）判定某个元素属于哪个集合，（2）将两个集合合并成一个集合。那么，我们只需要维护一个**并查集**即可。
+
 <!--more-->
+
 为什么不直接在每个元素对象中添加一个描述从属集合的属性呢？因为合并时，时间复杂度是 `O(n)`，而并查集只需要很少时间。
 
 ## 分析
@@ -60,7 +63,7 @@ class Dsu:
             self.size[x] += self.size[y]
 ```
 
-一般来说，用压缩路径即可。[Tarjan](https://www.researchgate.net/publication/220430653_Worst-case_Analysis_of_Set_Union_Algorithms) 证明了如果不使用启发式合并、只使用路径压缩的最坏时间复杂度是 $O (m \log n)$，而[姚期智](https://epubs.siam.org/doi/abs/10.1137/0214010?journalCode=smjcat) 证明了不使用启发式合并、只使用路径压缩，在平均情况下，时间复杂度依然是 $O (m\alpha(m,n))$。
+一般来说，用压缩路径即可。[Tarjan](https://www.researchgate.net/publication/220430653_Worst-case_Analysis_of_Set_Union_Algorithms) 证明了如果不使用启发式合并、只使用路径压缩的最坏时间复杂度是 $O (m \log n)$，而[姚期智](https://epubs.siam.org/doi/abs/10.1137/0214010?journalCode=smjcat) 证明了不使用启发式合并、只使用路径压缩，在平均情况下，时间复杂度依然是 $O (m\alpha (m,n))$。
 
 [CLRS 的阅读攻略😂](https://www.cnblogs.com/clemente/p/9902220.html) 在学习章节之前可以先看看这个总结，节约时间，搞清楚重点。
 

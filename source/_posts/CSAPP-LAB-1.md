@@ -5,7 +5,9 @@ cover: https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img455.jpg
 categories: [编程, Labs, CMU 15-213]
 toc: true
 ---
-CSAPP 的 Labs 对照 CMU 的课程 [15-213](https://www.bilibili.com/video/BV1iW411d7hd/?spm_id_from=333.337.search-card.all.click&vd_source=e36f47f043068554931919060ccd92ef)，由于本科有学习过相关内容，所以有的课我就直接跳过了。
+
+CSAPP 的 Labs 对照 CMU 的课程 [15-213](https://www.bilibili.com/video/BV1iW411d7hd/?spm_id_from=333.337.search-card.all.click\&vd_source=e36f47f043068554931919060ccd92ef)，由于本科有学习过相关内容，所以有的课我就直接跳过了。
+
 <!--more-->
 
 代码链接：[Manipulating Bits](https://github.com/zion4h/csapp/blob/master/datalab-handout/bits.c)

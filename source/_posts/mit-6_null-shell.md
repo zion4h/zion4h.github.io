@@ -8,13 +8,15 @@ tags:
 toc: true
 ---
 
-[6.Null](https://missing.csail.mit.edu)是 **MIT** 专为介绍常用计算机工具所开设的一门课程。我在过去的工作和学习过程中可能已经接触过 **git**、**vim** 等工具，也会使用一些简单的命令行指令比如 `cd`、`cp`、`mv` 等，但远远谈不上熟练。
+[6.Null](https://missing.csail.mit.edu) 是 **MIT** 专为介绍常用计算机工具所开设的一门课程。我在过去的工作和学习过程中可能已经接触过 **git**、**vim** 等工具，也会使用一些简单的命令行指令比如 `cd`、`cp`、`mv` 等，但远远谈不上熟练。
+
 <!--more-->
-我仍然记得当我第一次怀着热情学习 **Linux** 时，首先上知乎，在大神们的指路下捧起了 **鸟叔的Linux私房菜** 这本书。结果我翻了不到两三页就开始犯困，学习热情消退地很快，整个人就像一个正通过新华字典学语文的洋人。更难以接受的是，网友们评价这本书学起来比较轻松，真的很难想象上古程序员们是度过了怎样枯燥的学习生涯。总而言之，这门课的定位就是一名合格的计算机领路人，我们不用再对着手册慢慢啃，或者干脆永远像新手一样用时谷歌，对着博客里的命令行代码一通照搬生抄，对于 **shell指令** 的概念也仅仅停留在这一长串命令是用来干这个或那个的阶段。
+
+我仍然记得当我第一次怀着热情学习 **Linux** 时，首先上知乎，在大神们的指路下捧起了 **鸟叔的 Linux 私房菜** 这本书。结果我翻了不到两三页就开始犯困，学习热情消退地很快，整个人就像一个正通过新华字典学语文的洋人。更难以接受的是，网友们评价这本书学起来比较轻松，真的很难想象上古程序员们是度过了怎样枯燥的学习生涯。总而言之，这门课的定位就是一名合格的计算机领路人，我们不用再对着手册慢慢啃，或者干脆永远像新手一样用时谷歌，对着博客里的命令行代码一通照搬生抄，对于 **shell 指令** 的概念也仅仅停留在这一长串命令是用来干这个或那个的阶段。
 
 ## 初识
 
-课程使用 **Bourne Again SHell** 或者说 **bash**，但我更喜欢在 **Mac** 上用 **Zsh**（一种拓展bash），我使用的终端程序是 **iTerm2**。如果有美化需求，可以结合[调色卡](https://iterm2colorschemes.com)和[zsh主题](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes)自定义。当然如果使用 **Windows 11**，我发现 **PowerShell(v7.4.0)** 的优化和配置也挺不错的。
+课程使用 **Bourne Again SHell** 或者说 **bash**，但我更喜欢在 **Mac** 上用 **Zsh**（一种拓展 bash），我使用的终端程序是 **iTerm2**。如果有美化需求，可以结合[调色卡](https://iterm2colorschemes.com)和 [zsh 主题](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes)自定义。当然如果使用 **Windows 11**，我发现  **PowerShell(v7.4.0)**  的优化和配置也挺不错的。
 
 ```shell
 ~$ date
@@ -25,7 +27,7 @@ hello world
 hello world
 ```
 
-`～` 是 `/Users/your-name` 的缩写，`date` 和 `echo` 都是程序，我们可以通过`\`输入转义字符或者直接用字符串，这些小程序就是我们常说的命令。当我们输入一个命令时，**Shell** 会到 **$PATH** 中定义的目录里查找与之匹配的程序并执行。
+`～` 是 `/Users/your-name` 的缩写，`date` 和 `echo` 都是程序，我们可以通过 `\` 输入转义字符或者直接用字符串，这些小程序就是我们常说的命令。当我们输入一个命令时，**Shell** 会到 **$PATH** 中定义的目录里查找与之匹配的程序并执行。
 
 ```shell
 ~$ echo $PATH
@@ -40,7 +42,7 @@ echo: shell built-in command
 
 ## 路径
 
-**Linux** 和 **macOS** 用 `/` 分隔路径并以 `/` 为根路径，**Windows** 上用 `\` 分隔且每个磁盘都有一个根，说实话后者的反斜杠真的反人类，后文默认采用 **Linux** 文件系统。任何以`/`开头的都是 **绝对路径**，其他都是 **相对路径**，相对是指相对于当前工作目录。我们用 `pwd`（print work directory）命令可以打印当前目录的绝对路径，而用 `cd`（change directory）可以进入其他目录，另外 `..` 表示父目录。
+**Linux** 和 **macOS** 用 `/` 分隔路径并以 `/` 为根路径，**Windows** 上用 `\` 分隔且每个磁盘都有一个根，说实话后者的反斜杠真的反人类，后文默认采用 **Linux** 文件系统。任何以 `/` 开头的都是 **绝对路径**，其他都是 **相对路径**，相对是指相对于当前工作目录。我们用 `pwd`（print work directory）命令可以打印当前目录的绝对路径，而用 `cd`（change directory）可以进入其他目录，另外 `..` 表示父目录。
 
 ```shell
 ~$ pwd
@@ -52,7 +54,7 @@ echo: shell built-in command
 /$
 ```
 
-当我们运行一个程序时，默认在当前目录中运行，比如 `ls` 指令默认打印当前目录的内容也可以打印你给出的指定目录。命令运行接收带-开头的标志来控制修改其行为，比如 **-h** 或者 **--help** 可以打印程序的帮助文本，阅读帮助文本我们可以知道 `ls -l` 表示打印长文本信息。
+当我们运行一个程序时，默认在当前目录中运行，比如 `ls` 指令默认打印当前目录的内容也可以打印你给出的指定目录。命令运行接收带 - 开头的标志来控制修改其行为，比如 **-h** 或者 **--help** 可以打印程序的帮助文本，阅读帮助文本我们可以知道 `ls -l` 表示打印长文本信息。
 
 ```shell
 ~$ ls -l go
@@ -68,7 +70,7 @@ drwxr-xr-x   3 huangzining  staff   96  8  9 22:26 src
 
 ## 输入输出流
 
-当我们输入 `echo` 命令打印 ***hello word*** 时，键盘就是输入，屏幕就是输出，但 **shell** 允许我们重定向输入输出流。最简单的重定向是 `< file` 和 `> file`，分别对应输入流和输出流的重定向，还可以组合使用。
+当我们输入 `echo` 命令打印 _**hello word**_ 时，键盘就是输入，屏幕就是输出，但 **shell** 允许我们重定向输入输出流。最简单的重定向是 `< file` 和 `> file`，分别对应输入流和输出流的重定向，还可以组合使用。
 
 ```shell
 ~/tmp$ echo hello > hello.txt
@@ -94,7 +96,7 @@ drwxr-xr-x   3 huangzining  staff   96  8  9 22:26 src
 
 ## root
 
-在大多数类 **Unix** 系统上，都有一个超级用户 **root**，它可以创建、读取、更新和删除系统中的任何文件。一般我们通过`sudo`命令执行一些只能 **root** 才能执行的事情，或者切换成 **root** 用户。
+在大多数类 **Unix** 系统上，都有一个超级用户 **root**，它可以创建、读取、更新和删除系统中的任何文件。一般我们通过 `sudo` 命令执行一些只能 **root** 才能执行的事情，或者切换成 **root** 用户。
 
 ```shell
 ~$ sudo xxx
@@ -106,11 +108,11 @@ exit
 ~$
 ```
 
-当出现`#`时，说明已进入 **root模式**。
+当出现`#`时，说明已进入 **root 模式**。
 
 ## 练习
 
-1.在**tmp**目录下创建一个**missing**目录:
+1\. 在 **tmp** 目录下创建一个 **missing** 目录:
 
 ```shell
 ~/tmp$ mkdir missing
@@ -118,13 +120,13 @@ exit
 missing
 ```
 
-2.利用 `man` 熟悉 `touch` 命令:
+2\. 利用 `man` 熟悉 `touch` 命令:
 
 ```shell
 ~/tmp$ man touch
 ```
 
-3.使用 `touch` 在 **missing** 内部创建一个名为 **semester** 的文件:
+3\. 使用 `touch` 在 **missing** 内部创建一个名为 **semester** 的文件:
 
 ```shell
 ~/tmp$ touch missing/semester
@@ -132,7 +134,7 @@ missing
 semester
 ```
 
-4.将一段内容写到 **semester** 文件中，每次写入一行：
+4\. 将一段内容写到 **semester** 文件中，每次写入一行：
 
 ```shell
 ~/tmp$ echo '#!/bin/bash' > missing/semester
@@ -141,9 +143,9 @@ semester
 curl --head --silent https://missing.csail.mit.edu
 ```
 
-注意，`!`比较特殊即使用双引号包裹也会被执行，因此在作为纯文本时要用单引号。
+注意，`!` 比较特殊即使用双引号包裹也会被执行，因此在作为纯文本时要用单引号。
 
-5.直接执行文件:
+5\. 直接执行文件:
 
 ```shell
 ~/tmp$ ./missing/semester
@@ -152,9 +154,9 @@ zsh: permission denied: ./missing/semester
 -rw-r--r--  1 huangzining  staff    51B 12 12 16:27 missing/semester
 ```
 
-没有x权限，无法执行。
+没有 x 权限，无法执行。
 
-6.利用sh执行文件:
+6\. 利用 sh 执行文件:
 
 ```shell
 ~/tmp$ sh missing/semester
@@ -181,9 +183,9 @@ x-fastly-request-id: facf3a37ed8fe85eaa8ea754c22f5687009da86b
 content-length: 7991
 ```
 
-7.学习chmod
+7\. 学习 chmod
 
-8.修改文件权限:
+8\. 修改文件权限:
 
 ```shell
 ~/tmp$ chmod 755 missing/semester
@@ -213,15 +215,15 @@ x-fastly-request-id: d62b90ed680dd96c4821069bb3648d618c7a597b
 content-length: 7991
 ```
 
-通过查阅[shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))，我们知道#!实际上指代了#!interpreter [optional-arg]，常见的如：
+通过查阅 [shebang](https://en.wikipedia.org/wiki/Shebang_\(Unix\))，我们知道 #! 实际上指代了 #!interpreter \[optional-arg]，常见的如：
 
-- #!/bin/sh
-- \#!/bin/bash
-- \#!/usr/bin/pwsh
-- \#!/usr/bin/env python3
-- \#!/bin/false
+* \#!/bin/sh
+* \#!/bin/bash
+* \#!/usr/bin/pwsh
+* \#!/usr/bin/env python3
+* \#!/bin/false
 
-9.利用|和>将由semester生成的last modified字段内容输出到home/last-modified.txt中:
+9\. 利用 | 和 > 将由 semester 生成的 last modified 字段内容输出到 home/last-modified.txt 中:
 
 ```shell
 ~/tmp$ ./missing/semester|grep last-modified|cut -d ':' -f 2 > ~/last-modified.txt

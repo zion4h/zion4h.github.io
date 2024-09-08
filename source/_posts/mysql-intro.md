@@ -8,11 +8,14 @@ toc: true
 tags: 
     - mysql
 ---
-**MySQL** 是一个 **GPL 开源**的 **DBMS** （关系数据库管理系统），根据 [DB-Engines](https://db-engines.com/en/ranking)，截止 2023 年它的流行程度已仅次于 Oracle。其实有很多其他比 MySQL 好用的 DBMS，但为什么它能如此受欢迎呢，个人认为主要有三点：**开源免费**、**简单易用**、**知名度高**。
-<!--more-->
-**后人竟是我自己**：“写完再看，感觉好枯燥，好丑，逻辑不清晰，语言不练达，你真的懂MySQL吗？？”
 
-- [如何选择开源许可证？](https://zion4h.github.io/2023/03/31/opensource-license-intro/)
+**MySQL** 是一个 **GPL 开源**的 **DBMS** （关系数据库管理系统），根据 [DB-Engines](https://db-engines.com/en/ranking)，截止 2023 年它的流行程度已仅次于 Oracle。其实有很多其他比 MySQL 好用的 DBMS，但为什么它能如此受欢迎呢，个人认为主要有三点：**开源免费**、**简单易用**、**知名度高**。
+
+<!--more-->
+
+**后人竟是我自己**：“写完再看，感觉好枯燥，好丑，逻辑不清晰，语言不练达，你真的懂 MySQL 吗？？”
+
+* [如何选择开源许可证？](https://zion4h.github.io/2023/03/31/opensource-license-intro/)
 
 ## 索引
 
@@ -65,7 +68,7 @@ MyISAM 和 InnoDB 存储引擎都支持全文本索引 `FULLTEXT` 的，并且�
 
 > 最适合索引的列是出现在 WHERE 子句中的列，或连接子句中指定的列，而不是出现在 SELECT 关键字后的选择列表中的列。
 > …
-> 如果有一个 CHAR(200) 列，如果在前 10 个或 20 个字符内，多数值是惟一
+> 如果有一个 CHAR (200) 列，如果在前 10 个或 20 个字符内，多数值是惟一
 > 的，那么就不要对整个列进行索引。对前 10 个或 20 个字符进行索引能够节省大量索引空间，
 > 也可能会使查询更快。
 > …
@@ -80,7 +83,7 @@ MyISAM 和 InnoDB 存储引擎都支持全文本索引 `FULLTEXT` 的，并且�
 
 MySQL 有两种索引结构，**B-TREE** 和 **HASH**，MyISAM 和 InnoDB 都只支持 **B-TREE**，而 **MEMORY/HEAP** 支持 **HASH** 和 **B-TREE**。**HASH** 结构的数据库引擎有几个最显著的限制，只能在 `WHERE` 中使用 `=` 或 `<=>` 符，无法使用 `ORDER BY`，本质是为了换取更小内存做出的牺牲。
 
-- 博客：[B 树家族](https://zion4h.github.io/2023/04/01/data-structure-btree/)
+* 博客：[B 树家族](https://zion4h.github.io/2023/04/01/data-structure-btree/)
 
 ### 组合索引的最左前缀特性
 
@@ -140,15 +143,15 @@ ROLLBACK [WORK] [AND [NO] CHAIN] [[NO] RELEASE]
 SET autocommit = {0 | 1}
 ```
 
-- `START TRANSACTION` 或 `BEGIN` 开启一个新的事务，后者就是个别名，不用纠结
-- `COMMIT` 提交当前事务
-- `ROLLBACK` 回滚当前事务，回滚即取消回滚点后它发生的变化
-- `SET autocommit` 禁止或允许（默认允许）自动提交事务
-- `READ WRITE` 或 `READ ONLY` 事务访问模式，默认是读写模式
+* `START TRANSACTION` 或 `BEGIN` 开启一个新的事务，后者就是个别名，不用纠结
+* `COMMIT` 提交当前事务
+* `ROLLBACK` 回滚当前事务，回滚即取消回滚点后它发生的变化
+* `SET autocommit` 禁止或允许（默认允许）自动提交事务
+* `READ WRITE` 或 `READ ONLY` 事务访问模式，默认是读写模式
 
 当我们开始一个事务时，如果还有未提交的事务存在那么它会被立刻提交。
 
-如果有`LOCK TABLES`，那么也会强制释放表锁。另外一点是，任何 **DDL 语句**都无法回滚。
+如果有 `LOCK TABLES`，那么也会强制释放表锁。另外一点是，任何 **DDL 语句**都无法回滚。
 
 ### 事务断点
 
@@ -179,36 +182,36 @@ UNLOCK TABLES
 
 1. 使用 LOCK TABLES 的只能访问被锁定表格
 
-    ```bash
-    mysql> LOCK TABLES t1 READ;
-    mysql> SELECT COUNT(*) FROM t1;
-    +----------+
-    | COUNT(*) |
-    +----------+
-    |        3 |
-    +----------+
-    mysql> SELECT COUNT(*) FROM t2;
-    ERROR 1100 (HY000): Table 't2' was not locked with LOCK TABLES
-    ```
+   ```bash
+   mysql> LOCK TABLES t1 READ;
+   mysql> SELECT COUNT(*) FROM t1;
+   +----------+
+   | COUNT(*) |
+   +----------+
+   |        3 |
+   +----------+
+   mysql> SELECT COUNT(*) FROM t2;
+   ERROR 1100 (HY000): Table 't2' was not locked with LOCK TABLES
+   ```
 
 2. 锁定时使用表名或者别名都可以，但是我们在访问这些锁定表一定要和锁定语句的声明保持一致
 
-    ```bash
-    mysql> LOCK TABLE t WRITE, t AS t1 READ;
-    mysql> INSERT INTO t SELECT * FROM t;
-    ERROR 1100: Table 't' was not locked with LOCK TABLES
-    mysql> INSERT INTO t SELECT * FROM t AS t1;
-    ```
+   ```bash
+   mysql> LOCK TABLE t WRITE, t AS t1 READ;
+   mysql> INSERT INTO t SELECT * FROM t;
+   ERROR 1100: Table 't' was not locked with LOCK TABLES
+   mysql> INSERT INTO t SELECT * FROM t AS t1;
+   ```
 
 3. [LOCK TABLES](https://dev.mysql.com/doc/refman/8.0/en/lock-tables.html) 和 [UNLOCK TABLES](https://dev.mysql.com/doc/refman/8.0/en/lock-tables.html) 配合事务使用：
 
-    ```sql
-    SET autocommit=0;
-    LOCK TABLES t1 WRITE, t2 READ, ...;
-    ... do something with tables t1 and t2 here ...
-    COMMIT;
-    UNLOCK TABLES;
-    ```
+   ```sql
+   SET autocommit=0;
+   LOCK TABLES t1 WRITE, t2 READ, ...;
+   ... do something with tables t1 and t2 here ...
+   COMMIT;
+   UNLOCK TABLES;
+   ```
 
 ### 设置事务
 
@@ -236,52 +239,52 @@ access_mode: {
 
 1. 设置事务隔离级别
 
-    InnoDB 提供了 4 种隔离级别，默认是 `REPEATABLE READ`。
+   InnoDB 提供了 4 种隔离级别，默认是 `REPEATABLE READ`。
 
-   - [READ UNCOMMITTED](https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html#isolevel_read-uncommitted)
-   - [READ COMMITTED](https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html#isolevel_read-committed)
-   - [REPEATABLE READ](https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html#isolevel_repeatable-read)
-   - [SERIALIZABLE](https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html#isolevel_serializable)
+   * [READ UNCOMMITTED](https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html#isolevel_read-uncommitted)
+   * [READ COMMITTED](https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html#isolevel_read-committed)
+   * [REPEATABLE READ](https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html#isolevel_repeatable-read)
+   * [SERIALIZABLE](https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html#isolevel_serializable)
 
 2. 设置事务访问模式
 
-    默认是 `READ WRITE`，如果设置成 `READ ONLY`，就无法在事务中修改 table 了。
+   默认是 `READ WRITE`，如果设置成 `READ ONLY`，就无法在事务中修改 table 了。
 
 3. 设置事务特征范围
 
-    就是这次设置事务会影响到全局（尽管叫全局但显然不可能包括已经提交的事务）或者当前会话。
+   就是这次设置事务会影响到全局（尽管叫全局但显然不可能包括已经提交的事务）或者当前会话。
 
 ### 隔离级别
 
-- READ UNCOMMITTED
+* READ UNCOMMITTED
 
-    最低隔离级别，在读未提交这个级别下，MySQL 会以无锁模式读取行，导致有可能读到未提交事务更新后的数据，这种问题也被叫做脏读。
+  最低隔离级别，在读未提交这个级别下，MySQL 会以无锁模式读取行，导致有可能读到未提交事务更新后的数据，这种问题也被叫做脏读。
 
-- READ COMMITTED
+* READ COMMITTED
 
-    读已提交首先解决了脏读问题，但是 T1 在两次读取期间，可能 T2 对数据修改，导致前后 T1 前后读取结果不一致，这种问题叫做不可重复读。
+  读已提交首先解决了脏读问题，但是 T1 在两次读取期间，可能 T2 对数据修改，导致前后 T1 前后读取结果不一致，这种问题叫做不可重复读。
 
-- REPEATABLE READ
+* REPEATABLE READ
 
-    InnoDB 默认隔离级别，T1 在读取时，其他事务不能操作其访问行，但是其他事务可以插入新行，因此 T1 在读取期间表的行数一直在增加，这就是幻读问题。InnoDB 引入了 next-key lock 解决了该问题。
+  InnoDB 默认隔离级别，T1 在读取时，其他事务不能操作其访问行，但是其他事务可以插入新行，因此 T1 在读取期间表的行数一直在增加，这就是幻读问题。InnoDB 引入了 next-key lock 解决了该问题。
 
-- SERIALIZABLE
+* SERIALIZABLE
 
-    最严格的隔离级别。
+  最严格的隔离级别。
 
 ### ACID 模型
 
 **ACID** 是一套数据库设计原则，主要强调的是可靠性方面。
 
->原子性（Atomicity）：事务是一个原子操作单元，其对数据的修改，要么全都执行，要么全都不执行。
+> 原子性（Atomicity）：事务是一个原子操作单元，其对数据的修改，要么全都执行，要么全都不执行。
 >
->一致性（Consistent）：在事务开始和完成时，数据都必须保持一致状态。这意味着所有相关的数据规则都必须应用于事务的修改，以保持数据的完整性；事务结束时，所有的内部数据结构（如 B 树索引或双向链表）也都必须是正确的。
+> 一致性（Consistent）：在事务开始和完成时，数据都必须保持一致状态。这意味着所有相关的数据规则都必须应用于事务的修改，以保持数据的完整性；事务结束时，所有的内部数据结构（如 B 树索引或双向链表）也都必须是正确的。
 >
->隔离性（Isolation）：数据库系统提供一定的隔离机制，保证事务在不受外部并发操作影响的“独立”环境执行。这意味着事务处理过程中的中间状态对外部是不可见的，反之亦然。
+> 隔离性（Isolation）：数据库系统提供一定的隔离机制，保证事务在不受外部并发操作影响的 “独立” 环境执行。这意味着事务处理过程中的中间状态对外部是不可见的，反之亦然。
 >
->持久性（Durable）：事务完成之后，它对于数据的修改是永久性的，即使出现系统故障也能够保持。
+> 持久性（Durable）：事务完成之后，它对于数据的修改是永久性的，即使出现系统故障也能够保持。
 >
->《深入浅出 MySQL》
+> 《深入浅出 MySQL》
 
 ## 锁
 
@@ -291,21 +294,21 @@ InnoDB 通过共享锁和独占锁实现了行级锁，共享锁允许事务读�
 
 ### 意向锁
 
-InnoDB 通过意向锁来实现表级锁，**IS（意向共享锁）**会在整张表的每个行设共享锁，而 **IX（意向独占锁）**则是设独占锁。
+InnoDB 通过意向锁来实现表级锁，\*\*IS（意向共享锁）\*\* 会在整张表的每个行设共享锁，而 \*\*IX（意向独占锁）\*\* 则是设独占锁。
 
 比如，`“SELECT…FOR SHARE”` 就是 IS，`”SELECT…FOR UPDATE”` 就是 IX。一个事务要想获取一行数据的 X 锁，那么必须先获取所在表的 IX 锁；而如果想要获取 S 锁，那么获取 IS 锁。意向锁本质是相当于告诉 MySQL，我将要对某些数据加 X 锁或者 S 锁，在通过锁冲突间接管理锁颗粒细度。
 
 ### 记录锁
 
-**记录锁（record lock）**是加在索引上的，比如 `SELECT c1 FROM t WHERE c1 = 10 FOR UPDATE;` 语句会阻止其他事务通过 `t.c1=10` 的索引去间接修改、删除其数据所在行。
+\*\* 记录锁（record lock）\*\* 是加在索引上的，比如 `SELECT c1 FROM t WHERE c1 = 10 FOR UPDATE;` 语句会阻止其他事务通过 `t.c1=10` 的索引去间接修改、删除其数据所在行。
 
-像我们之前提到的 X 锁和 S 锁都是加在行上的，而记录锁是加在索引上的，那么*如果这一列没有索引怎么办？* InnoDB 会创建一个隐含的聚集索引。
+像我们之前提到的 X 锁和 S 锁都是加在行上的，而记录锁是加在索引上的，那么_如果这一列没有索引怎么办？_ InnoDB 会创建一个隐含的聚集索引。
 
 ### 间隙锁
 
-**间隙锁（gap lock）**也是加在索引上的，和记录锁区别在于，它是针对一个范围内的索引记录，比如 `SELECT c1 FROM t WHERE c1 BETWEEN 10 and 20 FOR UPDATE;`，如果这时候有其他事务想要插入一个 15 的值就会被阻止。
+\*\* 间隙锁（gap lock）\*\* 也是加在索引上的，和记录锁区别在于，它是针对一个范围内的索引记录，比如 `SELECT c1 FROM t WHERE c1 BETWEEN 10 and 20 FOR UPDATE;`，如果这时候有其他事务想要插入一个 15 的值就会被阻止。
 
-不同事务可以在同一段索引记录中取得冲突的间隙锁，这是因为间隙锁本身是为“排他”而生，如果想从索引中清除记录，则需要合并不同事务持有的该记录上的间隙锁。
+不同事务可以在同一段索引记录中取得冲突的间隙锁，这是因为间隙锁本身是为 “排他” 而生，如果想从索引中清除记录，则需要合并不同事务持有的该记录上的间隙锁。
 
 ### 下一键锁
 

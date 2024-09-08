@@ -9,19 +9,21 @@ tags:
     - redis
     - 数据库
 ---
+
 首先，我们要对 Redis 建立一个最基本的印象，**K/V**，**NoSQL**，**内存数据库**，**单线程**。另外，Redis 还是**开源**的，基于 **BSD 协议**（这个协议允许商用），用 **ANSI C** 语言编写而成，能够在大部分 **POSIX 系统**上运行，当然最常用的就是 Linux 和 OS X 系统了。
+
 <!--more-->
 
-- [五种开源协议的比较 (BSD，Apache，GPL，LGPL，MIT)](http://www.ha97.com/833.html)
-- [如何选择开源许可证？](https://zion4h.github.io/2023/03/31/opensource-license-intro/)
-- [ANSI C 标准 vs GNU C 标准](https://developer.aliyun.com/article/953604)
-- [Linux 黑话解释：什么是 POSIX？](https://linux.cn/article-14201-1.html)
+* [五种开源协议的比较 (BSD，Apache，GPL，LGPL，MIT)](http://www.ha97.com/833.html)
+* [如何选择开源许可证？](https://zion4h.github.io/2023/03/31/opensource-license-intro/)
+* [ANSI C 标准 vs GNU C 标准](https://developer.aliyun.com/article/953604)
+* [Linux 黑话解释：什么是 POSIX？](https://linux.cn/article-14201-1.html)
 
 ## Redis 数据类型
 
 由于 C 语言本身缺乏对一些复杂结构的定义，因此 Redis 自定义了一些数据类型，自成体系。最基本的数据类型包括 String、List、Hash、Set、ZSet，再深入一点，就是 `Bitmap`、`Stream`、`HyperLogLog` 和 `Geospatial`。
 
-- [Redis data types](https://redis.io/docs/data-types/)
+* [Redis data types](https://redis.io/docs/data-types/)
 
 ### String
 
@@ -51,7 +53,7 @@ ZSet 也是集合，我们在插入元素的同时要声明该元素的分数，
 
 ![ZSet](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/redis-data-structures-sorted-sets.svg)
 
-跳表是在链表基础上发展而来的，为了提升查询效率，我们可以在单链表之上再加一层链表，但只保留一半，每个元素除了指向后一个元素还指向下一层的“自己”，其可行性是建立在元素有序排列的基础之上的。当然，看到这里，我们不难想到，跳表稍微复杂点的地方是插入和删除，会以类似查询的方式对相邻元素更新。
+跳表是在链表基础上发展而来的，为了提升查询效率，我们可以在单链表之上再加一层链表，但只保留一半，每个元素除了指向后一个元素还指向下一层的 “自己”，其可行性是建立在元素有序排列的基础之上的。当然，看到这里，我们不难想到，跳表稍微复杂点的地方是插入和删除，会以类似查询的方式对相邻元素更新。
 
 简单来说，记住下面这张图即可
 
@@ -83,7 +85,7 @@ Redis 作为一个内存数据库，一旦**宕机**，里面的数据就会全�
 
 Redis 有两种持久化方式，一个是 **RDB**，适合**冷备**，一个是 **AOF**。
 
-- [冷备、热备、双活、两地三中心](https://zhuanlan.zhihu.com/p/34791057)
+* [冷备、热备、双活、两地三中心](https://zhuanlan.zhihu.com/p/34791057)
 
 ### RDB
 

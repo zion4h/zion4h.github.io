@@ -8,7 +8,9 @@ tags:
     - maven
 toc: true
 ---
+
 本文将简单介绍如何解析 Maven 的 目录结构和 POM 文件结构。
+
 <!--more-->
 
 ## 目录结构
@@ -173,4 +175,4 @@ Maven 更重要的是配 **POM**（Project Object Model）文件，它利用 XML
 
 【1】[Introduction to the POM](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html)
 
-【2】[Maven 学习-目录结构](https://www.cnblogs.com/now-fighting/p/4858982.html)
+【2】[Maven 学习 - 目录结构](https://www.cnblogs.com/now-fighting/p/4858982.html)

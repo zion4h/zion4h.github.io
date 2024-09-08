@@ -16,9 +16,10 @@ toc: true
 [root@MiWiFi-R4A-srv malloclab-handout]# yum install glibc-devel.i686
 [root@MiWiFi-R4A-srv malloclab-handout]# yum install libstdc++-devel.i686
 ```
+
 <!--more-->
 
-lab 缺少 trace 文件，可自行下载 [CSAPP-Lab/initial_labs/08_Malloc Lab/traces at master · Deconx/CSAPP-Lab (github.com)](https://github.com/Deconx/CSAPP-Lab/tree/master/initial_labs/08_Malloc%20Lab/traces)。然后，详读 [malloclab.dvi (cmu.edu)](http://csapp.cs.cmu.edu/3e/malloclab.pdf) 和书上 9.9 节。
+lab 缺少 trace 文件，可自行下载  [CSAPP-Lab/initial\_labs/08\_Malloc Lab/traces at master · Deconx/CSAPP-Lab (github.com)](https://github.com/Deconx/CSAPP-Lab/tree/master/initial_labs/08_Malloc%20Lab/traces) 。然后，详读 [malloclab.dvi (cmu.edu)](http://csapp.cs.cmu.edu/3e/malloclab.pdf) 和书上 9.9 节。
 
 ## 思路和过程
 
@@ -38,7 +39,7 @@ lab 缺少 trace 文件，可自行下载 [CSAPP-Lab/initial_labs/08_Malloc Lab/
 #define FTRP(bp) ((char *)(bp) + GET_SIZE(HDRP(bp)) - DSIZE)
 ```
 
-当一个块被释放时，就会涉及空闲块合并，可分为 4 种情况 afa、aff、ffa 和 fff。在编码过程中应注意，块指针指向的是第一个有效载荷字节地址，当然如果有效载荷为空则指向尾部。当堆被初始化时或者当分配函数无法找到一个合适的匹配块时，就会拓展堆。mem_sbrk 每次调用都返回一个块，由于 bp 指向的是结尾块（就是那个 0/1 块），因此结尾块成了新的头部，并设置为空闲。注意啊，这个 sbrk 其实只返回了一个双字对齐的内存片段，它一个部分成了新块的载荷和尾部，还有一部分成了新的结尾块。再之后，拓展完新块会遇到最后一个分配块为空闲的情况，所以拓展堆后还需要将二者合并。
+当一个块被释放时，就会涉及空闲块合并，可分为 4 种情况 afa、aff、ffa 和 fff。在编码过程中应注意，块指针指向的是第一个有效载荷字节地址，当然如果有效载荷为空则指向尾部。当堆被初始化时或者当分配函数无法找到一个合适的匹配块时，就会拓展堆。mem\_sbrk 每次调用都返回一个块，由于 bp 指向的是结尾块（就是那个 0/1 块），因此结尾块成了新的头部，并设置为空闲。注意啊，这个 sbrk 其实只返回了一个双字对齐的内存片段，它一个部分成了新块的载荷和尾部，还有一部分成了新的结尾块。再之后，拓展完新块会遇到最后一个分配块为空闲的情况，所以拓展堆后还需要将二者合并。
 
 堆在初始化时需要四个字，其中第二个字和第三个字构成起始块（载荷为 0），第四个字构成结尾块。之后让头指针就指向起始块，后面我们采用邻近适配法时新指针也指向这个块。
 

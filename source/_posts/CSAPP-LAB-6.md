@@ -9,9 +9,10 @@ toc: true
 ## 准备
 
 除了看 [shlab.dvi (cmu.edu)](http://csapp.cs.cmu.edu/3e/shlab.pdf) 和 [Introduction to Computer Systems 15-213/18-243, spring 2009 (cmu.edu)](https://www.cs.cmu.edu/~213/lectures/15-ecf-signals.pdf) 外，这个实验还需要仔细阅读书上第八章异常控制流部分，而书中未补全代码可在 [csapp.cs.cmu.edu/3e/ics3/code/src/csapp.c](http://csapp.cs.cmu.edu/3e/ics3/code/src/csapp.c) 搜索（比如 Kill）。
+
 <!--more-->
 
-由于我基本是按照书上介绍内容照葫芦画瓢，实际的个人思考很少，个人认为比较重要的点是对照 tshref.out（也可以用 make rtestx 输出）差异去不断修改。具体来说，我们按照原代码框架顺序编写 eval、builtin_cmd、do_bgfg、waitfg 和另外 3 个 handler 即可。
+由于我基本是按照书上介绍内容照葫芦画瓢，实际的个人思考很少，个人认为比较重要的点是对照 tshref.out（也可以用 make rtestx 输出）差异去不断修改。具体来说，我们按照原代码框架顺序编写 eval、builtin\_cmd、do\_bgfg、waitfg 和另外 3 个 handler 即可。
 
 另外值得注意的是很多特殊变量不需要我们定义，比如 SIGCONT，我的错误示范：
 
@@ -20,7 +21,7 @@ toc: true
 #define SIGCONT 18 /* 用在 bg 和 fg 指令 */
 ```
 
-## eval、builtin_cmd、do_bgfg、waitfg
+## eval、builtin\_cmd、do\_bgfg、waitfg
 
 eval 部分代码直接参照 8-24，而其中锁的部分参考 8.5.4 和 8-40，lab 在 Hints 中也有提到需要在 fork 子进程前用 sigprocmask 锁住 SIGCHLD 信号，防止子进程提前终止导致父进程添加僵尸进程。当然，这里一开始我是完全没考虑并发冲突之类的。
 
@@ -68,7 +69,7 @@ void eval(char *cmdline) {
 }
 ```
 
-然后，编写 buildtin_cmd，注意这个方法属于主线程，因此我们用 exit(0) 可以跳出循环安全退出，当然具体代码参照 8-24 编写即可。
+然后，编写 buildtin\_cmd，注意这个方法属于主线程，因此我们用 exit (0) 可以跳出循环安全退出，当然具体代码参照 8-24 编写即可。
 
 ```c
 int builtin_cmd(char **argv) {
@@ -93,7 +94,7 @@ int builtin_cmd(char **argv) {
 }
 ```
 
-在编写 do_bgfg 的时候，要注意和参考输出做对比，这里我推荐 test15，基本囊括了所有情况：
+在编写 do\_bgfg 的时候，要注意和参考输出做对比，这里我推荐 test15，基本囊括了所有情况：
 
 ```c
 void do_bgfg(char **argv) {
@@ -210,4 +211,4 @@ void sigtstp_handler(int sig) {
 }
 ```
 
-收官~
+收官\~

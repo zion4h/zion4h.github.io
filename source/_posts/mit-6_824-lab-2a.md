@@ -9,7 +9,9 @@ tags:
     - go
 toc: true
 ---
+
 我们将在 Lab2 中实现一个 Raft 系统，Raft 本身是一个分布式一致性算法。工欲善其事必先利其器，本实验难度较高，所以我先读 [Raft 论文](https://raft.github.io/raft.pdf)，再看助教写的 [guide](https://thesquareplanet.com/blog/students-guide-to-raft/)。为了方便理解协议的运作过程，我还去了 [Raft 官网](https://raft.github.io)，并反复观看 [Raft 可视化动画](http://thesecretlivesofdata.com/raft/)。
+
 <!--more-->
 
 再次强调，本 lab 难度较大，因此我在实验中有参考不少资料，并一一列出：

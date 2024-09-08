@@ -9,9 +9,11 @@ tags:
     - TODO
 toc: true
 ---
+
 > “[The Free Lunch Is Over](http://www.gotw.ca/publications/concurrency-ddj.htm)” -- Herb Sutter
 
-对于痛恨大厂“挤牙膏”的我而言，Intel 创始人提出的**摩尔定律**听起来再"美味"不过，一个延续数十年名副其实的“神话”。但随着半导体工业发展到极致后，为了继续提高芯片性能，只能转向**多核化**发展。而多核化又进一步促生**并发编程**的需求。
+对于痛恨大厂 “挤牙膏” 的我而言，Intel 创始人提出的**摩尔定律**听起来再 "美味" 不过，一个延续数十年名副其实的 “神话”。但随着半导体工业发展到极致后，为了继续提高芯片性能，只能转向**多核化**发展。而多核化又进一步促生**并发编程**的需求。
+
 <!--more-->
 
 ![Intel CPU Introductions](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/CPU.png)
@@ -24,7 +26,7 @@ toc: true
 2. 但实际运行过程中，线程遇到竞争资源会等待，而这个等待时间是漫长的，最终导致整体效果较差
 3. 改进的方法比较直接，将竞争资源的颗粒度细化，从而减少线程等待时间
 
-通常，我们会将并行和多核画上等号，但实际上计算机可以在多个层次用到并行技术。比如位级并行，“为什么 32 位计算机比 8 位计算机速度快？”，因为两个 32 位数的加法它只需要执行 1 次，而后者需要 4 次。但这显然是有瓶颈的，因此 128 位的计算机迟迟得不到推出。指令并行，或者说 CPU 加速，当然指令的并行也带来了“内存可见性”问题。数据并行，或者说 GPU 加速，可以对大量数据施加同一个操作。任务并行，即多处理器，这是我们最频繁打交道的部分，也是大家讨论“并行”时的一般性范畴。
+通常，我们会将并行和多核画上等号，但实际上计算机可以在多个层次用到并行技术。比如位级并行，“为什么 32 位计算机比 8 位计算机速度快？”，因为两个 32 位数的加法它只需要执行 1 次，而后者需要 4 次。但这显然是有瓶颈的，因此 128 位的计算机迟迟得不到推出。指令并行，或者说 CPU 加速，当然指令的并行也带来了 “内存可见性” 问题。数据并行，或者说 GPU 加速，可以对大量数据施加同一个操作。任务并行，即多处理器，这是我们最频繁打交道的部分，也是大家讨论 “并行” 时的一般性范畴。
 
 ## 互斥和内存模型
 
@@ -52,7 +54,7 @@ public static void main(String[] args) throws InterruptedException {
 
 **线程**之间通过**共享内存**进行通信，本质上是控制流。但当**竞态条件**发生时，每次运行结果都可能不一样。为了避免这种情况的发生，我们将对竞争资源同步访问，也就是加**锁**。
 
-比如经典的“[i++ 线程安全](https://stackoverflow.com/questions/680097/ive-heard-i-isnt-thread-safe-is-i-thread-safe)”问题。
+比如经典的 “[i++ 线程安全](https://stackoverflow.com/questions/680097/ive-heard-i-isnt-thread-safe-is-i-thread-safe)” 问题。
 
 ### 乱序执行的代码
 
@@ -60,18 +62,18 @@ public static void main(String[] args) throws InterruptedException {
 
 造成乱序的可能原因：
 
-- **编译器**的静态优化
-- **JVM** 的动态优化
-- **硬件指令**的乱序执行
+* **编译器**的静态优化
+* **JVM** 的动态优化
+* **硬件指令**的乱序执行
 
 可参考：
 
-- *[Java 内存模型](http://www.cs.umd.edu/~pugh/java/memoryModel/) by William Pugh*
-- *[JSR-133 FAQ](https://www.cs.umd.edu/~pugh/java/memoryModel/jsr-133-faq.html) by William Pugh*
+* _[Java 内存模型](http://www.cs.umd.edu/~pugh/java/memoryModel/) by William Pugh_
+* _[JSR-133 FAQ](https://www.cs.umd.edu/~pugh/java/memoryModel/jsr-133-faq.html) by William Pugh_
 
 ### 死锁
 
-有人说为了让代码安全运行，干脆让全部代码都同步执行好了，但这样线程会频繁阻塞，失去了并发的意义。并且，当引入多个锁之后可能会造成**死锁**。一个经典死锁模型是——[哲学家进餐问题](https://en.wikipedia.org/wiki/Dining_philosophers_problem)。
+有人说为了让代码安全运行，干脆让全部代码都同步执行好了，但这样线程会频繁阻塞，失去了并发的意义。并且，当引入多个锁之后可能会造成**死锁**。一个经典死锁模型是 —— [哲学家进餐问题](https://en.wikipedia.org/wiki/Dining_philosophers_problem)。
 
 ```java
 public class Philosopher extends Thread {
@@ -102,7 +104,7 @@ public class Philosopher extends Thread {
 
 一个最简单的解决思路是：给筷子编号，按全局顺序取筷子避免头尾冲突。
 
-*问题：Java 内存模型是如何保证对象初始化是线程安全的？是否必须通过加锁才能在线程之间安全地公开对象？*
+_问题：Java 内存模型是如何保证对象初始化是线程安全的？是否必须通过加锁才能在线程之间安全地公开对象？_
 
 Java 内存模型保证对象初始化是线程安全的，不需要显式地加锁。具体来说，当一个线程执行到对象初始化代码时，Java 内存模型通过 happens-before 原则保证该线程先前所做的所有操作都对其他线程可见，然后再执行对象初始化代码。这样，其他线程在访问该对象时将访问到正确的、完整的、已经初始化的对象实例。
 
@@ -110,7 +112,7 @@ Happens-Before 原则是 Java 并发编程中一个重要的概念，它描述�
 
 ### 双重检查锁模式
 
-**双检锁 DCL** 是一个反面模式，反面模式来自 *GoF* 的《**设计模式**》一书，用来指代那些经常出现，却又低效且有待优化的模式。
+**双检锁 DCL** 是一个反面模式，反面模式来自 _GoF_ 的《**设计模式**》一书，用来指代那些经常出现，却又低效且有待优化的模式。
 
 ```java
 public class DCL {
@@ -196,19 +198,19 @@ try {
 
 为什么要有线程池？1. 拒绝服务攻击 2. 手动创建开销大。另外，线程池的大小会考虑到任务本身，一般 CPU 密集的任务会接近可用核树，而 IO 密集的会更大。
 
-java.util.concurrent 包中的 ArrayBlockingQueue 是一个并发队列，非常适合消费者-生产者模式，提供了高效的并发 put、take 方法。take 会在取空时阻塞直到非空，put 会在放满时阻塞直到有足够空间。
+java.util.concurrent 包中的 ArrayBlockingQueue 是一个并发队列，非常适合消费者 - 生产者模式，提供了高效的并发 put、take 方法。take 会在取空时阻塞直到非空，put 会在放满时阻塞直到有足够空间。
 
 TODO 作者是如何一步步改进程序并发性能的：1. 引入线程池 2. 引入 concurrentHashMap3. 将对竞争资源的访问转换成处理离线任务再合并。
 
-问题 1 阅读 ForkJoinPool 文档——fork/join 框架和线程池区别？分别适用什么场景？
+问题 1 阅读 ForkJoinPool 文档 ——fork/join 框架和线程池区别？分别适用什么场景？
 
-Fork/Join 框架是一个基于工作窃取算法的任务调度框架，而线程池则是用于执行一组线程任务的框架。具体来说，ForkJoinPool 线程池中的每一条线程都有一个自己的工作队列（WorkQueue），这个工作队列是双端队列，从自己队列的头部取得任务，从尾部添加任务，如果自己的队列中没有任务了，它又会去“偷”其他线程的任务。这一点就是工作窃取算法。
+Fork/Join 框架是一个基于工作窃取算法的任务调度框架，而线程池则是用于执行一组线程任务的框架。具体来说，ForkJoinPool 线程池中的每一条线程都有一个自己的工作队列（WorkQueue），这个工作队列是双端队列，从自己队列的头部取得任务，从尾部添加任务，如果自己的队列中没有任务了，它又会去 “偷” 其他线程的任务。这一点就是工作窃取算法。
 
 问题 2 什么是 countDownLatch 和 CyclicBarrier？
 
 CountDownLatch 和 CyclicBarrier 都是 Java 中的多线程工具类。
 
-CountDownLatch 是一个计数器，可以用来控制多个线程的并发执行。CountDownLatch 有一个计数值，调用一次 countDown() 方法计数器的值就会减 1，当计数器的值减为 0 时，表示所有线程都已经执行完毕，等待在 await() 方法上的线程就可以继续执行。
+CountDownLatch 是一个计数器，可以用来控制多个线程的并发执行。CountDownLatch 有一个计数值，调用一次 countDown () 方法计数器的值就会减 1，当计数器的值减为 0 时，表示所有线程都已经执行完毕，等待在 await () 方法上的线程就可以继续执行。
 
 CyclicBarrier 也是一个计数器，但与 CountDownLatch 不同的是，CyclicBarrier 的计数值只能在初始化时设置，所有线程都到达后，它会释放所有等待的线程，并且将计数值重置为初始值。CyclicBarrier 适合需要多个线程协同完成某个任务的场景。
 

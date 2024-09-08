@@ -9,16 +9,18 @@ tags:
     - go
 toc: true
 ---
+
 遵循 [lab 页](https://pdos.csail.mit.edu/6.824/labs/lab-mr.html) 指导，并在本地部署好项目。我在观摩完 mrsequential 部分的代码后，再结合 [MapReduce 论文](https://static.googleusercontent.com/media/research.google.com/zh-CN//archive/mapreduce-osdi04.pdf)，理清了基本思路。
+
 <!--more-->
 
 ### 准备
 
 首先，我们会有两个角色，worker 负责处理任务，coordinator 负责管理和分配任务，一般有一个 coordinator 和多个 worker（现在先不考虑单点故障问题）。
 
-- **SPOF** 单点故障指系统中一点失效，就会让整个系统无法运作的部件。
+* **SPOF** 单点故障指系统中一点失效，就会让整个系统无法运作的部件。
 
-单词计数任务的 **map 阶段**会将输入的多个文本转换成形如“`hello，1`”这样的键值数组，然后在 **reduce 阶段**会将这些键值数组整合并输出。另外，我们在代码设计过程中应注意：coordinator 只负责分配和管理，而 worker 负责全部的计算。
+单词计数任务的 **map 阶段**会将输入的多个文本转换成形如 “`hello，1`” 这样的键值数组，然后在 **reduce 阶段**会将这些键值数组整合并输出。另外，我们在代码设计过程中应注意：coordinator 只负责分配和管理，而 worker 负责全部的计算。
 
 ### map
 

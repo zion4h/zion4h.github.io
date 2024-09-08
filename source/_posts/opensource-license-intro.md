@@ -9,17 +9,19 @@ toc: true
 tags: 
     - 开源
 ---
+
 **开源促进会 OSI** 是**开源定义 OSD** 的管理者，由 Bruce Perens 和 Eric S. Raymond 创立于 1998 年，我们寻常用的开源协议都需要该组织认可，要求符合 **OSD** 定义。
+
 <!--more-->
 
-- **OSI** [Open Source initiative](https://opensource.org/licenses/)
-- **OSD** [Open Source definition](https://en.wikipedia.org/wiki/The_Open_Source_Definition)
+* **OSI** [Open Source initiative](https://opensource.org/licenses/)
+* **OSD** [Open Source definition](https://en.wikipedia.org/wiki/The_Open_Source_Definition)
 
 ## 常用开源协议
 
 ### GPL
 
-1970s，[Richard Stallman](https://en.wikipedia.org/wiki/Richard_Stallman) 发起了**自由软件运动**，并撰写了 **GNU 通用公共许可协议** [GPL](https://en.wikipedia.org/wiki/GNU_General_Public_License)。GPL 是一个 [Copyleft 协议](https://zh.wikipedia.org/wiki/Copyleft)，而 Copyleft 协议又叫**传染性开源协议**，只要项目中有一部分带 Copyleft 协议，那么整个项目都必须带上 Copyleft 协议，从而*变相达到鼓励开源的目的*。
+1970s，[Richard Stallman](https://en.wikipedia.org/wiki/Richard_Stallman) 发起了**自由软件运动**，并撰写了 **GNU 通用公共许可协议** [GPL](https://en.wikipedia.org/wiki/GNU_General_Public_License)。GPL 是一个 [Copyleft 协议](https://zh.wikipedia.org/wiki/Copyleft)，而 Copyleft 协议又叫**传染性开源协议**，只要项目中有一部分带 Copyleft 协议，那么整个项目都必须带上 Copyleft 协议，从而_变相达到鼓励开源的目的_。
 
 ### MIT & BSD
 
@@ -52,7 +54,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Creative Commons
 
-[Creative Commons 许可证](https://creativecommons.org/licenses/)是允许免费分发其他受版权保护的“作品”的几种公共版权许可证之一。你只需要做出[两个选择](https://creativecommons.org/choose/)，是否共享以及是否商用。
+[Creative Commons 许可证](https://creativecommons.org/licenses/)是允许免费分发其他受版权保护的 “作品” 的几种公共版权许可证之一。你只需要做出[两个选择](https://creativecommons.org/choose/)，是否共享以及是否商用。
 
 ![署名-非商业性使用-相同方式共享 4.0 国际](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230507214354.png)
 

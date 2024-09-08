@@ -8,7 +8,9 @@ tags:
     - shell
 toc: true
 ---
-本文主要叙述了如何以脚本方式去使用 **bash**，并介绍了大量常用的 **Shell 工具**。很多工具并非系统自带，需要手动下载甚至手动配置，如果是 **Mac OS** 的话，使用`brew`一键安装即可。
+
+本文主要叙述了如何以脚本方式去使用 **bash**，并介绍了大量常用的 **Shell 工具**。很多工具并非系统自带，需要手动下载甚至手动配置，如果是 **Mac OS** 的话，使用 `brew` 一键安装即可。
+
 <!--more-->
 
 ## shell 脚本
@@ -28,9 +30,9 @@ $foo
 
 ### 赋值变量
 
-我们可以在 **bash** 中直接赋值变量，但注意在 **shell** 脚本中，空格符会将参数拆分。另外，字符串可以用单引号`'`和双引号`"`定义，但二者不等效。单引号是纯文本，双引号会替换变量值。
+我们可以在 **bash** 中直接赋值变量，但注意在 **shell** 脚本中，空格符会将参数拆分。另外，字符串可以用单引号`'` 和双引号 `"` 定义，但二者不等效。单引号是纯文本，双引号会替换变量值。
 
-现在我们写一个脚本文件 ***mcd.sh***，`$1`表示这个脚本接收的第一个参数：
+现在我们写一个脚本文件 _**mcd.sh**_，`$1` 表示这个脚本接收的第一个参数：
 
 ```sh
 mcd() {
@@ -41,20 +43,20 @@ mcd() {
 
 **bash** 会使用特殊变量来引用参数、错误代码和其他变量，下面列出了常用变量：
 
-- `$0` - 脚本名
-- `$1` 到 `$9` - 脚本接收的参数
-- `$@` - 脚本接收的全部参数
-- `$#` - 参数数目
-- `$?` - 上一条命令的返回码
-- `$$` - 处理当前脚本的进程 id
-- `!!` - 完整的上一条命令包括参数
-- `$_` - 上一条命令的最后一个参数
+* `$0` - 脚本名
+* `$1` 到 `$9` - 脚本接收的参数
+* `$@` - 脚本接收的全部参数
+* `$#` - 参数数目
+* `$?` - 上一条命令的返回码
+* `$$` - 处理当前脚本的进程 id
+* `!!` - 完整的上一条命令包括参数
+* `$_` - 上一条命令的最后一个参数
 
 想更多细节，请参考 **TLDR** (Linux 文档计划）的 [特殊变量章节](https://tldp.org/LDP/abs/html/special-chars.html)。
 
 ### 命令返回结果
 
-命令会使用`STDOUT`返回输出或者用`STDERR`返回错误，并且会返回一个`Return Code`（也就是`$?`）。这个返回码为 **0** 时表示一切正常，反之如果出错则返回码为 **1**。返回码能够与逻辑与`&&`和逻辑或`||`一起组合运算，还可以用分号`;`将同一行命令分隔。
+命令会使用 `STDOUT` 返回输出或者用 `STDERR` 返回错误，并且会返回一个 `Return Code`（也就是 `$?`）。这个返回码为 **0** 时表示一切正常，反之如果出错则返回码为 **1**。返回码能够与逻辑与 `&&` 和逻辑或 `||` 一起组合运算，还可以用分号`;` 将同一行命令分隔。
 
 ```shell
 ~/tmp$ false || echo "Oops, fail"
@@ -71,9 +73,9 @@ This will always run
 
 ### 命令置换和进程替换
 
-一种常见的场景是希望将命令的输出结果作为变量获取，我们可以通过 **命令置换** ***command substitution*** 完成。当我们输入`$(CMD)`时，它会先执行`CMD`，并用结果取代原本的`$(CMD)`。比如，当我们想要遍历文件夹时，可以使用`for file in $(ls)`，**shell** 会先调用`ls`然后迭代访问这些其返回结果。
+一种常见的场景是希望将命令的输出结果作为变量获取，我们可以通过 **命令置换** _**command substitution**_ 完成。当我们输入 `$(CMD)` 时，它会先执行 `CMD`，并用结果取代原本的 `$(CMD)`。比如，当我们想要遍历文件夹时，可以使用 `for file in $(ls)`，**shell** 会先调用 `ls` 然后迭代访问这些其返回结果。
 
-另外一个鲜为人知的类似功能是 **进程替换** ***process substitution***，常用在希望将命令结果用文件而不是 **STDIN** 传递时。当我们输入`<(CMD)`时，会先执行`CMD`，然后将结果保存在一个临时文件中，并用这个临时文件名去替换原本的`<(CMD)`。比如，`diff <(ls foo) <(ls bar)`会现实 **foo** 和 **bar** 两个文件夹之间的差异。
+另外一个鲜为人知的类似功能是 **进程替换** _**process substitution**_，常用在希望将命令结果用文件而不是 **STDIN** 传递时。当我们输入 `<(CMD)` 时，会先执行 `CMD`，然后将结果保存在一个临时文件中，并用这个临时文件名去替换原本的 `<(CMD)`。比如，`diff <(ls foo) <(ls bar)` 会现实 **foo** 和 **bar** 两个文件夹之间的差异。
 
 ```sh
 #!/bin/bash
@@ -93,11 +95,11 @@ for file in "$@"; do
 done
 ```
 
-代码中比较了前一条命令的返回码是否为 **0**，如果想要执行其他比较，可以参考 [Linux 手册](https://www.man7.org/linux/man-pages/man1/test.1.html) 和 [Unix wiki](http://mywiki.wooledge.org/BashFAQ/031)，执行比较的时候注意加双中括号`[[]]`。
+代码中比较了前一条命令的返回码是否为 **0**，如果想要执行其他比较，可以参考 [Linux 手册](https://www.man7.org/linux/man-pages/man1/test.1.html) 和 [Unix wiki](http://mywiki.wooledge.org/BashFAQ/031)，执行比较的时候注意加双中括号 `[[]]`。
 
 ### 通配符
 
-**Shell** 支持 **通配符** ***Wildcards***，可以用`?`和`*`分别匹配 **一个** 或 **多个** 字符，此外 **Shell** 还支持用大括号`{}`去扩展命令中的公共子字符串。
+**Shell** 支持 **通配符** _**Wildcards**_，可以用`?` 和 `*` 分别匹配 **一个** 或 **多个** 字符，此外 **Shell** 还支持用大括号 `{}` 去扩展命令中的公共子字符串。
 
 ```shell
 ~/tmp$ mkdir foo bar
@@ -139,17 +141,17 @@ b
 a
 ```
 
-第一行的`#!`是 [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))，它会告诉内核使用 **python3 解释器** 来执行这个脚本。这里不得不强调一下脚本和 **shell 函数** 的区别，**shell** 函数必须用使用和当前 **shell** 相同的语言，而脚本可以用任何语言，这就是为什么脚本都需要加上一行 **shebang**。
+第一行的`#!` 是 [shebang](https://en.wikipedia.org/wiki/Shebang_\(Unix\))，它会告诉内核使用 **python3 解释器** 来执行这个脚本。这里不得不强调一下脚本和 **shell 函数** 的区别，**shell** 函数必须用使用和当前 **shell** 相同的语言，而脚本可以用任何语言，这就是为什么脚本都需要加上一行 **shebang**。
 
 ## shell 工具
 
 ### 查看命令使用方式
 
-一般用`-h`或`--help`，也可以用`man`直接查看使用手册，但有时候手册过于臃肿，我们可以借助工具 [tldr](https://tldr.sh/) 将说明简化。
+一般用 `-h` 或 `--help`，也可以用 `man` 直接查看使用手册，但有时候手册过于臃肿，我们可以借助工具 [tldr](https://tldr.sh/) 将说明简化。
 
 ### 查找文件
 
-直接使用内置命令`find`即可：
+直接使用内置命令 `find` 即可：
 
 ```shell
 # Find all directories named src
@@ -171,7 +173,7 @@ find . -name '*.tmp' -exec rm {} \;
 find . -name '*.png' -exec convert {} {}.jpg \;
 ```
 
-尽管`find`很强大，但它的语法用起来也很麻烦，因此我们通常用替代工具 [fd](https://github.com/sharkdp/fd)，它更简单更快而且更友好：
+尽管 `find` 很强大，但它的语法用起来也很麻烦，因此我们通常用替代工具 [fd](https://github.com/sharkdp/fd)，它更简单更快而且更友好：
 
 ```shell
 ~/tmp$ fd "t"
@@ -183,9 +185,9 @@ test.sh
 
 #### 查找代码
 
-查找代码最通用的自然是 [grep](https://www.man7.org/linux/man-pages/man1/grep.1.html)，`grep`有很多标志符，比较常用的是`-C`用来获取匹配行的上下文，以及`-v`用来反转匹配（比如返回所有不匹配某个`pattern`的行）。当你想要从多个文件中快速查找时，可以用`-R`递归查询。
+查找代码最通用的自然是 [grep](https://www.man7.org/linux/man-pages/man1/grep.1.html)，`grep` 有很多标志符，比较常用的是 `-C` 用来获取匹配行的上下文，以及 `-v` 用来反转匹配（比如返回所有不匹配某个 `pattern` 的行）。当你想要从多个文件中快速查找时，可以用 `-R` 递归查询。
 
-针对`grep -R`也有很多优化查询工具，比如 [ack](https://github.com/beyondgrep/ack3), [ag](https://github.com/ggreer/the_silver_searcher) 和 [rg](https://github.com/BurntSushi/ripgrep)，下面的结果高下立判。
+针对 `grep -R` 也有很多优化查询工具，比如 [ack](https://github.com/beyondgrep/ack3), [ag](https://github.com/ggreer/the_silver_searcher) 和 [rg](https://github.com/BurntSushi/ripgrep)，下面的结果高下立判。
 
 ```shell
 ~/tmp$ grep -R "s"                                                         17s
@@ -215,15 +217,15 @@ script.py
 
 #### 查找 shell 命令
 
-通过`history`我们可以浏览之前输入的命令，除了不断按上箭头，我们还可以通过`history | grep find`找到包含“**find**”子串的命令。
+通过 `history` 我们可以浏览之前输入的命令，除了不断按上箭头，我们还可以通过 `history | grep find` 找到包含 “**find**” 子串的命令。
 
-此外，我们也可以用`Ctrl+R`去向后搜索，它其实是和 [fzf](https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings#ctrl-r) 绑定的。当然，由于我用的是 **zsh**，自然使用  ***history-based autosuggestions*** 插件了。
+此外，我们也可以用 `Ctrl+R` 去向后搜索，它其实是和 [fzf](https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings#ctrl-r) 绑定的。当然，由于我用的是 **zsh**，自然使用  _**history-based autosuggestions**_ 插件了。
 
 ## 练习
 
 ### 练习 1
 
-读`man ls`并一个 ls 命令来列出所有文件
+读 `man ls` 并一个 ls 命令来列出所有文件
 
 ```shell
 ~/tmp$ ls -ahlt --color
@@ -256,7 +258,7 @@ polo() {
 }
 ```
 
-注意修改执行权限并用`source`将这两个命令定义给 shell。
+注意修改执行权限并用 `source` 将这两个命令定义给 shell。
 
 ### 练习 3
 

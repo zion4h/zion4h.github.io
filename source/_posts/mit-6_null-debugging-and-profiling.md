@@ -10,10 +10,13 @@ tags:
     - profile
 toc: true
 ---
->“Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.” — Brian Kernighan, *Unix for Beginners*.
+
+> “Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.” — Brian Kernighan, _Unix for Beginners_.
 
 编程有一条黄金法则，“代码并不会按你所想那样运行，而只会按你所述运行”。写完代码只是编程的第一步，我们更多时间其实花在了 **Debugging（调试）** 和 **Profiling（性能分析）** 上。
+
 <!-- more -->
+
 ## Debugging
 
 ### 打印调试语句和日志
@@ -98,7 +101,7 @@ for _ in range(100):
 
 ![小程序 logger 运行展示](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230502151128.png)
 
-终端可以通过颜色提高可读性，像 `ls` 或者 `grep` 都使用 [ANSI 转义序列](https://en.wikipedia.org/wiki/ANSI_escape_code) 来让 shell 修改输出的颜色。e.g.，执行 `echo -e "\e[38;2;255;0;0mThis is red\e[0m"`会输出一行红色的 This is red 在终端。当然，前提是这个终端支持 [24-bit truecolor](https://github.com/termstandard/colors)，像 Mac OS 的 terminal 就并不支持，需要改用只支持 16 色的 ANSI 转义序列，e.g.，执行 `echo -e "\e[31;1mThis is red\e[0m"`。
+终端可以通过颜色提高可读性，像 `ls` 或者 `grep` 都使用 [ANSI 转义序列](https://en.wikipedia.org/wiki/ANSI_escape_code) 来让 shell 修改输出的颜色。e.g.，执行 `echo -e "\e[38;2;255;0;0mThis is red\e[0m"` 会输出一行红色的 This is red 在终端。当然，前提是这个终端支持 [24-bit truecolor](https://github.com/termstandard/colors)，像 Mac OS 的 terminal 就并不支持，需要改用只支持 16 色的 ANSI 转义序列，e.g.，执行 `echo -e "\e[31;1mThis is red\e[0m"`。
 
 ### 第三方日志
 
@@ -118,7 +121,7 @@ for _ in range(100):
 
 ### 调试器
 
-当打印调试也没用时，我们就该用调试器了。**调试器（debugger）**能够让我们交互式执行程序，具体来说它能做到：
+当打印调试也没用时，我们就该用调试器了。\*\* 调试器（debugger）\*\* 能够让我们交互式执行程序，具体来说它能做到：
 
 1. 到达断点时**暂停**
 2. 每次执行一步
@@ -129,13 +132,13 @@ for _ in range(100):
 
 ### 特殊工具
 
-- 跟踪程序进行的**系统调用**
-  - [strace](https://www.man7.org/linux/man-pages/man1/strace.1.html) （Linux）
-  - [dtruss](https://www.manpagez.com/man/1/dtruss/) （Mac OS）
-- 查看**网络数据包**
-  - [tcpdump](https://www.man7.org/linux/man-pages/man1/tcpdump.1.html)
-  - [Wireshark](https://www.wireshark.org/)
-  - 浏览器自带**开发者工具**，这个通常来说使用频率最高
+* 跟踪程序进行的**系统调用**
+  * [strace](https://www.man7.org/linux/man-pages/man1/strace.1.html) （Linux）
+  * [dtruss](https://www.manpagez.com/man/1/dtruss/) （Mac OS）
+* 查看**网络数据包**
+  * [tcpdump](https://www.man7.org/linux/man-pages/man1/tcpdump.1.html)
+  * [Wireshark](https://www.wireshark.org/)
+  * 浏览器自带**开发者工具**，这个通常来说使用频率最高
 
 ### 静态分析
 
@@ -145,42 +148,42 @@ for _ in range(100):
 
 ## Profiling
 
-在 Debug 结束后，尽管程序能够按照预想那样跑起来了，但它有可能占用过多不必要的 CPU 和内存资源。算法只会告诉我们如何分析时间复杂度，但并不会告诉我们真正遇到程序龟速行驶时该怎么处理。Knuth 说过“*过早优化是万恶之源*”，我们应该先通过 **profiler** 和**监视器**去查看到底是哪部分代码在偷偷占用大部分资源，在这之后再考虑如何优化的问题。
+在 Debug 结束后，尽管程序能够按照预想那样跑起来了，但它有可能占用过多不必要的 CPU 和内存资源。算法只会告诉我们如何分析时间复杂度，但并不会告诉我们真正遇到程序龟速行驶时该怎么处理。Knuth 说过 “_过早优化是万恶之源_”，我们应该先通过 **profiler** 和**监视器**去查看到底是哪部分代码在偷偷占用大部分资源，在这之后再考虑如何优化的问题。
 
 ### 时钟
 
 和 Debug 很像，一个最简单的 profiler 可以通过**时钟**实现，在可疑代码段前后加上时钟，我们就能得到这部分代码的运行时间。
 
-然而这些时钟“墙”可能会误导你做出错误的判断，因为进程可能会在这对时钟间等待某个事件（比如打印），而且其他进程也会在这对时钟间运行。通常 **time 工具**会将 `Real`，`User` 和 `Sys` 时间作区分，“`User + Sys`” 才能得到进程实际消耗的 **CPU 时间**，StackOverflow 上有提出 [相关问题](https://stackoverflow.com/questions/556405/what-do-real-user-and-sys-mean-in-the-output-of-time1)。
+然而这些时钟 “墙” 可能会误导你做出错误的判断，因为进程可能会在这对时钟间等待某个事件（比如打印），而且其他进程也会在这对时钟间运行。通常 **time 工具**会将 `Real`，`User` 和 `Sys` 时间作区分，“`User + Sys`” 才能得到进程实际消耗的 **CPU 时间**，StackOverflow 上有提出 [相关问题](https://stackoverflow.com/questions/556405/what-do-real-user-and-sys-mean-in-the-output-of-time1)。
 
 ![time 演示](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230502190437.png)
 
 ### Profilers
 
-- [How do Ruby & Python profilers work?](https://jvns.ca/blog/2017/12/17/how-do-ruby---python-profilers-work-/)
+* [How do Ruby & Python profilers work?](https://jvns.ca/blog/2017/12/17/how-do-ruby---python-profilers-work-/)
 
 1. CPU
-    在绝大多数时候，我们讨论的 profiler 实际指 **CPU profiler**。CPU profiler 有两种实现实现方式，**tracing profiler** 会记录程序执行的每个函数调用，而 **sampling profiler** 会定期侦测程序并记录程序栈。当然，它们的最终目的都是为了帮助我们了解发现程序*究竟在哪些地方耗费了大量 CPU*。
+   在绝大多数时候，我们讨论的 profiler 实际指 **CPU profiler**。CPU profiler 有两种实现实现方式，**tracing profiler** 会记录程序执行的每个函数调用，而 **sampling profiler** 会定期侦测程序并记录程序栈。当然，它们的最终目的都是为了帮助我们了解发现程序_究竟在哪些地方耗费了大量 CPU_。
 
 2. 内存
-    在使用类似 C 或 C++ 编程时，**内存泄漏**将导致内存得不到及时释放。
+   在使用类似 C 或 C++ 编程时，**内存泄漏**将导致内存得不到及时释放。
 
 3. 可视化
-    人类都是视觉生物，谁会喜欢盯着满屏幕字母数字去绞尽脑汁翻找自己想要的信息，这种情况在没头绪的情况下会更糟（*之前有过经历，只能靠前人经验去摸索，这对于程序员来说完全没道理嘛*）。
+   人类都是视觉生物，谁会喜欢盯着满屏幕字母数字去绞尽脑汁翻找自己想要的信息，这种情况在没头绪的情况下会更糟（_之前有过经历，只能靠前人经验去摸索，这对于程序员来说完全没道理嘛_）。
 
-    一个通用的解决方法是 [Flame Graph](https://www.brendangregg.com/flamegraphs.html) 和 [pycallgraph](https://pycallgraph.readthedocs.io/en/master/)。
+   一个通用的解决方法是 [Flame Graph](https://www.brendangregg.com/flamegraphs.html) 和 [pycallgraph](https://pycallgraph.readthedocs.io/en/master/)。
 
 ### 资源监控
 
 ![htop](https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230503152037.png)
 
-- 泛用监控：最流行的当属 **htop**，它本身是 **top** 的改进版，按 `h` 可以查看详细使用手册。类似的，有 **glances** 的替品，个人觉得排版视觉更美观。
-- **I/O 操作**：[iotop](https://www.man7.org/linux/man-pages/man8/iotop.8.html)
-- **磁盘**使用情况：[df](https://www.man7.org/linux/man-pages/man1/df.1.html) 和 `du`（当然，我们一般不用 `du`，改用 [ncdu](https://dev.yorhel.nl/ncdu)）
-- **内存**使用情况：本身 `htop` 已经足够，但你也可以用 `free` 命令单独查看
-- **打开文件**：[lsof](https://www.man7.org/linux/man-pages/man8/lsof.8.html)
-- **网络连接和配置**情况：使用 [ip](https://man7.org/linux/man-pages/man8/ip.8.html) 命令（可以看页面 **examples 项**），查看**路由、网络设置和接口**等。这里值得注意的一点是，不要再用已经被废弃的 `netstat` 和 `ifconfig` 了。
-- **网络**使用情况：[iftop](http://www.ex-parrot.com/pdw/iftop/)
+* 泛用监控：最流行的当属 **htop**，它本身是 **top** 的改进版，按 `h` 可以查看详细使用手册。类似的，有 **glances** 的替品，个人觉得排版视觉更美观。
+* **I/O 操作**：[iotop](https://www.man7.org/linux/man-pages/man8/iotop.8.html)
+* **磁盘**使用情况：[df](https://www.man7.org/linux/man-pages/man1/df.1.html) 和 `du`（当然，我们一般不用 `du`，改用 [ncdu](https://dev.yorhel.nl/ncdu)）
+* **内存**使用情况：本身 `htop` 已经足够，但你也可以用 `free` 命令单独查看
+* **打开文件**：[lsof](https://www.man7.org/linux/man-pages/man8/lsof.8.html)
+* **网络连接和配置**情况：使用 [ip](https://man7.org/linux/man-pages/man8/ip.8.html) 命令（可以看页面 **examples 项**），查看**路由、网络设置和接口**等。这里值得注意的一点是，不要再用已经被废弃的 `netstat` 和 `ifconfig` 了。
+* **网络**使用情况：[iftop](http://www.ex-parrot.com/pdw/iftop/)
 
 ## 参考
 

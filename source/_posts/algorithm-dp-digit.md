@@ -9,8 +9,11 @@ tags:
     - DP
 toc: true
 ---
+
 算法常见题之**数位 DP**，从题面来看数据范围很大（比如 10 的 20 次方，**无法暴力**），喜欢问在 `[L, R]` 中有多少符合的数。
+
 <!--more-->
+
 数位 DP 板子如下：
 
 ```python
@@ -41,4 +44,4 @@ def f(i, mask, is_limit, is_number):
 ans = f(0, 0, True, False)
 ```
 
-【1】[灵茶山艾府 - 数位 DP 通用模板](https://www.bilibili.com/video/BV1rS4y1s721/?spm_id_from=333.337.search-card.all.click&vd_source=e36f47f043068554931919060ccd92ef)
+【1】[灵茶山艾府 - 数位 DP 通用模板](https://www.bilibili.com/video/BV1rS4y1s721/?spm_id_from=333.337.search-card.all.click\&vd_source=e36f47f043068554931919060ccd92ef)
