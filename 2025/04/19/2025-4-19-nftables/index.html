@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>nftables 实践——替代 iptables - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="nftables 作为 iptables 的接班人，在实际使用中也确实感受到了它的简洁、优雅，最重要的是装b！"><meta property="og:type" content="blog"><meta property="og:title" content="nftables 实践——替代 iptables"><meta property="og:url" content="https://zion4h.github.io/2025/04/19/2025-4-19-nftables/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="nftables 作为 iptables 的接班人，在实际使用中也确实感受到了它的简洁、优雅，最重要的是装b！"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://wx2.sinaimg.cn/mw690/006cgX3ggy1hvqm0f2ntyj32c0340npf.jpg"><meta property="article:published_time" content="2025-04-19T13:18:00.000Z"><meta property="article:modified_time" content="2025-04-19T14:53:30.548Z"><meta property="article:author" content="zion h4"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://wx2.sinaimg.cn/mw690/006cgX3ggy1hvqm0f2ntyj32c0340npf.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2025/04/19/2025-4-19-nftables/"},"headline":"nftables 实践——替代 iptables","image":["https://wx2.sinaimg.cn/mw690/006cgX3ggy1hvqm0f2ntyj32c0340npf.jpg"],"datePublished":"2025-04-19T13:18:00.000Z","dateModified":"2025-04-19T14:53:30.548Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"nftables 作为 iptables 的接班人，在实际使用中也确实感受到了它的简洁、优雅，最重要的是装b！"}</script><link rel="canonical" href="https://zion4h.github.io/2025/04/19/2025-4-19-nftables/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://wx2.sinaimg.cn/mw690/006cgX3ggy1hvqm0f2ntyj32c0340npf.jpg" alt="nftables 实践——替代 iptables"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-04-19T13:18:00.000Z" title="4/19/2025, 9:18:00 PM">2025-04-19</time>发表</span><span class="level-item"><time dateTime="2025-04-19T14:53:30.548Z" title="4/19/2025, 10:53:30 PM">2025-04-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Linux/">Linux</a><span> / </span><a class="link-muted" href="/categories/Linux/%E9%98%B2%E7%81%AB%E5%A2%99/">防火墙</a></span><span class="level-item">5 分钟读完 (大约717个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">nftables 实践——替代 iptables</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><code>nftables</code> 作为 iptables 的接班人，在实际使用中也确实感受到了它的简洁、优雅，最重要的是<strong>装b</strong>！</p>
+<span id="more"></span>
+<h2 id="1-应用场景">1. 应用场景</h2>
+<p>以前用 iptables 常见的需求：</p>
+<ul>
+<li>让具有私有 IP 的 VM 访问外网（masquerade）</li>
+<li>将 VM 的 SSH 端口转发到宿主指定端口</li>
+<li>（可选）结合 fail2ban 做自动封禁（ps：据说有个 reaction 是 fail2ban 的轻量替代，但 fail2ban 已经足够傻瓜有效，所以没动力换）</li>
+</ul>
+<hr>
+<h2 id="2-基本语法与结构">2. 基本语法与结构</h2>
+<p><code>nft</code> 命令一览：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nft add | delete | flush table|chain|rule ...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>保留了 Linux 的“四表五链”设计。详见 <a target="_blank" rel="noopener" href="https://wiki.nftables.org/wiki-nftables/index.php/Netfilter_hooks">Netfilter_hooks（英文）</a></li>
+<li>实际用时，大多只关心 <strong>ip 协议族</strong>，所以可以省略（默认即为 ip）</li>
+<li>创建表 (table) 后可定义链 (chain)，主要关注入口（prerouting）与出口（postrouting）</li>
+<li>虽然这些属于 <code>nat</code> 表的链，但为了可读性、可维护性也可以直接用 <code>filter</code> 表，不影响效果</li>
+<li>rule 语法需指定 table/chain，然后写具体 statement</li>
+<li>statement 比较灵活，需要结合实际查阅文档或 <code>man nft</code> 页面（详见 <a target="_blank" rel="noopener" href="https://man.archlinux.org/man/nft.8#STATEMENTS">nft.8#STATEMENTS</a>）</li>
+</ul>
+<p><img src="https://people.netfilter.org/pablo/nf-hooks.png" alt="四表五链"></p>
+<hr>
+<h2 id="3-实践案例">3. 实践案例</h2>
+<h3 id="1-让-VM-访问外网（私有-IP-NAT-出口）">(1) 让 VM 访问外网（私有 IP NAT 出口）</h3>
+<p>实现 NAT 出口最常用的就是 masquerade，流程对应 <code>postrouting</code> 阶段：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nft add rule nat postrouting masquerade</span><br></pre></td></tr></table></figure>
+<p>或带表名完整示例（首次需先建表/链）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nft add table nat</span><br><span class="line">nft add chain nat postrouting <span class="string">&#x27;&#123; type nat hook postrouting priority 100; &#125;&#x27;</span></span><br><span class="line">nft add rule nat postrouting masquerade</span><br></pre></td></tr></table></figure>
+<h3 id="2-SSH-端口转发">(2) SSH 端口转发</h3>
+<p>比如将宿主 12221 端口流量转发到内网 VM 的 22 端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nft add rule nat prerouting tcp dport 12221 dnat to 192.168.1.101:22</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="3-关于表名与链名的灵活性">(3) 关于表名与链名的灵活性</h3>
+<p>nft 规则中的 <code>table</code> 和 <code>chain</code> 名字其实没有强制要求，随意起名即可。例如可以用 <code>小明</code>、<code>小红</code>替代：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nft add table xiaoming</span><br><span class="line">nft add chain xiaoming xiaohong <span class="string">&#x27;&#123; type nat hook prerouting priority 0; &#125;&#x27;</span></span><br><span class="line">nft add rule xiaoming xiaohong tcp dport 12221 dnat to 192.168.1.101:22</span><br></pre></td></tr></table></figure>
+<p>作用完全一致。<br>
+<strong>另外注意</strong>：即使在 ssh 会话过程中删除掉该 rule，也不会立即使已建立连接断开。</p>
+<blockquote>
+<p><strong>提示</strong>：nftables 默认配置文件通常位于 <code>/etc/nftables.conf</code>，重启后会自动加载。临时添加的配置也可以用 <code>nft list ruleset &gt; /etc/nftables.conf</code> 备份。</p>
+</blockquote>
+<hr>
+<h2 id="4-小结与感想">4. 小结与感想</h2>
+<ul>
+<li>只有简单了解并动手试过，你才会发现：<strong>nft 比 iptables 更现代，也确实更清爽易用</strong>。</li>
+<li>statement 和匹配规则更直观，灵活性强。</li>
+<li>个人实际体验很友好，尤其便于批量管理和自动化。</li>
+</ul>
+<hr>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Nftables">ArchWiki: nftables</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiki.gentoo.org/wiki/Nftables/Examples">Gentoo Wiki: nftables/Examples</a></li>
+</ol>
+</div><div class="article-licensing box"><div class="licensing-title"><p>nftables 实践——替代 iptables</p><p><a href="https://zion4h.github.io/2025/04/19/2025-4-19-nftables/">https://zion4h.github.io/2025/04/19/2025-4-19-nftables/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2025/04/19/2025-4-19-Gpu-go-through/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">服务器 KVM 虚拟化部署记录</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/04/19/2025-4-19-systemd-practic/"><span class="level-item">Systemd 实践 - KVM 虚拟机自动重启</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "4ebcff38cacfbc4a7bd05f20e2e4811b",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#1-应用场景"><span class="level-left"><span class="level-item">1</span><span class="level-item">1. 应用场景</span></span></a></li><li><a class="level is-mobile" href="#2-基本语法与结构"><span class="level-left"><span class="level-item">2</span><span class="level-item">2. 基本语法与结构</span></span></a></li><li><a class="level is-mobile" href="#3-实践案例"><span class="level-left"><span class="level-item">3</span><span class="level-item">3. 实践案例</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#1-让-VM-访问外网（私有-IP-NAT-出口）"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">(1) 让 VM 访问外网（私有 IP NAT 出口）</span></span></a></li><li><a class="level is-mobile" href="#2-SSH-端口转发"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">(2) SSH 端口转发</span></span></a></li><li><a class="level is-mobile" href="#3-关于表名与链名的灵活性"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">(3) 关于表名与链名的灵活性</span></span></a></li></ul></li><li><a class="level is-mobile" href="#4-小结与感想"><span class="level-left"><span class="level-item">4</span><span class="level-item">4. 小结与感想</span></span></a></li><li><a class="level is-mobile" href="#参考资料"><span class="level-left"><span class="level-item">5</span><span class="level-item">参考资料</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
