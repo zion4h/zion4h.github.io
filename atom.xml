@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2025-04-19T08:24:20.870Z</updated>
+  <updated>2025-04-19T10:29:27.898Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -15,6 +15,23 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Systemd 实践 - KVM 虚拟机自动重启</title>
+    <link href="https://zion4h.github.io/2025/04/19/2025-4-19-systemd-practic/"/>
+    <id>https://zion4h.github.io/2025/04/19/2025-4-19-systemd-practic/</id>
+    <published>2025-04-19T10:24:39.000Z</published>
+    <updated>2025-04-19T10:29:27.898Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;最近有个任务和&lt;code&gt;systemd&lt;/code&gt;相关。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Linux" scheme="https://zion4h.github.io/categories/Linux/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>搭建 C 语言编程环境指南</title>
@@ -423,27 +440,6 @@
     
     
     <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数位 DP</title>
-    <link href="https://zion4h.github.io/2023/06/04/algorithm-dp-digit/"/>
-    <id>https://zion4h.github.io/2023/06/04/algorithm-dp-digit/</id>
-    <published>2023-06-04T04:37:44.000Z</published>
-    <updated>2025-04-19T08:22:12.039Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;算法常见题之&lt;strong&gt;数位 DP&lt;/strong&gt;，从题面来看数据范围很大（比如 10 的 20 次方，&lt;strong&gt;无法暴力&lt;/strong&gt;），喜欢问在 &lt;code&gt;[L, R]&lt;/code&gt; 中有多少符合的数。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="IT" scheme="https://zion4h.github.io/categories/IT/"/>
-    
-    
-    <category term="算法" scheme="https://zion4h.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-    <category term="DP" scheme="https://zion4h.github.io/tags/DP/"/>
     
   </entry>
   
