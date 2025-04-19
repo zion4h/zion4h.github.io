@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>6-824-LAB-2B - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="TODO 客户端发送的命令会被 leader 包装成一个 entry 并添加到它的日志中，然后广播 append 消息让其他服务器复制日志。当 entry 被安全复制后，leader 上的复制状态机会应用其内部命令，并返回执行结果给客户端。另外，即使 leader 已经答复了客户端，为了满足一致性，也会对那些因为网络、奔溃或运行缓慢等而没成功复制日志的服务器重复发送 append 消息。服务器底层"><meta property="og:type" content="blog"><meta property="og:title" content="6-824-LAB-2B"><meta property="og:url" content="https://zion4h.github.io/2022/12/08/mit-6_824-lab-2b/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="TODO 客户端发送的命令会被 leader 包装成一个 entry 并添加到它的日志中，然后广播 append 消息让其他服务器复制日志。当 entry 被安全复制后，leader 上的复制状态机会应用其内部命令，并返回执行结果给客户端。另外，即使 leader 已经答复了客户端，为了满足一致性，也会对那些因为网络、奔溃或运行缓慢等而没成功复制日志的服务器重复发送 append 消息。服务器底层"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img000.jpeg"><meta property="article:published_time" content="2022-12-08T02:22:53.000Z"><meta property="article:modified_time" content="2025-04-19T08:22:12.054Z"><meta property="article:author" content="zion h4"><meta property="article:tag" content="raft"><meta property="article:tag" content="go"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img000.jpeg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2022/12/08/mit-6_824-lab-2b/"},"headline":"6-824-LAB-2B","image":[],"datePublished":"2022-12-08T02:22:53.000Z","dateModified":"2025-04-19T08:22:12.054Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"TODO 客户端发送的命令会被 leader 包装成一个 entry 并添加到它的日志中，然后广播 append 消息让其他服务器复制日志。当 entry 被安全复制后，leader 上的复制状态机会应用其内部命令，并返回执行结果给客户端。另外，即使 leader 已经答复了客户端，为了满足一致性，也会对那些因为网络、奔溃或运行缓慢等而没成功复制日志的服务器重复发送 append 消息。服务器底层"}</script><link rel="canonical" href="https://zion4h.github.io/2022/12/08/mit-6_824-lab-2b/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img000.jpeg" alt="6-824-LAB-2B"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-12-08T02:22:53.000Z" title="12/8/2022, 10:22:53 AM">2022-12-08</time>发表</span><span class="level-item"><time dateTime="2025-04-19T08:22:12.054Z" title="4/19/2025, 4:22:12 PM">2025-04-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Labs/">Labs</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-824/">MIT 6.824</a></span><span class="level-item">12 分钟读完 (大约1818个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">6-824-LAB-2B</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><code>TODO</code><br>
+客户端发送的命令会被 <code>leader</code> 包装成一个 <strong>entry</strong> 并添加到它的日志中，然后广播 <strong>append</strong> 消息让其他服务器复制日志。当 <strong>entry</strong> 被<u><strong>安全复制</strong></u>后，<code>leader</code> 上的复制状态机会应用其内部命令，并返回执行结果给客户端。另外，即使 <code>leader</code> 已经答复了客户端，为了满足一致性，也会对那些因为网络、奔溃或运行缓慢等而没成功复制日志的服务器重复发送 <strong>append</strong> 消息。服务器底层日志本质是一个 <strong>entry</strong> 数组，每个 <strong>entry</strong> 包含一条命令和 <strong>term</strong>（指代 <strong>entry</strong> 创建时所处的任期或者说接收到客户端命令的 <code>leader</code> 的任期）。</p>
+<span id="more"></span>
+<h2 id="流程分析">流程分析</h2>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/appendentries-rpc.png" alt="appendentries-rpc"></p>
+<p>下面讨论安全复制，当一个 <strong>entry</strong> 被复制到主体服务器后，我们称它和在其之前的全部 entry 都是可提交的。而 <code>leader</code> 会一直记录可提交 <strong>entry</strong> 的最高下标即 <strong>commitIndex</strong>，并在发送 <strong>append</strong> 消息以及心跳时一并传递。当一个 <code>follower</code> 知道一个 <strong>entry</strong> 时可提交时，它会将其应用到本地状态机上。</p>
+<p>Raft 协议的 <em><strong>Log Matching</strong></em> 属性保证了<u>通过下标和 <strong>term</strong> 可以唯一锁定一个 <strong>entry</strong></u>。当 <code>leader</code> 发送 <strong>append</strong> 消息时，会同时发送紧邻新 <strong>entry</strong> 的前一个 <strong>entry</strong> 的下标和 <strong>term</strong>，如果 <code>follower</code> 没找到这个 <strong>entry</strong> 就拒绝，找到就日志复制。这样当 <code>leader</code> 的 <strong>append</strong> 消息一旦返回成功，就表示该 <code>follower</code> 此刻日志和 <strong>leader</strong> 一致。</p>
+<p>Raft 用 <code>leader</code> 的日志去覆盖 <code>follower</code> 的冲突日志部分来解决非一致性问题。简单来说，就是找到 <code>leader</code> 和 <code>follower</code> 日志公共部分的最后一个 <strong>entry</strong>，删除 <code>follower</code> 在该 <strong>entry</strong> 之后的全部日志，然后用 <code>leader</code> 该 <strong>entry</strong> 之后的日志替换。为了便于管理，<code>leader</code> 为每个 <code>follower</code> 准备了一个 <strong>nextIndex</strong> 去指代替换日志的第一个 <strong>entry</strong> 的下标。<u>当 leader 当选时，会将每个 nextIndex 都指向自己日志最后一个 entry 之后的位置（last index + 1）</u>。当日志不一致时，<strong>append</strong> 消息会返回失败给 <code>leader</code>，<code>leader</code> 会减少 <strong>nextIndex</strong>，这样反复调整直到 <strong>nextIndex</strong> 到达正确的位置。<code>follower</code> 结果日志复制后和 <code>leader</code> 保持一致，并返回成功。</p>
+<p>对上述算法进一步改进，给 <code>reply</code> 添加两个参数 <strong>conflictIndex</strong> 和 <strong>ConflictTerm</strong>，当 <code>follower</code> 因为日志太短而找不到 <strong>prevIndex</strong> 时则让 <strong>nextIndex</strong> 指向其日志最后一个 <strong>entry</strong> 之后的位置；当 <code>follower</code> 发现 <strong>prevIndex</strong> 指向下标所在 <strong>entry</strong> 的 <strong>term</strong> 和自己的日志不一致时，则看 <code>leader</code> 有没有 <strong>entry</strong> 是那个 <strong>term</strong> 的，如果有就让 <strong>nextIndex</strong> 指向 <code>follower</code> 那个 <strong>term</strong> 的第一个 <strong>entry</strong> 所在下标，否则就让 <strong>nextIndex</strong> 指向 <code>leader</code> 那个 <strong>term</strong> 的最后一个 <strong>entry</strong> 之后一个位置（根据 <em><strong>leaderCompleteness</strong></em> 可以证明，<code>leader</code> 必然要短一些）。</p>
+<p><em><strong>Leader Completeness</strong></em> 属性保证了一个 <strong>entry</strong> 一旦被提交，就不会被更替。为了实现该属性，Raft 规定投票时需要判断是否 <em><strong>up-to-date</strong></em>；还规定规定不能通过判断是否主体复制来提交非当前任期的 <strong>entry</strong>（figure 8）。</p>
+<p>如果 <code>follower</code> 和 <code>candidate</code> 崩溃了，那么 RPCs 返回失败，Raft 会重试 RPCs 请求。即使在完成 RPCs 任务后返回响应前失败，也做相似处理。</p>
+<h2 id="细节处理">细节处理</h2>
+<p>来自 <a target="_blank" rel="noopener" href="https://thesquareplanet.com/blog/students-guide-to-raft/">guide</a> 的关于常见问题的分析和处理，这些问题通常源于我们对 Raft 论文的理解和原作者产生分歧，或者遗漏掉一些限定以及用错误的方式去处理问题导致。</p>
+<p><em><strong>Livelocks</strong></em></p>
+<p>在 Lab2 中，产生<strong>活锁</strong>的常见场景是，刚选出一个新 <code>leader</code>，此时一个其他节点又发起了新的选举导致新 <code>leader</code> 立马被抛弃。解决这个问题的关键在于重置选举计时器的时机，我们只会在如下三个场景重置：<u>a）从当前 leader 处获得 <strong>append 消息</strong>时；b）发起新的选举时；c）向 candidate 投票时。</u></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/requestvote-rpc.png" alt="requestvote-rpc"></p>
+<p>其中 c 情况尤为特别，当网络不稳定时，不同服务器底层日志可能有差异，这时候只会有少数几个服务器满足 <em><strong>up-to-date</strong></em> 要求。如果每当有投票请求就重置计时器而不是确定投票时重置，那么满足 <em><strong>up-to-date</strong></em> 日志的服务器可能迟迟不能开始选举。另外，一旦 candidate 超时就要立刻发起新的选举。</p>
+<p>在处理 RPCs 时，时刻遵循 <strong>Rules for All Servers</strong> 的第二条规则：</p>
+<article class="message is-info">
+  <div class="message-body">
+      If RPC request or response contains term T > currentTerm: set currentTerm = T, convert to <strong>follower</strong> (§5.1)
+  </div>
+</article>
+<p><em><strong>Incorrect RPC handlers</strong></em></p>
+<p>虽然已经有论文的 <strong>figure 2</strong>，但要想正确处理 RPCs 的细节，还需要注意：</p>
+<ul>
+<li>
+<p>“<strong>reply false</strong>” 还暗示我们应该立刻返回，如果想要做其他的动作，需要将其放在前面，再观察逻辑是否合理；</p>
+</li>
+<li>
+<p>收到 <strong>append</strong> 消息时，即使 <strong>prevLogIndex</strong> 越过本地日志最大长度，也应按 <strong>term</strong> 不匹配的情况处理而不是单独处理；</p>
+</li>
+<li>
+<p>即使 <strong>append</strong> 消息未携带日志，仍然要检查：</p>
+</li>
+</ul>
+<article class="message is-info">
+  <div class="message-body">
+      1. Reply false if log doesn’t contain an entry at <strong>prevLogIndex</strong>
+      whose term matches <strong>prevLogIndex</strong> (§5.3)
+  </div>
+</article>
+<p><em><strong>Failure to follow The Rules</strong></em></p>
+<ul>
+<li>在处理 RPCs 过程中，如果 <code>commitIndex &gt; lastApplied</code>，则要应用日志到本地状态机上。</li>
+<li>确保定期或者 <strong>commitIndex</strong> 更新后检查 <code>commitIndex &gt; lastApplied</code></li>
+<li>如果 <code>leader</code> 发出 <strong>append</strong> 消息并且被拒绝，而且不是因为日志不一致，那么 <code>leader</code> 应该立刻下台</li>
+<li><code>leader</code> 不能将 <strong>commitIndex</strong> 更新到上个 <strong>term</strong> 的某个位置，因此我们需要特别检查 <code>log[N].term == currentTerm</code>，具体参考图 8；</li>
+</ul>
+<p><em><strong>Term confusion</strong></em></p>
+<p>正确处理 RPCs 中 <strong>term</strong> 的正确方式是，首先在 <code>reply</code> 中记录 <strong>term</strong>，响应后将这个 <strong>term</strong> 和 <strong>currentTerm</strong> 做对比，如果不同就不处理，当且仅当这个 <strong>term</strong> 和 <strong>currentTerm</strong> 相等时才继续处理。另外，不要用 <code>matchIndex = nextIndex - 1</code> 或者 <code>matchIndex = len(log)</code>，因为它们可能在发送 RPC 之后已经被更新过了，正确的做法是使用 <code>matchIndex = prevLogIndex + len(entries[])</code>。</p>
+<p><em><strong>我的补充</strong></em></p>
+<ul>
+<li>
+<p><code>leader</code> 一开始是不存在的，而 <strong>nextIndex</strong> 和 <strong>matchIndex</strong> 都和 <code>leader</code> 相关，因此，在 <code>candidate</code> 选举成功并转换成 <code>leader</code> 时，要让 <strong>nextIndex</strong> 赋初值，即 <code>lastIndex+1</code>，表示不需要替换任何 <strong>entry</strong>，这里还隐含了乐观者设定。</p>
+</li>
+<li>
+<p>由于 <code>leader</code> 可能会对某个 <code>follower</code> 发送多个 <strong>append</strong> 消息，因此在处理回复时，即更新 <strong>matchIndex</strong> 和 <strong>nextIndex</strong> 时要按 <code>args</code> 而不是 <code>leader</code> 本身来判定。</p>
+</li>
+<li>
+<p>每个 <code>leader</code> 只能 <strong>commit</strong> 当前 <strong>term</strong> 的 <strong>entry</strong>（5.4）</p>
+</li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>6-824-LAB-2B</p><p><a href="https://zion4h.github.io/2022/12/08/mit-6_824-lab-2b/">https://zion4h.github.io/2022/12/08/mit-6_824-lab-2b/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-12-08</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/raft/">raft</a><a class="link-muted mr-2" rel="tag" href="/tags/go/">go</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/12/11/functional-programming-and-modularity/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">函数式编程和模块化</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/12/06/dp-pack/"><span class="level-item">背包 DP</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "fcb75006b4875dc285f9fb14f389f7a1",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#流程分析"><span class="level-left"><span class="level-item">1</span><span class="level-item">流程分析</span></span></a></li><li><a class="level is-mobile" href="#细节处理"><span class="level-left"><span class="level-item">2</span><span class="level-item">细节处理</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

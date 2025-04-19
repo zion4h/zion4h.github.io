@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>最小生成树 - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="最小生成树源于最短电路连接，我们希望连接所有组件的针脚，同时又巴不得连线最短。由于连接了全部点，同时无环，因此又叫最小树。"><meta property="og:type" content="blog"><meta property="og:title" content="最小生成树"><meta property="og:url" content="https://zion4h.github.io/2023/06/10/algirithm-mst/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="最小生成树源于最短电路连接，我们希望连接所有组件的针脚，同时又巴不得连线最短。由于连接了全部点，同时无环，因此又叫最小树。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://i.imgur.com/EI7uBgh.jpeg"><meta property="article:published_time" content="2023-06-10T09:06:03.000Z"><meta property="article:modified_time" content="2025-04-19T08:22:12.039Z"><meta property="article:author" content="zion h4"><meta property="article:tag" content="算法"><meta property="article:tag" content="MST"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://i.imgur.com/EI7uBgh.jpeg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2023/06/10/algirithm-mst/"},"headline":"最小生成树","image":[],"datePublished":"2023-06-10T09:06:03.000Z","dateModified":"2025-04-19T08:22:12.039Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"最小生成树源于最短电路连接，我们希望连接所有组件的针脚，同时又巴不得连线最短。由于连接了全部点，同时无环，因此又叫最小树。"}</script><link rel="canonical" href="https://zion4h.github.io/2023/06/10/algirithm-mst/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://i.imgur.com/EI7uBgh.jpeg" alt="最小生成树"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-06-10T09:06:03.000Z" title="6/10/2023, 5:06:03 PM">2023-06-10</time>发表</span><span class="level-item"><time dateTime="2025-04-19T08:22:12.039Z" title="4/19/2025, 4:22:12 PM">2025-04-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/%E7%AE%97%E6%B3%95/">算法</a></span><span class="level-item">3 分钟读完 (大约486个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">最小生成树</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><strong>最小生成树</strong>源于最短电路连接，我们希望连接所有组件的针脚，同时又巴不得连线最短。由于连接了全部点，同时无环，因此又叫最小树。</p>
+<span id="more"></span>
+<p>最小树的生成算法其实很简单，如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">generic_mst</span>(<span class="params">G</span>):</span><br><span class="line">    A = []</span><br><span class="line">    n = <span class="built_in">len</span>(G)</span><br><span class="line">    <span class="keyword">while</span> <span class="built_in">len</span>(A) &lt; n - <span class="number">1</span>:</span><br><span class="line">        e = findSafeEdge(A, G.E)</span><br><span class="line">        A.append(e)</span><br><span class="line">    <span class="keyword">return</span> A</span><br></pre></td></tr></table></figure>
+<p>这里面的 <code>findSafeEdge</code> 意为寻找一条<strong>安全边</strong>，<strong>Kruskal</strong> 和 <strong>Prim</strong> 算法都各自定义了这条<strong>安全边</strong>的具体规则。</p>
+<h2 id="Kruskal-算法">Kruskal 算法</h2>
+<p>简单来说，先将所有边按权重排序，再由小到大遍历所有边，将两端点非同一棵树（借助并查集）的边加入。这样一来，每次加入的安全边永远是<strong>权重最小的连接两个不同分量的边</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">mst_kruskal</span>(<span class="params">G</span>):</span><br><span class="line">    A = []</span><br><span class="line">    n = <span class="built_in">len</span>(G)</span><br><span class="line">    dsu = Dsu(n)</span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> G.V:</span><br><span class="line">        dsu.pa[v] = v</span><br><span class="line">    sort(G.E)</span><br><span class="line">    <span class="keyword">for</span> e <span class="keyword">in</span> G.E:</span><br><span class="line">        u, v = e</span><br><span class="line">        <span class="keyword">if</span> dsu.find(u) != dsu.find(v):</span><br><span class="line">            A.append(e)</span><br><span class="line">            dsu.union(u, v)</span><br><span class="line">    <span class="keyword">return</span> A</span><br></pre></td></tr></table></figure>
+<p><strong>Kruskal</strong> 算法时间为 <code>O(ElgV)</code>。</p>
+<h2 id="Prim-算法">Prim 算法</h2>
+<p><strong>Prim</strong> 和 <strong>Dijkstra</strong> 算法相似，保持<strong>集合 A</strong> 的边总能构成一棵树，每次从连接集合 A 和集合 A 之外的点的所有边中选取一条边。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">mst_prim</span>(<span class="params">G, r</span>):</span><br><span class="line">    <span class="keyword">for</span> u <span class="keyword">in</span> G.V:</span><br><span class="line">        d[u] = inf</span><br><span class="line">        pi[u] = <span class="literal">None</span></span><br><span class="line">    d[r] = <span class="number">0</span></span><br><span class="line">    Q = heapq.heapify(G.V)</span><br><span class="line">    <span class="keyword">while</span> Q:</span><br><span class="line">        u = heapq.heappop(Q)</span><br><span class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> G.adj[u]:</span><br><span class="line">            <span class="keyword">if</span> G.W(u, v) &lt; d[v]:</span><br><span class="line">                pi[v] = u</span><br><span class="line">                d[v] = G.W(u, v)</span><br></pre></td></tr></table></figure>
+<p><strong>Prim</strong> 算法的时间取决于最小优先队列 <code>Q</code> 的实现，如果使用<strong>二叉最小优先队列</strong>，则时间复杂读为 <code>O(ElgV)</code>，如果改用<strong>斐波那契堆</strong>来实现优先队列，那么算法时间 <code>O(E+VlgV)</code>。</p>
+<p>一个有趣的点在于，最<strong>小生成树算法</strong>最早由 <strong>Boruvka</strong> 发明，<strong>Kruskal</strong> 是 1956 年，而 <strong>Prim</strong> 是 1930 年。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>最小生成树</p><p><a href="https://zion4h.github.io/2023/06/10/algirithm-mst/">https://zion4h.github.io/2023/06/10/algirithm-mst/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-06-10</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E7%AE%97%E6%B3%95/">算法</a><a class="link-muted mr-2" rel="tag" href="/tags/MST/">MST</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/06/14/programming-lambda/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">函数式编程</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/06/09/programming-intro-cpp/"><span class="level-item">C++ 入门/扫盲</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "c9e844db0f464f58c9f4f67b548f5c8a",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Kruskal-算法"><span class="level-left"><span class="level-item">1</span><span class="level-item">Kruskal 算法</span></span></a></li><li><a class="level is-mobile" href="#Prim-算法"><span class="level-left"><span class="level-item">2</span><span class="level-item">Prim 算法</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

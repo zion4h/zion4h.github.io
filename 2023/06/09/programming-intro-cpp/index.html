@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>C++ 入门/扫盲 - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="简单列出一些 C++ 语言的特点和知识，目前处于 “知其然” 阶段。"><meta property="og:type" content="blog"><meta property="og:title" content="C++ 入门/扫盲"><meta property="og:url" content="https://zion4h.github.io/2023/06/09/programming-intro-cpp/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="简单列出一些 C++ 语言的特点和知识，目前处于 “知其然” 阶段。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://i.imgur.com/Ysqn3vw.jpeg"><meta property="article:published_time" content="2023-06-09T00:18:00.000Z"><meta property="article:modified_time" content="2025-04-19T08:22:12.057Z"><meta property="article:author" content="zion h4"><meta property="article:tag" content="TODO"><meta property="article:tag" content="c++"><meta property="article:tag" content="入门"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://i.imgur.com/Ysqn3vw.jpeg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2023/06/09/programming-intro-cpp/"},"headline":"C++ 入门/扫盲","image":[],"datePublished":"2023-06-09T00:18:00.000Z","dateModified":"2025-04-19T08:22:12.057Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"简单列出一些 C++ 语言的特点和知识，目前处于 “知其然” 阶段。"}</script><link rel="canonical" href="https://zion4h.github.io/2023/06/09/programming-intro-cpp/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://i.imgur.com/Ysqn3vw.jpeg" alt="C++ 入门/扫盲"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-06-09T00:18:00.000Z" title="6/9/2023, 8:18:00 AM">2023-06-09</time>发表</span><span class="level-item"><time dateTime="2025-04-19T08:22:12.057Z" title="4/19/2025, 4:22:12 PM">2025-04-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/C/">C++</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/C/%E6%89%AB%E7%9B%B2/">扫盲</a></span><span class="level-item">3 分钟读完 (大约380个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">C++ 入门/扫盲</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>简单列出一些 C++ 语言的特点和知识，目前处于 “知其然” 阶段。</p>
+<span id="more"></span>
+<h2 id="复合类型">复合类型</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a, &amp;b, *c;</span><br></pre></td></tr></table></figure>
+<p>上面这行代码定义了一个变量、引用和一个指针，指针和引用可能容易被混淆，二者都只是一个 “路牌”，用来指向真正的对象，但指针本身是一个真正的对象，而引用不是。比如，我们可以让 <code>*c = 1</code>，但不能使用 <code>&amp;b = 1</code>。注意，<code>int *c</code> 表示 c 是一个 int，它是一个指针，<code>*</code> 是用来修饰 c 的而不是用来补充 <code>int</code>。</p>
+<h2 id="智能指针">智能指针</h2>
+<p>智能指针可以自动释放不再引用的对象，而不用再纠结 new 和 delete 的使用，底层用到的是 “引用计数”。</p>
+<p>仿函数</p>
+<h2 id="模板类">模板类</h2>
+<p>就是泛型参数相关那套。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function">T <span class="title">foo</span><span class="params">(T* v)</span> </span>&#123;</span><br><span class="line">    T tmp = *v;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>namespace</p>
+<p>成员模板</p>
+<p>泛化、特化和偏特化<br>
+偏特化又分为个数的偏和范围的偏。</p>
+<p>数量不定的模板参数<br>
+variadic templates，模板参数包，函数参数类型包，函数参数类型包</p>
+<p>引用 Reference<br>
+引用、指针的区别，Java 都是引用</p>
+<p>虚函数<br>
+相当于 Java 中的接口，函数中的函数，好像很难解释，确实有一点抽象，又有一点 AOP 的思想。</p>
+<p>new 和 delete<br>
+如何将两个动作分解。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>C++ 入门/扫盲</p><p><a href="https://zion4h.github.io/2023/06/09/programming-intro-cpp/">https://zion4h.github.io/2023/06/09/programming-intro-cpp/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-06-09</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/TODO/">TODO</a><a class="link-muted mr-2" rel="tag" href="/tags/c/">c++</a><a class="link-muted mr-2" rel="tag" href="/tags/%E5%85%A5%E9%97%A8/">入门</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/06/10/algirithm-mst/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">最小生成树</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/06/06/algorithm-dsu/"><span class="level-item">并查集</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "ad9d42ee7397619e86deb74b137a2494",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#复合类型"><span class="level-left"><span class="level-item">1</span><span class="level-item">复合类型</span></span></a></li><li><a class="level is-mobile" href="#智能指针"><span class="level-left"><span class="level-item">2</span><span class="level-item">智能指针</span></span></a></li><li><a class="level is-mobile" href="#模板类"><span class="level-left"><span class="level-item">3</span><span class="level-item">模板类</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

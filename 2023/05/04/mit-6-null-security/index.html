@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>MIT 6.Null 安全和密码学 - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="标题很唬人，但实际上我们并不需要去学习如何设计安全系统或密码协议，而只需要理解和实际编程相关的东西，比如在 Git 中使用 Hash 函数或在 SSH 中使用 KDF 和对称非对称加密，密码学突然就接地气了。"><meta property="og:type" content="blog"><meta property="og:title" content="MIT 6.Null 安全和密码学"><meta property="og:url" content="https://zion4h.github.io/2023/05/04/mit-6-null-security/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="标题很唬人，但实际上我们并不需要去学习如何设计安全系统或密码协议，而只需要理解和实际编程相关的东西，比如在 Git 中使用 Hash 函数或在 SSH 中使用 KDF 和对称非对称加密，密码学突然就接地气了。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img010.png"><meta property="article:published_time" content="2023-05-04T14:16:10.000Z"><meta property="article:modified_time" content="2025-04-19T08:22:12.053Z"><meta property="article:author" content="zion h4"><meta property="article:tag" content="shell"><meta property="article:tag" content="security"><meta property="article:tag" content="cryptography"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img010.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2023/05/04/mit-6-null-security/"},"headline":"MIT 6.Null 安全和密码学","image":["https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img010.png"],"datePublished":"2023-05-04T14:16:10.000Z","dateModified":"2025-04-19T08:22:12.053Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"标题很唬人，但实际上我们并不需要去学习如何设计安全系统或密码协议，而只需要理解和实际编程相关的东西，比如在 Git 中使用 Hash 函数或在 SSH 中使用 KDF 和对称非对称加密，密码学突然就接地气了。"}</script><link rel="canonical" href="https://zion4h.github.io/2023/05/04/mit-6-null-security/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img010.png" alt="MIT 6.Null 安全和密码学"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-05-04T14:16:10.000Z" title="5/4/2023, 10:16:10 PM">2023-05-04</time>发表</span><span class="level-item"><time dateTime="2025-04-19T08:22:12.053Z" title="4/19/2025, 4:22:12 PM">2025-04-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Labs/">Labs</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-Null/">MIT 6.Null</a></span><span class="level-item">13 分钟读完 (大约1997个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">MIT 6.Null 安全和密码学</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>标题很唬人，但实际上我们并不需要去学习如何设计安全系统或密码协议，而只需要理解和实际编程相关的东西，比如在 Git 中使用 <strong>Hash 函数</strong>或在 SSH 中使用 <strong>KDF</strong> 和<strong>对称非对称加密</strong>，密码学突然就接地气了。</p>
+<span id="more"></span>
+<h2 id="熵-Entropy">熵 Entropy</h2>
+<p>想要保证计算机安全，就需要高强度的密码，让别人猜不着。但是什么才算高强度的密码呢？答案是<strong>香农熵</strong>。香农熵常用来测量随机性，而_随机性越高的密码强度也更高_。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/password_strength.png" alt="密码强度"></p>
+<p>正如上面 XKCD 漫画所描述的那样，密码强度这个概念可能有点反直觉，因为人们通常会将 “<strong>高强度密码</strong>” 同 “<strong>人类难记住的密码</strong>” 相混淆。那些用古诗去切换密码并洋洋得意的人，比如 <code>2Ghymcl-1Hblsqt</code>，甚至不少是计算机专家。</p>
+<p>言归正传，香农熵强度单位是 bit，可以由 <code>log_2(# of possibilities)</code> 计算得到，比如投一个骰子会出现 6 种点数，那它的随机性就是 2.58 bits。多少强度的密码可以被认为是安全的呢？一般来说，线上密码应该大于 40，线下则要求更高，需要 80。原因不难想到，线下能够利用硬件加速，而线上有网络等限制。</p>
+<h2 id="Hash-函数">Hash 函数</h2>
+<p><strong>CHF(<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">Cryptographic hash function</a>)</strong>  可以将任意长度的数据都映射成一个固定长度。</p>
+<p>我们拿 <strong><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/SHA-1">SHA1</a></strong> 举例，Git 就有采用 SHA1，它能够将任意输入都转化成一个 160-bit 的输出，合 40 个 HEX 码。我们也可以在命令行中尝试使用，</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[vagrant@localhost ~]$ <span class="built_in">printf</span> <span class="string">&#x27;hello\n&#x27;</span> | <span class="built_in">sha1sum</span></span><br><span class="line">f572d396fae9206628714fb2ce00f72e94f2258f  -</span><br><span class="line">[vagrant@localhost ~]$ <span class="built_in">printf</span> <span class="string">&#x27;hello\n&#x27;</span> | <span class="built_in">sha1sum</span></span><br><span class="line">f572d396fae9206628714fb2ce00f72e94f2258f  -</span><br><span class="line">[vagrant@localhost ~]$ <span class="built_in">printf</span> <span class="string">&#x27;Hello\n&#x27;</span> | <span class="built_in">sha1sum</span></span><br><span class="line">1d229271928d3f9e2bb0375bd6ce5db6c6d348d9  -</span><br></pre></td></tr></table></figure>
+<p>理想的哈希函数有以下属性：</p>
+<ul>
+<li><strong>Deterministic 确定性</strong>，相同的输出总是得到相同的结果，函数本身不会变</li>
+<li><strong>Non-invertible 不可逆</strong>，通过结果你很难倒退出一个合理输入</li>
+<li><strong>Target collision resistant 目标抗碰撞</strong>，给一个输入，你很难找到一个具有相同输出的另一输入</li>
+<li><strong>Collision resistant 抗碰撞</strong>，你很难找到具有相同输出的两个不同的输入，和目标抗碰撞概念相仿但明显要求更加严格</li>
+</ul>
+<p>虽然 SHA-1 很流行，但它已经 <a target="_blank" rel="noopener" href="https://shattered.io/">不再</a> 被认为是强力 CHF，这里有一张 <a target="_blank" rel="noopener" href="https://valerieaurora.org/hash.html">CHF 生命周期表</a>，</p>
+<h2 id="KDFs">KDFs</h2>
+<p><strong>KDFs</strong>（<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Key_derivation_function">key derivation functions 密钥推导函数</a>）是一个和 CHF 相关的概念，常用来生成一个固定输出，并将其用作其他加密函数的密钥。KDFs 会故意放慢速度，来减缓离线暴力攻击。</p>
+<p>具体到实际运用场景，我们用户并不希望网站明文传输或者存储我们的密码，这样安全风险太高且侵犯隐私。因此，可以将密码和 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Salt_(cryptography)">盐</a>（随机生成）混合得到 KDF 并存储。而当需要验证时，再将用户输入和同一份<strong>盐</strong>混合，与之前存储的 KDF 对照。</p>
+<h2 id="对称加密">对称加密</h2>
+<p><strong>对称加密</strong>解决的是隐藏信息问题，也就是让通信双方以一种独有方式进行交流，其他人无法破解他们的交流内容。实现的原理也很简单，双方持有一份相同的密钥，可以用这个密钥加密明文，也能用这个密钥解开密文。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">keygen() -&gt; key  (this function is randomized)</span><br><span class="line"></span><br><span class="line">encrypt(plaintext: array&lt;byte&gt;, key) -&gt; array&lt;byte&gt;  (the ciphertext)</span><br><span class="line">decrypt(ciphertext: array&lt;byte&gt;, key) -&gt; array&lt;byte&gt;  (the plaintext)</span><br></pre></td></tr></table></figure>
+<p>密钥 key 可以由 KDF 生成，如 <code>key = KDF(passphrase)</code>。可以参考一些使用较为广泛的对称加密算法，比如 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a>。</p>
+<h2 id="非对称加密">非对称加密</h2>
+<p>“非对称” 指的是有两个密钥，具有两个不同的角色。顾名思义，私钥是用来保密的，而公钥可以公开共享并且不会影响安全性（与对称密钥中的共享密钥相区别）。</p>
+<p>非对称加密提供加密、解密和签名、验证功能：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">keygen() -&gt; (public key, private key)  (this function is randomized)</span><br><span class="line"></span><br><span class="line">encrypt(plaintext: array&lt;byte&gt;, public key) -&gt; array&lt;byte&gt;  (the ciphertext)</span><br><span class="line">decrypt(ciphertext: array&lt;byte&gt;, private key) -&gt; array&lt;byte&gt;  (the plaintext)</span><br><span class="line"></span><br><span class="line">sign(message: array&lt;byte&gt;, private key) -&gt; array&lt;byte&gt;  (the signature)</span><br><span class="line">verify(message: array&lt;byte&gt;, signature: array&lt;byte&gt;, public key) -&gt; bool  (whether or not the signature is valid)</span><br></pre></td></tr></table></figure>
+<p>由公钥加密的信息只能由私钥解开，用函数表达就是 <code>decrypt(encrypt(m, public key), private key) = m</code></p>
+<h2 id="实例">实例</h2>
+<h3 id="密码管理">密码管理</h3>
+<p>常用的密码有 <a target="_blank" rel="noopener" href="https://keepassxc.org/">KeePassXC</a>（我最喜欢的💖），<a target="_blank" rel="noopener" href="https://www.passwordstore.org/">pass</a> 和 1Password（收费😅）。密码管理工具可以避免重复使用密码，随机生成的高熵密码，并且所有密码保存在一个地方，使用对称加密，密钥使用 KDF 从密码短语生成。</p>
+<h3 id="2FA">2FA</h3>
+<p><strong>2FA</strong>（<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Multi-factor_authentication">Two-factor authentication</a> 双因子认证）要求使用<strong>知识因子</strong>（“你知道的东西”，其实就是密码😁）和另一个<strong>占有因子</strong>（“你拥有的东西”）。例如，网上银行应用程序要求用户输入密码和通过短信发送到手机上的验证码时，就使用了 <strong>2FA</strong>。</p>
+<p>由于破解第二个认证因子需要付出更多，并且其他类型的因子更难以窃取或伪造，因此 <strong>2FA</strong> 可提高帐户安全性，并更好地保护组织及其用户免遭未经授权的访问。</p>
+<h3 id="全盘加密">全盘加密</h3>
+<p><strong>全盘加密</strong>使用对称加密保护整个磁盘，是在电脑被盗时用来保护数据的。在 Linux 上使用 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_a_non-root_file_system">cryptsetup + LUKS</a>，在 Windows 上使用自带的 <a target="_blank" rel="noopener" href="https://fossbytes.com/enable-full-disk-encryption-windows-10/">BitLocker</a>，在 macOS 上使用 <a target="_blank" rel="noopener" href="https://support.apple.com/en-us/HT204837">FileVault</a>。</p>
+<h3 id="私信">私信</h3>
+<p>使用 Signal 或 Keybase，通过非对称加密保证端到端的安全性，但获取联系人的公钥是这里的关键步骤。</p>
+<h3 id="SSH">SSH</h3>
+<p>在运行 <code>ssh-keygen</code> 时，它会随机生成（随机性由操作系统提供信息生成）一个非对称密钥对 <strong>public_key</strong> 和 <strong>private_key</strong>。公钥按原样存储（它是公开的，所以保密并不重要），但私钥应该在磁盘上加密。 <code>ssh-keygen</code> 程序会提示用户输入密码，并通过 KDF 生成密钥，然后使用这个对称密钥对私钥进行加密。</p>
+<p>在使用中，一旦服务器知道客户端的公钥（存储在 <strong>.ssh/authorized_keys</strong> 文件中），连接的客户端就可以使用<strong>非对称签名</strong>证明其身份，通过<strong>挑战应答认证机制</strong>（<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Challenge%E2%80%93response_authentication">CRAM</a>）来完成。在宏观层面上看，服务器选择一个随机数并将其发送给客户端，然后客户端签署此消息并将签名发送回服务器，服务器根据记录的公钥检查签名。这有效地证明客户端拥有与服务器的 <strong>.ssh/authorized_keys</strong> 文件中的公钥对应的私钥，因此服务器可以允许客户端登录。</p>
+<h2 id="其他">其他</h2>
+<p><a target="_blank" rel="noopener" href="https://latacora.micro.blog/2018/04/03/cryptographic-right-answers.html"><em>Cryptographic Right Answers</em></a></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>MIT 6.Null 安全和密码学</p><p><a href="https://zion4h.github.io/2023/05/04/mit-6-null-security/">https://zion4h.github.io/2023/05/04/mit-6-null-security/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-05-04</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/shell/">shell</a><a class="link-muted mr-2" rel="tag" href="/tags/security/">security</a><a class="link-muted mr-2" rel="tag" href="/tags/cryptography/">cryptography</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/05/07/mit-6-null-potpourri/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">MIT 6.Null 大杂烩</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/05/02/mit-6_null-debugging-and-profiling/"><span class="level-item">MIT 6.Null 调试和性能分析</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "5483b3eb897139068e202ede9c62b5c6",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#熵-Entropy"><span class="level-left"><span class="level-item">1</span><span class="level-item">熵 Entropy</span></span></a></li><li><a class="level is-mobile" href="#Hash-函数"><span class="level-left"><span class="level-item">2</span><span class="level-item">Hash 函数</span></span></a></li><li><a class="level is-mobile" href="#KDFs"><span class="level-left"><span class="level-item">3</span><span class="level-item">KDFs</span></span></a></li><li><a class="level is-mobile" href="#对称加密"><span class="level-left"><span class="level-item">4</span><span class="level-item">对称加密</span></span></a></li><li><a class="level is-mobile" href="#非对称加密"><span class="level-left"><span class="level-item">5</span><span class="level-item">非对称加密</span></span></a></li><li><a class="level is-mobile" href="#实例"><span class="level-left"><span class="level-item">6</span><span class="level-item">实例</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#密码管理"><span class="level-left"><span class="level-item">6.1</span><span class="level-item">密码管理</span></span></a></li><li><a class="level is-mobile" href="#2FA"><span class="level-left"><span class="level-item">6.2</span><span class="level-item">2FA</span></span></a></li><li><a class="level is-mobile" href="#全盘加密"><span class="level-left"><span class="level-item">6.3</span><span class="level-item">全盘加密</span></span></a></li><li><a class="level is-mobile" href="#私信"><span class="level-left"><span class="level-item">6.4</span><span class="level-item">私信</span></span></a></li><li><a class="level is-mobile" href="#SSH"><span class="level-left"><span class="level-item">6.5</span><span class="level-item">SSH</span></span></a></li></ul></li><li><a class="level is-mobile" href="#其他"><span class="level-left"><span class="level-item">7</span><span class="level-item">其他</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

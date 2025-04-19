@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>MySQL 扫盲 - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="MySQL 是一个 GPL 开源的 DBMS （关系数据库管理系统），根据 DB-Engines，截止 2023 年它的流行程度已仅次于 Oracle。其实有很多其他比 MySQL 好用的 DBMS，但为什么它能如此受欢迎呢，个人认为主要有三点：开源免费、简单易用、知名度高。"><meta property="og:type" content="blog"><meta property="og:title" content="MySQL 扫盲"><meta property="og:url" content="https://zion4h.github.io/2023/03/31/mysql-intro/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="MySQL 是一个 GPL 开源的 DBMS （关系数据库管理系统），根据 DB-Engines，截止 2023 年它的流行程度已仅次于 Oracle。其实有很多其他比 MySQL 好用的 DBMS，但为什么它能如此受欢迎呢，个人认为主要有三点：开源免费、简单易用、知名度高。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1003.jpg"><meta property="article:published_time" content="2023-03-31T14:59:20.000Z"><meta property="article:modified_time" content="2025-04-19T08:22:12.056Z"><meta property="article:author" content="zion h4"><meta property="article:tag" content="mysql"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1003.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2023/03/31/mysql-intro/"},"headline":"MySQL 扫盲","image":["https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1003.jpg"],"datePublished":"2023-03-31T14:59:20.000Z","dateModified":"2025-04-19T08:22:12.056Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"MySQL 是一个 GPL 开源的 DBMS （关系数据库管理系统），根据 DB-Engines，截止 2023 年它的流行程度已仅次于 Oracle。其实有很多其他比 MySQL 好用的 DBMS，但为什么它能如此受欢迎呢，个人认为主要有三点：开源免费、简单易用、知名度高。"}</script><link rel="canonical" href="https://zion4h.github.io/2023/03/31/mysql-intro/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1003.jpg" alt="MySQL 扫盲"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-03-31T14:59:20.000Z" title="3/31/2023, 10:59:20 PM">2023-03-31</time>发表</span><span class="level-item"><time dateTime="2025-04-19T08:22:12.056Z" title="4/19/2025, 4:22:12 PM">2025-04-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/IT/">IT</a><span> / </span><a class="link-muted" href="/categories/IT/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span><span class="level-item">21 分钟读完 (大约3091个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">MySQL 扫盲</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><strong>MySQL</strong> 是一个 <strong>GPL 开源</strong>的 <strong>DBMS</strong> （关系数据库管理系统），根据 <a target="_blank" rel="noopener" href="https://db-engines.com/en/ranking">DB-Engines</a>，截止 2023 年它的流行程度已仅次于 Oracle。其实有很多其他比 MySQL 好用的 DBMS，但为什么它能如此受欢迎呢，个人认为主要有三点：<strong>开源免费</strong>、<strong>简单易用</strong>、<strong>知名度高</strong>。</p>
+<span id="more"></span>
+<p><strong>后人竟是我自己</strong>：“写完再看，感觉好枯燥，好丑，逻辑不清晰，语言不练达，你真的懂 MySQL 吗？？”</p>
+<ul>
+<li><a href="https://zion4h.github.io/2023/03/31/opensource-license-intro/">如何选择开源许可证？</a></li>
+</ul>
+<h2 id="索引">索引</h2>
+<p>首先我们应当明确一点，索引是用来 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/optimization-indexes.html">优化 SQL 查询</a> 的，或者说提高 <code>SELECT</code> 操作速度的，当然前提是要在查询条件中使用索引列。</p>
+<h3 id="创建索引">创建索引</h3>
+<p>由 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/create-index.html">CREATE INDEX Statement</a>，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">CREATE [UNIQUE | FULLTEXT | SPATIAL] INDEX index_name</span><br><span class="line">    [index_type]</span><br><span class="line">    ON tbl_name (key_part,...)</span><br><span class="line">    [index_option]</span><br><span class="line">    [algorithm_option | lock_option] ...</span><br><span class="line"></span><br><span class="line">key_part: &#123;col_name [(length)] | (<span class="built_in">expr</span>)&#125; [ASC | DESC]</span><br><span class="line"></span><br><span class="line">index_option: &#123;</span><br><span class="line">    KEY_BLOCK_SIZE [=] value</span><br><span class="line">  | index_type</span><br><span class="line">  | WITH PARSER parser_name</span><br><span class="line">  | COMMENT <span class="string">&#x27;string&#x27;</span></span><br><span class="line">  | &#123;VISIBLE | INVISIBLE&#125;</span><br><span class="line">  | ENGINE_ATTRIBUTE [=] <span class="string">&#x27;string&#x27;</span></span><br><span class="line">  | SECONDARY_ENGINE_ATTRIBUTE [=] <span class="string">&#x27;string&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">index_type:</span><br><span class="line">    USING &#123;BTREE | HASH&#125;</span><br><span class="line"></span><br><span class="line">algorithm_option:</span><br><span class="line">    ALGORITHM [=] &#123;DEFAULT | INPLACE | COPY&#125;</span><br><span class="line"></span><br><span class="line">lock_option:</span><br><span class="line">    LOCK [=] &#123;DEFAULT | NONE | SHARED | EXCLUSIVE&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="前缀索引">前缀索引</h3>
+<p>有时候索引列很长比如 <code>CHAR(200)</code>，但在前 10 个或者前 20 个字符，大多数值又是唯一的，我们可以对索引列的前 N 个字符创建索引，从而<strong>节省索引空间并加速查询</strong>。</p>
+<h3 id="全文本索引">全文本索引</h3>
+<p>MyISAM 和 InnoDB 存储引擎都支持全文本索引 <code>FULLTEXT</code> 的，并且只限于 <code>CHAR</code>、<code>VARCHAR</code> 和 <code>TEXT</code> 列，但是索引是对整个列的，不支持前缀索引。</p>
+<h3 id="索引设计原则">索引设计原则</h3>
+<p>这里我直接引用 <a target="_blank" rel="noopener" href="https://www.linuxidc.com/Linux/2016-05/130922.htm">《深入浅出 MySQL》</a>，</p>
+<blockquote>
+<p>最适合索引的列是出现在 WHERE 子句中的列，或连接子句中指定的列，而不是出现在 SELECT 关键字后的选择列表中的列。<br>
+…<br>
+如果有一个 CHAR (200) 列，如果在前 10 个或 20 个字符内，多数值是惟一<br>
+的，那么就不要对整个列进行索引。对前 10 个或 20 个字符进行索引能够节省大量索引空间，<br>
+也可能会使查询更快。<br>
+…<br>
+利用最左前缀。<br>
+…<br>
+如果有明确定义的主<br>
+键，则按照主键顺序保存。如果没有主键，但是有唯一索引，那么就是按照唯一索引的顺序<br>
+保存。如果既没有主键又没有唯一索引，那么表中会自动生成一个内部列，按照这个列的顺<br>
+序保存。</p>
+</blockquote>
+<h3 id="索引结构">索引结构</h3>
+<p>MySQL 有两种索引结构，<strong>B-TREE</strong> 和 <strong>HASH</strong>，MyISAM 和 InnoDB 都只支持 <strong>B-TREE</strong>，而 <strong>MEMORY/HEAP</strong> 支持 <strong>HASH</strong> 和 <strong>B-TREE</strong>。<strong>HASH</strong> 结构的数据库引擎有几个最显著的限制，只能在 <code>WHERE</code> 中使用 <code>=</code> 或 <code>&lt;=&gt;</code> 符，无法使用 <code>ORDER BY</code>，本质是为了换取更小内存做出的牺牲。</p>
+<ul>
+<li>博客：<a href="https://zion4h.github.io/2023/04/01/data-structure-btree/">B 树家族</a></li>
+</ul>
+<h3 id="组合索引的最左前缀特性">组合索引的最左前缀特性</h3>
+<p>如果我们创建了一个组合索引，我们也不强求在条件句中用上全部的索引列，而是只要用到了最左边的索引列就能用上这个组合索引。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create index ind_sales2_companyid_moneys on sales2(company_id,moneys);</span><br><span class="line">Query OK, 1000 rows affected (0.03 sec)</span><br><span class="line">Records: 1000 Duplicates: 0 Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; explain select * from sales2 <span class="built_in">where</span> company_id = 2006\G;</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line"> <span class="built_in">id</span>: 1</span><br><span class="line"> select_type: SIMPLE</span><br><span class="line"> table: sales2</span><br><span class="line"> <span class="built_in">type</span>: ref</span><br><span class="line">possible_keys: ind_sales2_companyid_moneys</span><br><span class="line">key: ind_sales2_companyid_moneys</span><br><span class="line"> key_len: 5</span><br><span class="line"> ref: const</span><br><span class="line"> rows: 1</span><br><span class="line"> Extra: Using <span class="built_in">where</span></span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<h3 id="索引的-like-查询">索引的 like 查询</h3>
+<p>如果查询条件是 <code>like</code>，那么 <code>%</code> 不能放在开头，否则无法使用索引；对于大文本查询，我们要用全文搜索，而不是 <code>like %…%</code>。</p>
+<h3 id="无法使用索引的场景">无法使用索引的场景</h3>
+<ol>
+<li>MySQL 估计索引查询比全表扫描还要慢时</li>
+<li>使用 MEMORY/HEAP，并且 <code>where</code> 条件中不带 <code>=</code> 时，因为 HASH 索引自身的结构原因不支持</li>
+<li>采用复合索引时，<code>WHERE</code> 条件没有索引列的第一部分</li>
+<li>用 <code>or</code> 分割开的 <code>WHERE</code> 条件句，如果有一个列没有索引，则都不会用到</li>
+<li>如果 <code>like</code> 是用 <code>%</code> 开头的则不支持</li>
+</ol>
+<h2 id="事务和锁定语句">事务和锁定语句</h2>
+<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/sql-transactional-statements.html">MySQL 事务</a> 一般指的<strong>本地事务</strong>，但它也能通过 <strong>XA 事务</strong>支持<strong>分布式事务</strong>。</p>
+<h3 id="事务控制命令">事务控制命令</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">START</span> TRANSACTION</span><br><span class="line">    [transaction_characteristic [, transaction_characteristic] ...]</span><br><span class="line"></span><br><span class="line">transaction_characteristic: &#123;</span><br><span class="line">    <span class="keyword">WITH</span> CONSISTENT SNAPSHOT</span><br><span class="line">  <span class="operator">|</span> READ WRITE</span><br><span class="line">  <span class="operator">|</span> READ <span class="keyword">ONLY</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">BEGIN</span> [WORK]</span><br><span class="line"><span class="keyword">COMMIT</span> [WORK] [<span class="keyword">AND</span> [<span class="keyword">NO</span>] CHAIN] [[<span class="keyword">NO</span>] <span class="keyword">RELEASE</span>]</span><br><span class="line"><span class="keyword">ROLLBACK</span> [WORK] [<span class="keyword">AND</span> [<span class="keyword">NO</span>] CHAIN] [[<span class="keyword">NO</span>] <span class="keyword">RELEASE</span>]</span><br><span class="line"><span class="keyword">SET</span> autocommit <span class="operator">=</span> &#123;<span class="number">0</span> <span class="operator">|</span> <span class="number">1</span>&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>START TRANSACTION</code> 或 <code>BEGIN</code> 开启一个新的事务，后者就是个别名，不用纠结</li>
+<li><code>COMMIT</code> 提交当前事务</li>
+<li><code>ROLLBACK</code> 回滚当前事务，回滚即取消回滚点后它发生的变化</li>
+<li><code>SET autocommit</code> 禁止或允许（默认允许）自动提交事务</li>
+<li><code>READ WRITE</code> 或 <code>READ ONLY</code> 事务访问模式，默认是读写模式</li>
+</ul>
+<p>当我们开始一个事务时，如果还有未提交的事务存在那么它会被立刻提交。</p>
+<p>如果有 <code>LOCK TABLES</code>，那么也会强制释放表锁。另外一点是，任何 <strong>DDL 语句</strong>都无法回滚。</p>
+<h3 id="事务断点">事务断点</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SAVEPOINT</span> identifier</span><br><span class="line"><span class="keyword">ROLLBACK</span> [WORK] <span class="keyword">TO</span> [<span class="keyword">SAVEPOINT</span>] identifier</span><br><span class="line"><span class="keyword">RELEASE</span> <span class="keyword">SAVEPOINT</span> identifier</span><br></pre></td></tr></table></figure>
+<p>事务断点的使用方法如上，很直观。如果创建同名断点时会覆盖旧的断点。</p>
+<p>在执行回滚操作后，晚于回滚位置之后的保存点都将删除，并且回滚位置之后存储的行锁都不会释放，除非是新增的行。</p>
+<h3 id="锁定语句">锁定语句</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">LOCK TABLES</span><br><span class="line">    tbl_name [[<span class="keyword">AS</span>] alias] lock_type</span><br><span class="line">    [, tbl_name [[<span class="keyword">AS</span>] alias] lock_type] ...</span><br><span class="line"></span><br><span class="line">lock_type: &#123;</span><br><span class="line">    READ [<span class="keyword">LOCAL</span>]</span><br><span class="line">  <span class="operator">|</span> [LOW_PRIORITY] WRITE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">UNLOCK TABLES</span><br></pre></td></tr></table></figure>
+<ol>
+<li>
+<p>使用 LOCK TABLES 的只能访问被锁定表格</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; LOCK TABLES t1 READ;</span><br><span class="line">mysql&gt; SELECT COUNT(*) FROM t1;</span><br><span class="line">+----------+</span><br><span class="line">| COUNT(*) |</span><br><span class="line">+----------+</span><br><span class="line">|        3 |</span><br><span class="line">+----------+</span><br><span class="line">mysql&gt; SELECT COUNT(*) FROM t2;</span><br><span class="line">ERROR 1100 (HY000): Table <span class="string">&#x27;t2&#x27;</span> was not locked with LOCK TABLES</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>锁定时使用表名或者别名都可以，但是我们在访问这些锁定表一定要和锁定语句的声明保持一致</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; LOCK TABLE t WRITE, t AS t1 READ;</span><br><span class="line">mysql&gt; INSERT INTO t SELECT * FROM t;</span><br><span class="line">ERROR 1100: Table <span class="string">&#x27;t&#x27;</span> was not locked with LOCK TABLES</span><br><span class="line">mysql&gt; INSERT INTO t SELECT * FROM t AS t1;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/lock-tables.html">LOCK TABLES</a> 和 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/lock-tables.html">UNLOCK TABLES</a> 配合事务使用：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> autocommit<span class="operator">=</span><span class="number">0</span>;</span><br><span class="line">LOCK TABLES t1 WRITE, t2 READ, ...;</span><br><span class="line">... do something <span class="keyword">with</span> tables t1 <span class="keyword">and</span> t2 here ...</span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="设置事务">设置事务</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> [<span class="keyword">GLOBAL</span> <span class="operator">|</span> SESSION] TRANSACTION</span><br><span class="line">    transaction_characteristic [, transaction_characteristic] ...</span><br><span class="line"></span><br><span class="line">transaction_characteristic: &#123;</span><br><span class="line">    ISOLATION LEVEL level</span><br><span class="line">  <span class="operator">|</span> access_mode</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">level: &#123;</span><br><span class="line">     REPEATABLE READ</span><br><span class="line">   <span class="operator">|</span> READ COMMITTED</span><br><span class="line">   <span class="operator">|</span> READ UNCOMMITTED</span><br><span class="line">   <span class="operator">|</span> SERIALIZABLE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">access_mode: &#123;</span><br><span class="line">     READ WRITE</span><br><span class="line">   <span class="operator">|</span> READ <span class="keyword">ONLY</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>
+<p>设置事务隔离级别</p>
+<p>InnoDB 提供了 4 种隔离级别，默认是 <code>REPEATABLE READ</code>。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html#isolevel_read-uncommitted">READ UNCOMMITTED</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html#isolevel_read-committed">READ COMMITTED</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html#isolevel_repeatable-read">REPEATABLE READ</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html#isolevel_serializable">SERIALIZABLE</a></li>
+</ul>
+</li>
+<li>
+<p>设置事务访问模式</p>
+<p>默认是 <code>READ WRITE</code>，如果设置成 <code>READ ONLY</code>，就无法在事务中修改 table 了。</p>
+</li>
+<li>
+<p>设置事务特征范围</p>
+<p>就是这次设置事务会影响到全局（尽管叫全局但显然不可能包括已经提交的事务）或者当前会话。</p>
+</li>
+</ol>
+<h3 id="隔离级别">隔离级别</h3>
+<ul>
+<li>
+<p>READ UNCOMMITTED</p>
+<p>最低隔离级别，在读未提交这个级别下，MySQL 会以无锁模式读取行，导致有可能读到未提交事务更新后的数据，这种问题也被叫做脏读。</p>
+</li>
+<li>
+<p>READ COMMITTED</p>
+<p>读已提交首先解决了脏读问题，但是 T1 在两次读取期间，可能 T2 对数据修改，导致前后 T1 前后读取结果不一致，这种问题叫做不可重复读。</p>
+</li>
+<li>
+<p>REPEATABLE READ</p>
+<p>InnoDB 默认隔离级别，T1 在读取时，其他事务不能操作其访问行，但是其他事务可以插入新行，因此 T1 在读取期间表的行数一直在增加，这就是幻读问题。InnoDB 引入了 next-key lock 解决了该问题。</p>
+</li>
+<li>
+<p>SERIALIZABLE</p>
+<p>最严格的隔离级别。</p>
+</li>
+</ul>
+<h3 id="ACID-模型">ACID 模型</h3>
+<p><strong>ACID</strong> 是一套数据库设计原则，主要强调的是可靠性方面。</p>
+<blockquote>
+<p>原子性（Atomicity）：事务是一个原子操作单元，其对数据的修改，要么全都执行，要么全都不执行。</p>
+<p>一致性（Consistent）：在事务开始和完成时，数据都必须保持一致状态。这意味着所有相关的数据规则都必须应用于事务的修改，以保持数据的完整性；事务结束时，所有的内部数据结构（如 B 树索引或双向链表）也都必须是正确的。</p>
+<p>隔离性（Isolation）：数据库系统提供一定的隔离机制，保证事务在不受外部并发操作影响的 “独立” 环境执行。这意味着事务处理过程中的中间状态对外部是不可见的，反之亦然。</p>
+<p>持久性（Durable）：事务完成之后，它对于数据的修改是永久性的，即使出现系统故障也能够保持。</p>
+<p>《深入浅出 MySQL》</p>
+</blockquote>
+<h2 id="锁">锁</h2>
+<h3 id="共享锁和独占锁">共享锁和独占锁</h3>
+<p>InnoDB 通过共享锁和独占锁实现了行级锁，共享锁允许事务读该行数据，而独占锁允许对该行修改和删除。共享锁和独占锁我们一般用 S 锁和 X 锁简称，如果事务 T1 持有一行数据的 S 锁，那么当另一个事务请求 S 锁时能够立即获取，但请求 X 锁则需要等待 T1 先释放 S 锁。</p>
+<h3 id="意向锁">意向锁</h3>
+<p>InnoDB 通过意向锁来实现表级锁，**IS（意向共享锁）** 会在整张表的每个行设共享锁，而 **IX（意向独占锁）** 则是设独占锁。</p>
+<p>比如，<code>“SELECT…FOR SHARE”</code> 就是 IS，<code>”SELECT…FOR UPDATE”</code> 就是 IX。一个事务要想获取一行数据的 X 锁，那么必须先获取所在表的 IX 锁；而如果想要获取 S 锁，那么获取 IS 锁。意向锁本质是相当于告诉 MySQL，我将要对某些数据加 X 锁或者 S 锁，在通过锁冲突间接管理锁颗粒细度。</p>
+<h3 id="记录锁">记录锁</h3>
+<p>** 记录锁（record lock）** 是加在索引上的，比如 <code>SELECT c1 FROM t WHERE c1 = 10 FOR UPDATE;</code> 语句会阻止其他事务通过 <code>t.c1=10</code> 的索引去间接修改、删除其数据所在行。</p>
+<p>像我们之前提到的 X 锁和 S 锁都是加在行上的，而记录锁是加在索引上的，那么_如果这一列没有索引怎么办？_ InnoDB 会创建一个隐含的聚集索引。</p>
+<h3 id="间隙锁">间隙锁</h3>
+<p>** 间隙锁（gap lock）** 也是加在索引上的，和记录锁区别在于，它是针对一个范围内的索引记录，比如 <code>SELECT c1 FROM t WHERE c1 BETWEEN 10 and 20 FOR UPDATE;</code>，如果这时候有其他事务想要插入一个 15 的值就会被阻止。</p>
+<p>不同事务可以在同一段索引记录中取得冲突的间隙锁，这是因为间隙锁本身是为 “排他” 而生，如果想从索引中清除记录，则需要合并不同事务持有的该记录上的间隙锁。</p>
+<h3 id="下一键锁">下一键锁</h3>
+<p>InnoDB 通过下一键锁 next-key lock 来实现 REPEATABLE READ 隔离级别下对幻读问题的解决，而下一键锁遵循左开右闭原则。</p>
+<p><code>TODO</code></p>
+<p>4.redo log、undo log、binlog</p>
+<p>5.SQL 实际执行</p>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://www.oracle.com/mysql/what-is-mysql/">【 1 】 Oracle: What is MySQL？</a></p>
+<p><a target="_blank" rel="noopener" href="https://tech.meituan.com/2014/06/30/mysql-index.html">【 2 】 美团技术：MySQL 索引原理及慢查询优化</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.linuxidc.com/Linux/2016-05/130922.htm">【 3 】 深入浅出 MySQL</a></p>
+<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/optimization-indexes.html">【 4 】 MySQL Doc</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/rbmonster/learning-note/blob/master/src/main/java/com/toc/MYSQL.md">【 5 】 learning-note: MySQL</a></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>MySQL 扫盲</p><p><a href="https://zion4h.github.io/2023/03/31/mysql-intro/">https://zion4h.github.io/2023/03/31/mysql-intro/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-03-31</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/mysql/">mysql</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/04/01/life-diary-23-3/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">2023 年 3 月</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/03/31/opensource-license-intro/"><span class="level-item">如何选择开源许可证？</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "9f062a8d1e00678f8af751a9ef231e3e",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#索引"><span class="level-left"><span class="level-item">1</span><span class="level-item">索引</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#创建索引"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">创建索引</span></span></a></li><li><a class="level is-mobile" href="#前缀索引"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">前缀索引</span></span></a></li><li><a class="level is-mobile" href="#全文本索引"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">全文本索引</span></span></a></li><li><a class="level is-mobile" href="#索引设计原则"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">索引设计原则</span></span></a></li><li><a class="level is-mobile" href="#索引结构"><span class="level-left"><span class="level-item">1.5</span><span class="level-item">索引结构</span></span></a></li><li><a class="level is-mobile" href="#组合索引的最左前缀特性"><span class="level-left"><span class="level-item">1.6</span><span class="level-item">组合索引的最左前缀特性</span></span></a></li><li><a class="level is-mobile" href="#索引的-like-查询"><span class="level-left"><span class="level-item">1.7</span><span class="level-item">索引的 like 查询</span></span></a></li><li><a class="level is-mobile" href="#无法使用索引的场景"><span class="level-left"><span class="level-item">1.8</span><span class="level-item">无法使用索引的场景</span></span></a></li></ul></li><li><a class="level is-mobile" href="#事务和锁定语句"><span class="level-left"><span class="level-item">2</span><span class="level-item">事务和锁定语句</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#事务控制命令"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">事务控制命令</span></span></a></li><li><a class="level is-mobile" href="#事务断点"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">事务断点</span></span></a></li><li><a class="level is-mobile" href="#锁定语句"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">锁定语句</span></span></a></li><li><a class="level is-mobile" href="#设置事务"><span class="level-left"><span class="level-item">2.4</span><span class="level-item">设置事务</span></span></a></li><li><a class="level is-mobile" href="#隔离级别"><span class="level-left"><span class="level-item">2.5</span><span class="level-item">隔离级别</span></span></a></li><li><a class="level is-mobile" href="#ACID-模型"><span class="level-left"><span class="level-item">2.6</span><span class="level-item">ACID 模型</span></span></a></li></ul></li><li><a class="level is-mobile" href="#锁"><span class="level-left"><span class="level-item">3</span><span class="level-item">锁</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#共享锁和独占锁"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">共享锁和独占锁</span></span></a></li><li><a class="level is-mobile" href="#意向锁"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">意向锁</span></span></a></li><li><a class="level is-mobile" href="#记录锁"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">记录锁</span></span></a></li><li><a class="level is-mobile" href="#间隙锁"><span class="level-left"><span class="level-item">3.4</span><span class="level-item">间隙锁</span></span></a></li><li><a class="level is-mobile" href="#下一键锁"><span class="level-left"><span class="level-item">3.5</span><span class="level-item">下一键锁</span></span></a></li></ul></li><li><a class="level is-mobile" href="#参考"><span class="level-left"><span class="level-item">4</span><span class="level-item">参考</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

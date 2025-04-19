@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>MIT 6.NULL 版本控制 (Git) - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Version Control Systems (VCSs) 版本控制系统 是专门用来跟踪源码变动的工具。 VCSs 会用快照将文件夹和它里面的内容变化记录下来，每一份快照都完整包含了那一时刻文件夹及其子文件和子文件夹的状态，以及快照创建人信息和快照捎带信息。"><meta property="og:type" content="blog"><meta property="og:title" content="MIT 6.NULL 版本控制 (Git)"><meta property="og:url" content="https://zion4h.github.io/2023/04/18/mit-6_null-git/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="Version Control Systems (VCSs) 版本控制系统 是专门用来跟踪源码变动的工具。 VCSs 会用快照将文件夹和它里面的内容变化记录下来，每一份快照都完整包含了那一时刻文件夹及其子文件和子文件夹的状态，以及快照创建人信息和快照捎带信息。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img005.webp"><meta property="article:published_time" content="2023-04-18T06:20:22.000Z"><meta property="article:modified_time" content="2025-04-19T08:22:12.055Z"><meta property="article:author" content="zion h4"><meta property="article:tag" content="shell"><meta property="article:tag" content="git"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img005.webp"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2023/04/18/mit-6_null-git/"},"headline":"MIT 6.NULL 版本控制 (Git)","image":["https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img005.webp"],"datePublished":"2023-04-18T06:20:22.000Z","dateModified":"2025-04-19T08:22:12.055Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"Version Control Systems (VCSs) 版本控制系统 是专门用来跟踪源码变动的工具。 VCSs 会用快照将文件夹和它里面的内容变化记录下来，每一份快照都完整包含了那一时刻文件夹及其子文件和子文件夹的状态，以及快照创建人信息和快照捎带信息。"}</script><link rel="canonical" href="https://zion4h.github.io/2023/04/18/mit-6_null-git/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img005.webp" alt="MIT 6.NULL 版本控制 (Git)"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-04-18T06:20:22.000Z" title="4/18/2023, 2:20:22 PM">2023-04-18</time>发表</span><span class="level-item"><time dateTime="2025-04-19T08:22:12.055Z" title="4/19/2025, 4:22:12 PM">2025-04-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Labs/">Labs</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-Null/">MIT 6.Null</a></span><span class="level-item">17 分钟读完 (大约2561个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">MIT 6.NULL 版本控制 (Git)</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><strong><em>Version Control Systems</em> (VCSs) 版本控制系统</strong> 是专门用来跟踪源码变动的工具。</p>
+<p><strong>VCSs</strong> 会用快照将文件夹和它里面的内容变化记录下来，每一份快照都完整包含了那一时刻文件夹及其子文件和子文件夹的状态，以及快照创建人信息和快照捎带信息。</p>
+<span id="more"></span>
+<p>版本控制有什么用？即使只是独立开发，通过 VCS 我们也能轻松了解某段代码的设计和修改目的，从而解放大脑，而在多人合作的场景下则需求更迫切：</p>
+<ul>
+<li><em>谁写的这个模块？</em></li>
+<li><em>A 文件的第 2306 行代码是谁写的？什么时候写的？为什么这么写？</em></li>
+<li><em>之前某个功能单元是能正常运行的，但现在无法运行了，我该去哪里找问题？</em></li>
+<li><em>甲部门开发 x 功能，同时让 Z 部门开发 y 功能</em></li>
+</ul>
+<h2 id="Git-数据模型">Git 数据模型</h2>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/git-xkcd.png" alt="Git by xkcd"></p>
+<p>这个漫画讽刺了 Git 的接口设计，太过抽象容易让人困惑，以至于最后大家都像念魔咒一样用它。但如果我们自底向上，先去了解 Git 的底层设计，也就是 <strong>Git 数据模型</strong>，理解起 <strong>Git</strong> 的运作来会更加的轻松。</p>
+<p>理解 <strong>Git 数据模型</strong>，意味着理解 <code>tree</code>、<code>blob</code>、<code>commit</code>。在 <strong>Git 数据模型</strong> 中，我们将文件称为 <strong>blob</strong>，目录则称为 <strong>tree</strong>。显然，<strong>tree</strong> 可以同时包含 <strong>tree</strong> 和 <strong>blob</strong>，而 <strong>blob</strong> 并不能。还有一个我们不能忽视的角色是快照，它们被称为 <strong>commit</strong>，每个 <strong>commit</strong> 都包含以下内容：</p>
+<ul>
+<li><code>parent</code></li>
+<li><code>author</code></li>
+<li><code>message</code></li>
+<li><code>snapshot</code> 这里指代最顶层 <strong>tree</strong> 的快照</li>
+</ul>
+<h3 id="Object">Object</h3>
+<p>如果用伪代码表述的话，可以表示上述三者为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a file is a bunch of bytes</span></span><br><span class="line">type blob = array&lt;byte&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// a directory contains named files and directories</span></span><br><span class="line">type tree = map&lt;string, tree | blob&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// a commit has parents, metadata, and the top-level tree</span></span><br><span class="line">type commit = struct &#123;</span><br><span class="line">    <span class="attr">parents</span>: array&lt;commit&gt;</span><br><span class="line">    <span class="attr">author</span>: string</span><br><span class="line">    <span class="attr">message</span>: string</span><br><span class="line">    <span class="attr">snapshot</span>: tree</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们用 <code>object</code> 去统称 <code>tree</code>、<code>blob</code>、<code>commit</code>，则所有 <code>object</code> 都可以按如下方式统一管理：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">type object = blob | tree | commit</span><br><span class="line"></span><br><span class="line">objects = map&lt;string, object&gt;</span><br><span class="line"></span><br><span class="line">def <span class="title function_">store</span>(object):</span><br><span class="line">    id = <span class="title function_">sha1</span>(object)</span><br><span class="line">    objects[id] = object</span><br><span class="line"></span><br><span class="line">def <span class="title function_">load</span>(id):</span><br><span class="line">    <span class="keyword">return</span> objects[id]</span><br></pre></td></tr></table></figure>
+<p>简而言之，<strong>Git</strong> 会对 <code>object</code> 通过 <strong>SHA-1 哈希值</strong> （40 个 16 进制数）进行内容寻址。</p>
+<h3 id="Reference">Reference</h3>
+<p>尽管所有的 <code>commit</code> 都被哈希值唯一标记，但正常人类是没办法记住 40 个 16 进制数的，因此我们需要借助索引去记忆，它们指向实际的 <strong>commits</strong>，比如我们常用索引 <code>master</code> 就指向主分支上的最新的 <strong>commits</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">references = map&lt;string, string&gt;</span><br><span class="line"></span><br><span class="line">def <span class="title function_">update_reference</span>(name, id):</span><br><span class="line">    references[name] = id</span><br><span class="line"></span><br><span class="line">def <span class="title function_">read_reference</span>(name):</span><br><span class="line">    <span class="keyword">return</span> references[name]</span><br><span class="line"></span><br><span class="line">def <span class="title function_">load_reference</span>(name_or_id):</span><br><span class="line">    <span class="keyword">if</span> name_or_id <span class="keyword">in</span> <span class="attr">references</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">load</span>(references[name_or_id])</span><br><span class="line">    <span class="attr">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">load</span>(name_or_id)</span><br></pre></td></tr></table></figure>
+<p>在 <strong>Git</strong> 中，索引 <code>HEAD</code> 指向当前位置。</p>
+<h3 id="Snapshots">Snapshots</h3>
+<p>每个 <code>commit</code> 都会记录最顶层 <code>tree</code>，形如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;root&gt; (tree)</span><br><span class="line">|</span><br><span class="line">+- foo (tree)</span><br><span class="line">|  |</span><br><span class="line">|  + bar.txt (blob, contents = <span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">|</span><br><span class="line">+- baz.txt (blob, contents = <span class="string">&quot;git is wonderful&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>而 <strong>commits</strong> 的 DAG （有向无环图）则构成了 <strong>Git</strong> 的历史记录，通俗来讲就是，每个 <code>commit</code> 只需要知道自己的父亲是哪些 <strong>commits</strong>，也就是能正确回答我从哪里来这个问题就好（嗯~ 非哲学范畴）。</p>
+<p>假如考虑这样一个场景，我们要对源码进行 1. 修复 Bug；2. 添加新功能，我们可以用新建两个分支同步执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">o &lt;-- o &lt;-- o &lt;-- o</span><br><span class="line">            ^</span><br><span class="line">             \</span><br><span class="line">              --- o &lt;-- o</span><br></pre></td></tr></table></figure>
+<p>我们接下来需要合并 1 和 2，但不可避免的会遇到合并冲突，这需要我们手动选择保留和删除冲突代码。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">o &lt;-- o &lt;-- o &lt;-- o &lt;---- o</span><br><span class="line">            ^            /</span><br><span class="line">             \          v</span><br><span class="line">              --- o &lt;-- o</span><br></pre></td></tr></table></figure>
+<h3 id="Repositories">Repositories</h3>
+<p>现在，我们终于能够正确定义一个 Git 仓库了！在硬盘上，它是一堆由 <code>reference</code> 和 <code>object</code> 构成的数据，我们可以从 <strong>Git 数据模型</strong> 角度去理解。我们输入的 <strong>Git 命令</strong> 都在操作 <strong>commit 的 DAG</strong>，本质上是在添加和修改 <code>object</code> 和 <code>referance</code>。</p>
+<h2 id="暂存区">暂存区</h2>
+<p><strong>Git</strong> 还有一个暂存区的概念，它跟数据模型正交，属于创建提交的一部分。简单来说，暂存区允许我们告诉 <strong>Git</strong> 下一次快照需要包含哪些修改，这和通常的 VCS 直接保存当前状态有所区别，这能够暂存区的快照更干净、更聪明。</p>
+<p>另外，如果你创建了一个新文件，<strong>Git</strong> 并不会跟踪它，此时它的状态是 <strong>Untracked files</strong>，除非你用 <code>git add</code> 命令将其加入 <strong>暂存区</strong>。</p>
+<p>一个高质量的提交消息很重要，可参考</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">A Note About Git Commit Messages</a></li>
+<li><a target="_blank" rel="noopener" href="https://cbea.ms/git-commit/">How to Write a Git Commit Message</a></li>
+</ul>
+<h2 id="Git-命令行接口">Git 命令行接口</h2>
+<p>可以阅读 <a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2">Pro Git</a> 以了解更多细节。</p>
+<h3 id="基础">基础</h3>
+<ul>
+<li><code>git help &lt;command&gt;</code> 帮助文档</li>
+<li><code>git init</code> 将当前文件夹初始化为一个 git 仓库，并将数据都放到 <strong>.git 文件夹</strong> 中</li>
+<li><code>git status</code> 查看当前状态</li>
+<li><code>git add &lt;filename&gt;</code> 添加文档到暂存区</li>
+<li><code>git commit</code> 创建一个 <code>commit</code></li>
+<li><code>git log</code> 展开历史日志</li>
+<li><code>git log --all --graph --decorate</code> 以 <strong>DAG</strong> 方式展开历史日志</li>
+<li><code>git diff &lt;filename&gt;</code> 展示 <strong>暂存区</strong> 中该文件的具体变动</li>
+<li><code>git diff &lt;revision&gt; &lt;filename&gt;</code> 展示不同快照间该文件的变动</li>
+<li><code>git checkout &lt;revision&gt;</code> 更新 <strong>HEAD 索引</strong> 到指定快照</li>
+</ul>
+<h3 id="分支与合并">分支与合并</h3>
+<ul>
+<li><code>git branch</code> 展示分支</li>
+<li><code>git branch &lt;name&gt;</code> 创建分支</li>
+<li><code>git checkout -b &lt;name&gt;</code> 创建分支并切换 <strong>HEAD</strong> 到该分支
+<ul>
+<li>等效于 <code>git branch &lt;name&gt;; git checkout &lt;name&gt;</code></li>
+</ul>
+</li>
+<li><code>git merge &lt;revision&gt;</code> 将指定分支合并到当前分支</li>
+<li><code>git mergetool</code> 一个工具，用来解决合并冲突的</li>
+<li><code>git rebase</code> 变基 TODO</li>
+</ul>
+<h3 id="远程访问">远程访问</h3>
+<ul>
+<li><code>git remote</code> 展示远程仓库</li>
+<li><code>git remote add &lt;name&gt; &lt;url&gt;</code> 将一个远程仓库添加到当前 <strong>Git 仓库</strong></li>
+<li><code>git push &lt;remote&gt; &lt;local branch&gt;:&lt;remote branch&gt;</code> 发送 <code>objects</code> 到远程仓库，并更新远程仓库 <code>reference</code></li>
+<li><code>git branch --set-upstream-to=&lt;remote&gt;/&lt;remote branch&gt;</code> 设置本地分支和远程分支的联系关系</li>
+<li><code>git fetch</code> 从远程仓库获取 <code>objects</code>/<code>references</code></li>
+<li><code>git clone</code> 将远程仓库下载到本地</li>
+</ul>
+<h3 id="撤销">撤销</h3>
+<ul>
+<li><code>git commit --amend</code> 修改一条 <code>commit</code> 的内容或者捎带信息</li>
+<li><code>git reset HEAD &lt;file&gt;</code> 取消暂存文件</li>
+<li><code>git checkout -- &lt;file&gt;</code> 丢弃改变</li>
+</ul>
+<h2 id="Git-高级命令">Git 高级命令</h2>
+<ul>
+<li><code>git config</code> 可以参考 <a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-config">git-config</a></li>
+<li><code>git clone --depth=1</code> 浅克隆，丢掉完整的历史，只保留一个快照</li>
+<li><code>git add -p</code></li>
+<li><code>git rebase -i</code></li>
+<li><code>git blame</code> 查看谁最后编辑的</li>
+<li><code>git stash</code></li>
+<li><code>git bisect</code></li>
+<li><code>.gitignore</code> 指定哪些 <strong>untracked files</strong> 需要忽略</li>
+</ul>
+<h3 id="Fast-Forward-Merge">Fast-Forward Merge</h3>
+<p>**Fast-Forward Merge（快进式合并）** 其实并不需要我们做额外操作，它是 Git 本身内置的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230503163121.png" alt="快进式合并"></p>
+<h3 id="Three-Way-Merge">Three-Way Merge</h3>
+<p>如果在合并时使用 <code>--no-ff</code> 参数，Git 就会采用 <strong>Three-Way Merge（三方合并）</strong>。所谓三方合并是同 “先 <code>diff</code>，再手工决定” 的两方合并相区别的，它会根据原始文档内容判断到底该保留谁的，简单来说是舍旧迎新策略。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230503165154.png" alt="三方合并"></p>
+<h3 id="Squash-Merge">Squash Merge</h3>
+<p>**Squash Merge（压缩式合并）** 本身和普通 <code>merge</code> 没什么两样，但是它能让整个 log 更加干净。我们正常合并会让新 <code>commit</code> 拥有两个父节点，但很多时候我们的分支只是做了一些很细小的修改，如果直接 <code>merge</code> 会让整个 log 看着非常乱，而压缩式合并能够解决我们这种需求。当然，它是原理本身不难猜到，就是将分支改动在主干上重放，然后需要手动 <code>commit</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230503171038.png" alt="压缩式合并"></p>
+<h3 id="Rebase">Rebase</h3>
+<p>TODO</p>
+<h3 id="cherry-pick">cherry-pick</h3>
+<p>TODO</p>
+<h2 id="Resources">Resources</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://git-scm.com/book/en/v2">Pro Git</a> 很重要的一本书</li>
+<li><a target="_blank" rel="noopener" href="https://ohshitgit.com/">Oh Shit, Git!?!</a> 教你如何处理常见 Git 错误</li>
+<li><a target="_blank" rel="noopener" href="https://eagain.net/articles/git-for-computer-scientists/">Git for Computer Scientists</a></li>
+<li><a target="_blank" rel="noopener" href="https://jwiegley.github.io/git-from-the-bottom-up/">Git from the Bottom Up</a> 详细描述 Git 自底向上实现</li>
+<li><a target="_blank" rel="noopener" href="https://xosh.org/explain-git-in-simple-words/">How to explain git in simple words?</a></li>
+<li><a target="_blank" rel="noopener" href="https://learngitbranching.js.org/?locale=zh_CN">Learn Git Branching</a> Git 教学游戏</li>
+</ul>
+<h2 id="实践-1-本地操作">实践 1 本地操作</h2>
+<h3 id="添加一个-animal-py">添加一个 <a target="_blank" rel="noopener" href="http://animal.py">animal.py</a></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">default</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;hello&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    default()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h3 id="加入到暂存区">加入到暂存区</h3>
+<p><code>git add animal.py</code></p>
+<h3 id="提交">提交</h3>
+<p><code>git commit</code></p>
+<h3 id="查看">查看</h3>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/git-branch-vv.png" alt="git branch -vv"></p>
+<h3 id="添加猫猫功能">添加猫猫功能</h3>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230423163903.png" alt="add cat feature"></p>
+<h3 id="添加狗狗功能">添加狗狗功能</h3>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230423164506.png" alt="add dog feature"></p>
+<h3 id="合并分支">合并分支</h3>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230423165417.png" alt="合并猫狗"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/0C0uJtMNir.png" alt="冲突代码"></p>
+<p>代码冲突解决后记得将冲突文件添加到暂存区，最后键入 <code>git merge --continue</code>，解决！</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230423165822.png" alt="over"></p>
+<h2 id="实践-2-远程访问">实践 2 远程访问</h2>
+<h3 id="绑定远程项目">绑定远程项目</h3>
+<p>将本地 git 项目和远程项目绑定，如果是从远端拷贝到本地，那直接克隆就好。但若是先建立的本地项目，想要发送到远程，则需要配置 remote，再 push。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230523180410.png" alt="添加远程仓库"></p>
+<h3 id="同步更新">同步更新</h3>
+<p>你在修改代码的同时，别人也在修改代码，因次我们除了保持本地与远程同名分支代码的同步外，想要合并到主干分支，务必请求 pull request 简称 PR。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230523182656.png" alt="提交 PR"></p>
+<p>上传到远端分支 Bob 后，我们可以提交 PR，然后仓库管理员会审核，如果有冲突的代码会手动解决冲突。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230523182951.png" alt="远程审核"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/20230523183208.png" alt="手动修改并通过"></p>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://morningspace.github.io/tech/git-merge-stories-1/">【1】Git 合并那些事 —— 认识几种 Merge 方法</a></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>MIT 6.NULL 版本控制 (Git)</p><p><a href="https://zion4h.github.io/2023/04/18/mit-6_null-git/">https://zion4h.github.io/2023/04/18/mit-6_null-git/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-04-18</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/shell/">shell</a><a class="link-muted mr-2" rel="tag" href="/tags/git/">git</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/04/27/font-style/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">如何选择你的字体</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/04/07/java-basic-intro-collection/"><span class="level-item">Java 扫盲（二）集合</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "8910b5bad7d2b2c55a6b73bf9fa112b8",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Git-数据模型"><span class="level-left"><span class="level-item">1</span><span class="level-item">Git 数据模型</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Object"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">Object</span></span></a></li><li><a class="level is-mobile" href="#Reference"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">Reference</span></span></a></li><li><a class="level is-mobile" href="#Snapshots"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">Snapshots</span></span></a></li><li><a class="level is-mobile" href="#Repositories"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">Repositories</span></span></a></li></ul></li><li><a class="level is-mobile" href="#暂存区"><span class="level-left"><span class="level-item">2</span><span class="level-item">暂存区</span></span></a></li><li><a class="level is-mobile" href="#Git-命令行接口"><span class="level-left"><span class="level-item">3</span><span class="level-item">Git 命令行接口</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#基础"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">基础</span></span></a></li><li><a class="level is-mobile" href="#分支与合并"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">分支与合并</span></span></a></li><li><a class="level is-mobile" href="#远程访问"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">远程访问</span></span></a></li><li><a class="level is-mobile" href="#撤销"><span class="level-left"><span class="level-item">3.4</span><span class="level-item">撤销</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Git-高级命令"><span class="level-left"><span class="level-item">4</span><span class="level-item">Git 高级命令</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Fast-Forward-Merge"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">Fast-Forward Merge</span></span></a></li><li><a class="level is-mobile" href="#Three-Way-Merge"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">Three-Way Merge</span></span></a></li><li><a class="level is-mobile" href="#Squash-Merge"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">Squash Merge</span></span></a></li><li><a class="level is-mobile" href="#Rebase"><span class="level-left"><span class="level-item">4.4</span><span class="level-item">Rebase</span></span></a></li><li><a class="level is-mobile" href="#cherry-pick"><span class="level-left"><span class="level-item">4.5</span><span class="level-item">cherry-pick</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Resources"><span class="level-left"><span class="level-item">5</span><span class="level-item">Resources</span></span></a></li><li><a class="level is-mobile" href="#实践-1-本地操作"><span class="level-left"><span class="level-item">6</span><span class="level-item">实践 1 本地操作</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#添加一个-animal-py"><span class="level-left"><span class="level-item">6.1</span><span class="level-item">添加一个 animal.py</span></span></a></li><li><a class="level is-mobile" href="#加入到暂存区"><span class="level-left"><span class="level-item">6.2</span><span class="level-item">加入到暂存区</span></span></a></li><li><a class="level is-mobile" href="#提交"><span class="level-left"><span class="level-item">6.3</span><span class="level-item">提交</span></span></a></li><li><a class="level is-mobile" href="#查看"><span class="level-left"><span class="level-item">6.4</span><span class="level-item">查看</span></span></a></li><li><a class="level is-mobile" href="#添加猫猫功能"><span class="level-left"><span class="level-item">6.5</span><span class="level-item">添加猫猫功能</span></span></a></li><li><a class="level is-mobile" href="#添加狗狗功能"><span class="level-left"><span class="level-item">6.6</span><span class="level-item">添加狗狗功能</span></span></a></li><li><a class="level is-mobile" href="#合并分支"><span class="level-left"><span class="level-item">6.7</span><span class="level-item">合并分支</span></span></a></li></ul></li><li><a class="level is-mobile" href="#实践-2-远程访问"><span class="level-left"><span class="level-item">7</span><span class="level-item">实践 2 远程访问</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#绑定远程项目"><span class="level-left"><span class="level-item">7.1</span><span class="level-item">绑定远程项目</span></span></a></li><li><a class="level is-mobile" href="#同步更新"><span class="level-left"><span class="level-item">7.2</span><span class="level-item">同步更新</span></span></a></li></ul></li><li><a class="level is-mobile" href="#参考"><span class="level-left"><span class="level-item">8</span><span class="level-item">参考</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

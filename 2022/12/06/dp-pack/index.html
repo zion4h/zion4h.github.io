@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>背包 DP - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="背包问题探讨了如何用有限背包去装入尽可能多或者尽可能贵的物品，或者说用有限空间换取最大价值的问题。当然，问题是多样化的，我们需要将问题中涉及到的资源抽象对应到背包的空间和价值两个维度上。"><meta property="og:type" content="blog"><meta property="og:title" content="背包 DP"><meta property="og:url" content="https://zion4h.github.io/2022/12/06/dp-pack/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="背包问题探讨了如何用有限背包去装入尽可能多或者尽可能贵的物品，或者说用有限空间换取最大价值的问题。当然，问题是多样化的，我们需要将问题中涉及到的资源抽象对应到背包的空间和价值两个维度上。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img006.jpg"><meta property="article:published_time" content="2022-12-06T13:29:32.000Z"><meta property="article:modified_time" content="2025-04-19T08:22:12.042Z"><meta property="article:author" content="zion h4"><meta property="article:tag" content="leetcode"><meta property="article:tag" content="algorithm"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img006.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2022/12/06/dp-pack/"},"headline":"背包 DP","image":["https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img006.jpg"],"datePublished":"2022-12-06T13:29:32.000Z","dateModified":"2025-04-19T08:22:12.042Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"背包问题探讨了如何用有限背包去装入尽可能多或者尽可能贵的物品，或者说用有限空间换取最大价值的问题。当然，问题是多样化的，我们需要将问题中涉及到的资源抽象对应到背包的空间和价值两个维度上。"}</script><link rel="canonical" href="https://zion4h.github.io/2022/12/06/dp-pack/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img006.jpg" alt="背包 DP"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-12-06T13:29:32.000Z" title="12/6/2022, 9:29:32 PM">2022-12-06</time>发表</span><span class="level-item"><time dateTime="2025-04-19T08:22:12.042Z" title="4/19/2025, 4:22:12 PM">2025-04-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/%E7%AE%97%E6%B3%95/">算法</a></span><span class="level-item">7 分钟读完 (大约1081个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">背包 DP</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>背包问题探讨了如何用有限背包去装入尽可能多或者尽可能贵的物品，或者说用<strong>有限空间换取最大价值的问题</strong>。当然，问题是多样化的，我们需要将问题中涉及到的资源抽象对应到背包的空间和价值两个维度上。</p>
+<span id="more"></span>
+<h2 id="01-背包">01 背包</h2>
+<p>有 <strong>N</strong> 件物品和一个容量为 <strong>V</strong> 的背包，放入第 i 件物品会消耗 <strong>ci</strong>，获得价值 <strong>wi</strong>，而 <strong>01 背包</strong>问题的特点是每种物品有且仅有一件。其状态转移方程为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">F[i,v] = max &#123;F[i-<span class="number">1</span>, v], F[i-<span class="number">1</span>, v - c_i] + w_i&#125;</span><br></pre></td></tr></table></figure>
+<p>根据上面的转移方程可以写出如下代码（网上随意 copy 了一份，看看思路即可），<strong>每当遇到一个新的物品，判断加入它到背包是否能让之前的收纳规划优化</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">n, v = <span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split())</span><br><span class="line">goods = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    goods.append([<span class="built_in">int</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">input</span>().split()])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化，先全部赋值为 0，这样至少体积为 0 或者不选任何物品的时候是满足要求  </span></span><br><span class="line">dp = [[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(v+<span class="number">1</span>)] <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n+<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,v+<span class="number">1</span>):</span><br><span class="line">        dp[i][j] = dp[i-<span class="number">1</span>][j]  <span class="comment"># 第 i 个物品不选</span></span><br><span class="line">        <span class="keyword">if</span> j&gt;=goods[i-<span class="number">1</span>][<span class="number">0</span>]:   <span class="comment"># 判断背包容量是不是大于第 i 件物品的体积</span></span><br><span class="line">            <span class="comment"># 在选和不选的情况中选出最大值</span></span><br><span class="line">            dp[i][j] = <span class="built_in">max</span>(dp[i][j], dp[i-<span class="number">1</span>][j-goods[i-<span class="number">1</span>][<span class="number">0</span>]]+goods[i-<span class="number">1</span>][<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(dp[-<span class="number">1</span>][-<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<p>而将上述代码优化后可以得到：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dp = [<span class="number">0</span>] * (N + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    c, w = goods[i][<span class="number">0</span>], goods[i][<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(V, c-<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">        dp[j] = <span class="built_in">max</span>(dp[j], dp[j - c]+w)</span><br></pre></td></tr></table></figure>
+<h2 id="完全背包">完全背包</h2>
+<p>即将 01 背包问题的条件修改为每种物品有无穷件，其状态转换方程为：<br>
+$$<br>
+F [i,v] = max \{ F [i-1,v], F [i,v-c_i]+w_i \}<br>
+$$<br>
+注意和前一个转换方程对比，不难发现，其区别的关键点在于，** 我们在完全背包考虑加入一件物品时，之前可能已经加入过无数件它的复制品了，而 01 背包时则从没加入过该物品。** 分析后，不难得到代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dp = [<span class="number">0</span>] * (n + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    c, w = goods[i][<span class="number">0</span>], goods[i][<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(c, V+<span class="number">1</span>):</span><br><span class="line">        dp[j] = <span class="built_in">max</span>(dp[j], dp[j - c]+w)</span><br></pre></td></tr></table></figure>
+<p>另外一种解决完全背包问题的思路是，虽然每种物品都是无限的，但在有限容量的限制下，我们最多只能取 $\lfloor V/c_i \rfloor$ 件，因此可以转换为 01 背包问题。更近一步，可以用二进制优化。</p>
+<h2 id="多重背包">多重背包</h2>
+<p>即将 01 背包问题的条件修改为每种物品有若干件，其状态转换方程为：<br>
+$$<br>
+F [i,v] = max \{ F [i-1,v], F [i-1,v-k \times c_i]+k \times w_i|0&lt;=k&lt;=M_i \}<br>
+$$<br>
+对于 $M_i$ 件第 i 种物品，我们考虑用二进制的方法将其转换为 01 背包问题，令这些系数分别为 $1,2,2^2 …2^{k-1},M_i−2^k+1$，比如 13 可以被分为 <code>1,2,4,6</code> 四件物品。</p>
+<p>总的来说，面对背包问题，首先状态转换方程，即思考前 i-1 件物品满足某种情况后，面对第 i 件物品，我们应该如何去优化我们规划。</p>
+<h2 id="分组背包">分组背包</h2>
+<p>同样由 01 背包的背景而来，<strong>N</strong> 个物品被划分成了 <strong>K</strong> 组，同一组的物品最多只能选择一件。此时，我们的思考方式变成了，<strong>每当新的一组物品，我们选本组中最大的一件或者一件都不选</strong>，有状态方程：</p>
+<p>$$<br>
+F[i,v] = max\{F[k-1,v], F[k-1,v-c_i]+w_i|item\ i \in group\ K\}<br>
+$$</p>
+<p>优化后的伪代码如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/dp-pack-fake-code.png" alt="fake code"></p>
+<p>三重循环不可随意更替，内部第二重循环的逆序是因为在第三重循环会更新 $F [v]$ 的值，而优化时只能在 $i-1$ 的基础上优化。</p>
+<h2 id="参考资料">参考资料</h2>
+<p>【 1 】 崔添翼的 <a target="_blank" rel="noopener" href="https://github.com/tianyicui/pack/blob/master/V2.pdf">背包九讲</a></p>
+<p>【 2 】 三叶 LeetCode 的 <a target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki/%E8%83%8C%E5%8C%85-DP">背包 DP 子栏</a></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>背包 DP</p><p><a href="https://zion4h.github.io/2022/12/06/dp-pack/">https://zion4h.github.io/2022/12/06/dp-pack/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-12-06</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/leetcode/">leetcode</a><a class="link-muted mr-2" rel="tag" href="/tags/algorithm/">algorithm</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/12/08/mit-6_824-lab-2b/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">6-824-LAB-2B</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/12/03/mit-6_824-lab-2a/"><span class="level-item">MIT 6.824 Lab2 PartA</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "23d5f4b07e8c1b7c1f46801c7dcd3ed7",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#01-背包"><span class="level-left"><span class="level-item">1</span><span class="level-item">01 背包</span></span></a></li><li><a class="level is-mobile" href="#完全背包"><span class="level-left"><span class="level-item">2</span><span class="level-item">完全背包</span></span></a></li><li><a class="level is-mobile" href="#多重背包"><span class="level-left"><span class="level-item">3</span><span class="level-item">多重背包</span></span></a></li><li><a class="level is-mobile" href="#分组背包"><span class="level-left"><span class="level-item">4</span><span class="level-item">分组背包</span></span></a></li><li><a class="level is-mobile" href="#参考资料"><span class="level-left"><span class="level-item">5</span><span class="level-item">参考资料</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

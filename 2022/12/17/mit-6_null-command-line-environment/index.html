@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>MIT 6.Null 命令行环境部署 - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="长期使用 Shell 的程序员应该如何通过优化工作流来节约时间呢？我想可以从以下四点出发，一是提高任务并行度，通过 Job 控制 和 TMUX 配合；二是简化或优化命令，通过 Aliase 和 Dotfiles 去配置实现；三是远程访问；四是美化 Shell 界面，良好的 ui 也能极大提高工作效率。"><meta property="og:type" content="blog"><meta property="og:title" content="MIT 6.Null 命令行环境部署"><meta property="og:url" content="https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="长期使用 Shell 的程序员应该如何通过优化工作流来节约时间呢？我想可以从以下四点出发，一是提高任务并行度，通过 Job 控制 和 TMUX 配合；二是简化或优化命令，通过 Aliase 和 Dotfiles 去配置实现；三是远程访问；四是美化 Shell 界面，良好的 ui 也能极大提高工作效率。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img001.jpg"><meta property="article:published_time" content="2022-12-17T04:48:33.000Z"><meta property="article:modified_time" content="2025-04-19T08:22:12.054Z"><meta property="article:author" content="zion h4"><meta property="article:tag" content="shell"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img001.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/"},"headline":"MIT 6.Null 命令行环境部署","image":["https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img001.jpg"],"datePublished":"2022-12-17T04:48:33.000Z","dateModified":"2025-04-19T08:22:12.054Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"长期使用 Shell 的程序员应该如何通过优化工作流来节约时间呢？我想可以从以下四点出发，一是提高任务并行度，通过 Job 控制 和 TMUX 配合；二是简化或优化命令，通过 Aliase 和 Dotfiles 去配置实现；三是远程访问；四是美化 Shell 界面，良好的 ui 也能极大提高工作效率。"}</script><link rel="canonical" href="https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img001.jpg" alt="MIT 6.Null 命令行环境部署"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-12-17T04:48:33.000Z" title="12/17/2022, 12:48:33 PM">2022-12-17</time>发表</span><span class="level-item"><time dateTime="2025-04-19T08:22:12.054Z" title="4/19/2025, 4:22:12 PM">2025-04-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Labs/">Labs</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-Null/">MIT 6.Null</a></span><span class="level-item">10 分钟读完 (大约1480个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">MIT 6.Null 命令行环境部署</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>长期使用 <strong>Shell</strong> 的程序员应该如何通过优化工作流来节约时间呢？我想可以从以下四点出发，一是提高任务并行度，通过 <strong>Job 控制</strong> 和 <strong>TMUX</strong> 配合；二是简化或优化命令，通过 <strong>Aliase</strong> 和 <strong>Dotfiles</strong> 去配置实现；三是远程访问；四是美化 <strong>Shell</strong> 界面，良好的 ui 也能极大提高工作效率。</p>
+<span id="more"></span>
+<h2 id="Job-控制">Job 控制</h2>
+<p>当我们需要中断 <strong>Job</strong> 时，通常是因为命令完成时间过长（比如因为网络问题导致 <code>brew update</code> 卡住），通常会按下 <code>&lt;Ctrl c&gt;</code>。这个组合键本质上是让 <strong>Shell</strong> 向当前进程传递信号 <code>SIGINT</code>。</p>
+<p><strong>Shell</strong> 使用一种称为 <strong>信号</strong> 的 <strong>unix 通信机制</strong> 向进程传递信息从而改变执行流程，因此信号是 <strong>软件中断</strong>。</p>
+<h3 id="杀死进程">杀死进程</h3>
+<p><strong>杀死进程</strong> 有两种方式，键入 <code>Ctrl c</code> 从而发送 <code>SIGINT</code> 信号给进程，或者键入 <code>Ctrl \</code> 从而发送 <code>SIGQUIT</code> 信号给进程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr.bin/env python</span></span><br><span class="line"><span class="keyword">import</span> signal, time</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">handler</span>(<span class="params">signum, time</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\ni got a sigint, but i am not stopping&quot;</span>)</span><br><span class="line"></span><br><span class="line">signal.signal(signal.sigint, handler)</span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> true:</span><br><span class="line">    time.sleep(<span class="number">.1</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\r&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i), end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/Kill-process.png" alt="kill process"></p>
+<p>当然，一种更优雅直接的方式是向进程传递 <code>SIGTERM</code> 信号，利用 <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/kill.1.html">kill</a> 命令向进程发送信号。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/kill-15.png" alt="kill -l"></p>
+<h3 id="暂停或将进程放入后台">暂停或将进程放入后台</h3>
+<p>想要让运行的 <strong>Job</strong> 暂停，可以键入 <code>Ctrl z</code> 发送信号 <code>SIGTSTP</code>，这里面的 <strong>TSTP</strong> 是 <strong>Terminal Stop</strong> 的缩写。而之后则可以使用 <a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man1/bg.1p.html">bg</a> 或者 <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/fg.1p.html">fg</a> 命令将暂停的任务继续运行。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/fg-bg-demo.png" alt="前后台Job控制"></p>
+<p>想要查看更多信号相关信息，可以点击 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Signal_(IPC)">here</a>，或者直接键入 <code>man signal</code> 在终端查看。</p>
+<h2 id="终端多路复用器">终端多路复用器</h2>
+<p>一次性运行多个任务的时候，我们可以同时开多个终端窗口监视它们进度，但在命令行界面使用终端多路复用器是一种更加通用的解决方案，尤其在远程连接机器的时候。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/tmux.png" alt="tmux demo"></p>
+<p>最流行的终端多路复用器就是 <strong>TMUX</strong>，可以自己配置快捷键来快速创建和切换标签和界面。在 <strong>TMUX</strong> 中，一个 <strong>Session</strong> 就是一个独立的工作空间可以有多个窗口，而一个窗口就是一个可视标签同一个 <strong>Session</strong> 可以切割出多个窗口，一个窗口可以分为多个 <strong>Pane</strong>。</p>
+<ul>
+<li>Sessions
+<ul>
+<li><code>tmux</code> 打开一个新的 session</li>
+<li><code>tmux new -s NAME</code> 打开一个新的 session 并命名</li>
+<li><code>tmux ls</code> 列出当前 sessions</li>
+<li><code>&lt;Ctrl b&gt; d</code> 在 session 内部键入这个命令可以退出当前 session</li>
+<li><code>tmux a</code> 进入上一个 session，也可以用 - t 进入指定 session</li>
+</ul>
+</li>
+<li>Windows
+<ul>
+<li><code>&lt;Ctrl b&gt; c</code> 创建一个新窗口</li>
+<li><code>&lt;Ctrl b&gt; N</code> 切换到第 N 个窗口</li>
+<li><code>&lt;Ctrl b&gt; p</code> 切换到上一个窗口</li>
+<li><code>&lt;Ctrl b&gt; n</code> 切换到下一个窗口</li>
+<li><code>&lt;Ctrl b&gt; ，</code>重命名当前窗口</li>
+<li><code>&lt;Ctrl b&gt; w</code> 列出所有窗口</li>
+</ul>
+</li>
+<li>Panes
+<ul>
+<li><code>&lt;Ctrl b&gt; &quot;</code> 水平切割窗口</li>
+<li><code>&lt;Ctrl b&gt; %</code> 竖直切割窗口</li>
+<li><code>&lt;Ctrl b&gt; &lt;direction&gt;</code> 朝特定方向移动 pane</li>
+<li><code>&lt;Ctrl b&gt; z</code> 放大当前 pane</li>
+</ul>
+</li>
+</ul>
+<p>这里有关于 <a target="_blank" rel="noopener" href="https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/">tmux</a> 的快速教程。</p>
+<h2 id="Aliases">Aliases</h2>
+<p><strong>Shell</strong> 支持 <strong>Aliasing</strong>，即用一个较短的指令作为一个长命令的别名从而减少我们的工作量，通常的用法如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> alias_name=<span class="string">&quot;command_to_alias arg1 arg2&quot;</span></span><br></pre></td></tr></table></figure>
+<p>比较常用过的设定有：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># User specific aliases and functions</span></span><br><span class="line"><span class="built_in">alias</span> ll=<span class="string">&quot;ls -lh&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">alias</span> gs=<span class="string">&quot;git status&quot;</span></span><br><span class="line"><span class="built_in">alias</span> gc=<span class="string">&quot;git commit&quot;</span></span><br><span class="line"><span class="built_in">alias</span> v=<span class="string">&quot;vim&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">alias</span> sl=<span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">mv</span>=<span class="string">&quot;mv -i&quot;</span>           <span class="comment"># -i prompts before overwrite</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">mkdir</span>=<span class="string">&quot;mkdir -p&quot;</span>     <span class="comment"># -p make parent dirs as needed</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">df</span>=<span class="string">&quot;df -h&quot;</span>           <span class="comment"># -h prints human readable format</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">alias</span> la=<span class="string">&quot;ls -A&quot;</span></span><br><span class="line"><span class="built_in">alias</span> lla=<span class="string">&quot;la -l&quot;</span></span><br></pre></td></tr></table></figure>
+<p>如果要将别名持久化，我们需要将其配置到 <strong>shell</strong> 启动文件中，比如 <strong>.bashrc</strong> 或者 <strong>.zshrc</strong>，这些文件又被称为 <strong>Dotfile</strong>。</p>
+<h2 id="Dotfiles">Dotfiles</h2>
+<p>许多程序都会用一个以<code>.</code> 开头的文本文件作为配置文件，我们称这些文件为 <strong>Dotfiles</strong>，当我们输入 ls 时它们默认隐藏。<strong>Shell</strong> 在启动时会读取很多文件并加载其配置，根据 <strong>Shell</strong> 的不同，无论是登录还是交互都很复杂，<a target="_blank" rel="noopener" href="https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html">这里</a>是关于这个问题的参考。</p>
+<p>每个人都会对自己的 <strong>Dotfiles</strong> 有特别的配置，<strong>6.null</strong> 提供了助教们的配置:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/anishathalye/dotfiles">Anish</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jonhoo/configs">Jon</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jjgo/dotfiles">Jose</a></li>
+<li><a target="_blank" rel="noopener" href="https://dotfiles.github.io">others</a> 有一些很棒的资料可以参考。</li>
+</ul>
+<h2 id="远程访问">远程访问</h2>
+<p>我们可以通过使用 <em>Secure Shell</em> 即 <strong>SSH</strong> 来远程连接计算机，通常输入这样的一条指令:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh foo@bar.mid.edu</span><br></pre></td></tr></table></figure>
+<p>这里我们尝试以用户 <strong>foo</strong> 去登录服务器 <code>bar.mid.edu</code>，服务器既可以用 <strong>URL</strong> 表示也可以用 <strong>IP</strong> 表示。我们利用 <code>ssh-keygen</code> 生成密钥对，当有多套密钥对时可以用 <code>ssh-agent</code> 去管理。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519</span><br></pre></td></tr></table></figure>
+<p>为了不用每次都输入密码这么麻烦，我们可以将我们的公钥复制到远程计算机，因为 <strong>ssh</strong> 会检查<code>.ssh/authorized_keys</code> 来决定哪些客户可以直接连接：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 直接复制文件</span></span><br><span class="line"><span class="built_in">cat</span> .ssh/id_ed25519.pub | ssh foobar@remote <span class="string">&#x27;cat &gt;&gt; ~/.ssh/authorized_keys&#x27;</span></span><br><span class="line"><span class="comment"># ssh-copy-id</span></span><br><span class="line">ssh-copy-id -i .ssh/id_ed25519 foobar@remote</span><br></pre></td></tr></table></figure>
+<p>当我们想通过 <code>ssh</code> 复制文件时，可以用 <code>scp</code> 命令 <code>scp path/to/local_file remote_host:path/to/remote_file</code></p>
+<h2 id="Shell-Frameworks">Shell &amp; Frameworks</h2>
+<p><code>TODO</code></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>MIT 6.Null 命令行环境部署</p><p><a href="https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/">https://zion4h.github.io/2022/12/17/mit-6_null-command-line-environment/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-12-17</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/shell/">shell</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/01/01/life-diary-22-12/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">2022 年 12 月</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/12/16/mit-6_null-vim/"><span class="level-item">MIT 6.Null Vim</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "e1f19513f6b352c7835fa61e82393cf3",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Job-控制"><span class="level-left"><span class="level-item">1</span><span class="level-item">Job 控制</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#杀死进程"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">杀死进程</span></span></a></li><li><a class="level is-mobile" href="#暂停或将进程放入后台"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">暂停或将进程放入后台</span></span></a></li></ul></li><li><a class="level is-mobile" href="#终端多路复用器"><span class="level-left"><span class="level-item">2</span><span class="level-item">终端多路复用器</span></span></a></li><li><a class="level is-mobile" href="#Aliases"><span class="level-left"><span class="level-item">3</span><span class="level-item">Aliases</span></span></a></li><li><a class="level is-mobile" href="#Dotfiles"><span class="level-left"><span class="level-item">4</span><span class="level-item">Dotfiles</span></span></a></li><li><a class="level is-mobile" href="#远程访问"><span class="level-left"><span class="level-item">5</span><span class="level-item">远程访问</span></span></a></li><li><a class="level is-mobile" href="#Shell-Frameworks"><span class="level-left"><span class="level-item">6</span><span class="level-item">Shell &amp; Frameworks</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

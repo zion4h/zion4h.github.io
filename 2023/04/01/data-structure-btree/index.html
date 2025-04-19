@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>B 树 - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="探讨 B 树和其变种的数据结构，比如 B 树、B+ 树、红黑树等。"><meta property="og:type" content="blog"><meta property="og:title" content="B 树"><meta property="og:url" content="https://zion4h.github.io/2023/04/01/data-structure-btree/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="探讨 B 树和其变种的数据结构，比如 B 树、B+ 树、红黑树等。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1004.jpg"><meta property="article:published_time" content="2023-04-01T08:06:46.000Z"><meta property="article:modified_time" content="2025-04-19T08:22:12.042Z"><meta property="article:author" content="zion h4"><meta property="article:tag" content="btree"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1004.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2023/04/01/data-structure-btree/"},"headline":"B 树","image":["https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1004.jpg"],"datePublished":"2023-04-01T08:06:46.000Z","dateModified":"2025-04-19T08:22:12.042Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"探讨 B 树和其变种的数据结构，比如 B 树、B+ 树、红黑树等。"}</script><link rel="canonical" href="https://zion4h.github.io/2023/04/01/data-structure-btree/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/wallpaperimg1004.jpg" alt="B 树"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-04-01T08:06:46.000Z" title="4/1/2023, 4:06:46 PM">2023-04-01</time>发表</span><span class="level-item"><time dateTime="2025-04-19T08:22:12.042Z" title="4/19/2025, 4:22:12 PM">2025-04-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span><span class="level-item">20 分钟读完 (大约2935个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">B 树</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>探讨 <strong>B 树</strong>和其变种的数据结构，比如 <strong>B 树</strong>、<strong>B+ 树</strong>、<strong>红黑树</strong>等。</p>
+<span id="more"></span>
+<h2 id="起源">起源</h2>
+<p><img src="https://i.imgur.com/GyqD1nN.jpeg" alt="磁盘"></p>
+<p>B 树是一种<strong>平衡搜索树</strong>，类似<strong>红黑树</strong>，但拥有更多孩子节点，这使得 B 树的高度要比红黑树小很多。因此，B 树可以在 $O (lg n)$ 时间内完成操作。许多数据库如 MySQL 就采用 B 树或其变种 B+ 树来存储信息，从而降低磁盘等辅存的 I/O 操作数。</p>
+<p><img src="https://i.imgur.com/9amhyr0.jpeg" alt="内存条"></p>
+<p>磁盘作为<strong>辅存</strong>，区别于<strong>主存</strong>（对应内存条），是无法<strong>随机访问</strong>的，而 B 树则是专为这类无法随机访问的设备构造的数据结构。当然，随着 SSD 的大跳水，B 树也将会向着 <strong>LSM 树</strong>慢慢过渡。</p>
+<p><img src="https://i.imgur.com/5rWmcUM.jpeg" alt="SSD vs HD"></p>
+<p>硬盘或者说磁盘驱动器是由多个盘片组成的，每个盘片表面又有多个磁道，因此每次<strong>硬盘存取时间</strong>都不一样，它取决于当前磁道和所需磁道之间的<strong>距离</strong>以及<strong>初始旋转状态</strong>。不过，为了方便估计我们一般采用读写的<strong>页数</strong>来做<strong>磁盘存取时间</strong>的近似。</p>
+<p>言归正传，由于 B 树的操作时间通常由磁盘读写时间来决定，因此我们通常将 <strong>B 树的结点设计和一个完整磁盘页一样大小</strong>。结点大小又进而限制了一个结点包含<strong>孩子个数</strong>的上限，通常是 50 ~ 2000 之间，这还取决于关键字大小。一个体现这种设计的只管例子如下，一棵结点上限为 1000 的 B 树，存储十亿个结点，高度却仅为 2。</p>
+<p><img src="https://i.imgur.com/BXLXemn.png" alt="十亿结点的B树"></p>
+<h2 id="B-树的定义">B 树的定义</h2>
+<p>B 树和二叉搜索树、红黑树一样，将和关键字相关联的 “<strong>卫星数据</strong>” 同关键字一起放在同一结点中。当然，它一般是指针的形式，指向另一个磁盘页。之所以强调前一句，是因为一个常见的 B 树变种 <strong>B+ 树</strong>是将所有 “<strong>卫星数据</strong>” 都存储在叶子结点中的，内部仅保存关键字和孩子结点。</p>
+<p>根据 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a> 的定义，B 树是这样一棵有根树：</p>
+<ol>
+<li>每个结点 <code>x</code> 有以下属性：
+<ol>
+<li><code>x.n</code>，当前存储在 x 中的结点个数。</li>
+<li><code>x.n</code> 个关键字本身，以<strong>非降序排列</strong>。</li>
+<li><code>x.leaf</code>，一个判定当前是否为叶子结点的布尔值。</li>
+</ol>
+</li>
+<li>每个内部结点还包含 <code>x.n + 1</code> 个指向孩子结点的指针。</li>
+<li>每个关键字会对左右子树的<strong>关键字范围</strong>做切割限定。</li>
+<li>每个叶子结点具有相同深度。</li>
+<li>每个结点包含的关键字个数有上界和下届，用一个固定整数 “<strong>最小度数</strong>” <code>t &gt;= 2</code> 去定义这些界：
+<ol>
+<li>除了根结点以外的每个结点必须有至少 <code>t - 1</code> 个关键字。</li>
+<li>每个结点至多包含 <code>2t - 1</code> 个关键字。</li>
+</ol>
+</li>
+</ol>
+<p>当 <code>t = 2</code> 时的 B 树是最简单的，每个结点只有 2、3、4 个孩子，即一棵 <strong>2-3-4 树</strong>。当然，我们之前也谈过了，通常这个值在 50 ~ 2000 之间。另外，根结点的关键字没有限制这一特性，跟结点插入算法为<strong>向上传播</strong>有关。</p>
+<p>“前人栽树，后人乘凉”，任何时候都没法平地起高楼的，<strong>B 树</strong>的诞生本身也参考了 <strong>2-3 树</strong>和 <strong>2-3-4 树</strong>。B 树起源于二叉搜索树，由波音研究所的两名科学家 Rudolf Bayer 和 Edward M. McCreight 发明（1970s），应用于数据库和文件系统。B 树的 B 其实包含了多重意思，比如波音，而不是我们通常简单认为的 Balance 平衡。</p>
+<h3 id="2-3-tree">2-3 tree</h3>
+<p>一棵 <strong>2-3 树</strong>由 <strong>2-node</strong> 节点或 <strong>3-node</strong> 节点构成，由 John Hopcroft 于 1970 年发明。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/2-3-tree.png" alt="2-3-tree.png"></p>
+<p>为了保持平衡，2-3 树的所有叶节点放在同一层，节点元素值也是有序排放的。</p>
+<h3 id="2-3-4-tree">2-3-4 tree</h3>
+<p>由 <strong>2-3 树</strong>推广，<strong>2-3-4 树</strong>的内部节点还包含 <strong>4-node</strong> 节点。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/2-3-4-tree.png" alt="2-3-4-tree.png"></p>
+<p>同样为了保持平衡，<strong>2-3-4 树</strong>所有叶节点也放在同一层，节点元素内部有序排列。</p>
+<p>值的注意的是，<strong>2-3-4 树</strong>其实可以看作一棵 <strong>4 阶 B 树</strong>。</p>
+<h2 id="基本操作">基本操作</h2>
+<h3 id="搜索-B-树">搜索 B 树</h3>
+<p>过程和二叉搜索树类似，不断从根结点向下访问即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">B_TREE_SEARCH</span>(<span class="params">x, k</span>):</span><br><span class="line">    i = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> i &lt;= x.n <span class="keyword">and</span> k &gt; x.key:</span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> i &lt;= x.n <span class="keyword">and</span> k == x.key:</span><br><span class="line">        <span class="keyword">return</span> (x, i)</span><br><span class="line">    <span class="keyword">elif</span> x.leaf:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        DISK_READ(x, x.c[i])</span><br><span class="line">        <span class="keyword">return</span> B_TREE_SEARCH(x.c[i], k)</span><br></pre></td></tr></table></figure>
+<h3 id="创建一棵空的-B-树">创建一棵空的 B 树</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">B_TREE_CREATE</span>(<span class="params">T</span>):</span><br><span class="line">    x = ALLOCATE_NODE()</span><br><span class="line">    x.leaf = <span class="literal">True</span></span><br><span class="line">    x.n = <span class="number">0</span></span><br><span class="line">    DISK_WRITE(x)</span><br><span class="line">    T.root = x</span><br></pre></td></tr></table></figure>
+<h3 id="向-B-树插入一个关键字">向 B 树插入一个关键字</h3>
+<p>在 B 树中插入结点并不简单，由于不能将关键字插入一个满的结点，因此引入一个操作 ——“<strong>分裂</strong>”。分裂操作将一个满的包含 <code>2t - 1</code> 个关键的结点按中间关键分裂成两个包含 <code>t - 1</code> 个关键字的结点，而中间关键字则被提到父结点中，这是一个<strong>向上传播</strong>过程。为了将过程简化，我们在插入过程中会主动分裂满结点，从而将 “向上” 这一过程绕开。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">B_TREE_SPLIT_CHILD</span>(<span class="params">x, i</span>):</span><br><span class="line">    z = ALLOCATE_NODE()</span><br><span class="line">    y = x.c[i]</span><br><span class="line">    z.leaf = y.leaf</span><br><span class="line">    z.n = t - <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, t):</span><br><span class="line">        z.key[j] = y.key[j + t]</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> y.leaf:</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, t + <span class="number">1</span>):</span><br><span class="line">            z.c[j] = y.c[j + <span class="number">1</span>]</span><br><span class="line">    y.n = t - <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(x.n + <span class="number">1</span>, i, -<span class="number">1</span>):</span><br><span class="line">        x.c[j + <span class="number">1</span>] = x.c[j]</span><br><span class="line">    x.c[i + <span class="number">1</span>] = z</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(x.n, i - <span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">        x.key[j + <span class="number">1</span>] = x.key[j]</span><br><span class="line">    x.key[i] = y.key[t] </span><br><span class="line">    x.n = x.n + <span class="number">1</span></span><br><span class="line">    DISK_WRITE(y)</span><br><span class="line">    DISK_WRITE(z)</span><br><span class="line">    DISK_WRITE(x)</span><br></pre></td></tr></table></figure>
+<p>对根结点进行分裂是增加 B 树高度的唯一途径，有了上面的<strong>分裂</strong>动作，我们的插入操作也变容易起来，只需要<strong>沿树单向下行</strong>即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">B_TREE_INSERT</span>(<span class="params">T, k</span>):</span><br><span class="line">    r = T.root</span><br><span class="line">    <span class="keyword">if</span> r.n == <span class="number">2</span>*t - <span class="number">1</span>:</span><br><span class="line">        s = ALLOCATE_NODE()</span><br><span class="line">        T.root = s</span><br><span class="line">        s.leaf = <span class="literal">False</span></span><br><span class="line">        s.n = <span class="number">0</span></span><br><span class="line">        s.c[<span class="number">1</span>] = r</span><br><span class="line">        B_TREE_SPLIT_CHILD(s, <span class="number">1</span>)</span><br><span class="line">        B_TREE_INSERT_NONFULL(s, k)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        B_TREE_INSERT_NONFULL(r, k)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">B_TREE_INSERT_NONFULL</span>(<span class="params">x, k</span>):</span><br><span class="line">    i = x.n</span><br><span class="line">    <span class="keyword">if</span> x.leaf:</span><br><span class="line">        <span class="keyword">while</span> i &gt;= <span class="number">1</span> <span class="keyword">and</span> k &lt; x.key[i]:</span><br><span class="line">            x.key[i + <span class="number">1</span>] = x.key[i]</span><br><span class="line">            i = i - <span class="number">1</span></span><br><span class="line">        x.key[i + <span class="number">1</span>] = k</span><br><span class="line">        x.n = x.n + <span class="number">1</span></span><br><span class="line">        DISK_WRITE(x)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">while</span> i &gt;= <span class="number">1</span> <span class="keyword">and</span> k &lt; x.key[i]:</span><br><span class="line">            i = i - <span class="number">1</span></span><br><span class="line">        i = i + <span class="number">1</span></span><br><span class="line">        DISK_READ(x.c[i])</span><br><span class="line">        <span class="keyword">if</span> x.c[i].n == <span class="number">2</span>*t - <span class="number">1</span>:</span><br><span class="line">            B_TREE_SPLIT_CHILD(x, i)</span><br><span class="line">            <span class="keyword">if</span> k &gt; x.key[i]:</span><br><span class="line">                i = i + <span class="number">1</span></span><br><span class="line">        B_TREE_INSERT_NONFULL(x.c[i], k)</span><br></pre></td></tr></table></figure>
+<p>对于一棵高度为 h 的 B 树来说，<code>B_TREE_INSERT</code> 要做 $O (h)$ 次磁盘存取，因为每一层只做了 $O (1)$ 次 <code>DISK_WRITE</code> 和 <code>DISK_READ</code> 操作。</p>
+<h2 id="删除">删除</h2>
+<p>删除的逻辑简述如下：</p>
+<ol>
+<li>如果关键字 k 在结点 <code>x</code> 中，并且 <code>x</code> 是一个叶子结点，则从 <code>x</code> 中删除 k 即可</li>
+<li>如果关键字 k 在结点 <code>x</code> 中，并且 <code>x</code> 是一个内部结点，则：
+<ol>
+<li>x 中前于 k 的子节点 <code>y</code> 至少包含 t 个关键字，则找到 k 在 <code>y</code> 中的前驱 k’，递归地删除 k’，并在 <code>x</code> 中用 k’ 去替换 k。</li>
+<li>对称的，如果前于 k 的子结点 <code>y</code> 只有 t - 1 个关键字，那么则找后于 k 的子结点 <code>z</code>。</li>
+<li>如果 <code>y</code> 和 <code>z</code> 都只有 t - 1 个关键字，则将 k 和 <code>z</code> 都合并到 <code>y</code> 中，再递归删除 <code>y</code> 中的 k 关键字。</li>
+</ol>
+</li>
+<li>如果关键字 k 不在结点 <code>x</code> 中，则先确定一个必定包含 k 的子树的根 <code>x.c[i]</code>。如果 <code>x.c[i]</code> 只有 t - 1 个关键字，则：
+<ol>
+<li>如果 <code>x.c[i]</code> 的相邻兄弟包含至少 t 个关键字，则 x 中对应的那个关键字下沉到 <code>x.c[i]</code> 中， 而将相邻兄弟的一个关键字提到 <code>x</code> 中。</li>
+<li>如果两个相邻兄弟都只有 t - 1 个关键字，则将 <code>x.c[i]</code> 和一个兄弟合并，再递归删除 k 关键字。</li>
+</ol>
+</li>
+</ol>
+<h2 id="实现数据库索引">实现数据库索引</h2>
+<p>我们的数据库一般都放在磁盘上，而从磁盘上读取一条记录的时间大约是 10 毫秒，假设我们从一百万条数据中找到一条记录，即使用二分法也要访存 20 次即 0.2 秒。当然由于我们访存时会按块存取，而一个块可能包含连续一百条记录，这样后续的几次比较实际上并不需要访存。因此，访存时间缩短为 0.14 秒左右。</p>
+<p>有利自然有弊，虽然我们访问记录的速度快了，但维护这样一个有序结构也变得麻烦起来。因此，当我们删除时，我们只是将其标记为已删除而暂时不动它，等访问效率降低到一定程度后再整理。同理，插入时，我们直接替换掉那些已删除的元素。而为了让删除和插入的代价尽量小，我们也需要尽量让 B 树维持在一个半满的状态。</p>
+<p>这时候，采用 B 树作为数据库索引结构意义出现了。假设我们构建一个 100 阶的 B 树，并让它保存_一百万条数据，那么我们访问一条记录只需要 3 次_，也就是 0.03 秒。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/btree.png" alt="btree.png"></p>
+<p>B 树用在数据库有这样几点优势：</p>
+<ol>
+<li>有序存储键值，便于<strong>顺序遍历</strong>。</li>
+<li><strong>使用分层索引，最大限度地减少磁盘读取次数。</strong></li>
+<li>使用部分填充块来加快插入和删除的速度。</li>
+<li>通过递归算法保持索引平衡。</li>
+</ol>
+<p>此外，B 树通过确保内部节点至少半满，最小化浪费，B 树能够处理任意数量的插入和删除操作。</p>
+<h2 id="衍生数据结构">衍生数据结构</h2>
+<h3 id="B-Tree">B+ Tree</h3>
+<p>MySQL 的 InnoDB 采用 B + 树存储索引，相较于 B 树，由于元素都放到了叶子节点所以树会变矮查询速度变快，另一方面 B + 树的叶子节点是有序串联的，因此范围查询起来也比较方便。</p>
+<h3 id="红黑树-Red–black-Tree">红黑树 Red–black Tree</h3>
+<p>红黑树是由 Leonidas J. Guibas 和 Robert Sedgewick 在 2-3-4 树上发展而来，增删查改节点的时间都是 $O (log n)$。</p>
+<p>红黑树保证根和叶子节点都是黑色，红色节点不相邻，且任意路径的黑色节点数相等，这使得最长路径和最短路径只有两倍差。</p>
+<h3 id="跳表-Skip-list">跳表 Skip list</h3>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Skip_list">跳表</a>是一个概率数据结构，最大亮点是能够以 ${\mathcal {O}}(\log n)$ 复杂进行查询和增删。它实现快速查询的原理其实很简单，在维持更少元素的子序列上查找即可，这样就能跳过非目标的元素了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/Skip_list_add_element-en.gif" alt="跳表添加元素"></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>B 树</p><p><a href="https://zion4h.github.io/2023/04/01/data-structure-btree/">https://zion4h.github.io/2023/04/01/data-structure-btree/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-04-01</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/btree/">btree</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/04/03/network-click-website-go/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">输入网址按回车发生了什么？</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/04/01/life-diary-23-3/"><span class="level-item">2023 年 3 月</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "826f3e227316c5ac5470ea09eeb20e87",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#起源"><span class="level-left"><span class="level-item">1</span><span class="level-item">起源</span></span></a></li><li><a class="level is-mobile" href="#B-树的定义"><span class="level-left"><span class="level-item">2</span><span class="level-item">B 树的定义</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#2-3-tree"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">2-3 tree</span></span></a></li><li><a class="level is-mobile" href="#2-3-4-tree"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">2-3-4 tree</span></span></a></li></ul></li><li><a class="level is-mobile" href="#基本操作"><span class="level-left"><span class="level-item">3</span><span class="level-item">基本操作</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#搜索-B-树"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">搜索 B 树</span></span></a></li><li><a class="level is-mobile" href="#创建一棵空的-B-树"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">创建一棵空的 B 树</span></span></a></li><li><a class="level is-mobile" href="#向-B-树插入一个关键字"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">向 B 树插入一个关键字</span></span></a></li></ul></li><li><a class="level is-mobile" href="#删除"><span class="level-left"><span class="level-item">4</span><span class="level-item">删除</span></span></a></li><li><a class="level is-mobile" href="#实现数据库索引"><span class="level-left"><span class="level-item">5</span><span class="level-item">实现数据库索引</span></span></a></li><li><a class="level is-mobile" href="#衍生数据结构"><span class="level-left"><span class="level-item">6</span><span class="level-item">衍生数据结构</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#B-Tree"><span class="level-left"><span class="level-item">6.1</span><span class="level-item">B+ Tree</span></span></a></li><li><a class="level is-mobile" href="#红黑树-Red–black-Tree"><span class="level-left"><span class="level-item">6.2</span><span class="level-item">红黑树 Red–black Tree</span></span></a></li><li><a class="level is-mobile" href="#跳表-Skip-list"><span class="level-left"><span class="level-item">6.3</span><span class="level-item">跳表 Skip list</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

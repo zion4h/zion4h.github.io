@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>MIT 6.824 Lab2 PartA - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="我们将在 Lab2 中实现一个 Raft 系统，Raft 本身是一个分布式一致性算法。工欲善其事必先利其器，本实验难度较高，所以我先读 Raft 论文，再看助教写的 guide。为了方便理解协议的运作过程，我还去了 Raft 官网，并反复观看 Raft 可视化动画。"><meta property="og:type" content="blog"><meta property="og:title" content="MIT 6.824 Lab2 PartA"><meta property="og:url" content="https://zion4h.github.io/2022/12/03/mit-6_824-lab-2a/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="我们将在 Lab2 中实现一个 Raft 系统，Raft 本身是一个分布式一致性算法。工欲善其事必先利其器，本实验难度较高，所以我先读 Raft 论文，再看助教写的 guide。为了方便理解协议的运作过程，我还去了 Raft 官网，并反复观看 Raft 可视化动画。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img259.jpg"><meta property="article:published_time" content="2022-12-03T04:00:00.000Z"><meta property="article:modified_time" content="2025-04-19T08:22:12.053Z"><meta property="article:author" content="zion h4"><meta property="article:tag" content="raft"><meta property="article:tag" content="go"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img259.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2022/12/03/mit-6_824-lab-2a/"},"headline":"MIT 6.824 Lab2 PartA","image":["https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img259.jpg"],"datePublished":"2022-12-03T04:00:00.000Z","dateModified":"2025-04-19T08:22:12.053Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"我们将在 Lab2 中实现一个 Raft 系统，Raft 本身是一个分布式一致性算法。工欲善其事必先利其器，本实验难度较高，所以我先读 Raft 论文，再看助教写的 guide。为了方便理解协议的运作过程，我还去了 Raft 官网，并反复观看 Raft 可视化动画。"}</script><link rel="canonical" href="https://zion4h.github.io/2022/12/03/mit-6_824-lab-2a/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img259.jpg" alt="MIT 6.824 Lab2 PartA"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-12-03T04:00:00.000Z" title="12/3/2022, 12:00:00 PM">2022-12-03</time>发表</span><span class="level-item"><time dateTime="2025-04-19T08:22:12.053Z" title="4/19/2025, 4:22:12 PM">2025-04-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Labs/">Labs</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-824/">MIT 6.824</a></span><span class="level-item">11 分钟读完 (大约1624个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">MIT 6.824 Lab2 PartA</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>我们将在 Lab2 中实现一个 Raft 系统，Raft 本身是一个分布式一致性算法。工欲善其事必先利其器，本实验难度较高，所以我先读 <a target="_blank" rel="noopener" href="https://raft.github.io/raft.pdf">Raft 论文</a>，再看助教写的 <a target="_blank" rel="noopener" href="https://thesquareplanet.com/blog/students-guide-to-raft/">guide</a>。为了方便理解协议的运作过程，我还去了 <a target="_blank" rel="noopener" href="https://raft.github.io">Raft 官网</a>，并反复观看 <a target="_blank" rel="noopener" href="http://thesecretlivesofdata.com/raft/">Raft 可视化动画</a>。</p>
+<span id="more"></span>
+<p>再次强调，本 lab 难度较大，因此我在实验中有参考不少资料，并一一列出：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://raft.github.io/raft.pdf">【Raft 论文】</a>⭐⭐⭐</li>
+<li><a target="_blank" rel="noopener" href="https://thesquareplanet.com/blog/students-guide-to-raft/">【助教 guide】</a>⭐⭐⭐</li>
+<li><a target="_blank" rel="noopener" href="http://thesecretlivesofdata.com/raft/">【Raft 动画】</a>⭐⭐⭐⭐⭐</li>
+<li>课程建议：
+<ol>
+<li><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/labs/raft-locking.txt">如何在 Raft 使用锁</a></li>
+<li><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/labs/raft-structure.txt">如何设计 Raft 数据结构</a></li>
+<li><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/labs/guidance.html">如何在 Raft 中 Debug</a></li>
+</ol>
+</li>
+<li><a target="_blank" rel="noopener" href="https://blog.josejg.com/debugging-pretty/">【设计实现一个科学的 Raft 日志系统】</a>⭐⭐⭐</li>
+<li><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/notes/raft_diagram.pdf">【Raft 交互图】</a></li>
+</ol>
+<h2 id="Raft">Raft</h2>
+<p>分布式系统利用<strong>共识算法</strong>让一组机器构成一个整体，共识算法又需要<strong>复制状态机</strong>，而复制状态机实现的关键就是<strong>复制日志</strong>。复制状态机的基本原理如图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/RSM-architecture.png" alt="RSM-architecture"></p>
+<p>在一个 <strong>Raft</strong> 集群中，每个服务器有三种角色，分别是 <code>leader</code>、<code>candidate</code> 和 <code>follower</code>，正常情况下是一个 <code>leader</code> 和多个 <code>follower</code>。每个 <code>follower</code> 都只会被动接收 RPCs，只有 <code>leader</code> 和 <code>candidate</code> 才能主动发送 RPCs。</p>
+<p>Raft 相比于 Paxos，优势在于算法更简单易懂，而且能够将共识问题拆分成<strong>领导选举、日志复制和安全性</strong>三个部分。对于客户端而言，它只需提交指令到 <code>leader</code> 即可（联系 <code>follower</code> 的请求也会被转到 <code>leader</code>），当前 <code>leader</code> 遇到网络问题或宕机时，系统会从剩余服务器中选出一个合适的新 <code>leader</code> 继续为客户端提供服务。</p>
+<p>Raft 的逻辑时间是任期 <code>term</code>，默认从 0 开始，且 Raft 的 <strong>Election Safety 属性</strong>规定了每个 term 最多只能有一个 <code>leader</code>。每个 term 由一个选举阶段和一个常规操作阶段构成，如图所示。如果 <code>candidate</code> 选举超时后没有当选 <code>leader</code> 则跳过常规操作阶段直接进入下一个 term，并再次选举。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/term.png" alt="term"></p>
+<p>另外，每个服务器都会维持一个 <code>currentTerm</code> 表示服务器当前所处的 term，并在相互通信时捎上该值，这样当服务器在通信时一旦发现自己的 term 落后，就会主动更新 term，并将角色转换成 <code>follower</code>，注意还需要将投票清空。相对应的，如果收到处于落后 term 的服务器发来的请求，则直接拒绝。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rf Raft)</span></span> updateTermL(newTerm <span class="type">int</span>) &#123;</span><br><span class="line">    Debug(dTimer, <span class="string">&quot;S%d %s, update from T%d to T%d&quot;</span>, rf.me, rf.state, rf.currentTerm, newTerm)</span><br><span class="line"></span><br><span class="line">    rf.currentTerm = newTerm</span><br><span class="line">    rf.state = follower</span><br><span class="line">    rf.votedFor = <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">    rf.persist()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="系统初始化">系统初始化</h2>
+<p>服务器初始状态都是 <code>follower</code>，而只要它从 <code>leader</code> 或 <code>candidate</code> 处收到有效 RPCs 就会维持在这种 <code>follower</code> 状态。正常情况下，<code>leader</code> 会定期向所有 <code>follower</code> 发送心跳消息（心跳检测消息本质上就是一种没有携带日志的特殊 append 消息），如果 <code>follower</code> 经过一段时间（该段时间称为 election timeout）仍未收到，那么它会认为当前系统无 <code>leader</code>，并开始选举。</p>
+<p>项目中的 ticker 方法是一个循环自检函数，用来实现上面提到的 <code>leader</code> 的心跳检测和 <code>follower</code> 的超时检测。后缀带大写 L 的是我从代码 QA 课程中学到的，表示该方法从临界区进入，方便放心访问共享变量，过于真香我立马重构了自己之前的代码。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rf Raft)</span></span> ticker() &#123;</span><br><span class="line">    <span class="keyword">for</span> rf.killed() == <span class="literal">false</span> &#123;</span><br><span class="line">        </span><br><span class="line">        time.Sleep(time.Millisecond  <span class="number">30</span>)</span><br><span class="line"></span><br><span class="line">        rf.mu.Lock()</span><br><span class="line">        <span class="keyword">if</span> rf.state == leader &#123;</span><br><span class="line">            rf.timerRefreshL()</span><br><span class="line">            rf.sendAppendsL(<span class="literal">true</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> rf.electionTimeout.Before(time.Now()) &#123;</span><br><span class="line">                rf.timerRefreshL()</span><br><span class="line">                rf.startElectionL()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        rf.mu.Unlock()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="选举">选举</h2>
+<p>一个 <code>follower</code> 开启选举的流程如下，先进入新一轮 term，转换状态为 <code>candidate</code>，然后投票给自己，最后并行发送 vote 请求给集群中的其他服务器。当一个 <code>candidate</code> 获得主体投票，即超过一半服务器的票数，则判断其赢得选举。赢得选举后，它将转换状态为 <code>leader</code>，并广播心跳。需要注意的一点是，这里是所有 <code>leader</code> 的起点。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/state-transition.png" alt="state-transition"></p>
+<p>当 <code>candidate</code> 在等待投票结果时，如果收到有效 append 消息，说明此时系统中已经有一个合法 <code>leader</code> 在运作，它则会转换成 <code>follower</code>。另外，如果有多个 <code>follower</code> 同时成了 <code>candidate</code> 可能会遇到投票分裂这种情况，即每个 <code>candidate</code> 都得不到主体投票最后没法选出 <code>leader</code>。而等选举超时后，所有 <code>candidate</code> 又同时开启新一轮选举，往复循环。为了避免这种情况，Raft 规定 election timeout 从 150-300ms 随机挑取，而不是一个固定的数字。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rf Raft)</span></span> timerRefreshL() &#123;</span><br><span class="line">    rf.electionTimeout = time.Now().Add(<span class="number">150</span>  time.Millisecond)</span><br><span class="line">    rf.electionTimeout = rf.electionTimeout.Add(time.Duration(rand.Int63n(<span class="number">150</span>))  time.Millisecond)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="投票">投票</h2>
+<p><code>follower</code> 在投票时需要遵循 <strong>FIFO 原则</strong>，另外为了维持安全性或者更确切的说是 <code>leader</code> Completeness 属性，还需要对哪些服务器能够被选为 <code>leader</code> 添加一些限制，就是 <code>follower</code> 只能投票给日志满足 up-to-date 的 <code>candidate</code>。具体来说，对比 <code>follower</code> 和 <code>candidate</code> 的日志的最后一个 entry，如果 <code>candidate</code> 一方的 entry 的 term 较小，则 up-to-date 为 false，反之为 true；如果 term 相等则继续比下标，如果 <code>candidate</code> 一方的 entry 下标较小，则 up-to-date 为 false，大于或等于都为 true。</p>
+<p>一些细节：</p>
+<ol>
+<li><code>candidate</code> 收到 vote 不会更新时间；</li>
+<li>成为 <code>leader</code> 后要更新 nextIndex 和 matchIndex。</li>
+</ol>
+</div><div class="article-licensing box"><div class="licensing-title"><p>MIT 6.824 Lab2 PartA</p><p><a href="https://zion4h.github.io/2022/12/03/mit-6_824-lab-2a/">https://zion4h.github.io/2022/12/03/mit-6_824-lab-2a/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-12-03</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/raft/">raft</a><a class="link-muted mr-2" rel="tag" href="/tags/go/">go</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/12/06/dp-pack/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">背包 DP</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/12/01/mit-6_824-lab_1/"><span class="level-item">MIT 6.824 Lab1 构建一个 MapReduce 系统</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "6b4b78b26b5afe40b4ada263f83d4882",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Raft"><span class="level-left"><span class="level-item">1</span><span class="level-item">Raft</span></span></a></li><li><a class="level is-mobile" href="#系统初始化"><span class="level-left"><span class="level-item">2</span><span class="level-item">系统初始化</span></span></a></li><li><a class="level is-mobile" href="#选举"><span class="level-left"><span class="level-item">3</span><span class="level-item">选举</span></span></a></li><li><a class="level is-mobile" href="#投票"><span class="level-left"><span class="level-item">4</span><span class="level-item">投票</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

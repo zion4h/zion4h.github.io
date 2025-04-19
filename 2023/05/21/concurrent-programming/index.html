@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>并发编程 - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="“The Free Lunch Is Over” – Herb Sutter  对于痛恨大厂 “挤牙膏” 的我而言，Intel 创始人提出的摩尔定律听起来再 “美味” 不过，一个延续数十年名副其实的 “神话”。但随着半导体工业发展到极致后，为了继续提高芯片性能，只能转向多核化发展。而多核化又进一步促生并发编程的需求。"><meta property="og:type" content="blog"><meta property="og:title" content="并发编程"><meta property="og:url" content="https://zion4h.github.io/2023/05/21/concurrent-programming/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="“The Free Lunch Is Over” – Herb Sutter  对于痛恨大厂 “挤牙膏” 的我而言，Intel 创始人提出的摩尔定律听起来再 “美味” 不过，一个延续数十年名副其实的 “神话”。但随着半导体工业发展到极致后，为了继续提高芯片性能，只能转向多核化发展。而多核化又进一步促生并发编程的需求。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img013.jpg"><meta property="article:published_time" content="2023-05-21T12:23:03.000Z"><meta property="article:modified_time" content="2025-04-19T08:22:12.041Z"><meta property="article:author" content="zion h4"><meta property="article:tag" content="并发"><meta property="article:tag" content="TODO"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img013.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2023/05/21/concurrent-programming/"},"headline":"并发编程","image":["https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img013.jpg"],"datePublished":"2023-05-21T12:23:03.000Z","dateModified":"2025-04-19T08:22:12.041Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"“The Free Lunch Is Over” – Herb Sutter  对于痛恨大厂 “挤牙膏” 的我而言，Intel 创始人提出的摩尔定律听起来再 “美味” 不过，一个延续数十年名副其实的 “神话”。但随着半导体工业发展到极致后，为了继续提高芯片性能，只能转向多核化发展。而多核化又进一步促生并发编程的需求。"}</script><link rel="canonical" href="https://zion4h.github.io/2023/05/21/concurrent-programming/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img013.jpg" alt="并发编程"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-05-21T12:23:03.000Z" title="5/21/2023, 8:23:03 PM">2023-05-21</time>发表</span><span class="level-item"><time dateTime="2025-04-19T08:22:12.041Z" title="4/19/2025, 4:22:12 PM">2025-04-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91/">并发</a></span><span class="level-item">21 分钟读完 (大约3138个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">并发编程</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>“<a target="_blank" rel="noopener" href="http://www.gotw.ca/publications/concurrency-ddj.htm">The Free Lunch Is Over</a>” – Herb Sutter</p>
+</blockquote>
+<p>对于痛恨大厂 “挤牙膏” 的我而言，Intel 创始人提出的<strong>摩尔定律</strong>听起来再 “美味” 不过，一个延续数十年名副其实的 “神话”。但随着半导体工业发展到极致后，为了继续提高芯片性能，只能转向<strong>多核化</strong>发展。而多核化又进一步促生<strong>并发编程</strong>的需求。</p>
+<span id="more"></span>
+<p><img src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/CPU.png" alt="Intel CPU Introductions"></p>
+<h2 id="并发还是并行？">并发还是并行？</h2>
+<p>一个简单的比方，人不能同时吃饭喝酒，不然你就会呛着。并发的意思就是，你可以抿一口酒再吃一口菜，这样酒也喝了，菜也尝了。而并行的意思就是，你是一个长着两张嘴的人，真的能够同时畅饮纯生并大口嚼着牛排。</p>
+<ol>
+<li>并发理论上能够提升处理任务的速度</li>
+<li>但实际运行过程中，线程遇到竞争资源会等待，而这个等待时间是漫长的，最终导致整体效果较差</li>
+<li>改进的方法比较直接，将竞争资源的颗粒度细化，从而减少线程等待时间</li>
+</ol>
+<p>通常，我们会将并行和多核画上等号，但实际上计算机可以在多个层次用到并行技术。比如位级并行，“为什么 32 位计算机比 8 位计算机速度快？”，因为两个 32 位数的加法它只需要执行 1 次，而后者需要 4 次。但这显然是有瓶颈的，因此 128 位的计算机迟迟得不到推出。指令并行，或者说 CPU 加速，当然指令的并行也带来了 “内存可见性” 问题。数据并行，或者说 GPU 加速，可以对大量数据施加同一个操作。任务并行，即多处理器，这是我们最频繁打交道的部分，也是大家讨论 “并行” 时的一般性范畴。</p>
+<h2 id="互斥和内存模型">互斥和内存模型</h2>
+<blockquote>
+<p>不应该在产品代码上直接使用 Thread 类等底层服务。</p>
+</blockquote>
+<p>很多语言都提供了并发接口，但是仅仅只是将计算机系统底层提供的指令简单抽象包装了一下。如果你在生产代码中实际去使用（比如 <code>new Thread</code>），那绝对是有问题的。Java 在并发包给我们提供了很多工具类，需要熟悉掌握。</p>
+<h3 id="线程">线程</h3>
+<p>当我们讨论并发时，其实大多数时候都在围绕线程和锁，下面是一个创建 Java 线程的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(()-&gt; System.out.println(<span class="string">&quot;Hello from thread.&quot;</span>));</span><br><span class="line">    t.start();</span><br><span class="line">    Thread.<span class="keyword">yield</span>();</span><br><span class="line">    System.out.println(<span class="string">&quot;Hello from main.&quot;</span>);</span><br><span class="line">    t.join();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>start</code> 方法启动线程，<code>yield</code> 方法让出处理器占用（重新竞争），<code>join</code> 等待线程死亡。</p>
+<h3 id="锁">锁</h3>
+<p><strong>线程</strong>之间通过<strong>共享内存</strong>进行通信，本质上是控制流。但当<strong>竞态条件</strong>发生时，每次运行结果都可能不一样。为了避免这种情况的发生，我们将对竞争资源同步访问，也就是加<strong>锁</strong>。</p>
+<p>比如经典的 “<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/680097/ive-heard-i-isnt-thread-safe-is-i-thread-safe">i++ 线程安全</a>” 问题。</p>
+<h3 id="乱序执行的代码">乱序执行的代码</h3>
+<p>在 Java 中，为了提高运行效率需要乱序执行代码，导致副作用产生，而 <strong>Java 内存模型</strong>则提供了一个标准告诉我们发生了什么副作用。</p>
+<p>造成乱序的可能原因：</p>
+<ul>
+<li><strong>编译器</strong>的静态优化</li>
+<li><strong>JVM</strong> 的动态优化</li>
+<li><strong>硬件指令</strong>的乱序执行</li>
+</ul>
+<p>可参考：</p>
+<ul>
+<li><em><a target="_blank" rel="noopener" href="http://www.cs.umd.edu/~pugh/java/memoryModel/">Java 内存模型</a> by William Pugh</em></li>
+<li><em><a target="_blank" rel="noopener" href="https://www.cs.umd.edu/~pugh/java/memoryModel/jsr-133-faq.html">JSR-133 FAQ</a> by William Pugh</em></li>
+</ul>
+<h3 id="死锁">死锁</h3>
+<p>有人说为了让代码安全运行，干脆让全部代码都同步执行好了，但这样线程会频繁阻塞，失去了并发的意义。并且，当引入多个锁之后可能会造成<strong>死锁</strong>。一个经典死锁模型是 —— <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Dining_philosophers_problem">哲学家进餐问题</a>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Philosopher</span> <span class="keyword">extends</span> <span class="title class_">Thread</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Chopstick left, right;</span><br><span class="line">    <span class="keyword">private</span> Random random;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Philosopher</span><span class="params">(Chopstick left, Chopstick right)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.left = left;</span><br><span class="line">        <span class="built_in">this</span>.right = right;</span><br><span class="line">        random = <span class="keyword">new</span> <span class="title class_">Random</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">                Thread.sleep(random.nextInt(<span class="number">1000</span>)); <span class="comment">// think</span></span><br><span class="line">                <span class="keyword">synchronized</span> (left) &#123;</span><br><span class="line">                    <span class="keyword">synchronized</span> (right) &#123;</span><br><span class="line">                        Thread.sleep(random.nextInt(<span class="number">1000</span>)); <span class="comment">// eat</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一个最简单的解决思路是：给筷子编号，按全局顺序取筷子避免头尾冲突。</p>
+<p><em>问题：Java 内存模型是如何保证对象初始化是线程安全的？是否必须通过加锁才能在线程之间安全地公开对象？</em></p>
+<p>Java 内存模型保证对象初始化是线程安全的，不需要显式地加锁。具体来说，当一个线程执行到对象初始化代码时，Java 内存模型通过 happens-before 原则保证该线程先前所做的所有操作都对其他线程可见，然后再执行对象初始化代码。这样，其他线程在访问该对象时将访问到正确的、完整的、已经初始化的对象实例。</p>
+<p>Happens-Before 原则是 Java 并发编程中一个重要的概念，它描述了一个事件在时间上的先后顺序。具体地说，如果操作 A happens-before 操作 B，那么操作 A 对共享变量的修改将对操作 B 可见，即操作 A 的结果被操作 B 观察到。</p>
+<h3 id="双重检查锁模式">双重检查锁模式</h3>
+<p><strong>双检锁 DCL</strong> 是一个反面模式，反面模式来自 <em>GoF</em> 的《<strong>设计模式</strong>》一书，用来指代那些经常出现，却又低效且有待优化的模式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DCL</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> DCL instance;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">DCL</span><span class="params">()</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> DCL <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (DCL.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (instance == <span class="literal">null</span>) &#123;</span><br><span class="line">                    instance = <span class="keyword">new</span> <span class="title class_">DCL</span>();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码是优化过的，原始版本没有 <code>volatile</code>，但随着 JVM 的不断被优化，我们应该尽量避免使用这个关键字。</p>
+<h2 id="并发工具包">并发工具包</h2>
+<p>用 ReentrantLock 来替换内置锁，来获取死锁中断、超时释放功能。</p>
+<h3 id="可中断的锁">可中断的锁</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ReentrantLock</span> <span class="variable">l1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReentrantLock</span>();</span><br><span class="line"><span class="type">ReentrantLock</span> <span class="variable">l2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReentrantLock</span>();</span><br><span class="line"><span class="type">Thread</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(()-&gt;&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        l1.lockInterruptibly();</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        l2.lockInterruptibly();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;t1 interrupted.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="超时">超时</h3>
+<p>设置超时时间尽管避免了无尽死锁，但也有可能导致死锁，比如所有锁一起超时。一些技巧可以改善这种情况，比如为不同锁设置不同超时时间，但整体来说通过设置超时来处理死锁不是一个好的选择。</p>
+<h3 id="交替锁">交替锁</h3>
+<p>首先锁住头两个结点，如果判断不在这两个节点点插入，则释放第一个节点，锁住第三个节点，如此遍历。</p>
+<p>与此同时，如果我们想测量链表长度，也可倒序遍历，每次锁住一个节点即可。</p>
+<h3 id="条件变量">条件变量</h3>
+<p>一个条件变量通常需要和一把锁相关联，线程在开始等待这个条件之前需要先获取这把锁。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ReentrantLock</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReentrantLock</span>();</span><br><span class="line"><span class="type">Condition</span> <span class="variable">condition</span> <span class="operator">=</span> lock.newCondition();</span><br><span class="line">lock.lock();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (a &lt; <span class="number">100</span>) &#123;</span><br><span class="line">        condition.await();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="原子变量">原子变量</h3>
+<p>也是用来替换内置锁的，一种无锁非阻塞的解决方案。</p>
+<p>问题 1 什么是公平锁？何时使用？使用非公平的锁会怎样？</p>
+<p>公平锁让多个线程遵循 FIFO 原则获取锁，优点是可以避免<strong>线程饥饿</strong>现象的发生，但如果使用非公平的锁会使得锁的获取变快。线程饥饿问题是指由一些线程持续获取锁导致另一些线程长久等待，甚至永远无法获取。</p>
+<h2 id="并发数据结构">并发数据结构</h2>
+<h3 id="写入时复制">写入时复制</h3>
+<p>之后的函数式语言就更牛逼了，因为它的竞争资源本身不会变化，因此在并发时并不需要保护竞争资源，从而根本没有并发问题。</p>
+<p>为什么要有线程池？1. 拒绝服务攻击 2. 手动创建开销大。另外，线程池的大小会考虑到任务本身，一般 CPU 密集的任务会接近可用核树，而 IO 密集的会更大。</p>
+<p>java.util.concurrent 包中的 ArrayBlockingQueue 是一个并发队列，非常适合消费者 - 生产者模式，提供了高效的并发 put、take 方法。take 会在取空时阻塞直到非空，put 会在放满时阻塞直到有足够空间。</p>
+<p>TODO 作者是如何一步步改进程序并发性能的：1. 引入线程池 2. 引入 concurrentHashMap3. 将对竞争资源的访问转换成处理离线任务再合并。</p>
+<p>问题 1 阅读 ForkJoinPool 文档 ——fork/join 框架和线程池区别？分别适用什么场景？</p>
+<p>Fork/Join 框架是一个基于工作窃取算法的任务调度框架，而线程池则是用于执行一组线程任务的框架。具体来说，ForkJoinPool 线程池中的每一条线程都有一个自己的工作队列（WorkQueue），这个工作队列是双端队列，从自己队列的头部取得任务，从尾部添加任务，如果自己的队列中没有任务了，它又会去 “偷” 其他线程的任务。这一点就是工作窃取算法。</p>
+<p>问题 2 什么是 countDownLatch 和 CyclicBarrier？</p>
+<p>CountDownLatch 和 CyclicBarrier 都是 Java 中的多线程工具类。</p>
+<p>CountDownLatch 是一个计数器，可以用来控制多个线程的并发执行。CountDownLatch 有一个计数值，调用一次 countDown () 方法计数器的值就会减 1，当计数器的值减为 0 时，表示所有线程都已经执行完毕，等待在 await () 方法上的线程就可以继续执行。</p>
+<p>CyclicBarrier 也是一个计数器，但与 CountDownLatch 不同的是，CyclicBarrier 的计数值只能在初始化时设置，所有线程都到达后，它会释放所有等待的线程，并且将计数值重置为初始值。CyclicBarrier 适合需要多个线程协同完成某个任务的场景。</p>
+<p>问题 3 Amdahl 定律是什么？</p>
+<p>Amdahl 定律是一个公式，它描述了在添加更多处理器或核心时，计算机系统可以达到的理论最大性能加速比。它表明，系统的加速比将受到程序中无法并行化的部分的限制。换句话说，如果一个程序由可并行化和不可并行化部分组成，则即使增加更多处理器，不可并行化部分也会限制系统的整体加速比。</p>
+<p>Amdahl 定律的公式为：</p>
+<p>速度提升比 = 1 / (1 - P + P/N)</p>
+<p>其中，P 是可并行化程序的部分比例，N 是处理器的数量，速度提升比是预期的性能改进。该公式假设问题规模保持不变，处理器之间没有通信或同步成本。</p>
+<p>Amdahl 定律强调了识别和优化程序中无法并行化的关键部分的重要性，以实现在添加更多处理器时的最佳性能提升。</p>
+<p>线程与锁模型最大的好处就是能被轻松集成到各种语言中，它本质上是将硬件工作形式化，而这也意味着它在语言层面其实并没有提供多大帮助，而且还容易带来不确定性的隐患。因为不确定，所以很难测试和复现问题。作者这里用赛车做了一个类比，如何从一堆废墟中找到问题，答案是完善数据记录。</p>
+<p>一些好的并发编程建议：1. 访问共享变量时同步 2. 按照全局固定顺序来取锁 3. 持有锁时避免调用外星方法。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>并发编程</p><p><a href="https://zion4h.github.io/2023/05/21/concurrent-programming/">https://zion4h.github.io/2023/05/21/concurrent-programming/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-05-21</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E5%B9%B6%E5%8F%91/">并发</a><a class="link-muted mr-2" rel="tag" href="/tags/TODO/">TODO</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/05/21/algorithm-shortest-path-1/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">单源最短路径问题</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/05/20/read-hackers-and-painters/"><span class="level-item">读《黑客与画家》有感</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "f9d652f66693e0ce758b97b0286c60b1",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#并发还是并行？"><span class="level-left"><span class="level-item">1</span><span class="level-item">并发还是并行？</span></span></a></li><li><a class="level is-mobile" href="#互斥和内存模型"><span class="level-left"><span class="level-item">2</span><span class="level-item">互斥和内存模型</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#线程"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">线程</span></span></a></li><li><a class="level is-mobile" href="#锁"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">锁</span></span></a></li><li><a class="level is-mobile" href="#乱序执行的代码"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">乱序执行的代码</span></span></a></li><li><a class="level is-mobile" href="#死锁"><span class="level-left"><span class="level-item">2.4</span><span class="level-item">死锁</span></span></a></li><li><a class="level is-mobile" href="#双重检查锁模式"><span class="level-left"><span class="level-item">2.5</span><span class="level-item">双重检查锁模式</span></span></a></li></ul></li><li><a class="level is-mobile" href="#并发工具包"><span class="level-left"><span class="level-item">3</span><span class="level-item">并发工具包</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#可中断的锁"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">可中断的锁</span></span></a></li><li><a class="level is-mobile" href="#超时"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">超时</span></span></a></li><li><a class="level is-mobile" href="#交替锁"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">交替锁</span></span></a></li><li><a class="level is-mobile" href="#条件变量"><span class="level-left"><span class="level-item">3.4</span><span class="level-item">条件变量</span></span></a></li><li><a class="level is-mobile" href="#原子变量"><span class="level-left"><span class="level-item">3.5</span><span class="level-item">原子变量</span></span></a></li></ul></li><li><a class="level is-mobile" href="#并发数据结构"><span class="level-left"><span class="level-item">4</span><span class="level-item">并发数据结构</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#写入时复制"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">写入时复制</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

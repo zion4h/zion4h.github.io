@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Blowin&#39; in the Wind</title>
+  
+  
+  <link href="https://zion4h.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://zion4h.github.io/"/>
+  <updated>2025-04-19T08:24:20.870Z</updated>
+  <id>https://zion4h.github.io/</id>
+  
+  <author>
+    <name>zion h4</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>搭建 C 语言编程环境指南</title>
+    <link href="https://zion4h.github.io/2024/10/01/cs-c-deploy/"/>
+    <id>https://zion4h.github.io/2024/10/01/cs-c-deploy/</id>
+    <published>2024-10-01T14:19:39.000Z</published>
+    <updated>2025-04-19T08:24:20.870Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;C 语言是一个经典且高效的编程语言，广泛应用于操作系统、嵌入式系统等开发中。本文将详细介绍如何在 Linux 环境下搭建一个 C 语言开发环境，包括编译器安装、代码编辑器设置、Git 全局配置、Zsh 快捷键优化等，帮助你快速上手 C 语言编程。&lt;/p&gt;
+&lt;p&gt;PS：后面放弃了，感觉C语言还是太无聊了。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="C" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/C/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>2024 年 7 月</title>
+    <link href="https://zion4h.github.io/2024/07/26/life-diary-24-7/"/>
+    <id>https://zion4h.github.io/2024/07/26/life-diary-24-7/</id>
+    <published>2024-07-26T07:29:03.000Z</published>
+    <updated>2025-04-19T08:22:12.052Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;玩博客和搞技术都需要一颗 DIY 内核，我决定以后的文章封面图都用我拍摄的照片，并在文章开头介绍一下图片背景。前段时间我在 B 站和小红书上 “抄” 了一些公式化地拍摄构图，效果还是有的，至少给慧琳拍照的时候不会被抱怨了。比如，构图尽量用九宫格，如果拍全身照就用 1 倍焦距并且将人脸放中间，这样脸不会变形还可以拉长腿部。注意不要贴死底部，余些空间显露一点层次感。如果是半身照就用 2.5 倍焦距，人眼平齐 1/3 线。如果拍侧身照，就放置在左下四格子，尽量舒展开身体，让其自然延申。除了人像外，我还想尝试街头拍摄，希望能留住旅行和生活中的痕迹，给回忆提供一点参考线索。初步的设想是抓住镜头中的故事感，在去掉周围杂物后，突显主题元素，无论是对立冲突还是水乳交融的都行。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何用 C 语言编写一个 Shell</title>
+    <link href="https://zion4h.github.io/2024/07/14/write-a-zion-shell/"/>
+    <id>https://zion4h.github.io/2024/07/14/write-a-zion-shell/</id>
+    <published>2024-07-14T11:45:43.000Z</published>
+    <updated>2025-04-19T08:22:12.059Z</updated>
+    
+    
+    <summary type="html">Shell，或者说 Unix shell，本质上是一个命令行解释器。它是一个计算机程序，允许用户通过命令行与操作系统交互。Shell 有两种界面形式：命令行界面 (CLI) 和图形用户界面 (GUI)（例如 Windows 中的文件浏览器）。常见的 CLI 有 `sh`、`zsh`、`bash` 等，其中 `sh` 是第一个流行的 shell，`bash` 是 Linux 系统自带的 shell，而 `zsh` 则是最受欢迎的 shell 之一。</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E6%89%AB%E7%9B%B2/"/>
+    
+    
+    <category term="intro" scheme="https://zion4h.github.io/tags/intro/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>复现康威的生命游戏</title>
+    <link href="https://zion4h.github.io/2024/07/04/convey-life-game-implement/"/>
+    <id>https://zion4h.github.io/2024/07/04/convey-life-game-implement/</id>
+    <published>2024-07-04T11:13:07.000Z</published>
+    <updated>2025-04-19T08:22:12.041Z</updated>
+    
+    
+    <summary type="html">康威生命游戏（英语：Conway&#39;s Game of Life），又称康威生命棋，是英国数学家约翰·何顿·康威在1970年发明的细胞自动机。它最初于1970年10月在《科学美国人》杂志上马丁·葛登能的“数学游戏”专栏出现。</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E6%89%AB%E7%9B%B2/"/>
+    
+    
+    <category term="intro" scheme="https://zion4h.github.io/tags/intro/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何实现一个内存分配器？</title>
+    <link href="https://zion4h.github.io/2024/07/03/how-to-implement-a-memory-allocator/"/>
+    <id>https://zion4h.github.io/2024/07/03/how-to-implement-a-memory-allocator/</id>
+    <published>2024-07-03T02:58:58.000Z</published>
+    <updated>2025-04-19T08:22:12.043Z</updated>
+    
+    
+    <summary type="html">这篇文章会用C写一个内存分配器，本质是对malloc(), calloc(), realloc() 和 free()的复现。</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E6%89%AB%E7%9B%B2/"/>
+    
+    
+    <category term="intro" scheme="https://zion4h.github.io/tags/intro/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何创建一个随意折腾的 Linux 沙盒环境？</title>
+    <link href="https://zion4h.github.io/2024/07/02/how-to-create-a-sandbox/"/>
+    <id>https://zion4h.github.io/2024/07/02/how-to-create-a-sandbox/</id>
+    <published>2024-07-02T13:09:21.000Z</published>
+    <updated>2025-04-19T08:22:12.043Z</updated>
+    
+    
+    <summary type="html">项目式学习（Project Based Learning）能够快速检验和提高一个人的编程水平，而学习过程中又不可避免地会编写运行一些 Demo。然而，如果直接使用 Windows 或者 MacOS 多少会面临环境部署问题，因此拥有一个能随意折腾地 Linux 沙盒对我来说开始变得尤为迫切。因此，在本篇博客中，我将介绍如何在 Windows 上轻松创建一个 Linux 沙盒。</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E6%89%AB%E7%9B%B2/"/>
+    
+    
+    <category term="intro" scheme="https://zion4h.github.io/tags/intro/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2024 年 6 月</title>
+    <link href="https://zion4h.github.io/2024/06/26/life-diary-24-6/"/>
+    <id>https://zion4h.github.io/2024/06/26/life-diary-24-6/</id>
+    <published>2024-06-26T07:29:03.000Z</published>
+    <updated>2025-04-19T08:22:12.052Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;去年上半年，除了钱包瘪的速度比较想象中快得多以外，一切都很美好。恋爱产生的巨量多巴胺给我生活拼命加氧，让我嗨到甚至忘记记录生活。我想这是否就是生命真正的意义，沉浸着感受五彩生活而不只是喘气。刚开始本以为这种狂热的状态不会超过三个月，现在都翻了个倍。这段时间其实有很多很有趣的东西值得记录，沙滩、叮叮车、迪斯尼、互见家长、海购、出租师傅等等，不止是两人缠绵，还有过程中遇到有趣的人或事。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2024 年 3~5 月</title>
+    <link href="https://zion4h.github.io/2024/04/27/life-diary-24-3/"/>
+    <id>https://zion4h.github.io/2024/04/27/life-diary-24-3/</id>
+    <published>2024-04-27T02:16:33.000Z</published>
+    <updated>2025-04-19T08:22:12.052Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;历史并无所谓必然性，领跑者的优势无法维续，成功者的共性又太零散，对历史的总结大多沦为了个人的自我偏见，包括对成功本身的定义也五花八门了起来。但话又说回来，思想匮乏的我，读历史时囫囵，下结论时匆匆，明明百无聊赖却又不细细去读全凭书本作者自圆其说，只求转述时能仿着鹦鹉学舌一番。即使偶尔脑子里蹦出一星半点想法，诸如 “农民起义总伴随屠杀”，也廉价无意义，构不成理论，却依然深信不疑了很久，成了自己最厌恶的经验主义者。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2024 年 2 月</title>
+    <link href="https://zion4h.github.io/2024/02/27/life-diary-24-2/"/>
+    <id>https://zion4h.github.io/2024/02/27/life-diary-24-2/</id>
+    <published>2024-02-27T02:14:33.000Z</published>
+    <updated>2025-04-19T08:22:12.051Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;她之前告诉我朋友介绍的男生都没见过，但是今天突然知道她曾和一个男生相约去看过电影，因为男生比较帅而且主动要了微信。但见面后又嫌弃男生矮个子，就放弃继续交流了，她又说自己不会因为外貌而喜欢上一个人。之前说身边男孩子少，但是和男生喝酒的场合挺多次的，还喝醉过，我该相信哪一句话呢。我需要理性回归，不要再浑浑噩噩，现在的我根本无法解释这一切。而且现在的我又到了万分窘迫的时候了，我慢慢地一步步走吧，从明天开始清醒。我知道她爱我，但她能为了这份感情做到什么地步呢，我好讨厌思考这些，反正都是外源性矛盾，就无视吧。我要努力做到一个人也能好好的。现在凌晨 4 点半了，我感觉脑袋锈锈的，心里空空的，好难受。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2024 年 1 月</title>
+    <link href="https://zion4h.github.io/2024/01/27/life-diary-24-1/"/>
+    <id>https://zion4h.github.io/2024/01/27/life-diary-24-1/</id>
+    <published>2024-01-27T02:07:48.000Z</published>
+    <updated>2025-04-19T08:22:12.051Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;和她朋友一起喝酒，在伟伟鸭脑壳吃过后结账，hl 和 ysy 争着结账，她爸电话来了，被 1 结账。她急着走，我醉酒不懂，于是她打车准备离开，让我俩分开走。1 在劝我跟着，我说手机在她手里，声音很大，把周围人吓了一跳，我仍不觉。后面 hl 说把途径点设置成我家，但设置成终点变我家了。之后，我们先去她家，然后我回了家，觉得太醉，就发完消息，自己睡了。可是睡不着，又看看有没有回复，没有。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2023 年 11 月</title>
+    <link href="https://zion4h.github.io/2023/12/16/life-diary-23-11/"/>
+    <id>https://zion4h.github.io/2023/12/16/life-diary-23-11/</id>
+    <published>2023-12-16T07:29:03.000Z</published>
+    <updated>2025-04-19T08:22:12.049Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;上海的秋风总爱带着残夏的温度和雨水的潮湿，闷声朝人撞过来。早上醒来后，并没有立刻起床，而是静静躺在床上，望着天花板发呆。最近基本手机不离手，我很喜欢看到 “正在输入中…” 的字样。这意味着世界上有另外一个人关心我的想法，她好奇我的状态，而我不再是一棵可有可无的小草了。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2023 年 10 月</title>
+    <link href="https://zion4h.github.io/2023/11/16/life-diary-23-10/"/>
+    <id>https://zion4h.github.io/2023/11/16/life-diary-23-10/</id>
+    <published>2023-11-16T07:29:03.000Z</published>
+    <updated>2025-04-19T08:22:12.049Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这个月同慧琳相识，确切地说应该是上个月。二人由双方家长牵头添了微信。初识并没擦出什么火花，尽管我强忍内心腼腆主动打了招呼，但有一搭没一搭聊着快一个小时后，话题戛然而止。总之，最后谁也不再多说一句话了。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2023 年 7-9 月</title>
+    <link href="https://zion4h.github.io/2023/10/16/life-diary-23-789/"/>
+    <id>https://zion4h.github.io/2023/10/16/life-diary-23-789/</id>
+    <published>2023-10-16T07:29:03.000Z</published>
+    <updated>2025-04-19T08:22:12.051Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;人毕竟是群居动物，当你做了一件惹人错愕的事时，群人并不立刻表现，反倒是抬头观望他者或主事者的表情。因为没人希望成为不假思索的配角，聪明结合着奴隶心态成了自缚的缘由。当然，一旦你立刻露怯，食物链下位者的身份立刻暴露无疑，“引蛇出洞” 已是第三层，早已超出通常无意识博弈的范畴。因此，在高度竞争环境中，错误的言行绝对不要承认。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2023 年 6 月</title>
+    <link href="https://zion4h.github.io/2023/07/16/life-diary-23-6/"/>
+    <id>https://zion4h.github.io/2023/07/16/life-diary-23-6/</id>
+    <published>2023-07-16T07:29:03.000Z</published>
+    <updated>2025-04-19T08:22:12.051Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;每个人能都在走捷径，但什么是捷径，什么又算成功。一个普罗大众眼里的 “成功人士”，一般来说是从小刻苦学习最后成功进入大公司或者公务员，然后便戛然而止。为什么成功者需要由失败者们去认可。“走开，挡着我晒太阳了” 大众不理解，皇帝也不理解。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>函数式编程</title>
+    <link href="https://zion4h.github.io/2023/06/14/programming-lambda/"/>
+    <id>https://zion4h.github.io/2023/06/14/programming-lambda/</id>
+    <published>2023-06-14T00:02:49.000Z</published>
+    <updated>2025-04-19T08:22:12.058Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html"></summary>
+        
+      
+    
+    
+    
+    
+    <category term="TODO" scheme="https://zion4h.github.io/tags/TODO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>最小生成树</title>
+    <link href="https://zion4h.github.io/2023/06/10/algirithm-mst/"/>
+    <id>https://zion4h.github.io/2023/06/10/algirithm-mst/</id>
+    <published>2023-06-10T09:06:03.000Z</published>
+    <updated>2025-04-19T08:22:12.039Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;strong&gt;最小生成树&lt;/strong&gt;源于最短电路连接，我们希望连接所有组件的针脚，同时又巴不得连线最短。由于连接了全部点，同时无环，因此又叫最小树。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="算法" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="算法" scheme="https://zion4h.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="MST" scheme="https://zion4h.github.io/tags/MST/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++ 入门/扫盲</title>
+    <link href="https://zion4h.github.io/2023/06/09/programming-intro-cpp/"/>
+    <id>https://zion4h.github.io/2023/06/09/programming-intro-cpp/</id>
+    <published>2023-06-09T00:18:00.000Z</published>
+    <updated>2025-04-19T08:22:12.057Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;简单列出一些 C++ 语言的特点和知识，目前处于 “知其然” 阶段。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="C++" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/C/"/>
+    
+    <category term="扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/C/%E6%89%AB%E7%9B%B2/"/>
+    
+    
+    <category term="TODO" scheme="https://zion4h.github.io/tags/TODO/"/>
+    
+    <category term="c++" scheme="https://zion4h.github.io/tags/c/"/>
+    
+    <category term="入门" scheme="https://zion4h.github.io/tags/%E5%85%A5%E9%97%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>并查集</title>
+    <link href="https://zion4h.github.io/2023/06/06/algorithm-dsu/"/>
+    <id>https://zion4h.github.io/2023/06/06/algorithm-dsu/</id>
+    <published>2023-06-06T13:26:54.000Z</published>
+    <updated>2025-04-19T08:22:12.039Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;算法常见题之&lt;strong&gt;并查集&lt;/strong&gt;或者不相交集合数据结构 &lt;strong&gt;DSU&lt;/strong&gt;，当有一组集合 n 个元素，假设我们经常需要：（1）判定某个元素属于哪个集合，（2）将两个集合合并成一个集合。那么，我们只需要维护一个&lt;strong&gt;并查集&lt;/strong&gt;即可。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="算法" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="算法" scheme="https://zion4h.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="并查集" scheme="https://zion4h.github.io/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2023 年 5 月</title>
+    <link href="https://zion4h.github.io/2023/06/04/life-diary-23-5/"/>
+    <id>https://zion4h.github.io/2023/06/04/life-diary-23-5/</id>
+    <published>2023-06-04T14:43:50.000Z</published>
+    <updated>2025-04-19T08:22:12.050Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;达尔文的进化论直到今天仍被有些人奉为圭臬，两百年前的进步思想如果仍觉得不过时那显然该淘汰的是持有这种偏见的人本身。我并不关心它在生物学上的争议，而是想批评它代表的哲学观以及政治思想的腐朽。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数位 DP</title>
+    <link href="https://zion4h.github.io/2023/06/04/algorithm-dp-digit/"/>
+    <id>https://zion4h.github.io/2023/06/04/algorithm-dp-digit/</id>
+    <published>2023-06-04T04:37:44.000Z</published>
+    <updated>2025-04-19T08:22:12.039Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;算法常见题之&lt;strong&gt;数位 DP&lt;/strong&gt;，从题面来看数据范围很大（比如 10 的 20 次方，&lt;strong&gt;无法暴力&lt;/strong&gt;），喜欢问在 &lt;code&gt;[L, R]&lt;/code&gt; 中有多少符合的数。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="IT" scheme="https://zion4h.github.io/categories/IT/"/>
+    
+    
+    <category term="算法" scheme="https://zion4h.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="DP" scheme="https://zion4h.github.io/tags/DP/"/>
+    
+  </entry>
+  
+</feed>

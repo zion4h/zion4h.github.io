@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>MIT 6.Null 大杂烩 - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="本篇大杂烩包括键盘重映射、守护进程、FUSE、备份、APIs、命令行模板、窗口管理器、VPNs、Markdown 等。"><meta property="og:type" content="blog"><meta property="og:title" content="MIT 6.Null 大杂烩"><meta property="og:url" content="https://zion4h.github.io/2023/05/07/mit-6-null-potpourri/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="本篇大杂烩包括键盘重映射、守护进程、FUSE、备份、APIs、命令行模板、窗口管理器、VPNs、Markdown 等。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img011.jpg"><meta property="article:published_time" content="2023-05-07T13:54:31.000Z"><meta property="article:modified_time" content="2025-04-19T08:22:12.053Z"><meta property="article:author" content="zion h4"><meta property="article:tag" content="shell"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img011.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2023/05/07/mit-6-null-potpourri/"},"headline":"MIT 6.Null 大杂烩","image":["https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img011.jpg"],"datePublished":"2023-05-07T13:54:31.000Z","dateModified":"2025-04-19T08:22:12.053Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"本篇大杂烩包括键盘重映射、守护进程、FUSE、备份、APIs、命令行模板、窗口管理器、VPNs、Markdown 等。"}</script><link rel="canonical" href="https://zion4h.github.io/2023/05/07/mit-6-null-potpourri/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="https://cdn.jsdelivr.net/gh/zion4h/picture-home@main/img011.jpg" alt="MIT 6.Null 大杂烩"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-05-07T13:54:31.000Z" title="5/7/2023, 9:54:31 PM">2023-05-07</time>发表</span><span class="level-item"><time dateTime="2025-04-19T08:22:12.053Z" title="4/19/2025, 4:22:12 PM">2025-04-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Labs/">Labs</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/Labs/MIT-6-Null/">MIT 6.Null</a></span><span class="level-item">11 分钟读完 (大约1642个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">MIT 6.Null 大杂烩</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>本篇大杂烩包括键盘重映射、守护进程、FUSE、备份、APIs、命令行模板、窗口管理器、VPNs、Markdown 等。</p>
+<span id="more"></span>
+<h2 id="键盘映射">键盘映射</h2>
+<p><strong>键盘映射</strong>有助于我们在不同系统之间无缝切换，这对程序员来说尤其便利，比如我就常常在 <code>Command</code> 在 Windows 上对应着 <code>Ctrl</code> 还是 <code>Alt</code> 上纠结。坦诚说，我到现在也没有对键盘进行重映射，一个直接理由是：我担心看不懂网络上地快捷键指南了。</p>
+<p>一些常用的<strong>映射配置</strong>：</p>
+<ul>
+<li><code>Capslock -&gt; Ctrl or Esc</code> 这对洋人来说是个低频键，但对中国人来说其实在 macOS 上蛮常用来切换中英文的</li>
+<li><code>PtrSc -&gt; Play/Pause</code></li>
+<li><code>Ctrl -&gt; Meta</code>（<code>Win</code> 或者 <code>Command</code>）</li>
+</ul>
+<p>一些<strong>自定义组合键事件</strong>：</p>
+<ul>
+<li>打开一个新网页或者终端</li>
+<li>插入一个特别的文本，比如邮箱或者 ID</li>
+</ul>
+<p>不同系统会各自有优秀的重映射软件：</p>
+<ul>
+<li>macOS <a target="_blank" rel="noopener" href="https://karabiner-elements.pqrs.org/">Karabiner-Elements</a>，<a target="_blank" rel="noopener" href="https://github.com/koekeishiya/skhd">skhd</a></li>
+<li>Linux <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Xmodmap">xmodmap</a>，<a target="_blank" rel="noopener" href="https://github.com/autokey/autokey">Autokey</a></li>
+<li>Windows 内置控制面板，<a target="_blank" rel="noopener" href="https://www.autohotkey.com/">AutoHotKey</a>，<a target="_blank" rel="noopener" href="https://www.randyrants.com/category/sharpkeys/">SharpKeys</a></li>
+</ul>
+<h2 id="守护进程">守护进程</h2>
+<p><strong>守护进程 daemons</strong> 本质上就是躲在计算机后台偷偷运行的程序，当然这种说法是非贬义的，毕竟系统进程也是守护进程。通常来说，它们名字都会跟着一个名叫 “d” 的尾巴，比如在 <code>sshd</code> 或者 <code>systemd</code>。</p>
+<p>这里提到的 <code>systemd</code> 是 Linux 用来管理守护进程的配置和运行的，你可以输入 <code>systemctl status</code> 来列出当前正在运行的守护进程。我们可以利用 <code>systemctl</code> 去启用 <code>enable</code>，禁用 <code>disable</code>，开启 <code>start</code>，暂停 <code>stop</code>，重启 <code>restart</code> 或者检查 <code>status</code> 服务状态，这些都是很常用的系统命令，不求记住但至少混个脸熟啊，可别 “天天打照面，次次都脸盲” 了。</p>
+<p>如果你想_配置你自己的守护进程_，也可以通过 <code>systemd</code> 提供的接口设置。这里是一个自定义 Python 程序的示范：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/systemd/system/myapp.service</span></span><br><span class="line"><span class="attr">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=<span class="string">My Custom App</span></span><br><span class="line"><span class="attr">After</span>=<span class="string">network.target</span></span><br><span class="line"></span><br><span class="line"><span class="attr">[Service]</span></span><br><span class="line"><span class="attr">User</span>=<span class="string">foo</span></span><br><span class="line"><span class="attr">Group</span>=<span class="string">foo</span></span><br><span class="line"><span class="attr">WorkingDirectory</span>=<span class="string">/home/foo/projects/mydaemon</span></span><br><span class="line"><span class="attr">ExecStart</span>=<span class="string">/usr/bin/local/python3.7 app.py</span></span><br><span class="line"><span class="attr">Restart</span>=<span class="string">on-failure</span></span><br><span class="line"></span><br><span class="line"><span class="attr">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=<span class="string">multi-user.target</span></span><br></pre></td></tr></table></figure>
+<h2 id="FUSE">FUSE</h2>
+<p><strong>FUSE</strong> 是<strong>用户空间文件系统</strong>的英文缩写，简单来说就是以一个用户身份自己设计实现一个文件系统，当然本质上是在调用操作系统内核文件相关的系统调用命令。不过，出于安全方面的考虑，UNIX 并不支持 FUSE。</p>
+<p>可能你会好奇，系统自带的文件系统挺好的，我干嘛要重新设计一个呢？下面有一些例子，可以参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/libfuse/sshfs">sshfs</a> 通过 ssh 在本地打开远程节点的文件</li>
+<li><a target="_blank" rel="noopener" href="https://rclone.org/commands/rclone_mount/">rclone</a> 安装 Dropbox、GDrive、Amazon S3 或 Google Cloud Storage 等云存储服务并在本地打开数据</li>
+<li><a target="_blank" rel="noopener" href="https://nuetzlich.net/gocryptfs/">gocryptfs</a> 加密覆盖系统，它的文件和文件夹都是加密过的，然后通过这个系统明文访问，具体细节可以看官网演示</li>
+<li><a target="_blank" rel="noopener" href="https://keybase.io/docs/kbfs">kbfs</a> 端到端加密的文件系统</li>
+<li><a target="_blank" rel="noopener" href="https://borgbackup.readthedocs.io/en/stable/usage/mount.html">borgbackup</a></li>
+</ul>
+<h2 id="备份">备份</h2>
+<p><strong>备份 backups</strong> 这个概念应当和<strong>副本 copy</strong> 区别开，上传到云盘也不算备份，尽管 Google Drive 和 Dropbox 很方便，但当数据被破坏时，它们也会把错误同步。</p>
+<p>可以参考 <a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/2019/backups/">2019 年 missing 的备份话题章节</a></p>
+<h2 id="APIs">APIs</h2>
+<p>很多在线服务都提供 <strong>API</strong> 接口供用户访问，我做过不少 Web 服务，这里不再赘述了。有的 API 需要权限，可以通过 <a target="_blank" rel="noopener" href="https://www.oauth.com/">OAuth</a> 扮演特定角色去访问。</p>
+<h2 id="命令行模板">命令行模板</h2>
+<p>如果你对命令一无所知，也可以使用 man 命令直接查看对应程序的使用手册。但大部分程序在设置 flag 时都遵循某些约定俗成的规则：</p>
+<ul>
+<li><code>--help</code> 简略版的使用说明</li>
+<li><code>--version</code> 或者 <code>-V</code> 版本号</li>
+<li><code>--verbose</code> 或者 <code>-v</code> 打印输出，有的程序支持 <code>-vvv</code>，v 越多打印语句越详细</li>
+<li><code>--quite</code> 只打印错误信息</li>
+<li><code>-r</code> 通常来说具有破坏性的命令（比如删除）是不递归的，需要你手动指定<strong>递归标志</strong></li>
+</ul>
+<h2 id="VPNs">VPNs</h2>
+<p>中国有防火墙的存在，所以我们经常通过 VPNs 的访问方式来与外网通信。但实际上在正常的网络访问中，“机场” 和 ISP 本身没什么区别，它们都能够截获你的流量和日志，但是你的通信内容是被 https 保护的。所以在使用 VPNs 时，我们只需要关心网络质量即可。</p>
+<h2 id="Hammerspoon">Hammerspoon</h2>
+<p><a target="_blank" rel="noopener" href="https://www.hammerspoon.org/">Hammerspoon</a> 是 macOS 的桌面自动化框架，它允许你编写挂接到操作系统功能的 Lua 脚本，从而和键盘、鼠标、窗口、显示器、文件系统等进行交互。</p>
+<h2 id="Docker-Vagrant-Cloud">Docker, Vagrant, Cloud</h2>
+<p><a target="_blank" rel="noopener" href="https://www.vagrantup.com/">Vagrant</a> 允许你用代码对虚拟机配置进行描述，包括操作系统、服务和包等，然后键入 <code>vagrant up</code> 就能将虚拟机实例化。<a target="_blank" rel="noopener" href="https://www.docker.com/">Docker</a> 在概念上类似，但它使用轻量级容器而不是虚拟机。</p>
+<p>你也可以在云端租用虚拟机，它有如下好处：</p>
+<ul>
+<li>永远在线的<strong>公网 IP</strong></li>
+<li>机器可自由配置资源</li>
+<li>以便宜的价格同时持有多台机器（比如一千台）</li>
+</ul>
+<h2 id="GitHub">GitHub</h2>
+<p>在 GitHub，你有两种方式参与到开源项目中：</p>
+<ul>
+<li>提 <strong>issue</strong>，一般是报错和请求新特性，甚至都不需要你去读代码。</li>
+<li>提 <strong>pull request</strong>，你可以 <code>fork</code> 某个项目到本地，新建一个分支，然后修 bug 或者实现一个新特性，最后创建一个 <strong>pull request</strong>，项目管理员会审核你的补丁，如果通过会加入到主干上。通常来说，大型项目都有贡献指南，标记那些对初学者较友好的 <strong>issue</strong>，有的甚至有指导计划来引导初学者。</li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>MIT 6.Null 大杂烩</p><p><a href="https://zion4h.github.io/2023/05/07/mit-6-null-potpourri/">https://zion4h.github.io/2023/05/07/mit-6-null-potpourri/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-05-07</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/shell/">shell</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/05/20/read-hackers-and-painters/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">读《黑客与画家》有感</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/05/04/mit-6-null-security/"><span class="level-item">MIT 6.Null 安全和密码学</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "c5d4822e0556b98373e13d001af4863a",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#键盘映射"><span class="level-left"><span class="level-item">1</span><span class="level-item">键盘映射</span></span></a></li><li><a class="level is-mobile" href="#守护进程"><span class="level-left"><span class="level-item">2</span><span class="level-item">守护进程</span></span></a></li><li><a class="level is-mobile" href="#FUSE"><span class="level-left"><span class="level-item">3</span><span class="level-item">FUSE</span></span></a></li><li><a class="level is-mobile" href="#备份"><span class="level-left"><span class="level-item">4</span><span class="level-item">备份</span></span></a></li><li><a class="level is-mobile" href="#APIs"><span class="level-left"><span class="level-item">5</span><span class="level-item">APIs</span></span></a></li><li><a class="level is-mobile" href="#命令行模板"><span class="level-left"><span class="level-item">6</span><span class="level-item">命令行模板</span></span></a></li><li><a class="level is-mobile" href="#VPNs"><span class="level-left"><span class="level-item">7</span><span class="level-item">VPNs</span></span></a></li><li><a class="level is-mobile" href="#Hammerspoon"><span class="level-left"><span class="level-item">8</span><span class="level-item">Hammerspoon</span></span></a></li><li><a class="level is-mobile" href="#Docker-Vagrant-Cloud"><span class="level-left"><span class="level-item">9</span><span class="level-item">Docker, Vagrant, Cloud</span></span></a></li><li><a class="level is-mobile" href="#GitHub"><span class="level-left"><span class="level-item">10</span><span class="level-item">GitHub</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
