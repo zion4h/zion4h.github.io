@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2025-04-19T15:09:09.803Z</updated>
+  <updated>2025-04-23T03:32:14.959Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://zion4h.github.io/2025/04/19/2025-4-19-Gpu-go-through/"/>
     <id>https://zion4h.github.io/2025/04/19/2025-4-19-Gpu-go-through/</id>
     <published>2025-04-19T13:54:57.000Z</published>
-    <updated>2025-04-19T15:09:09.803Z</updated>
+    <updated>2025-04-23T03:32:14.959Z</updated>
     
     
     <summary type="html">&lt;p&gt;公司新到一批 8 卡 48 GB RTX 4090 服务器，用于深度学习任务的多租户调度。本文记录从系统安装、磁盘分区、GPU 直通到虚拟机克隆全过程中踩过的坑与解决方案，以备后查，也希望能给同样需求的同学一些参考。&lt;/p&gt;</summary>
