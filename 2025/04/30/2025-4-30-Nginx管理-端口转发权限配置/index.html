@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Nginx 管理&amp;端口转发权限配置 - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Nginx 是一款高性能 Web 服务器和反向代理工具，非常适合搭建多实例服务，统一管理外部访问端口与权限。本文记录完整的安装、配置 SSL&amp;#x2F;Basic Auth、实例化端口转发以及日志调试全流程，希望对需要集中运维或微服务网关的同学有所助益。"><meta property="og:type" content="blog"><meta property="og:title" content="Nginx 管理&amp;端口转发权限配置"><meta property="og:url" content="https://zion4h.github.io/2025/04/30/2025-4-30-Nginx%E7%AE%A1%E7%90%86-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="Nginx 是一款高性能 Web 服务器和反向代理工具，非常适合搭建多实例服务，统一管理外部访问端口与权限。本文记录完整的安装、配置 SSL&amp;#x2F;Basic Auth、实例化端口转发以及日志调试全流程，希望对需要集中运维或微服务网关的同学有所助益。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://zion4h.github.io/img/og_image.png"><meta property="article:published_time" content="2025-04-30T07:46:36.000Z"><meta property="article:modified_time" content="2025-04-30T08:33:52.548Z"><meta property="article:author" content="zion h4"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://zion4h.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2025/04/30/2025-4-30-Nginx%E7%AE%A1%E7%90%86-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE/"},"headline":"Nginx 管理&端口转发权限配置","image":["https://zion4h.github.io/img/og_image.png"],"datePublished":"2025-04-30T07:46:36.000Z","dateModified":"2025-04-30T08:33:52.548Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"Nginx 是一款高性能 Web 服务器和反向代理工具，非常适合搭建多实例服务，统一管理外部访问端口与权限。本文记录完整的安装、配置 SSL&#x2F;Basic Auth、实例化端口转发以及日志调试全流程，希望对需要集中运维或微服务网关的同学有所助益。"}</script><link rel="canonical" href="https://zion4h.github.io/2025/04/30/2025-4-30-Nginx%E7%AE%A1%E7%90%86-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-04-30T07:46:36.000Z" title="4/30/2025, 3:46:36 PM">2025-04-30</time>发表</span><span class="level-item"><time dateTime="2025-04-30T08:33:52.548Z" title="4/30/2025, 4:33:52 PM">2025-04-30</time>更新</span><span class="level-item">7 分钟读完 (大约1010个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">Nginx 管理&amp;端口转发权限配置</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>Nginx 是一款高性能 Web 服务器和反向代理工具，非常适合搭建多实例服务，统一管理外部访问端口与权限。本文记录完整的安装、配置 SSL/Basic Auth、实例化端口转发以及日志调试全流程，希望对需要集中运维或微服务网关的同学有所助益。</p>
+<span id="more"></span>
+<hr>
+<h3 id="一、安装-Nginx-及相关工具">一、安装 Nginx 及相关工具</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install nginx</span><br></pre></td></tr></table></figure>
+<h4 id="安装-SSL-证书工具（Certbot）和生成自签名证书">安装 SSL 证书工具（Certbot）和生成自签名证书</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install certbot python3-certbot-nginx</span><br><span class="line">sudo <span class="built_in">mkdir</span> -p /etc/nginx/ssl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自签名证书生成示例</span></span><br><span class="line">sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \</span><br><span class="line">    -keyout /etc/nginx/ssl/10.10.90.60.key \</span><br><span class="line">    -out /etc/nginx/ssl/10.10.90.60.crt \</span><br><span class="line">    -subj <span class="string">&quot;/CN=10.10.90.60&quot;</span> \</span><br><span class="line">    -addext <span class="string">&quot;subjectAltName=IP:10.10.90.60&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="二、HTTPS-加密-Basic-Auth-安全认证">二、HTTPS 加密 &amp; Basic Auth 安全认证</h3>
+<p>Nginx 支持灵活的 SSL 配置和基础 HTTP 认证，有效隔离未授权访问，实现 IP/端口级控制。</p>
+<h4 id="生成-HTTP-Basic-Auth-账户密码文件">生成 HTTP Basic Auth 账户密码文件</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install apache2-utils</span><br><span class="line">sudo htpasswd -c /etc/nginx/.htpasswd admin</span><br></pre></td></tr></table></figure>
+<h4 id="在-server-段落中插入如下配置开启认证及证书（重点摘录）：">在 server 段落中插入如下配置开启认证及证书（重点摘录）：</h4>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span> <span class="number">10.10.90.39</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># SSL（自签名示例）</span></span><br><span class="line">    <span class="attribute">ssl_certificate</span>     /etc/nginx/ssl/<span class="number">10.10.90.39</span>.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/nginx/ssl/<span class="number">10.10.90.39</span>.key;</span><br><span class="line">    <span class="attribute">ssl_protocols</span>       TLSv1.<span class="number">2</span> TLSv1.<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># HTTP 基本认证</span></span><br><span class="line">    <span class="attribute">auth_basic</span> <span class="string">&quot;Restricted Access&quot;</span>;</span><br><span class="line">    <span class="attribute">auth_basic_user_file</span> /etc/nginx/.htpasswd;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... 省略其他 location...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="三、实例化多端口、多实例的灵活转发策略">三、实例化多端口、多实例的灵活转发策略</h3>
+<p>传统的固定端口方式效率较低，通过 Nginx 的<code>map</code>、正则和变量，可轻松实现一套入口根据不同路径/标志符转发至后端不同机器或容器的指定端口。</p>
+<h4 id="支持-WebSocket-透传，以及复杂-URL-重写：">支持 WebSocket 透传，以及复杂 URL 重写：</h4>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="comment"># ... 省略常规配置。..</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 实例名到后端地址映射（后续可拓展为环节热更新）</span></span><br><span class="line">    <span class="attribute">map</span> <span class="variable">$instance_name</span> <span class="variable">$backend</span> &#123;</span><br><span class="line">        <span class="attribute">comfy1</span>  <span class="number">10.10.90.49:8188</span>;</span><br><span class="line">        <span class="attribute">comfy2</span>  <span class="number">10.10.90.25:8188</span>;</span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line">        <span class="attribute">comfytest1</span>  <span class="number">10.10.90.49:8188</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 提取 WebSocket 请求，用于单独存日志以及升级代理</span></span><br><span class="line">    <span class="attribute">map</span> <span class="variable">$http_upgrade</span> <span class="variable">$is_websocket</span> &#123;</span><br><span class="line">        <span class="attribute">default</span>      <span class="number">0</span>;</span><br><span class="line">        &quot;websocket&quot;  1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">log_format</span> websocket <span class="string">&#x27;<span class="variable">$remote_addr</span> - <span class="variable">$http_upgrade</span> [<span class="variable">$time_local</span>] &quot;<span class="variable">$host</span>&quot; &quot;<span class="variable">$request</span>&quot;&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="动态分流-Location（正则-变量-proxy-pass）">动态分流 Location（正则+变量+proxy_pass）</h4>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">    <span class="comment"># ...ssl/basic auth 见上文。..</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># /comfy1/path, /comfy2/path 自动甄别分流    </span></span><br><span class="line">    <span class="section">location</span> <span class="regexp">~ ^/(?&lt;instance_name&gt;comfy\d+)(?:/?)(?&lt;route_path&gt;/.*)$</span> &#123;</span><br><span class="line">        <span class="attribute">set</span> <span class="variable">$proxy_full_url</span> <span class="string">&quot;http://<span class="variable">$backend</span><span class="variable">$route_path</span><span class="variable">$is_args</span><span class="variable">$args</span>&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">proxy_http_version</span>      <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span>        Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span>        Connection <span class="string">&quot;Upgrade&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">access_log</span>   /var/log/nginx/websocket.log websocket if=<span class="variable">$is_websocket</span>;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">proxy_pass</span>   http://<span class="variable">$backend</span><span class="variable">$route_path</span><span class="variable">$is_args</span><span class="variable">$args</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 上游信息写入日志便于追溯</span></span><br><span class="line">        <span class="attribute">access_log</span>   /var/log/nginx/debug_access.log debug_fmt;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host              <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP         <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For   <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>TIP:</strong><br>
+<code>proxy_pass</code>结合 map 和正则变量，实现了【多实例切换】【WebSocket 直通】【只暴露一个 443 端口】的多功能入口。日志格式自定义便于调试追踪。</p>
+</blockquote>
+<hr>
+<h3 id="四、调试建议与配置管理经验">四、调试建议与配置管理经验</h3>
+<h4 id="热加载生效-配置测试">热加载生效 &amp; 配置测试</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -t      <span class="comment"># 测试语法</span></span><br><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure>
+<h4 id="管理站点可用性">管理站点可用性</h4>
+<p>保持配置结构简单易控，对 site 独立成 conf 文件，并软链管理：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">ln</span> -s /etc/nginx/sites-available/ip-proxy.conf \</span><br><span class="line">           /etc/nginx/sites-enabled/ip-proxy.conf</span><br></pre></td></tr></table></figure>
+<h4 id="日志调优">日志调优</h4>
+<p>对不同场景分别制定格式，尤其是 debug 和 websocket，避免统一日志难以溯源。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">log_format</span> debug_fmt <span class="string">&#x27;[<span class="variable">$time_local</span>] Instance:&quot;<span class="variable">$instance_name</span>&quot;|Backend:&quot;<span class="variable">$backend</span>&quot;|Route:&quot;<span class="variable">$route_path</span>&quot;|Client:<span class="variable">$remote_addr</span>-&gt;<span class="variable">$request</span>|Status:<span class="variable">$status</span>|ProxyPass:&quot;<span class="variable">$proxy_full_url</span>&quot;|&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="五、自我思考与扩展建议">五、自我思考与扩展建议</h3>
+<ul>
+<li><strong>安全优先：</strong> 强烈建议上线时更换自签名为 Let’s Encrypt 或企业可信 CA, 并根据实际关闭低安全协议。</li>
+<li><strong>变量式映射更灵活：</strong> 每新增实例无需改动回填上游映射即可，方便批量批次发布。</li>
+<li><strong>WebSocket 兼容：</strong> 长连接应用与数据推送均可支持。</li>
+<li><strong>日志精准：</strong> 滚动分类型存储便于排查。</li>
+<li><strong>定期复审配置与密钥，避免泄露风险</strong></li>
+</ul>
+<hr>
+<blockquote>
+<p>本文为实战向总结，着力兼顾易用性、安全性和可扩展性。如有更优实践，欢迎留言讨论。</p>
+</blockquote>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Nginx 管理&amp;端口转发权限配置</p><p><a href="https://zion4h.github.io/2025/04/30/2025-4-30-Nginx管理-端口转发权限配置/">https://zion4h.github.io/2025/04/30/2025-4-30-Nginx管理-端口转发权限配置/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-04-30</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-30</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/04/30/2025-4-30-%E4%BD%BF%E7%94%A8IFB%E5%AE%9E%E7%8E%B0Linux%E7%BD%91%E5%8D%A1%E5%85%A5%E5%8F%A3%E9%99%90%E9%80%9F/"><span class="level-item">使用 Linux 流量控制（ifb+tc）实现 Host 上下行带宽管理实录</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "01eb798046b95035aaa525ffeed3ce53",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#一、安装-Nginx-及相关工具"><span class="level-left"><span class="level-item">1</span><span class="level-item">一、安装 Nginx 及相关工具</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#安装-SSL-证书工具（Certbot）和生成自签名证书"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">安装 SSL 证书工具（Certbot）和生成自签名证书</span></span></a></li></ul></li><li><a class="level is-mobile" href="#二、HTTPS-加密-Basic-Auth-安全认证"><span class="level-left"><span class="level-item">2</span><span class="level-item">二、HTTPS 加密 &amp; Basic Auth 安全认证</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#生成-HTTP-Basic-Auth-账户密码文件"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">生成 HTTP Basic Auth 账户密码文件</span></span></a></li><li><a class="level is-mobile" href="#在-server-段落中插入如下配置开启认证及证书（重点摘录）："><span class="level-left"><span class="level-item">2.2</span><span class="level-item">在 server 段落中插入如下配置开启认证及证书（重点摘录）：</span></span></a></li></ul></li><li><a class="level is-mobile" href="#三、实例化多端口、多实例的灵活转发策略"><span class="level-left"><span class="level-item">3</span><span class="level-item">三、实例化多端口、多实例的灵活转发策略</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#支持-WebSocket-透传，以及复杂-URL-重写："><span class="level-left"><span class="level-item">3.1</span><span class="level-item">支持 WebSocket 透传，以及复杂 URL 重写：</span></span></a></li><li><a class="level is-mobile" href="#动态分流-Location（正则-变量-proxy-pass）"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">动态分流 Location（正则+变量+proxy_pass）</span></span></a></li></ul></li><li><a class="level is-mobile" href="#四、调试建议与配置管理经验"><span class="level-left"><span class="level-item">4</span><span class="level-item">四、调试建议与配置管理经验</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#热加载生效-配置测试"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">热加载生效 &amp; 配置测试</span></span></a></li><li><a class="level is-mobile" href="#管理站点可用性"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">管理站点可用性</span></span></a></li><li><a class="level is-mobile" href="#日志调优"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">日志调优</span></span></a></li></ul></li><li><a class="level is-mobile" href="#五、自我思考与扩展建议"><span class="level-left"><span class="level-item">5</span><span class="level-item">五、自我思考与扩展建议</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

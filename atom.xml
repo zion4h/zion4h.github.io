@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2025-04-30T07:04:19.290Z</updated>
+  <updated>2025-04-30T08:33:52.548Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -15,6 +15,21 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Nginx 管理&amp;端口转发权限配置</title>
+    <link href="https://zion4h.github.io/2025/04/30/2025-4-30-Nginx%E7%AE%A1%E7%90%86-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE/"/>
+    <id>https://zion4h.github.io/2025/04/30/2025-4-30-Nginx%E7%AE%A1%E7%90%86-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE/</id>
+    <published>2025-04-30T07:46:36.000Z</published>
+    <updated>2025-04-30T08:33:52.548Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Nginx 是一款高性能 Web 服务器和反向代理工具，非常适合搭建多实例服务，统一管理外部访问端口与权限。本文记录完整的安装、配置 SSL/Basic Auth、实例化端口转发以及日志调试全流程，希望对需要集中运维或微服务网关的同学有所助益。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>使用 Linux 流量控制（ifb+tc）实现 Host 上下行带宽管理实录</title>
@@ -47,7 +62,7 @@
     <link href="https://zion4h.github.io/2025/04/19/2025-4-19-Gpu-go-through/"/>
     <id>https://zion4h.github.io/2025/04/19/2025-4-19-Gpu-go-through/</id>
     <published>2025-04-19T13:54:57.000Z</published>
-    <updated>2025-04-30T07:06:45.075Z</updated>
+    <updated>2025-04-30T07:44:09.044Z</updated>
     
     
     <summary type="html">&lt;p&gt;公司新到一批 8 卡 48 GB RTX 4090 服务器，用于深度学习任务的多租户调度。本文记录从系统安装、磁盘分区、GPU 直通到虚拟机克隆全过程中踩过的坑与解决方案，以备后查，也希望能给同样需求的同学一些参考。&lt;/p&gt;</summary>
@@ -410,29 +425,6 @@
     
     
     <category term="TODO" scheme="https://zion4h.github.io/tags/TODO/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>最小生成树</title>
-    <link href="https://zion4h.github.io/2023/06/10/algirithm-mst/"/>
-    <id>https://zion4h.github.io/2023/06/10/algirithm-mst/</id>
-    <published>2023-06-10T09:06:03.000Z</published>
-    <updated>2025-04-19T08:22:12.039Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;strong&gt;最小生成树&lt;/strong&gt;源于最短电路连接，我们希望连接所有组件的针脚，同时又巴不得连线最短。由于连接了全部点，同时无环，因此又叫最小树。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="算法" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="算法" scheme="https://zion4h.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-    <category term="MST" scheme="https://zion4h.github.io/tags/MST/"/>
     
   </entry>
   
