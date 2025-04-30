@@ -16,8 +16,7 @@ toc: true
 
 ```bash
 #!/bin/bash
-
-virsh list --all | grep "shut off" | awk "{print \$2}" | while read vm; do 
+virsh list --all --state-shutoff --name | while read vm; do 
     echo "尝试启动虚拟机: $vm" 
     virsh start "$vm" 
     if [ $? -eq 0 ]; then 

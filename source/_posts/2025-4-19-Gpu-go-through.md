@@ -91,12 +91,13 @@ lspci -k -s 23:00.0
 
 ## 4. NVMe 分区与挂载
 
+将磁盘格式化为ext4（why？）后，查看其uuid，在写入文件表后将它挂载。
+
 ```bash
-parted /dev/nvme0n1 << 'EOF'
+parted /dev/nvme0n1
 mklabel gpt
 mkpart primary 0% 100%
 quit
-EOF
 
 mkfs.ext4 -L data_nvme0 /dev/nvme0n1p1
 
