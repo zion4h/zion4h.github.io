@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2025-04-23T03:39:26.289Z</updated>
+  <updated>2025-04-30T07:04:19.290Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>使用 Linux 流量控制（ifb+tc）实现 Host 上下行带宽管理实录</title>
+    <link href="https://zion4h.github.io/2025/04/30/2025-4-30-%E4%BD%BF%E7%94%A8IFB%E5%AE%9E%E7%8E%B0Linux%E7%BD%91%E5%8D%A1%E5%85%A5%E5%8F%A3%E9%99%90%E9%80%9F/"/>
+    <id>https://zion4h.github.io/2025/04/30/2025-4-30-%E4%BD%BF%E7%94%A8IFB%E5%AE%9E%E7%8E%B0Linux%E7%BD%91%E5%8D%A1%E5%85%A5%E5%8F%A3%E9%99%90%E9%80%9F/</id>
+    <published>2025-04-30T06:52:44.000Z</published>
+    <updated>2025-04-30T07:04:19.290Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;为实现对 Host 的上下行速度控制，需要借助 Linux 流量控制相关工具。Linux 流量控制包含三个部分：&lt;strong&gt;流量分类、流量标记、流量策略&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;我主要参考了 &lt;a href=&quot;https://wiki.archlinux.org/title/Advanced_traffic_control&quot;&gt;ArchWiki Advanced traffic control&lt;/a&gt;。资料中提到需要禁用 &lt;strong&gt;TCP 分段卸载（TSO）&lt;/strong&gt;——否则它会绕过 tc 去节省 CPU（实际上是“负优化”）。不过，由于我本身用 ifb + tbf 提前处理了流量，这个问题表面上看并未暴露，但为保险起见，我依然把每个 host 的 tso 都关掉了。（参考：&lt;a href=&quot;https://www.suse.com/support/kb/doc/?id=000016894&quot;&gt;SUSE 关于 TSO 关闭说明&lt;/a&gt;）&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Linux" scheme="https://zion4h.github.io/categories/Linux/"/>
+    
+    <category term="Network" scheme="https://zion4h.github.io/categories/Linux/Network/"/>
+    
+    
+    <category term="tc" scheme="https://zion4h.github.io/tags/tc/"/>
+    
+    <category term="ifb" scheme="https://zion4h.github.io/tags/ifb/"/>
+    
+    <category term="流控，带宽管理" scheme="https://zion4h.github.io/tags/%E6%B5%81%E6%8E%A7%EF%BC%8C%E5%B8%A6%E5%AE%BD%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
     <title>服务器 KVM 虚拟化 + GPU 直通部署记录</title>
     <link href="https://zion4h.github.io/2025/04/19/2025-4-19-Gpu-go-through/"/>
     <id>https://zion4h.github.io/2025/04/19/2025-4-19-Gpu-go-through/</id>
     <published>2025-04-19T13:54:57.000Z</published>
-    <updated>2025-04-23T03:39:26.289Z</updated>
+    <updated>2025-04-30T07:06:45.075Z</updated>
     
     
     <summary type="html">&lt;p&gt;公司新到一批 8 卡 48 GB RTX 4090 服务器，用于深度学习任务的多租户调度。本文记录从系统安装、磁盘分区、GPU 直通到虚拟机克隆全过程中踩过的坑与解决方案，以备后查，也希望能给同样需求的同学一些参考。&lt;/p&gt;</summary>
@@ -59,7 +85,7 @@
     <link href="https://zion4h.github.io/2025/04/19/2025-4-19-systemd-practic/"/>
     <id>https://zion4h.github.io/2025/04/19/2025-4-19-systemd-practic/</id>
     <published>2025-04-19T10:24:39.000Z</published>
-    <updated>2025-04-24T02:56:04.107Z</updated>
+    <updated>2025-04-30T07:06:08.364Z</updated>
     
     
     <summary type="html">&lt;p&gt;最近遇到一个需求，需要使用 &lt;code&gt;systemd&lt;/code&gt; 实现 KVM 虚拟机的自动重启功能。&lt;/p&gt;</summary>
@@ -407,33 +433,6 @@
     <category term="算法" scheme="https://zion4h.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
     <category term="MST" scheme="https://zion4h.github.io/tags/MST/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>C++ 入门/扫盲</title>
-    <link href="https://zion4h.github.io/2023/06/09/programming-intro-cpp/"/>
-    <id>https://zion4h.github.io/2023/06/09/programming-intro-cpp/</id>
-    <published>2023-06-09T00:18:00.000Z</published>
-    <updated>2025-04-19T08:22:12.057Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;简单列出一些 C++ 语言的特点和知识，目前处于 “知其然” 阶段。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="编程" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="C++" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/C/"/>
-    
-    <category term="扫盲" scheme="https://zion4h.github.io/categories/%E7%BC%96%E7%A8%8B/C/%E6%89%AB%E7%9B%B2/"/>
-    
-    
-    <category term="TODO" scheme="https://zion4h.github.io/tags/TODO/"/>
-    
-    <category term="c++" scheme="https://zion4h.github.io/tags/c/"/>
-    
-    <category term="入门" scheme="https://zion4h.github.io/tags/%E5%85%A5%E9%97%A8/"/>
     
   </entry>
   
