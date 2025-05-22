@@ -13,6 +13,63 @@ toc: true
 <!--more-->
 
 ---
+## 前言：为什么要给宿主机“系上安全带”？
+
+这台物理服务器运行着 8 个 KVM 虚拟机，分别承载实时推理与文件同步等业务。当虚拟机切换模型或版本时，需要从主机预置的模型仓库拉取大体积文件。为了减少公网带宽浪费，我把「模型下载、镜像更新」统一下沉到宿主机，由它先行完成外网下载，再让虚拟机通过 10 GbE 内部网络极速同步（实际测试约 380MBps+， 接近磁盘速度）。
+
+问题很快出现：
+
+1. 宿主机在短时间内“满血”跑 wget/aria2c，公网出口被 200 Mbit/s​+ 的流量抢占。
+2. 虚拟机的日常业务——尤其是用户上传日志、实时推理结果回传——立刻遭遇高 RTT、包重传甚至超时。
+3. 简单的 trickle、aria2c --max-download-limit 无法覆盖所有场景，比如重装系统时 dnf/apt 依赖下载同样会把带宽吃光。
+
+因此，我希望满足三点需求：
+- 虚拟机完全不限速，继续用满带宽做业务；
+- 宿主机出网（上传）≤ 50 Mbit/s，入网（下载）≤ 100 Mbit/s；
+- 方案可脚本化、一次配置后随系统启动自动生效。
+
+Linux Traffic Control（tc）配合 IFB 虚拟网卡正好满足这一目标：
+- 用 tbf/qdisc 对宿主机 egress 做简单上传限速；
+- 用 ingress + mirred redirect + ifb 把宿主机 download 流量“转送”到虚拟网卡上，再做下行限速；
+- 对同一物理网卡上绑着的 KVM vNIC 不做任何规则，让它们继续全速跑。
+
+---
+
+## IFB 原理与数据通路
+
+为什么需要 IFB？因为 Linux 内核在 **ingress** 方向只能做 *policing*（丢包），不能做 *shaping*（排队、匀速发包）。借助 IFB，我们把“入口流量”变成“出口流量”，就能挂任何 egress-qdisc（TBF/HTB/FQ-CodeL 等）来精细限速。
+
+数据流向可分五步（示例网卡 `eno1`，虚拟网卡 `ifb0`）：
+
+```
++-------+   +------+                 +------+
+|ingress|   |egress|   +---------+   |egress|
+|qdisc  +--->qdisc +--->netfilter+--->qdisc |
+|eth1   |   |ifb1  |   +---------+   |eth1  |
++-------+   +------+                 +------+
+```
+
+逐项拆解：
+
+1. NIC 收到下行数据包，驱动把 skb 交给内核。
+2. 在 `eno1` 的 `ingress qdisc`（句柄默认 `ffff:`）上执行 u32 filter；  
+   我们用 `mirred egress redirect dev ifb0` 把 skb 的 `dev` 字段改写成 `ifb0` 并“重新注入”协议栈，等价于“流量被扔进另一张虚拟网卡”。
+3. skb 现在是以 **ifb0 → egress** 的身份继续向前，因此能套上任何 egress-qdisc；我们对这里做 *shaping*，达到“宿主机下载限速”目的。
+4. 排完队的 skb 进入路由子系统（和普通本机发包无异），决定还是走 `eno1`。
+5. 最终到达 `eno1` 的 egress qdisc（此处我们另外挂 TBF 做“上传限速”），再交给驱动下发。
+
+关键事实与常见误解
+- IFB 并不能“提前”截流；包必须先进入物理网卡，才能被镜像到 IFB。  
+- 经过 mirred 的 skb 会重新走一次 netfilter，因此 iptables / nftables 统计会把这部分包算作“本地产生”，不要被双计数吓到。  
+- ingress qdisc 只能做 policer（如 `police rate 100mbit drop`）；真正的排队靠 ifb。  
+- TSO/GRO/LRO 若未关闭，仍可能让大包绕过 qdisc，生产环境建议全关或至少关掉 TSO/GSO。
+
+参考阅读  
+- kernel doc `Documentation/networking/ifb.rst` [link](https://wiki.linuxfoundation.org/networking/ifb)
+- Thomas Graf《Linux Traffic Control – Mirred Action Deep Dive》 
+- [StackExchange: “How is the IFB device positioned in the packet flow of the Linux kernel?”](https://unix.stackexchange.com/questions/288959/how-is-the-ifb-device-positioned-in-the-packet-flow-of-the-linux-kernel)
+
+---
 
 ## 需求与网络结构
 
@@ -26,32 +83,6 @@ toc: true
 - **出口上传带宽限制**非常简单，通过 qdisc 队列即可：
     - （一条命令搞定）
 - **入口下载带宽限制**较难，在物理层面通常需要通过路由器丢包实现；但本地可用 ifb 虚拟网卡来处理进入 eno1 的流量。
-
----
-
-## IFB 原理和包流程
-
-参考：  
-- [How is the ifb device positioned in the packet flow of the Linux kernel?](https://unix.stackexchange.com/questions/288959/how-is-the-ifb-device-positioned-in-the-packet-flow-of-the-linux-kernel)
-
-实际上，并不是“流量打到 ifb 再打到 eno1”，而是：
-
-1. 先进入 eno1；
-2. 再进入 ifb；
-3. 从 ifb 的 egress 出来；
-4. 最终还是从 eno1 egress 发出。
-
-可简要流程图如下：
-
-```
-+-------+   +------+                 +------+
-|ingress|   |egress|   +---------+   |egress|
-|qdisc  +--->qdisc +--->netfilter+--->qdisc |
-|eth1   |   |ifb1  |   +---------+   |eth1  |
-+-------+   +------+                 +------+
-```
-
-更多细节可以参阅：[linux-ip.net ifb 数据通路结构详细解释](http://linux-ip.net/gl/tc-filters/tc-filters-node3.html)
 
 ---
 

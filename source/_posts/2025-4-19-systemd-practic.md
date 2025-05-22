@@ -17,13 +17,13 @@ toc: true
 ```bash
 #!/bin/bash
 virsh list --all --state-shutoff --name | while read vm; do 
-    echo "尝试启动虚拟机: $vm" 
+    echo "尝试启动虚拟机：$vm" 
     virsh start "$vm" 
     if [ $? -eq 0 ]; then 
-        echo "成功启动虚拟机: $vm"
-        logger -t VM_AUTOSTART "启动记录: $vm"
+        echo "成功启动虚拟机：$vm"
+        logger -t VM_AUTOSTART "启动记录：$vm"
     else 
-        echo "启动失败: $vm" >&2 
+        echo "启动失败：$vm" >&2 
     fi
 done
 ```
