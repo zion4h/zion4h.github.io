@@ -26,7 +26,7 @@ categories:
 
 ---
 
-# 0. 环境 & 踩坑摘要
+## 0. 环境 & 踩坑摘要
 
 | 角色 | 说明 |
 | ---- | ---- |
@@ -45,15 +45,15 @@ categories:
 下面按模块展开。
 
 ---
-# 1．Nginx 负载监控  
+## 1．Nginx 负载监控  
 
 本节目标：在 **Docker-Compose** 环境中构建一套「带 VTS 模块」的 Nginx 镜像，并通过 `nginx-vts-exporter` 把 QPS、延迟分位数、状态码分布等指标推送到 Prometheus。下面给出 **完整、可直接粘贴的** `compose`、`Dockerfile` 与 `nginx.conf`，同时解释每一行到底干了什么。  
 
 ---
 
-## 1.1 直接使用自编译 VTS 模块的 Nginx
+### 1.1 直接使用自编译 VTS 模块的 Nginx
 
-### 1.1.1 docker-compose.yml 片段
+#### 1.1.1 docker-compose.yml 片段
 
 ```yaml
 services:
@@ -102,7 +102,7 @@ services:
 
 ---
 
-### 1.1.2 Dockerfile（双阶段编译）
+#### 1.1.2 Dockerfile（双阶段编译）
 
 > 文件放在 `./nginx-vts/Dockerfile`
 
@@ -172,7 +172,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 ---
 
-### 1.1.3 nginx.conf（精简只展示 VTS 相关）
+#### 1.1.3 nginx.conf（精简只展示 VTS 相关）
 
 > 文件放在 `./nginx-vts/nginx.conf`
 
@@ -228,7 +228,7 @@ Tips
 
 ---
 
-### 1.1.4 Prometheus 抓取示例（仅供参考）
+#### 1.1.4 Prometheus 抓取示例（仅供参考）
 
 ```yaml
 scrape_configs:
@@ -251,12 +251,12 @@ nginx_vts_filter_bytes_in_total{filter="upstream",upstream="backend"}  # 流量
 
 ---
 
-# 2．ComfyUI 存活监控 & 重启计数  
+## 2．ComfyUI 存活监控 & 重启计数  
 本节把「ComfyUI HTTP 探活 + 自动发现目标 + 告警」完整打通，而且**不用传统 cron**。黑盒探针仍采用官方 `prom/blackbox-exporter`，目标文件由一个极简 **sidecar** 守护脚本循环生成，全部交给 Docker-Compose 管理。
 
 ---
 
-## 2.1 Blackbox Exporter 服务
+### 2.1 Blackbox Exporter 服务
 
 `docker-compose.yml` 片段：  
 
@@ -277,14 +277,13 @@ blackbox-exporter:
   restart: unless-stopped
 ```
 
-### 解释  
 1. `blackbox.yml` 里只保留自定义模块 `comfy_https`（见下一小节）。  
 2. 密码通过 Docker Secret 注入：`/run/secrets/comfy_pass`。  
 3. 监听 9115，Prometheus 抓这个端口即可。
 
 ---
 
-## 2.2 Blackbox 配置 `blackbox.yml`
+### 2.2 Blackbox 配置 `blackbox.yml`
 
 > 文件路径：`./blackbox/blackbox.yml`
 
@@ -309,11 +308,11 @@ modules:
 
 ---
 
-## 2.3 动态目标：File-SD，但不用 cron
+### 2.3 动态目标：File-SD，但不用 cron
 
 思路：起一个极简 sidecar **每 60 秒写一次**目标文件；Prometheus 自带的 `file_sd_configs` 负责热加载，无需 cron/系统定时器。
 
-### 2.3.1 共享目标目录
+#### 2.3.1 共享目标目录
 
 先在 Compose 顶部声明一个卷，用于 **Prometheus 与 sidecar 共享**：
 
@@ -322,7 +321,7 @@ volumes:
   comfy_targets:
 ```
 
-### 2.3.2 Prometheus 抓取配置
+#### 2.3.2 Prometheus 抓取配置
 
 ```yaml
 scrape_configs:
@@ -363,7 +362,7 @@ prometheus:
 
 ---
 
-## 2.4 告警规则（Alertmanager）
+### 2.4 告警规则（Alertmanager）
 
 TODO
 
@@ -387,13 +386,12 @@ groups:
 
 ---
 
-# 3．GPU 指标采集（DCGM-Exporter 方案）
+## 3．GPU 指标采集（DCGM-Exporter 方案）
 
 目标：把显卡温度、功耗、显存占用、核心利用率等 DCGM 指标全部送进 Prometheus，随后在 Grafana 导入官方 Dashboard `DCGM Exporter / NVIDIA Data Center GPU Manager (ID: 12239)` 即可直接出图。
 
 ---
-
-## 3.1 服务定义：`gpu-exporter`
+### 3.1 服务定义：`gpu-exporter`
 
 ```yaml
 ###############################################################################
@@ -421,7 +419,7 @@ services:
 
 ---
 
-## 3.2 Prometheus 抓取配置
+### 3.2 Prometheus 抓取配置
 
 ```yaml
 scrape_configs:
@@ -443,7 +441,7 @@ scrape_configs:
 
 ---
 
-## 3.3 常见指标速查
+### 3.3 常见指标速查
 
 | 指标 | 含义 | 典型阈值 |
 | ---- | ---- | -------- |
@@ -454,7 +452,7 @@ scrape_configs:
 
 ---
 
-## 3.4 Grafana 快速出图
+### 3.4 Grafana 快速出图
 
 1. 在 Grafana → Dashboards → Import  
 2. 输入 `12239`（官方 DCGM Dashboard ID）  
@@ -468,9 +466,9 @@ scrape_configs:
 
 ---
 
-# 4. Docker & VPN 网段冲突处理
+## 4. Docker & VPN 网段冲突处理
 
-## 4.1 一劳永逸：限制 Docker 地址池
+### 4.1 一劳永逸：限制 Docker 地址池
 
 `/etc/docker/daemon.json`
 
@@ -484,7 +482,7 @@ scrape_configs:
 
 `systemctl restart docker`
 
-## 4.2 快速兜底：统一外部网络 dnet1
+### 4.2 快速兜底：统一外部网络 dnet1
 
 ```bash
 docker network create \
@@ -504,7 +502,7 @@ networks:
 
 ---
 
-# 5. 最终 docker-compose.monitor.yml（完整版）
+## 5. 最终 docker-compose.monitor.yml（完整版）
 
 ```yaml
 services:
@@ -597,7 +595,7 @@ networks:
 
 ---
 
-# 6. 小结
+## 6. 小结
 
 1. **Nginx** 用 VTS 模块 / exporter 拿到完整维度  
 2. **ComfyUI** 用 Blackbox + file SD，2 分钟探活告警  
