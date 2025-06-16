@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2025-04-30T08:33:52.548Z</updated>
+  <updated>2025-06-16T06:13:19.570Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -15,6 +15,41 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Prometheus 全链路监控实战： Nginx QPS、ComfyUI 存活、GPU 指标，到 Docker-VPN 网段踩坑记录</title>
+    <link href="https://zion4h.github.io/2025/06/09/2025-6-9-Prometheus%E8%BF%9B%E9%98%B6-Nginx%E8%B4%9F%E8%BD%BD%E3%80%81Comfy%E5%AD%98%E6%B4%BB%E3%80%81GPU%E8%8A%82%E7%82%B9%E4%B8%8EYAML%E7%B2%BE%E7%AE%80/"/>
+    <id>https://zion4h.github.io/2025/06/09/2025-6-9-Prometheus%E8%BF%9B%E9%98%B6-Nginx%E8%B4%9F%E8%BD%BD%E3%80%81Comfy%E5%AD%98%E6%B4%BB%E3%80%81GPU%E8%8A%82%E7%82%B9%E4%B8%8EYAML%E7%B2%BE%E7%AE%80/</id>
+    <published>2025-06-09T06:00:00.000Z</published>
+    <updated>2025-06-16T06:13:19.570Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;一篇给团队新人看的「一把梭」笔记：&lt;br&gt;
+• 打开 Nginx 详细指标（QPS / P99 / 5xx）&lt;br&gt;
+• 用 Blackbox 监控 ComfyUI 是否挂掉&lt;br&gt;
+• GPU 机器指标怎么进 Prometheus&lt;br&gt;
+• Docker-Compose + VPN 网段冲突到底怎么解决&lt;br&gt;
+• 最后把冗长的 Prometheus YAML 缩成 1/2&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;能抄就抄，能跑就行&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="Ops" scheme="https://zion4h.github.io/categories/Ops/"/>
+    
+    
+    <category term="Prometheus" scheme="https://zion4h.github.io/tags/Prometheus/"/>
+    
+    <category term="Nginx" scheme="https://zion4h.github.io/tags/Nginx/"/>
+    
+    <category term="GPU" scheme="https://zion4h.github.io/tags/GPU/"/>
+    
+    <category term="Blackbox" scheme="https://zion4h.github.io/tags/Blackbox/"/>
+    
+    <category term="Docker" scheme="https://zion4h.github.io/tags/Docker/"/>
+    
+  </entry>
   
   <entry>
     <title>Nginx 管理&amp;端口转发权限配置</title>
@@ -402,29 +437,6 @@
     
     
     <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>函数式编程</title>
-    <link href="https://zion4h.github.io/2023/06/14/programming-lambda/"/>
-    <id>https://zion4h.github.io/2023/06/14/programming-lambda/</id>
-    <published>2023-06-14T00:02:49.000Z</published>
-    <updated>2025-04-19T08:22:12.058Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html"></summary>
-        
-      
-    
-    
-    
-    
-    <category term="TODO" scheme="https://zion4h.github.io/tags/TODO/"/>
     
   </entry>
   
