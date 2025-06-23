@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>接口请求签名与认证的两种方案对比 - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="目录  为什么一定要做“签名 + 认证” 方案一：自定义 Ed25519 报文级签名 方案二：JWT（Ed25519 EdDSA） 维度对照总表 场景化选型建议 结语"><meta property="og:type" content="blog"><meta property="og:title" content="接口请求签名与认证的两种方案对比"><meta property="og:url" content="https://zion4h.github.io/2025/06/18/2025-6-18-%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E7%AD%BE%E5%90%8D%E4%B8%8E%E8%AE%A4%E8%AF%81%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="目录  为什么一定要做“签名 + 认证” 方案一：自定义 Ed25519 报文级签名 方案二：JWT（Ed25519 EdDSA） 维度对照总表 场景化选型建议 结语"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://zion4h.github.io/img/og_image.png"><meta property="article:published_time" content="2025-06-18T06:49:45.000Z"><meta property="article:modified_time" content="2025-06-18T09:38:35.605Z"><meta property="article:author" content="zion h4"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://zion4h.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2025/06/18/2025-6-18-%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E7%AD%BE%E5%90%8D%E4%B8%8E%E8%AE%A4%E8%AF%81%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/"},"headline":"接口请求签名与认证的两种方案对比","image":["https://zion4h.github.io/img/og_image.png"],"datePublished":"2025-06-18T06:49:45.000Z","dateModified":"2025-06-18T09:38:35.605Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"目录  为什么一定要做“签名 + 认证” 方案一：自定义 Ed25519 报文级签名 方案二：JWT（Ed25519 EdDSA） 维度对照总表 场景化选型建议 结语"}</script><link rel="canonical" href="https://zion4h.github.io/2025/06/18/2025-6-18-%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E7%AD%BE%E5%90%8D%E4%B8%8E%E8%AE%A4%E8%AF%81%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-06-18T06:49:45.000Z" title="6/18/2025, 2:49:45 PM">2025-06-18</time>发表</span><span class="level-item"><time dateTime="2025-06-18T09:38:35.605Z" title="6/18/2025, 5:38:35 PM">2025-06-18</time>更新</span><span class="level-item">11 分钟读完 (大约1711个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">接口请求签名与认证的两种方案对比</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>目录</p>
+<ol>
+<li>为什么一定要做“签名 + 认证”</li>
+<li>方案一：自定义 Ed25519 报文级签名</li>
+<li>方案二：JWT（Ed25519 EdDSA）</li>
+<li>维度对照总表</li>
+<li>场景化选型建议</li>
+<li>结语</li>
+</ol>
+<span id="more"></span>
+<h2 id="为什么一定要做「签名-认证」">为什么一定要做「签名 + 认证」</h2>
+<p>认证 (Authentication)：谁在访问？<br>
+完整性 (Integrity)：请求内容在传输途中是否被篡改？<br>
+抗重放 (Replay)：同一帧数据会不会被复制多次发动攻击？</p>
+<p>只要是在公网、跨团队或跨语言调用 REST／GraphQL／gRPC／WebSocket，甚至 IoT MQTT，都绕不开上面三个问题。最常见做法就是“在每个请求上做签名，再让服务端验签”。下面给出两套可以直接落地的方案。</p>
+<h2 id="方案一：自定义-Ed25519-报文级签名">方案一：自定义 Ed25519 报文级签名</h2>
+<h3 id="工作原理">工作原理</h3>
+<ol>
+<li>客户端保存 <strong>私钥</strong>（48 B PKCS#8 DER，再 base64 存储）。</li>
+<li>每次请求：
+<ol>
+<li>取 UTC 秒级时间戳 <code>timestamp</code></li>
+<li><code>bodyBytes = json.Marshal(body)</code></li>
+<li><code>msg = timestamp || bodyBytes</code></li>
+<li><code>signature = Ed25519.Sign(privKey, msg)</code></li>
+<li>把 3 个头一并发出
+<ul>
+<li><code>X-Timestamp</code></li>
+<li><code>X-Public-Key</code> (base64 DER，44 B)</li>
+<li><code>X-Signature</code>  (base64，64 B)</li>
+<li>（可选）再叠一层 Basic Auth / mTLS</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>服务端：
+<ul>
+<li>校验时间戳 ±N 秒</li>
+<li>用 <code>X-Public-Key</code> 还原公钥</li>
+<li>重新拼 <code>msg′ = timestamp || body</code>，执行 <code>ed25519.Verify(...)</code></li>
+<li>通过返回 200，失败直接 401/403</li>
+</ul>
+</li>
+</ol>
+<h3 id="完整-Go-代码">完整 Go 代码</h3>
+<h4 id="客户端——生成头并发送">客户端——生成头并发送</h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ---------------- 公共结构体 ----------------</span></span><br><span class="line"><span class="keyword">type</span> APIRequest <span class="keyword">struct</span> &#123;</span><br><span class="line">	Host     <span class="type">string</span> <span class="string">`json:&quot;host&quot;`</span></span><br><span class="line">	Username <span class="type">string</span> <span class="string">`json:&quot;username&quot;`</span></span><br><span class="line">	Command  <span class="type">string</span> <span class="string">`json:&quot;command&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------------- 计算签名 ----------------</span></span><br><span class="line"><span class="keyword">type</span> SignResult <span class="keyword">struct</span> &#123;</span><br><span class="line">	XTimestamp <span class="type">string</span></span><br><span class="line">	XPublicKey <span class="type">string</span></span><br><span class="line">	XSignature <span class="type">string</span></span><br><span class="line">	SignedBody []<span class="type">byte</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">MakeEd25519Headers</span><span class="params">(privBase64 <span class="type">string</span>, body APIRequest)</span></span> (*SignResult, <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="keyword">const</span> (</span><br><span class="line">		privDERLen      = <span class="number">48</span></span><br><span class="line">		seedStartIdx    = <span class="number">16</span></span><br><span class="line">		pubPrefix       = <span class="string">&quot;MCowBQYDK2VwAyEA&quot;</span> <span class="comment">// 12 B 固定前缀的 base64 表示</span></span><br><span class="line">		timestampFmt    = <span class="string">&quot;20060102150405&quot;</span></span><br><span class="line">	)</span><br><span class="line">	der, err := base64.StdEncoding.DecodeString(privBase64)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> || <span class="built_in">len</span>(der) != privDERLen &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, fmt.Errorf(<span class="string">&quot;decode priv base64: %w&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	seed := der[seedStartIdx:]</span><br><span class="line">	privKey := ed25519.NewKeyFromSeed(seed)</span><br><span class="line">	pubKey := privKey.Public().(ed25519.PublicKey)</span><br><span class="line"></span><br><span class="line">	bodyBytes, _ := json.Marshal(body)</span><br><span class="line">	ts := time.Now().UTC().Format(timestampFmt)</span><br><span class="line">	msg := <span class="built_in">append</span>([]<span class="type">byte</span>(ts), bodyBytes...)</span><br><span class="line"></span><br><span class="line">	sig := ed25519.Sign(privKey, msg)</span><br><span class="line">	pubDER, _ := base64.StdEncoding.DecodeString(pubPrefix)</span><br><span class="line">	pubDER = <span class="built_in">append</span>(pubDER, pubKey...)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> &amp;SignResult&#123;</span><br><span class="line">		XTimestamp: ts,</span><br><span class="line">		XPublicKey: base64.StdEncoding.EncodeToString(pubDER),</span><br><span class="line">		XSignature: base64.StdEncoding.EncodeToString(sig),</span><br><span class="line">		SignedBody: bodyBytes,</span><br><span class="line">	&#125;, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------------- 发送 HTTP ----------------</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SendSignedRequest</span><span class="params">(url <span class="type">string</span>, body APIRequest, sig *SignResult)</span></span> (<span class="type">string</span>, <span class="type">string</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	j, _ := json.Marshal(body)</span><br><span class="line">	req, _ := http.NewRequest(<span class="string">&quot;POST&quot;</span>, url, bytes.NewReader(j))</span><br><span class="line">	req.Header.Set(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/json&quot;</span>)</span><br><span class="line">	req.Header.Set(<span class="string">&quot;X-Timestamp&quot;</span>, sig.XTimestamp)</span><br><span class="line">	req.Header.Set(<span class="string">&quot;X-Public-Key&quot;</span>, sig.XPublicKey)</span><br><span class="line">	req.Header.Set(<span class="string">&quot;X-Signature&quot;</span>, sig.XSignature)</span><br><span class="line"></span><br><span class="line">	cli := &amp;http.Client&#123;Timeout: <span class="number">8</span> * time.Second&#125;</span><br><span class="line">	resp, err := cli.Do(req)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, <span class="string">&quot;&quot;</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line">	b, _ := io.ReadAll(resp.Body)</span><br><span class="line">	<span class="keyword">return</span> resp.Status, <span class="type">string</span>(b), <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="服务端——验签中间件">服务端——验签中间件</h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">verifyEd25519</span><span class="params">(next http.Handler)</span></span> http.Handler &#123;</span><br><span class="line">	<span class="keyword">const</span> skew = <span class="number">30</span> * time.Second</span><br><span class="line">	<span class="keyword">const</span> pubPrefixLen = <span class="number">12</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> http.HandlerFunc(<span class="function"><span class="keyword">func</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">		tsStr := r.Header.Get(<span class="string">&quot;X-Timestamp&quot;</span>)</span><br><span class="line">		pubStr := r.Header.Get(<span class="string">&quot;X-Public-Key&quot;</span>)</span><br><span class="line">		sigStr := r.Header.Get(<span class="string">&quot;X-Signature&quot;</span>)</span><br><span class="line">		<span class="keyword">if</span> tsStr == <span class="string">&quot;&quot;</span> || pubStr == <span class="string">&quot;&quot;</span> || sigStr == <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line">			http.Error(w, <span class="string">&quot;missing hdr&quot;</span>, <span class="number">401</span>); <span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 1. 时钟偏移</span></span><br><span class="line">		ts, _ := time.ParseInLocation(<span class="string">&quot;20060102150405&quot;</span>, tsStr, time.UTC)</span><br><span class="line">		<span class="keyword">if</span> d := time.Since(ts); d &gt; skew || d &lt; -skew &#123;</span><br><span class="line">			http.Error(w, <span class="string">&quot;expired&quot;</span>, <span class="number">401</span>); <span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 2. 公钥 &amp; 签名还原</span></span><br><span class="line">		pubDER, _ := base64.StdEncoding.DecodeString(pubStr)</span><br><span class="line">		<span class="keyword">if</span> <span class="built_in">len</span>(pubDER) &lt;= pubPrefixLen &#123;</span><br><span class="line">			http.Error(w, <span class="string">&quot;pub too short&quot;</span>, <span class="number">401</span>); <span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">		pubKey := ed25519.PublicKey(pubDER[pubPrefixLen:])</span><br><span class="line">		sig, _ := base64.StdEncoding.DecodeString(sigStr)</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 3. 读取 body &amp; 验签</span></span><br><span class="line">		body, _ := io.ReadAll(r.Body)</span><br><span class="line">		msg := <span class="built_in">append</span>([]<span class="type">byte</span>(tsStr), body...)</span><br><span class="line">		<span class="keyword">if</span> !ed25519.Verify(pubKey, msg, sig) &#123;</span><br><span class="line">			http.Error(w, <span class="string">&quot;bad signature&quot;</span>, <span class="number">401</span>); <span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 4. 复写 body 继续业务</span></span><br><span class="line">		r.Body = io.NopCloser(bytes.NewReader(body))</span><br><span class="line">		next.ServeHTTP(w, r)</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="优缺点小结">优缺点小结</h3>
+<p>优点</p>
+<ul>
+<li>100 % Stateless，仅依赖 3 个自定义头</li>
+<li>报文极小（~108 B）</li>
+<li>仅依赖标准库 <code>crypto/ed25519 + encoding/base64</code></li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>只能证明“这条报文来自这把公钥”，无法嵌入角色、过期等信息</li>
+<li>客户端换钥需要升级配置</li>
+<li>无跨语言标准，需要自己维护 SDK 和文档</li>
+</ul>
+<h2 id="方案二：JWT（Ed25519-EdDSA-签名）">方案二：JWT（Ed25519 EdDSA 签名）</h2>
+<h3 id="工作原理-2">工作原理</h3>
+<p>Token = <code>base64url(header).base64url(payload).base64url(signature)</code></p>
+<ul>
+<li>header：<code>alg=EdDSA</code>，可选 <code>kid</code></li>
+<li>payload：可存 <code>sub</code>（主体）、<code>exp</code>（过期）、<code>role</code>（角色）、<code>tenant_id</code> 等</li>
+<li>signature：用同一把 Ed25519 私钥签名</li>
+<li>客户端用 <code>Authorization: Bearer &lt;token&gt;</code> 携带</li>
+</ul>
+<h3 id="完整-Go-代码-2">完整 Go 代码</h3>
+<h4 id="客户端——签出-JWT">客户端——签出 JWT</h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// go get github.com/golang-jwt/jwt/v5</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">IssueJWT</span><span class="params">(privBase64, subject <span class="type">string</span>, ttl time.Duration)</span></span> (<span class="type">string</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="keyword">const</span> privDERLen = <span class="number">48</span></span><br><span class="line">	<span class="keyword">const</span> seedStartIdx = <span class="number">16</span></span><br><span class="line"></span><br><span class="line">	der, _ := base64.StdEncoding.DecodeString(privBase64)</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(der) != privDERLen &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, errors.New(<span class="string">&quot;bad key len&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	seed := der[seedStartIdx:]</span><br><span class="line">	priv := ed25519.NewKeyFromSeed(seed)</span><br><span class="line"></span><br><span class="line">	claims := jwt.RegisteredClaims&#123;</span><br><span class="line">		Subject:   subject,</span><br><span class="line">		ExpiresAt: jwt.NewNumericDate(time.Now().Add(ttl)),</span><br><span class="line">		Issuer:    <span class="string">&quot;cli-tool&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	tok := jwt.NewWithClaims(jwt.SigningMethodEdDSA, claims)</span><br><span class="line">	<span class="keyword">return</span> tok.SignedString(priv)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="客户端——发送请求">客户端——发送请求</h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SendJWTRequest</span><span class="params">(url, jwtToken <span class="type">string</span>, body APIRequest)</span></span> (<span class="type">string</span>, <span class="type">string</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	j, _ := json.Marshal(body)</span><br><span class="line">	req, _ := http.NewRequest(<span class="string">&quot;POST&quot;</span>, url, bytes.NewReader(j))</span><br><span class="line">	req.Header.Set(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/json&quot;</span>)</span><br><span class="line">	req.Header.Set(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;Bearer &quot;</span>+jwtToken)</span><br><span class="line"></span><br><span class="line">	cli := &amp;http.Client&#123;Timeout: <span class="number">8</span> * time.Second&#125;</span><br><span class="line">	resp, err := cli.Do(req)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, <span class="string">&quot;&quot;</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line">	b, _ := io.ReadAll(resp.Body)</span><br><span class="line">	<span class="keyword">return</span> resp.Status, <span class="type">string</span>(b), <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="服务端——验证中间件">服务端——验证中间件</h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">jwtMiddleware</span><span class="params">(pubDERBase64 <span class="type">string</span>, next http.Handler)</span></span> http.Handler &#123;</span><br><span class="line">	<span class="keyword">const</span> pubPrefixLen = <span class="number">12</span></span><br><span class="line">	<span class="keyword">return</span> http.HandlerFunc(<span class="function"><span class="keyword">func</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">		auth := r.Header.Get(<span class="string">&quot;Authorization&quot;</span>)</span><br><span class="line">		<span class="keyword">if</span> !strings.HasPrefix(auth, <span class="string">&quot;Bearer &quot;</span>) &#123;</span><br><span class="line">			http.Error(w, <span class="string">&quot;missing bearer&quot;</span>, <span class="number">401</span>); <span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">		tokenStr := strings.TrimPrefix(auth, <span class="string">&quot;Bearer &quot;</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 1. 解析公钥</span></span><br><span class="line">		pubDER, _ := base64.StdEncoding.DecodeString(pubDERBase64)</span><br><span class="line">		<span class="keyword">if</span> <span class="built_in">len</span>(pubDER) &lt;= pubPrefixLen &#123;</span><br><span class="line">			http.Error(w, <span class="string">&quot;bad pub&quot;</span>, <span class="number">401</span>); <span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">		pubKey := ed25519.PublicKey(pubDER[pubPrefixLen:])</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 2. Parse &amp; Validate</span></span><br><span class="line">		t, err := jwt.Parse(tokenStr, <span class="function"><span class="keyword">func</span><span class="params">(tok *jwt.Token)</span></span> (any, <span class="type">error</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span> tok.Method != jwt.SigningMethodEdDSA &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">nil</span>, fmt.Errorf(<span class="string">&quot;unexpected alg&quot;</span>)</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> pubKey, <span class="literal">nil</span></span><br><span class="line">		&#125;)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> || !t.Valid &#123;</span><br><span class="line">			http.Error(w, <span class="string">&quot;unauthorized: &quot;</span>+err.Error(), <span class="number">401</span>); <span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 3. 可把 claims 放进 ctx</span></span><br><span class="line">		ctx := context.WithValue(r.Context(), <span class="string">&quot;claims&quot;</span>, t.Claims)</span><br><span class="line">		next.ServeHTTP(w, r.WithContext(ctx))</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="优缺点小结-2">优缺点小结</h3>
+<p>优点</p>
+<ul>
+<li>payload 可自由写租户、角色、过期、jti（可做黑名单）</li>
+<li><code>kid</code> + JWKS 支持不停机密钥轮换</li>
+<li>生态成熟，浏览器 / 移动端 / Python / Java … 全有库</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>Token 本身 200 ~ 800 B，占带宽</li>
+<li>依赖第三方库 <code>github.com/golang-jwt/jwt/v5</code></li>
+<li>设计不当易造成权限泄漏（例如过期时间过长）</li>
+</ul>
+<h2 id="维度对照总表">维度对照总表</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>自定义 Ed25519 签名</th>
+<th>JWT / EdDSA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>认证对象</td>
+<td>公钥 == 身份，或再叠 Basic/mTLS</td>
+<td>payload.sub / tenant / role 等</td>
+</tr>
+<tr>
+<td>额外声明</td>
+<td>几乎没有（可再造头）</td>
+<td>payload 任意字段</td>
+</tr>
+<tr>
+<td>抗重放</td>
+<td>依赖时间戳 ±窗口</td>
+<td>exp / nbf / jti</td>
+</tr>
+<tr>
+<td>Key Rotation</td>
+<td>客户端手动换配置</td>
+<td>kid + JWKS 热替换</td>
+</tr>
+<tr>
+<td>报文大小</td>
+<td>3 个头约 108 B</td>
+<td>Bearer 200–800 B</td>
+</tr>
+<tr>
+<td>跨语言生态</td>
+<td>自写 SDK</td>
+<td><a target="_blank" rel="noopener" href="http://jwt.io">jwt.io</a> 完整生态</td>
+</tr>
+<tr>
+<td>典型场景</td>
+<td>内网 S2S、IoT 边缘、窄带场景</td>
+<td>BFF、移动端、三方开放 API</td>
+</tr>
+</tbody>
+</table>
+<h2 id="场景化选型建议">场景化选型建议</h2>
+<ul>
+<li>单体或少量微服务、全部 Go 语言 —— 选 Ed25519 自定义签名，依赖少、带宽省。</li>
+<li>面向前端 / 移动 / 第三方伙伴 —— 选 JWT，标准化、省对接成本。</li>
+<li>需要抗重放 / 加权限 / 单点登录 —— 直接用 JWT，免造 jti / exp 机制。</li>
+<li>极端窄带（LoRa、NB-IoT）或硬件受限 —— 继续用纯签名方案，甚至可再精简。</li>
+<li>高安全场景 —— Ed25519 做“消息完整性”，外层叠 mTLS／JWT 做“身份 + 会话”，双保险。</li>
+</ul>
+<h2 id="结语">结语</h2>
+<p>两条技术路线各有侧重：</p>
+<ul>
+<li>自定义 Ed25519 →「最小依赖 + 最小报文 + 最小功能」</li>
+<li>JWT →「功能丰富 + 生态成熟 + 易扩展」</li>
+</ul>
+<p>只要弄清业务边界、带宽约束、团队规模与未来演进，选型并不困难。希望本文能帮助 Go 开发者在“接口签名 / 认证”这道必考题上做出合适选择。Happy Coding!</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>接口请求签名与认证的两种方案对比</p><p><a href="https://zion4h.github.io/2025/06/18/2025-6-18-接口请求签名与认证的两种方案对比/">https://zion4h.github.io/2025/06/18/2025-6-18-接口请求签名与认证的两种方案对比/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-06-18</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-06-18</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2025/06/23/2025-6-23-SSH%E7%99%BB%E9%99%86/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">SSH 登陆与证书化实践</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/06/09/2025-6-9-Prometheus%E8%BF%9B%E9%98%B6-Nginx%E8%B4%9F%E8%BD%BD%E3%80%81Comfy%E5%AD%98%E6%B4%BB%E3%80%81GPU%E8%8A%82%E7%82%B9%E4%B8%8EYAML%E7%B2%BE%E7%AE%80/"><span class="level-item">Prometheus 全链路监控实战： Nginx QPS、ComfyUI 存活、GPU 指标，到 Docker-VPN 网段踩坑记录</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "c2d4bacb3968c2aa2febb2a002b74e99",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#为什么一定要做「签名-认证」"><span class="level-left"><span class="level-item">1</span><span class="level-item">为什么一定要做「签名 + 认证」</span></span></a></li><li><a class="level is-mobile" href="#方案一：自定义-Ed25519-报文级签名"><span class="level-left"><span class="level-item">2</span><span class="level-item">方案一：自定义 Ed25519 报文级签名</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#工作原理"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">工作原理</span></span></a></li><li><a class="level is-mobile" href="#完整-Go-代码"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">完整 Go 代码</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#客户端——生成头并发送"><span class="level-left"><span class="level-item">2.2.1</span><span class="level-item">客户端——生成头并发送</span></span></a></li><li><a class="level is-mobile" href="#服务端——验签中间件"><span class="level-left"><span class="level-item">2.2.2</span><span class="level-item">服务端——验签中间件</span></span></a></li></ul></li><li><a class="level is-mobile" href="#优缺点小结"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">优缺点小结</span></span></a></li></ul></li><li><a class="level is-mobile" href="#方案二：JWT（Ed25519-EdDSA-签名）"><span class="level-left"><span class="level-item">3</span><span class="level-item">方案二：JWT（Ed25519 EdDSA 签名）</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#工作原理-2"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">工作原理</span></span></a></li><li><a class="level is-mobile" href="#完整-Go-代码-2"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">完整 Go 代码</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#客户端——签出-JWT"><span class="level-left"><span class="level-item">3.2.1</span><span class="level-item">客户端——签出 JWT</span></span></a></li><li><a class="level is-mobile" href="#客户端——发送请求"><span class="level-left"><span class="level-item">3.2.2</span><span class="level-item">客户端——发送请求</span></span></a></li><li><a class="level is-mobile" href="#服务端——验证中间件"><span class="level-left"><span class="level-item">3.2.3</span><span class="level-item">服务端——验证中间件</span></span></a></li></ul></li><li><a class="level is-mobile" href="#优缺点小结-2"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">优缺点小结</span></span></a></li></ul></li><li><a class="level is-mobile" href="#维度对照总表"><span class="level-left"><span class="level-item">4</span><span class="level-item">维度对照总表</span></span></a></li><li><a class="level is-mobile" href="#场景化选型建议"><span class="level-left"><span class="level-item">5</span><span class="level-item">场景化选型建议</span></span></a></li><li><a class="level is-mobile" href="#结语"><span class="level-left"><span class="level-item">6</span><span class="level-item">结语</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

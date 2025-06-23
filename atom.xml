@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2025-06-16T06:22:31.938Z</updated>
+  <updated>2025-06-23T07:15:39.533Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -15,6 +15,61 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SSH 登陆与证书化实践</title>
+    <link href="https://zion4h.github.io/2025/06/23/2025-6-23-SSH%E7%99%BB%E9%99%86/"/>
+    <id>https://zion4h.github.io/2025/06/23/2025-6-23-SSH%E7%99%BB%E9%99%86/</id>
+    <published>2025-06-23T02:59:22.000Z</published>
+    <updated>2025-06-23T07:15:39.533Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;strong&gt;目录&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;原理速记&lt;/li&gt;
+&lt;li&gt;ssh-copy-id —— 一键分发公钥&lt;/li&gt;
+&lt;li&gt;ssh-agent —— 私钥只解锁一次&lt;/li&gt;
+&lt;li&gt;小团队高频变更？上 SSH CA&lt;/li&gt;
+&lt;li&gt;最小实验环境&lt;/li&gt;
+&lt;li&gt;FAQ&lt;/li&gt;
+&lt;li&gt;结语&lt;/li&gt;
+&lt;/ol&gt;</summary>
+    
+    
+    
+    
+    <category term="SSH" scheme="https://zion4h.github.io/tags/SSH/"/>
+    
+    <category term="安全" scheme="https://zion4h.github.io/tags/%E5%AE%89%E5%85%A8/"/>
+    
+    <category term="运维" scheme="https://zion4h.github.io/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+    <category term="CA" scheme="https://zion4h.github.io/tags/CA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>接口请求签名与认证的两种方案对比</title>
+    <link href="https://zion4h.github.io/2025/06/18/2025-6-18-%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E7%AD%BE%E5%90%8D%E4%B8%8E%E8%AE%A4%E8%AF%81%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/"/>
+    <id>https://zion4h.github.io/2025/06/18/2025-6-18-%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E7%AD%BE%E5%90%8D%E4%B8%8E%E8%AE%A4%E8%AF%81%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/</id>
+    <published>2025-06-18T06:49:45.000Z</published>
+    <updated>2025-06-18T09:38:35.605Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;目录&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;为什么一定要做“签名 + 认证”&lt;/li&gt;
+&lt;li&gt;方案一：自定义 Ed25519 报文级签名&lt;/li&gt;
+&lt;li&gt;方案二：JWT（Ed25519 EdDSA）&lt;/li&gt;
+&lt;li&gt;维度对照总表&lt;/li&gt;
+&lt;li&gt;场景化选型建议&lt;/li&gt;
+&lt;li&gt;结语&lt;/li&gt;
+&lt;/ol&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Prometheus 全链路监控实战： Nginx QPS、ComfyUI 存活、GPU 指标，到 Docker-VPN 网段踩坑记录</title>
@@ -386,48 +441,6 @@
     
     
     <summary type="html">&lt;p&gt;这个月同慧琳相识，确切地说应该是上个月。二人由双方家长牵头添了微信。初识并没擦出什么火花，尽管我强忍内心腼腆主动打了招呼，但有一搭没一搭聊着快一个小时后，话题戛然而止。总之，最后谁也不再多说一句话了。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
-    
-    
-    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2023 年 7-9 月</title>
-    <link href="https://zion4h.github.io/2023/10/16/life-diary-23-789/"/>
-    <id>https://zion4h.github.io/2023/10/16/life-diary-23-789/</id>
-    <published>2023-10-16T07:29:03.000Z</published>
-    <updated>2025-04-19T08:22:12.051Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;人毕竟是群居动物，当你做了一件惹人错愕的事时，群人并不立刻表现，反倒是抬头观望他者或主事者的表情。因为没人希望成为不假思索的配角，聪明结合着奴隶心态成了自缚的缘由。当然，一旦你立刻露怯，食物链下位者的身份立刻暴露无疑，“引蛇出洞” 已是第三层，早已超出通常无意识博弈的范畴。因此，在高度竞争环境中，错误的言行绝对不要承认。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
-    
-    
-    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2023 年 6 月</title>
-    <link href="https://zion4h.github.io/2023/07/16/life-diary-23-6/"/>
-    <id>https://zion4h.github.io/2023/07/16/life-diary-23-6/</id>
-    <published>2023-07-16T07:29:03.000Z</published>
-    <updated>2025-04-19T08:22:12.051Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;每个人能都在走捷径，但什么是捷径，什么又算成功。一个普罗大众眼里的 “成功人士”，一般来说是从小刻苦学习最后成功进入大公司或者公务员，然后便戛然而止。为什么成功者需要由失败者们去认可。“走开，挡着我晒太阳了” 大众不理解，皇帝也不理解。&lt;/p&gt;</summary>
     
     
     

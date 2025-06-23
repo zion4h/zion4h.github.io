@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>SSH 登陆与证书化实践 - Blowin&#039; in the Wind</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Welcome to H&#039;s Blog"><meta name="msapplication-TileImage" content="/img/kitty.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Welcome to H&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="目录  原理速记 ssh-copy-id —— 一键分发公钥 ssh-agent —— 私钥只解锁一次 小团队高频变更？上 SSH CA 最小实验环境 FAQ 结语"><meta property="og:type" content="blog"><meta property="og:title" content="SSH 登陆与证书化实践"><meta property="og:url" content="https://zion4h.github.io/2025/06/23/2025-6-23-SSH%E7%99%BB%E9%99%86/"><meta property="og:site_name" content="Blowin&#039; in the Wind"><meta property="og:description" content="目录  原理速记 ssh-copy-id —— 一键分发公钥 ssh-agent —— 私钥只解锁一次 小团队高频变更？上 SSH CA 最小实验环境 FAQ 结语"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://zion4h.github.io/img/og_image.png"><meta property="article:published_time" content="2025-06-23T02:59:22.000Z"><meta property="article:modified_time" content="2025-06-23T07:15:39.533Z"><meta property="article:author" content="zion h4"><meta property="article:tag" content="SSH"><meta property="article:tag" content="安全"><meta property="article:tag" content="运维"><meta property="article:tag" content="CA"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://zion4h.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://zion4h.github.io/2025/06/23/2025-6-23-SSH%E7%99%BB%E9%99%86/"},"headline":"SSH 登陆与证书化实践","image":["https://zion4h.github.io/img/og_image.png"],"datePublished":"2025-06-23T02:59:22.000Z","dateModified":"2025-06-23T07:15:39.533Z","author":{"@type":"Person","name":"zion h4"},"publisher":{"@type":"Organization","name":"Blowin' in the Wind","logo":{"@type":"ImageObject","url":"https://zion4h.github.io/img/kitty.png"}},"description":"目录  原理速记 ssh-copy-id —— 一键分发公钥 ssh-agent —— 私钥只解锁一次 小团队高频变更？上 SSH CA 最小实验环境 FAQ 结语"}</script><link rel="canonical" href="https://zion4h.github.io/2025/06/23/2025-6-23-SSH%E7%99%BB%E9%99%86/"><link rel="alternate" href="https://zion4h.github.io/atom.xml" title="Blowin&#039; in the Wind" type="application/atom+xml"><link rel="icon" href="/img/kitty.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/mono-blue.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a9f2a7370cea3cc47e78ce7e91a24ccc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="E57A0E10BC15ABA0F469F0806A5EDEB0"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-PB49LZ7RGB" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-PB49LZ7RGB');</script><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-06-23T02:59:22.000Z" title="6/23/2025, 10:59:22 AM">2025-06-23</time>发表</span><span class="level-item"><time dateTime="2025-06-23T07:15:39.533Z" title="6/23/2025, 3:15:39 PM">2025-06-23</time>更新</span><span class="level-item">10 分钟读完 (大约1563个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">SSH 登陆与证书化实践</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><strong>目录</strong></p>
+<ol>
+<li>原理速记</li>
+<li>ssh-copy-id —— 一键分发公钥</li>
+<li>ssh-agent —— 私钥只解锁一次</li>
+<li>小团队高频变更？上 SSH CA</li>
+<li>最小实验环境</li>
+<li>FAQ</li>
+<li>结语</li>
+</ol>
+<span id="more"></span>
+<hr>
+<h2 id="原理速记">原理速记</h2>
+<ol>
+<li>
+<p>每个用户在本地生成一对 <strong>非对称密钥</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;alice@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+<p>• 私钥 <code>~/.ssh/id_ed25519</code> 仅保存在本机<br>
+• 公钥 <code>~/.ssh/id_ed25519.pub</code> 追加到远端用户 <strong>~/.ssh/authorized_keys</strong> 即可完成免密登陆</p>
+</li>
+<li>
+<p>当 <code>authorized_keys</code> 会被 CM/定时任务覆盖时，可在服务端 <strong>/etc/ssh/sshd_config</strong> 启用第二个文件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AuthorizedKeysFile .ssh/authorized_keys .ssh/authorized_keys2</span><br></pre></td></tr></table></figure>
+<p>将个人公钥写入 <code>authorized_keys2</code>，与配置管理系统互不干扰。修改后执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl reload sshd</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<h2 id="ssh-copy-id-——-一键分发公钥">ssh-copy-id —— 一键分发公钥</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id alice@serverA</span><br></pre></td></tr></table></figure>
+<p>底层做的事：先正常 ssh 登陆，再把本地 <code>~/.ssh/id_*.pub</code> 追加到远端的 <code>authorized_keys</code>。<br>
+• 优点：一行命令，无需 <code>echo &gt;&gt;</code><br>
+• 缺点：一次只能处理「一台主机 &amp; 一位用户」，批量场景捉襟见肘</p>
+<hr>
+<h2 id="ssh-agent-——-私钥只解锁一次">ssh-agent —— 私钥只解锁一次</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(ssh-agent -s)</span>&quot;</span>        <span class="comment"># 启动 agent</span></span><br><span class="line">ssh-add ~/.ssh/id_ed25519     <span class="comment"># 加载私钥</span></span><br></pre></td></tr></table></figure>
+<p>• 首次输入私钥密码后即缓存在内存，后续连接无需重复输入<br>
+• <code>~/.ssh/config</code> 中加入 <code>AddKeysToAgent yes</code> 可自动加载<br>
+• macOS、Windows (Pageant/WSL) 均提供图形化托管</p>
+<hr>
+<h2 id="小团队高频变更？上-SSH-CA">小团队高频变更？上 <strong>SSH CA</strong></h2>
+<h3 id="3-1-痛点">3.1 痛点</h3>
+<p>N 台机器 × M 个人<br>
+• 传统模式：需维护 N × M 条公钥；新成员/离职/新服务器 → 全量同步，极易遗漏<br>
+• 权限收敛粒度有限，仅靠「加/删整行公钥」</p>
+<h3 id="3-2-核心思路">3.2 核心思路</h3>
+<ol>
+<li>由管理员创建一对 <strong>CA 私钥 / CA 公钥</strong></li>
+<li>仅 <strong>CA 公钥</strong> 下发到所有服务器，并在 <code>sshd_config</code> 中信任之</li>
+<li>用户公钥不再直接进服务器，而是先由 <strong>CA 私钥</strong> 签成 <em>证书</em> (<code>*-cert.pub</code>)</li>
+<li>用户本地携带「私钥 + 证书」即可登陆，服务器负责校验证书是否由受信 CA 签发且仍在有效期内</li>
+</ol>
+<h3 id="3-3-一次性基础设施">3.3 一次性基础设施</h3>
+<p>管理员机：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1) 生成 CA</span></span><br><span class="line">ssh-keygen -t ed25519 -f ~/ca_root -C <span class="string">&quot;company-user-ca&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2) 把公钥下发并写入 sshd_config</span></span><br><span class="line"><span class="keyword">for</span> h <span class="keyword">in</span> serverA serverB; <span class="keyword">do</span></span><br><span class="line">  scp ~/ca_root.pub root@<span class="variable">$h</span>:/etc/ssh/ca_root.pub</span><br><span class="line">  ssh root@<span class="variable">$h</span> <span class="string">&quot;echo &#x27;TrustedUserCAKeys /etc/ssh/ca_root.pub&#x27; &gt;&gt; /etc/ssh/sshd_config \</span></span><br><span class="line"><span class="string">               &amp;&amp; systemctl reload sshd&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-4-日常增删用户">3.4 日常增删用户</h3>
+<p>新增 <em>bob</em>，有效期 90 天，只允许以账号 bob 登陆：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -s ~/ca_root        \        <span class="comment"># CA 私钥</span></span><br><span class="line">           -I bob               \        <span class="comment"># 证书 ID</span></span><br><span class="line">           -n bob               \        <span class="comment"># principals（允许的登录名）</span></span><br><span class="line">           -V +90d              \        <span class="comment"># 有效期</span></span><br><span class="line">           -z 20250623001       \        <span class="comment"># 序列号，可用于撤销</span></span><br><span class="line">           ~/.ssh/bob.pub                <span class="comment"># 用户公钥</span></span><br><span class="line"><span class="comment"># 产出文件： ~/.ssh/bob-cert.pub</span></span><br></pre></td></tr></table></figure>
+<p>发送 <code>bob-cert.pub</code> 给用户，用户侧配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ~/.ssh/config</span></span><br><span class="line">Host *.corp</span><br><span class="line">  User bob</span><br><span class="line">  IdentityFile    ~/.ssh/bob           <span class="comment"># 私钥</span></span><br><span class="line">  CertificateFile ~/.ssh/bob-cert.pub  <span class="comment"># 证书</span></span><br></pre></td></tr></table></figure>
+<p>至此无需再触碰服务器。若要收回权限，只需把序号 <code>20250623001</code> 加入服务器的 <strong>RevokedKeys</strong> 列表并 reload sshd。</p>
+<h3 id="3-5-成本对比">3.5 成本对比</h3>
+<p>10 台机器 × 10 名成员<br>
+• 传统：100 次写 authorized_keys<br>
+• CA：下发 <strong>1 个 CA 公钥</strong> 到 10 台机器 + 签 10 份证书，共 <strong>20 次操作</strong><br>
+后续「加人/加机」都只需 <strong>1 步</strong>，线性成本</p>
+<hr>
+<h2 id="最小实验环境（Hands-on）">最小实验环境（Hands-on）</h2>
+<p>以下步骤可在两台虚拟机里 3 分钟跑通。</p>
+<h3 id="4-1-目录规划">4.1 目录规划</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/ssh-ca/&#123;ca,<span class="built_in">users</span>,hosts&#125;</span><br><span class="line"><span class="built_in">cd</span> ~/ssh-ca</span><br></pre></td></tr></table></figure>
+<h3 id="4-2-生成两类-CA（可选）">4.2 生成两类 CA（可选）</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用户 CA：用于给人签证书</span></span><br><span class="line">ssh-keygen -t ed25519 -f ca/user_ca -C <span class="string">&quot;User CA Key&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 主机 CA：用于给服务器自己签 Host 证书（可选）</span></span><br><span class="line">ssh-keygen -t ed25519 -f ca/host_ca -C <span class="string">&quot;Host CA Key&quot;</span></span><br></pre></td></tr></table></figure>
+<p>目录结构</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── ca</span><br><span class="line">│   ├── host_ca         host_ca.pub</span><br><span class="line">│   └── user_ca         user_ca.pub</span><br><span class="line">├── hosts               # 主机公钥/证书存放处</span><br><span class="line">└── users               # 用户公钥/证书存放处</span><br></pre></td></tr></table></figure>
+<h3 id="4-3-给某台服务器签-Host-证书（可选）">4.3 给某台服务器签 Host 证书（可选）</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1) 服务器上生成自身 host key（如已存在可跳过）</span></span><br><span class="line">sudo ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N <span class="string">&#x27;&#x27;</span> -C <span class="string">&#x27;host ed25519 key&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2) 用 host_ca 私钥签发</span></span><br><span class="line">sudo ssh-keygen -s ~/ssh-ca/ca/host_ca        \</span><br><span class="line">                -I host_10.10.90.105          \</span><br><span class="line">                -h                            \</span><br><span class="line">                -n 10.10.90.105               \</span><br><span class="line">                -V <span class="string">&#x27;+52w&#x27;</span>                     \</span><br><span class="line">                /etc/ssh/ssh_host_ed25519_key.pub</span><br><span class="line"><span class="comment"># 产出 /etc/ssh/ssh_host_ed25519_key-cert.pub</span></span><br></pre></td></tr></table></figure>
+<p>客户端将 <code>ca/host_ca.pub</code> 添入 <code>~/.ssh/known_hosts</code> 的 <code>@cert-authority</code> 记录后，即可基于证书校验主机身份，彻底告别 “yes/no” 指纹确认。</p>
+<h3 id="4-4-给用户签证书并登陆">4.4 给用户签证书并登陆</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># （管理员机）收到 bob 的 id_ed25519.pub</span></span><br><span class="line">ssh-keygen -s ca/user_ca -I bob -n bob -V +1d <span class="built_in">users</span>/bob.pub</span><br><span class="line"><span class="comment"># 产出 users/bob-cert.pub</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># （bob 本地）</span></span><br><span class="line"><span class="built_in">mv</span> <span class="built_in">users</span>/bob-cert.pub ~/.ssh/</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;</span></span><br><span class="line"><span class="string">Host server?.demo</span></span><br><span class="line"><span class="string">  User bob</span></span><br><span class="line"><span class="string">  IdentityFile    ~/.ssh/id_ed25519</span></span><br><span class="line"><span class="string">  CertificateFile ~/.ssh/bob-cert.pub</span></span><br><span class="line"><span class="string">&#x27;</span> &gt;&gt; ~/.ssh/config</span><br><span class="line"></span><br><span class="line">ssh server1.demo   <span class="comment"># 免密</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="FAQ">FAQ</h2>
+<p>Q1 如果同一用户需要不同权限，是否要多张证书？<br>
+A 是。建议<strong>一个权限集合对应一张证书</strong>，通过 <code>-n dev,gpu</code> 等 principals 控制。登陆时 OpenSSH 会自动匹配多张证书，无需手动 <code>-o CertificateFile=</code>。</p>
+<p>Q2 如何收回某位成员的 <em>admin</em> 权限但保留 <em>gpu</em>？<br>
+给他重新签一张不含 <em>admin</em> 的新证书，并把旧证书的序列号写入服务器端 <code>RevokedKeys</code>。</p>
+<p>Q3 证书吊销如何自动分发？<br>
+用你现有的 CM／Ansible／Salt 维护一份集中式 <code>ssh_ca_revoked</code> 文件，并在 sshd_config 中：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RevokedKeys /etc/ssh/ssh_ca_revoked</span><br></pre></td></tr></table></figure>
+<p>配合 CI/CD 即可秒级下发、热更新。</p>
+<p>Q4 如何自动化签发？<br>
+写一个 REST/CLI 的 “CA 服务”：<br>
+• 入参：用户公钥 + 角色组（dev/gpu/test/tmp/long-term…）<br>
+• 出参：同名 <code>*.pub-cert.pub</code><br>
+再配合 Jenkins/GitLab Runner 即可做到“一键申请、一键续期”。</p>
+<hr>
+<h2 id="结语">结语</h2>
+<p>SSH CA 不是新技术，却极易被忽视。只需一次性部署，即可：</p>
+<p>• 将公钥管理从 <em>O(N×M)</em> 降至 <em>O(N+M)</em><br>
+• 对成员/主机实现「秒级生效、秒级撤销」<br>
+• 精细化权限（principals + 有效期）与审计（证书序列号）</p>
+<p>希望本文能帮你在下一轮服务器扩容或团队变动时，减少 80%+ 的重复劳动。Happy Hacking!</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>SSH 登陆与证书化实践</p><p><a href="https://zion4h.github.io/2025/06/23/2025-6-23-SSH登陆/">https://zion4h.github.io/2025/06/23/2025-6-23-SSH登陆/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>zion h4</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-06-23</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-06-23</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/SSH/">SSH</a><a class="link-muted mr-2" rel="tag" href="/tags/%E5%AE%89%E5%85%A8/">安全</a><a class="link-muted mr-2" rel="tag" href="/tags/%E8%BF%90%E7%BB%B4/">运维</a><a class="link-muted mr-2" rel="tag" href="/tags/CA/">CA</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=641e7fdbd0e85900127dc9ed&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/06/18/2025-6-18-%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E7%AD%BE%E5%90%8D%E4%B8%8E%E8%AE%A4%E8%AF%81%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/"><span class="level-item">接口请求签名与认证的两种方案对比</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "a0ff875289e66348b2b4be06526f6965",
+            repo: "zion4h.github.io",
+            owner: "zion4h",
+            clientID: "6f5a7e1a8b910087187d",
+            clientSecret: "24cd36d0774c992dbd5536246799438ee849c1da",
+            admin: ["zion4h"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#原理速记"><span class="level-left"><span class="level-item">1</span><span class="level-item">原理速记</span></span></a></li><li><a class="level is-mobile" href="#ssh-copy-id-——-一键分发公钥"><span class="level-left"><span class="level-item">2</span><span class="level-item">ssh-copy-id —— 一键分发公钥</span></span></a></li><li><a class="level is-mobile" href="#ssh-agent-——-私钥只解锁一次"><span class="level-left"><span class="level-item">3</span><span class="level-item">ssh-agent —— 私钥只解锁一次</span></span></a></li><li><a class="level is-mobile" href="#小团队高频变更？上-SSH-CA"><span class="level-left"><span class="level-item">4</span><span class="level-item">小团队高频变更？上 SSH CA</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#3-1-痛点"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">3.1 痛点</span></span></a></li><li><a class="level is-mobile" href="#3-2-核心思路"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">3.2 核心思路</span></span></a></li><li><a class="level is-mobile" href="#3-3-一次性基础设施"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">3.3 一次性基础设施</span></span></a></li><li><a class="level is-mobile" href="#3-4-日常增删用户"><span class="level-left"><span class="level-item">4.4</span><span class="level-item">3.4 日常增删用户</span></span></a></li><li><a class="level is-mobile" href="#3-5-成本对比"><span class="level-left"><span class="level-item">4.5</span><span class="level-item">3.5 成本对比</span></span></a></li></ul></li><li><a class="level is-mobile" href="#最小实验环境（Hands-on）"><span class="level-left"><span class="level-item">5</span><span class="level-item">最小实验环境（Hands-on）</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#4-1-目录规划"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">4.1 目录规划</span></span></a></li><li><a class="level is-mobile" href="#4-2-生成两类-CA（可选）"><span class="level-left"><span class="level-item">5.2</span><span class="level-item">4.2 生成两类 CA（可选）</span></span></a></li><li><a class="level is-mobile" href="#4-3-给某台服务器签-Host-证书（可选）"><span class="level-left"><span class="level-item">5.3</span><span class="level-item">4.3 给某台服务器签 Host 证书（可选）</span></span></a></li><li><a class="level is-mobile" href="#4-4-给用户签证书并登陆"><span class="level-left"><span class="level-item">5.4</span><span class="level-item">4.4 给用户签证书并登陆</span></span></a></li></ul></li><li><a class="level is-mobile" href="#FAQ"><span class="level-left"><span class="level-item">6</span><span class="level-item">FAQ</span></span></a></li><li><a class="level is-mobile" href="#结语"><span class="level-left"><span class="level-item">7</span><span class="level-item">结语</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/kitty.png" alt="Blowin&#039; in the Wind" height="28"></a><p class="is-size-7"><span>&copy; 2025 zion h4</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zion4h"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
