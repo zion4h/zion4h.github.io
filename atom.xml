@@ -6,7 +6,7 @@
   <link href="https://zion4h.github.io/atom.xml" rel="self"/>
   
   <link href="https://zion4h.github.io/"/>
-  <updated>2025-06-23T07:15:39.533Z</updated>
+  <updated>2025-09-23T02:22:01.353Z</updated>
   <id>https://zion4h.github.io/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>谈谈 AI 写博客</title>
+    <link href="https://zion4h.github.io/2025/09/23/2025-9-22-%E8%B0%88%E8%B0%88%20AI%20%E5%86%99%E4%BD%9C/"/>
+    <id>https://zion4h.github.io/2025/09/23/2025-9-22-%E8%B0%88%E8%B0%88%20AI%20%E5%86%99%E4%BD%9C/</id>
+    <published>2025-09-22T18:00:45.951Z</published>
+    <updated>2025-09-23T02:22:01.353Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html"></summary>
+        
+      
+    
+    
+    
+    
+    <category term="AI" scheme="https://zion4h.github.io/tags/AI/"/>
+    
+  </entry>
+  
+  <entry>
     <title>SSH 登陆与证书化实践</title>
     <link href="https://zion4h.github.io/2025/06/23/2025-6-23-SSH%E7%99%BB%E9%99%86/"/>
     <id>https://zion4h.github.io/2025/06/23/2025-6-23-SSH%E7%99%BB%E9%99%86/</id>
     <published>2025-06-23T02:59:22.000Z</published>
-    <updated>2025-06-23T07:15:39.533Z</updated>
+    <updated>2025-09-23T02:01:38.589Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;strong&gt;目录&lt;/strong&gt;&lt;/p&gt;
@@ -46,6 +69,8 @@
     
     <category term="CA" scheme="https://zion4h.github.io/tags/CA/"/>
     
+    <category term="AIGC" scheme="https://zion4h.github.io/tags/AIGC/"/>
+    
   </entry>
   
   <entry>
@@ -53,18 +78,10 @@
     <link href="https://zion4h.github.io/2025/06/18/2025-6-18-%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E7%AD%BE%E5%90%8D%E4%B8%8E%E8%AE%A4%E8%AF%81%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/"/>
     <id>https://zion4h.github.io/2025/06/18/2025-6-18-%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E7%AD%BE%E5%90%8D%E4%B8%8E%E8%AE%A4%E8%AF%81%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/</id>
     <published>2025-06-18T06:49:45.000Z</published>
-    <updated>2025-06-18T09:38:35.605Z</updated>
+    <updated>2025-09-23T02:02:54.556Z</updated>
     
     
-    <summary type="html">&lt;p&gt;目录&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;为什么一定要做“签名 + 认证”&lt;/li&gt;
-&lt;li&gt;方案一：自定义 Ed25519 报文级签名&lt;/li&gt;
-&lt;li&gt;方案二：JWT（Ed25519 EdDSA）&lt;/li&gt;
-&lt;li&gt;维度对照总表&lt;/li&gt;
-&lt;li&gt;场景化选型建议&lt;/li&gt;
-&lt;li&gt;结语&lt;/li&gt;
-&lt;/ol&gt;</summary>
+    <summary type="html">为什么一定要做「签名 + 认证」</summary>
     
     
     
@@ -420,27 +437,6 @@
     
     
     <summary type="html">&lt;p&gt;上海的秋风总爱带着残夏的温度和雨水的潮湿，闷声朝人撞过来。早上醒来后，并没有立刻起床，而是静静躺在床上，望着天花板发呆。最近基本手机不离手，我很喜欢看到 “正在输入中…” 的字样。这意味着世界上有另外一个人关心我的想法，她好奇我的状态，而我不再是一棵可有可无的小草了。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="生活" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    <category term="日记" scheme="https://zion4h.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"/>
-    
-    
-    <category term="日记" scheme="https://zion4h.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2023 年 10 月</title>
-    <link href="https://zion4h.github.io/2023/11/16/life-diary-23-10/"/>
-    <id>https://zion4h.github.io/2023/11/16/life-diary-23-10/</id>
-    <published>2023-11-16T07:29:03.000Z</published>
-    <updated>2025-04-19T08:22:12.049Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这个月同慧琳相识，确切地说应该是上个月。二人由双方家长牵头添了微信。初识并没擦出什么火花，尽管我强忍内心腼腆主动打了招呼，但有一搭没一搭聊着快一个小时后，话题戛然而止。总之，最后谁也不再多说一句话了。&lt;/p&gt;</summary>
     
     
     
